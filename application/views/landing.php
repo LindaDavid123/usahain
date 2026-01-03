@@ -685,7 +685,7 @@
     
     <!-- Logo -->
     <a class="navbar-brand" href="<?= site_url(); ?>">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="">
         <circle cx="16" cy="16" r="16" fill="#1C6494"/>
         <path d="M12 10h8a2 2 0 012 2v8a2 2 0 01-2 2h-8a2 2 0 01-2-2v-8a2 2 0 012-2z" fill="white"/>
         <circle cx="16" cy="16" r="3" fill="#1C6494"/>

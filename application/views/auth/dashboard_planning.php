@@ -16,22 +16,27 @@ $user = array_merge([
 
 <style>
 :root {
-    --primary: #1C6494;
-    --primary-dark: #144d73;
-    --primary-light: #2b7ec9;
-    --secondary: #5bb7db;
-    --accent: #65C1DF;
-    --success: #2ecc71;
-    --warning: #f39c12;
-    --danger: #e74c3c;
-    --bg: #f8f9fa;
-    --bg-muted: #f0f4f8;
-    --card-bg: #ffffff;
-    --text: #1e293b;
-    --text-secondary: #64748b;
-    --shadow-sm: 0 2px 8px rgba(28,100,148,0.08);
-    --shadow-md: 0 4px 16px rgba(28,100,148,0.12);
-    --shadow-lg: 0 8px 24px rgba(28,100,148,0.16);
+    --primary: #4A90E2;
+    --primary-dark: #357ABD;
+    --primary-light: #6BA4EC;
+    --secondary: #7EC8E3;
+    --accent: #87CEEB;
+    --success: #52D79A;
+    --warning: #FFA76C;
+    --warning-dark: #FF8C4B;
+    --danger: #F57C7C;
+    --bg: #F5F8FA;
+    --bg-muted: #EDF2F7;
+    --card-bg: #FFFFFF;
+    --text: #2D3748;
+    --text-secondary: #718096;
+    --text-muted: #A0AEC0;
+    --border-color: #E2E8F0;
+    --shadow-xs: 0 1px 3px rgba(74,144,226,0.06);
+    --shadow-sm: 0 2px 6px rgba(74,144,226,0.08);
+    --shadow-md: 0 4px 12px rgba(74,144,226,0.10);
+    --shadow-lg: 0 8px 20px rgba(74,144,226,0.12);
+    --shadow-xl: 0 12px 28px rgba(74,144,226,0.15);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -39,53 +44,143 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
 
 /* HEADER */
 .header{
-    background:linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-    padding:20px 32px;
+    background:linear-gradient(135deg, #FFA76C 0%, #FF8C4B 100%);
+    padding:20px 40px;
     color:#fff;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    box-shadow:var(--shadow-md)
+    box-shadow:0 2px 12px rgba(255,167,108,0.15);
+    position:relative;
+    overflow:hidden;
+    border-bottom:1px solid rgba(255,255,255,0.12)
 }
-.header h3{font-size:20px;font-weight:700}
-.header-right{display:flex;align-items:center;gap:14px}
+.header::before{
+    content:'';
+    position:absolute;
+    top:-60%;
+    right:-8%;
+    width:450px;
+    height:450px;
+    background:radial-gradient(circle, rgba(255,255,255,0.09) 0%, transparent 70%);
+    border-radius:50%;
+    pointer-events:none
+}
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    position:relative;
+    z-index:2
+}
+.header-icon{
+    width:48px;
+    height:48px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.20);
+    backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.10);
+    border:1px solid rgba(255,255,255,0.25)
+}
+.header-title h3{
+    font-size:19px;
+    font-weight:700;
+    margin-bottom:4px;
+    letter-spacing:-0.3px;
+    text-shadow:0 1px 2px rgba(0,0,0,0.08)
+}
+.header-title small{
+    opacity:.90;
+    font-size:13px;
+    font-weight:500;
+    display:flex;
+    align-items:center;
+    gap:6px
+}
+.header-title small::before{
+    content:'✨';
+    font-size:12px
+}
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    position:relative;
+    z-index:2
+}
 .avatar{
-    width:46px;height:46px;border-radius:50%;
-    background:white;
-    color:var(--warning);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;box-shadow:var(--shadow-sm)
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    background:linear-gradient(135deg, #FFFFFF 0%, #FFF5E6 100%);
+    color:var(--warning-dark);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:16px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.12);
+    border:2px solid rgba(255,255,255,0.35);
+    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+}
+.avatar:hover{
+    transform:scale(1.08) rotate(5deg);
+    box-shadow:0 5px 15px rgba(0,0,0,0.18)
 }
 .logout-btn{
-    background:rgba(255,255,255,.2);
+    background:rgba(255,255,255,.22);
     color:#fff;
-    padding:9px 18px;
-    border-radius:24px;
+    padding:10px 22px;
+    border-radius:28px;
     font-size:13px;
     text-decoration:none;
     font-weight:600;
-    transition:.3s ease;
-    border:1.5px solid rgba(255,255,255,0.3)
+    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border:1px solid rgba(255,255,255,0.35);
+    backdrop-filter:blur(10px);
+    display:inline-flex;
+    align-items:center;
+    gap:8px
+}
+.logout-btn::before{
+    content:'🚪';
+    font-size:14px
 }
 .logout-btn:hover{
     background:rgba(255,255,255,.35);
-    transform:translateY(-1px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.15)
+    border-color:rgba(255,255,255,0.55);
+    transform:translateY(-2px);
+    box-shadow:0 4px 14px rgba(0,0,0,0.15)
 }
 .change-dashboard-btn{
-    background:rgba(255,255,255,.15);
+    background:rgba(255,255,255,.18);
     color:#fff;
-    padding:8px 16px;
-    border-radius:20px;
+    padding:9px 18px;
+    border-radius:24px;
     font-size:12px;
     text-decoration:none;
     font-weight:600;
-    transition:.3s ease;
-    border:1.5px solid rgba(255,255,255,0.25)
+    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border:1px solid rgba(255,255,255,0.30);
+    backdrop-filter:blur(10px);
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    white-space:nowrap
+}
+.change-dashboard-btn::before{
+    content:'🔄';
+    font-size:12px
 }
 .change-dashboard-btn:hover{
-    background:rgba(255,255,255,.3);
-    transform:translateY(-1px)
+    background:rgba(255,255,255,.32);
+    transform:translateY(-2px);
+    border-color:rgba(255,255,255,0.5);
+    box-shadow:0 3px 10px rgba(0,0,0,0.12)
 }
 
 /* CONTAINER */
@@ -471,8 +566,12 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
 }
 
 @media(max-width:768px){
-    .header{padding:18px 24px;flex-direction:column;gap:12px}
-    .header-right{width:100%;justify-content:center}
+    .header{padding:16px 20px;flex-direction:column;gap:14px;align-items:stretch}
+    .header-left{justify-content:center}
+    .header-right{width:100%;justify-content:center;flex-wrap:wrap}
+    .change-dashboard-btn{font-size:11px;padding:8px 14px}
+    .logout-btn{font-size:12px;padding:9px 18px}
+    .avatar{width:40px;height:40px;font-size:15px}
     .welcome-banner{padding:32px 24px}
     .welcome-banner h1{font-size:26px}
     .welcome-banner p{font-size:16px}
@@ -492,12 +591,15 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
 
 <!-- HEADER -->
 <div class="header">
-    <div>
-        <h3>💡 Dashboard Perencanaan</h3>
-        <small>Mulai perjalanan bisnis Anda</small>
+    <div class="header-left">
+        <div class="header-icon">🚀</div>
+        <div class="header-title">
+            <h3>Dashboard Perencanaan</h3>
+            <small>Mulai perjalanan bisnis Anda</small>
+        </div>
     </div>
     <div class="header-right">
-        <a href="<?= site_url('auth/change_dashboard'); ?>" class="change-dashboard-btn">🔄 Ganti Dashboard</a>
+        <a href="<?= site_url('auth/dashboard_operational'); ?>" class="change-dashboard-btn">Dashboard Operasional</a>
         <div class="avatar"><?= strtoupper(substr($user['nama'], 0, 1)); ?></div>
         <a href="<?= site_url('auth/logout'); ?>" class="logout-btn">Logout</a>
     </div>
@@ -507,7 +609,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
 
     <!-- WELCOME BANNER -->
     <div class="welcome-banner">
-        <h1>Selamat datang, <?= htmlspecialchars($user['nama']); ?>! 🚀</h1>
+        <h1>Selamat datang, <?= htmlspecialchars($user['nama']); ?>!</h1>
         <p>Mari mulai merencanakan bisnis impian Anda dengan panduan lengkap dari Usahain</p>
     </div>
 
