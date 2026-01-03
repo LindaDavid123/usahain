@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Authentication Access - Usahain</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .status.info {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .btn {
+            display: block;
+            padding: 18px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .btn-home {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .info-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 4px solid #667eea;
+        }
+        .info-box h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .info-box p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .info-box code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✅ Akses Authentication Berhasil!</h1>
+        <p class="subtitle">Halaman login dan register sekarang sudah bisa diakses</p>
+        
+        <div class="status">
+            <strong>✓ Status:</strong> Konfigurasi berhasil diperbaiki!
+        </div>
+        
+        <div class="status info">
+            <strong>ℹ Info:</strong> URL sekarang menggunakan <code>index.php</code> untuk kompatibilitas maksimal.
+        </div>
+        
+        <div class="btn-group">
+            <a href="http://localhost/usahain/index.php/auth/login" class="btn btn-primary">
+                🔐 Buka Halaman Login
+            </a>
+            <a href="http://localhost/usahain/index.php/auth/register" class="btn btn-secondary">
+                📝 Buka Halaman Register
+            </a>
+            <a href="http://localhost/usahain/" class="btn btn-home">
+                🏠 Kembali ke Landing Page
+            </a>
+        </div>
+        
+        <div class="info-box">
+            <h3>📋 Yang Sudah Diperbaiki:</h3>
+            <p>
+                1. <strong>File .htaccess</strong> - Format RewriteRule sudah diperbaiki<br>
+                2. <strong>Config index_page</strong> - Diubah menjadi <code>'index.php'</code><br>
+                3. <strong>Routing</strong> - Semua URL menggunakan <code>site_url()</code><br>
+                4. <strong>Compatibility</strong> - Berfungsi dengan atau tanpa mod_rewrite
+            </p>
+        </div>
+    </div>
+</body>
+</html>

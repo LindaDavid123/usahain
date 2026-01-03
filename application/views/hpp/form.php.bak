@@ -1,0 +1,81 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title><?= isset($hpp) ? 'Edit HPP' : 'Tambah HPP'; ?></title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; }
+        nav { background-color: #2c3e50; color: white; padding: 10px 20px; }
+        nav a { color: white; margin-right: 20px; text-decoration: none; }
+        .container { max-width: 600px; margin: 20px auto; padding: 0 20px; }
+        .card { background: white; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 30px; }
+        h2 { margin-bottom: 20px; color: #2c3e50; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #34495e; }
+        input[type="text"], input[type="number"], textarea, select { width: 100%; padding: 10px; border: 1px solid #bdc3c7; border-radius: 4px; font-size: 14px; }
+        textarea { min-height: 80px; resize: vertical; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-row .form-group { margin-bottom: 0; }
+        .btn-group { margin-top: 30px; display: flex; gap: 10px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; }
+        .btn-primary { background-color: #3498db; color: white; }
+        .btn-secondary { background-color: #95a5a6; color: white; }
+        .btn:hover { opacity: 0.8; }
+        .error { color: #e74c3c; font-size: 12px; margin-top: 5px; }
+        .info-box { background-color: #ecf0f1; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+        .info-box strong { color: #2c3e50; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="<?= site_url('dashboard'); ?>">Dashboard</a>
+        <a href="<?= site_url('hpp'); ?>">HPP Calculator</a>
+        <a href="<?= site_url('auth/logout'); ?>" style="float: right;">Logout (<?= $this->session->userdata('nama'); ?>)</a>
+    </nav>
+    <div class="container">
+        <div class="card">
+            <h2><?= isset($hpp) ? 'Edit HPP' : 'Tambah HPP Baru'; ?></h2>
+            
+            <div class="info-box">
+                <strong>Rumus Perhitungan:</strong><br>
+                Total Biaya = Biaya Bahan + Biaya Tenaga Kerja<br>
+                Margin = Harga Jual - Total Biaya
+            </div>
+
+            <form method="post">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bahan">Biaya Bahan *</label>
+                        <input type="number" id="bahan" name="bahan" step="0.01" value="<?= isset($hpp) ? $hpp->bahan : set_value('bahan'); ?>" required>
+                        <?= form_error('bahan', '<div class="error">', '</div>'); ?>
+                    </div>
+                    <div class="form-group">
+                        <label for="tenaga_kerja">Biaya Tenaga Kerja *</label>
+                        <input type="number" id="tenaga_kerja" name="tenaga_kerja" step="0.01" value="<?= isset($hpp) ? $hpp->tenaga_kerja : set_value('tenaga_kerja'); ?>" required>
+                        <?= form_error('tenaga_kerja', '<div class="error">', '</div>'); ?>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="harga_jual">Harga Jual *</label>
+                    <input type="number" id="harga_jual" name="harga_jual" step="0.01" value="<?= isset($hpp) ? $hpp->harga_jual : set_value('harga_jual'); ?>" required>
+                    <?= form_error('harga_jual', '<div class="error">', '</div>'); ?>
+                </div>
+
+                <?php if (isset($hpp)) : ?>
+                    <div class="form-group" style="background-color: #ecf0f1; padding: 15px; border-radius: 4px;">
+                        <strong>Total Biaya: Rp <?= number_format($hpp->total_biaya, 0, ',', '.'); ?></strong><br>
+                        <strong style="color: #27ae60;">Margin: Rp <?= number_format($hpp->harga_jual - $hpp->total_biaya, 0, ',', '.'); ?></strong>
+                    </div>
+                <?php endif; ?>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="<?= site_url('hpp'); ?>" class="btn btn-secondary">Batal</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
