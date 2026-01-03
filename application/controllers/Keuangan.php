@@ -14,8 +14,10 @@ class Keuangan extends CI_Controller {
     public function index()
     {
         $id_user = $this->session->userdata('id_user');
-        $data['transaksi_list'] = $this->db->get_where('pencatatan_keuangan', ['id_user' => $id_user])
-            ->order_by('tanggal', 'DESC')->result();
+        $data['transaksi_list'] = $this->db->where('id_user', $id_user)
+            ->order_by('tanggal', 'DESC')
+            ->get('pencatatan_keuangan')
+            ->result();
         $this->load->view('keuangan/index', $data);
     }
 

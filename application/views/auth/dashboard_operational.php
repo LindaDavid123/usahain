@@ -221,34 +221,51 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     text-align:center;
     text-decoration:none;
     transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+    box-shadow:0 6px 24px rgba(0,0,0,0.15);
     border:2px solid rgba(255,255,255,0.3);
     position:relative;
-    overflow:hidden
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px
 }
 .action::before{
     content:'';
     position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    background:rgba(255,255,255,0.1);
-    transform:translateY(100%);
-    transition:transform 0.4s
+    top:50%;left:50%;
+    width:0;height:0;
+    border-radius:50%;
+    background:rgba(255,255,255,0.2);
+    transform:translate(-50%, -50%);
+    transition:width 0.5s, height 0.5s;
+    z-index:1
 }
 .action:hover::before{
-    transform:translateY(0)
+    width:300px;
+    height:300px
 }
 .action:hover{
-    transform:translateY(-6px) scale(1.02);
-    box-shadow:0 12px 40px rgba(0,0,0,0.2);
-    border-color:rgba(255,255,255,0.6)
+    transform:translateY(-8px) scale(1.05);
+    box-shadow:0 16px 48px rgba(0,0,0,0.25);
+    border-color:rgba(255,255,255,0.8)
+}
+.action span{
+    font-size:32px;
+    z-index:2;
+    transition:transform 0.3s
+}
+.action:hover span{
+    transform:scale(1.2) rotate(10deg)
+}
+.action-text{
+    z-index:2;
+    font-size:15px
 }
 .sale{background:linear-gradient(135deg, #10b981 0%, #059669 100%)}
 .expense{background:linear-gradient(135deg, #ef4444 0%, #dc2626 100%)}
 .stock{background:linear-gradient(135deg, #3b82f6 0%, #1C6494 100%)}
-.report{background:linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);color:#fff}
+.report{background:linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);color:#fff}
 
 /* SUMMARY CARDS */
 .summary{
@@ -258,10 +275,10 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     margin-bottom:36px
 }
 .sum-card{
-    background:var(--card-bg);
-    border-radius:20px;
-    padding:28px 24px;
-    box-shadow:0 4px 20px rgba(28,100,148,0.08);
+    background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-radius:24px;
+    padding:32px 28px;
+    box-shadow:0 6px 24px rgba(28,100,148,0.1);
     transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border:2px solid rgba(28,100,148,0.08);
     position:relative;
@@ -273,17 +290,31 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     top:0;
     left:0;
     right:0;
-    height:4px;
-    background:linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    height:5px;
     transform:scaleX(0);
-    transition:transform 0.4s
+    transition:transform 0.4s;
+    border-radius:24px 24px 0 0
+}
+.sum-card::after{
+    content:'';
+    position:absolute;
+    bottom:-30%;
+    right:-20%;
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(28,100,148,0.04) 0%, transparent 70%);
+    transition:all 0.5s
+}
+.sum-card:hover::after{
+    transform:translate(-10%, -10%) scale(1.2)
 }
 .sum-card:hover::before{
     transform:scaleX(1)
 }
 .sum-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 12px 40px rgba(28,100,148,0.15);
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 16px 48px rgba(28,100,148,0.18);
     border-color:var(--primary-color)
 }
 .sum-card small{
@@ -292,15 +323,42 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     font-size:13px;
     text-transform:uppercase;
     letter-spacing:0.5px;
-    display:block;
-    margin-bottom:12px
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:14px;
+    position:relative;
+    z-index:2
+}
+.sum-card small::before{
+    content:'';
+    display:inline-block;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    transition:transform 0.3s
+}
+.sum-card:hover small::before{
+    transform:scale(1.5)
 }
 .sum-card h3{
     margin-top:0;
-    font-size:28px;
+    font-size:32px;
     font-weight:800;
-    line-height:1.2
+    line-height:1.2;
+    position:relative;
+    z-index:2;
+    text-shadow:0 2px 8px rgba(0,0,0,0.05)
 }
+.sum-card .green::before,
+.sum-card:has(.green)::before{background:linear-gradient(90deg, #10b981, #059669)}
+.sum-card .red::before,
+.sum-card:has(.red)::before{background:linear-gradient(90deg, #ef4444, #dc2626)}
+.sum-card .blue::before,
+.sum-card:has(.blue)::before{background:linear-gradient(90deg, #3b82f6, var(--primary-color))}
+.sum-card:has(.green) small::before{background:#10b981}
+.sum-card:has(.red) small::before{background:#ef4444}
+.sum-card:has(.blue) small::before{background:#3b82f6}
 .green{color:#10b981;text-shadow:0 2px 10px rgba(16,185,129,0.2)}
 .red{color:#ef4444;text-shadow:0 2px 10px rgba(239,68,68,0.2)}
 .blue{color:var(--primary-color);text-shadow:0 2px 10px rgba(28,100,148,0.2)}
@@ -382,6 +440,30 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 .tool-box:hover::before{
     transform:scaleX(1)
 }
+.tool-icon{
+    width:56px;
+    height:56px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    margin-bottom:16px;
+    box-shadow:0 4px 16px rgba(0,0,0,0.1);
+    position:relative;
+    z-index:2;
+    transition:all 0.4s
+}
+.tool-box:hover .tool-icon{
+    transform:scale(1.1) rotate(5deg);
+    box-shadow:0 8px 24px rgba(0,0,0,0.15)
+}
+.tool-icon.hpp{background:linear-gradient(135deg, #3b82f6, #1C6494)}
+.tool-icon.keuangan{background:linear-gradient(135deg, #10b981, #059669)}
+.tool-icon.risiko{background:linear-gradient(135deg, #f59e0b, #ea580c)}
+.tool-icon.analisis{background:linear-gradient(135deg, #8b5cf6, #6d28d9)}
+.tool-icon.info{background:linear-gradient(135deg, #ec4899, #be185d)}
+.tool-icon.advisor{background:linear-gradient(135deg, #06b6d4, #0891b2)}
 .tool-title{
     font-weight:800;
     margin-bottom:12px;
@@ -860,12 +942,12 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 <!-- HEADER -->
 <div class="header">
     <div>
-        <h3>🚀 Dashboard Operasional</h3>
+        <h3>Dashboard Operasional</h3>
         <small>Kelola Bisnis yang Sudah Berjalan</small>
     </div>
 
     <div class="header-right">
-        <a href="<?= site_url('auth/change_dashboard'); ?>" class="change-dashboard-btn">🔄 Ganti Dashboard</a>
+        <a href="<?= site_url('auth/change_dashboard'); ?>" class="change-dashboard-btn">Ganti Dashboard</a>
         <div class="avatar"><?= strtoupper(substr($user['nama'],0,1)); ?></div>
         <a href="<?= site_url('auth/logout'); ?>" 
            class="logout-btn"
@@ -893,17 +975,83 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
         </div>
     </div>
 
+    <!-- TOOLS -->
+    <div class="section-title">🛠️ Tools Bisnis Lainnya</div>
+    <div class="tools-grid">
+        
+        <!-- AI Advisor -->
+        <div class="tool-box">
+            <div class="tool-icon advisor">🤖</div>
+            <div class="tool-title">AI Advisor</div>
+            <div class="tool-desc">Konsultasi strategi bisnis dengan AI yang cerdas dan responsif</div>
+            <a href="<?= site_url('advisor'); ?>">Coba Sekarang →</a>
+        </div>
+
+        <!-- Kalkulator HPP -->
+        <div class="tool-box">
+            <div class="tool-icon hpp">🧮</div>
+            <div class="tool-title">Kalkulator HPP</div>
+            <div class="tool-desc">Hitung harga pokok produksi dan tentukan margin keuntungan optimal</div>
+            <a href="<?= site_url('hpp'); ?>">Hitung HPP →</a>
+        </div>
+
+        <!-- Pencatatan Keuangan -->
+        <div class="tool-box">
+            <div class="tool-icon keuangan">💰</div>
+            <div class="tool-title">Pencatatan Keuangan</div>
+            <div class="tool-desc">Catat & kelola pemasukan serta pengeluaran bisnis dengan mudah</div>
+            <a href="<?= site_url('keuangan'); ?>">Kelola Keuangan →</a>
+        </div>
+
+        <!-- Manajemen Risiko -->
+        <div class="tool-box">
+            <div class="tool-icon risiko">⚠️</div>
+            <div class="tool-title">Manajemen Risiko</div>
+            <div class="tool-desc">Identifikasi, evaluasi & mitigasi risiko usaha secara sistematis</div>
+            <a href="<?= site_url('risiko'); ?>">Kelola Risiko →</a>
+        </div>
+
+        <!-- Analisis Produk -->
+        <div class="tool-box">
+            <div class="tool-icon analisis">📊</div>
+            <div class="tool-title">Analisis Produk</div>
+            <div class="tool-desc">Analisa mendalam performa dan profitabilitas produk Anda</div>
+            <a href="<?= site_url('analisis'); ?>">Mulai Analisis →</a>
+        </div>
+
+        <!-- Rekomendasi Informasi Bisnis -->
+        <div class="tool-box">
+            <div class="tool-icon info">💡</div>
+            <div class="tool-title">Rekomendasi Informasi Bisnis</div>
+            <div class="tool-desc">Dapatkan tips, tren, dan informasi UMKM terkini untuk sukses</div>
+            <a href="<?= site_url('advisor/rekomendasi'); ?>">Lihat Info →</a>
+        </div>
+
+    </div>
+
     <!-- AKSI CEPAT -->
-    <div class="section-title">Aksi Cepat</div>
+    <div class="section-title">⚡ Aksi Cepat</div>
     <div class="actions">
-        <a href="#" onclick="openModalPenjualan(); return false;" class="action sale">Catat Penjualan</a>
-        <a href="#" onclick="openModalPengeluaran(); return false;" class="action expense">Catat Pengeluaran</a>
-        <a href="<?= base_url('hpp'); ?>" class="action stock">Hitung HPP</a>
-        <a href="<?= base_url('risiko'); ?>" onclick="openModalRisiko(); return false;" class="action report">Manajemen Risiko</a>
+        <a href="#" onclick="openModalPenjualan(); return false;" class="action sale">
+            <span>🛒</span>
+            <span class="action-text">Catat Penjualan</span>
+        </a>
+        <a href="#" onclick="openModalPengeluaran(); return false;" class="action expense">
+            <span>💸</span>
+            <span class="action-text">Catat Pengeluaran</span>
+        </a>
+        <a href="<?= base_url('hpp'); ?>" class="action stock">
+            <span>🧮</span>
+            <span class="action-text">Hitung HPP</span>
+        </a>
+        <a href="<?= base_url('risiko'); ?>" onclick="openModalRisiko(); return false;" class="action report">
+            <span>⚠️</span>
+            <span class="action-text">Manajemen Risiko</span>
+        </a>
     </div>
 
     <!-- RINGKASAN -->
-    <div class="section-title">Ringkasan Keuangan</div>
+    <div class="section-title">📊 Ringkasan Keuangan</div>
     
     <!-- FILTER PERIODE -->
     <div class="filter-periode">
@@ -997,54 +1145,6 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
         <?php endforeach; else: ?>
         <p class="text-muted">Belum ada transaksi</p>
         <?php endif; ?>
-    </div>
-
-    <!-- TOOLS -->
-    <div class="section-title">Tools Bisnis Lainnya</div>
-    <div class="tools-grid">
-        
-        <!-- AI Advisor -->
-        <div class="tool-box">
-            <div class="tool-title">AI Advisor</div>
-            <div class="tool-desc">Konsultasi strategi bisnis dengan AI</div>
-            <a href="<?= site_url('advisor'); ?>">Coba Sekarang →</a>
-        </div>
-
-        <!-- Kalkulator HPP -->
-        <div class="tool-box">
-            <div class="tool-title">Kalkulator HPP</div>
-            <div class="tool-desc">Hitung harga pokok produksi</div>
-            <a href="<?= site_url('hpp'); ?>">Hitung HPP →</a>
-        </div>
-
-        <!-- Pencatatan Keuangan -->
-        <div class="tool-box">
-            <div class="tool-title">Pencatatan Keuangan</div>
-            <div class="tool-desc">Catat pemasukan & pengeluaran</div>
-            <a href="<?= site_url('keuangan'); ?>">Kelola Keuangan →</a>
-        </div>
-
-        <!-- Manajemen Risiko -->
-        <div class="tool-box">
-            <div class="tool-title">Manajemen Risiko</div>
-            <div class="tool-desc">Identifikasi & kelola risiko usaha</div>
-            <a href="<?= site_url('risiko'); ?>">Kelola Risiko →</a>
-        </div>
-
-        <!-- Analisis Produk -->
-        <div class="tool-box">
-            <div class="tool-title">Analisis Produk</div>
-            <div class="tool-desc">Analisa performa produk Anda</div>
-            <a href="<?= site_url('analisis'); ?>">Analisis →</a>
-        </div>
-
-        <!-- Rekomendasi Informasi Bisnis -->
-        <div class="tool-box">
-            <div class="tool-title">Rekomendasi Informasi Bisnis</div>
-            <div class="tool-desc">Tips & tren UMKM terkini</div>
-            <a href="<?= site_url('advisor/rekomendasi'); ?>">Lihat Info →</a>
-        </div>
-
     </div>
 
 </div>

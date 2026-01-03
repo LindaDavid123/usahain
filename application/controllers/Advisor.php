@@ -52,6 +52,110 @@ class Advisor extends CI_Controller {
         $this->load->view('advisor/chat', $data);
     }
 
+    /**
+     * Clear chat history and start fresh without going back to form
+     */
+    public function new_chat($id = null)
+    {
+        // Clean all output buffers
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+        
+        header('Content-Type: application/json');
+        
+        if (!$id) {
+            echo json_encode(['status' => 'error', 'message' => 'ID not provided']);
+            return;
+        }
+        
+        $id_user = $this->session->userdata('id_user');
+        $advisor = $this->Al_advisor_model->get($id);
+        
+        if (!$advisor || $advisor->id_user != $id_user) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+
+        // Simpan chat lama ke field history sebelum clear
+        $old_chat = [];
+        if (!empty($advisor->riwayat_chat)) {
+            $decoded = json_decode($advisor->riwayat_chat, true);
+            if (is_array($decoded) && count($decoded) > 0) {
+                $old_chat = $decoded;
+            }
+        }
+        
+        // Ambil existing chat history
+        $chat_history = [];
+        if (!empty($advisor->chat_history)) {
+            $history = json_decode($advisor->chat_history, true);
+            if (is_array($history)) {
+                $chat_history = $history;
+            }
+        }
+        
+        // Tambahkan chat lama ke history jika ada
+        if (count($old_chat) > 0) {
+            $chat_history[] = [
+                'timestamp' => date('Y-m-d H:i:s'),
+                'messages' => $old_chat,
+                'title' => 'Chat ' . date('d M Y, H:i')
+            ];
+        }
+
+        // Update database: clear current chat, simpan ke history
+        $this->Al_advisor_model->update($id, [
+            'riwayat_chat' => json_encode([]),
+            'chat_history' => json_encode($chat_history)
+        ]);
+
+        echo json_encode([
+            'status' => 'ok', 
+            'message' => 'Chat baru dimulai',
+            'chat_history' => $chat_history
+        ]);
+    }
+    
+    /**
+     * Get chat history for sidebar
+     */
+    public function get_chat_history($id = null)
+    {
+        // Clean all output buffers
+        while (ob_get_level()) {
+            ob_end_clean();
+        }
+        
+        header('Content-Type: application/json');
+        
+        if (!$id) {
+            echo json_encode(['status' => 'error', 'message' => 'ID not provided']);
+            return;
+        }
+        
+        $id_user = $this->session->userdata('id_user');
+        $advisor = $this->Al_advisor_model->get($id);
+        
+        if (!$advisor || $advisor->id_user != $id_user) {
+            echo json_encode(['status' => 'error', 'message' => 'Unauthorized']);
+            return;
+        }
+        
+        $chat_history = [];
+        if (!empty($advisor->chat_history)) {
+            $history = json_decode($advisor->chat_history, true);
+            if (is_array($history)) {
+                $chat_history = $history;
+            }
+        }
+        
+        echo json_encode([
+            'status' => 'ok',
+            'chat_history' => $chat_history
+        ]);
+    }
+
     public function form()
     {
         $this->load->view('advisor/form');
@@ -168,11 +272,14 @@ class Advisor extends CI_Controller {
      */
     public function send_message()
     {
+        // Disable error display untuk AJAX endpoint
+        @ini_set('display_errors', '0');
+        error_reporting(0);
+        
         // Clear ALL output buffers to prevent BOM or whitespace
         while (ob_get_level()) {
             ob_end_clean();
         }
-        ob_start();
         
         header('Content-Type: application/json; charset=UTF-8');
 
@@ -211,28 +318,51 @@ class Advisor extends CI_Controller {
         // Load Gemini
         $this->load->library('Gemini');
 
+        log_message('info', '[Advisor] Calling Gemini API for advisor id: ' . $id);
+
         // Gunakan fungsi call_gemini_response yang sudah include riwayat chat
         $reply = $this->call_gemini_response($advisor, $message);
 
-        // Accept any non-empty reply from Gemini as valid
-        $valid = ($reply && strlen(trim($reply)) > 30);
+        log_message('info', '[Advisor] Gemini response length: ' . strlen($reply) . ' chars');
+        log_message('debug', '[Advisor] Gemini response preview: ' . substr($reply, 0, 200));
+
+        // Accept any non-empty reply from Gemini as valid (lebih permisif: minimal 10 karakter)
+        $valid = ($reply && strlen(trim($reply)) > 10);
         $source = 'gemini';
 
         // If primary failed or reply too short, try one more time
         if (!$valid) {
-            log_message('warning', 'Gemini primary response empty/short, attempting retry');
+            log_message('info', 'Gemini primary response empty/short (length: ' . strlen($reply) . '), attempting retry');
             sleep(2); // Wait before retry
             $reply = $this->call_gemini_response($advisor, $message);
-            $valid = ($reply && strlen(trim($reply)) >= 30);
+            $valid = ($reply && strlen(trim($reply)) > 10);
+            
+            if ($valid) {
+                log_message('info', 'Gemini retry successful');
+            }
         }
 
+        // Jika tetap gagal, gunakan fallback LOKAL yang PASTI berhasil
         if (!$valid) {
-            log_message('warning', 'Gemini did not return a relevant reply; using local fallback for advisor id: '.$id);
+            log_message('info', 'Gemini failed after retries; using local fallback for advisor id: '.$id);
             // Use a local fallback responder so the user always gets an answer
             $reply = $this->local_ai_reply($advisor, $message);
             $source = 'fallback';
+            
+            // Pastikan fallback juga tidak kosong
+            if (!$reply || strlen(trim($reply)) < 10) {
+                $reply = "Terima kasih atas pertanyaan Anda. Saat ini sistem sedang mengalami gangguan. Namun, berdasarkan data yang Anda input (modal: Rp" . number_format($advisor->modal_usaha, 0, ',', '.') . ", lokasi: {$advisor->lokasi_usaha}), saya sarankan untuk fokus pada bisnis yang sesuai dengan kondisi pasar lokal Anda. Silakan coba lagi beberapa saat atau hubungi admin untuk bantuan lebih lanjut.";
+                log_message('error', 'Fallback juga gagal, menggunakan response default');
+            }
         }
 
+        // PASTIKAN reply tidak pernah kosong sebelum disimpan
+        if (empty(trim($reply))) {
+            $reply = "Terima kasih atas pertanyaan Anda. Saat ini sistem sedang memproses permintaan tinggi. Silakan coba lagi dalam beberapa saat.";
+            $source = 'default';
+            log_message('error', 'Reply masih kosong setelah semua retry, menggunakan default message');
+        }
+        
         // Simpan balasan AI (atau fallback)
         $chat[] = [
             'from' => 'ai',
@@ -249,17 +379,23 @@ class Advisor extends CI_Controller {
             'status' => 'ok',
             'reply' => $reply,
             'chat' => $chat,
-            'source' => $source // 'gemini' or 'fallback'
+            'source' => $source // 'gemini', 'fallback', or 'default'
         ];
         
-        log_message('debug', 'Sending response: ' . json_encode(['status' => $response['status'], 'reply_length' => strlen($reply), 'source' => $source]));
+        log_message('info', 'Sending response: ' . json_encode(['status' => $response['status'], 'reply_length' => strlen($reply), 'source' => $source]));
+        log_message('debug', 'Full response JSON: ' . substr(json_encode($response, JSON_UNESCAPED_UNICODE), 0, 500));
         
         // Clean all buffers and send only JSON
         while (ob_get_level()) {
             ob_end_clean();
         }
         
-        echo json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $jsonOutput = json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        
+        // Pastikan tidak ada karakter aneh sebelum output JSON
+        if (ob_get_length()) ob_clean();
+        
+        echo $jsonOutput;
         exit; // Prevent any further output
     }
 
@@ -316,13 +452,32 @@ class Advisor extends CI_Controller {
         - Lokasi usaha: {$advisor->lokasi}
         - Minat usaha: {$advisor->minat}
 
-        ATURAN:
-        - Gunakan bahasa Indonesia
-        - Jawaban maksimal 5 paragraf
-        - Fokus solusi praktis
-        - Jangan menyebut kata 'AI'
+        ATURAN KONTEN:
+        - Gunakan bahasa Indonesia yang jelas dan profesional
+        - Jawaban maksimal 5 paragraf atau 10 poin
+        - Fokus pada solusi praktis dan actionable
+        - Jangan menyebut kata 'AI' atau 'Gemini'
         - Berikan jawaban yang BERVARIASI dan KREATIF untuk setiap pertanyaan
         - Hindari pengulangan jawaban yang sama persis
+        
+        ATURAN FORMATTING (PENTING):
+        - WAJIB gunakan Markdown formatting
+        - Gunakan **bold** untuk poin-poin PENTING
+        - Gunakan bullet points (-) untuk daftar/list
+        - Gunakan numbering (1. 2. 3.) untuk langkah-langkah
+        - Pisahkan paragraf dengan line break
+        - Gunakan ## untuk sub-judul jika perlu
+        - Contoh format yang baik:
+          
+          **Modal Rp 5 juta cocok untuk:**
+          1. Warung makan sederhana
+          2. Toko kelontong
+          3. Usaha jasa
+          
+          **Tips sukses:**
+          - Fokus pada 1-2 produk dulu
+          - Catat pendapatan harian
+          - Evaluasi setiap minggu
         ";
 
         // Ambil 5 chat terakhir sebagai konteks
@@ -345,9 +500,23 @@ class Advisor extends CI_Controller {
             . $userMessage . "\n"
             . "[Request ID: " . uniqid() . " | Waktu: " . date('Y-m-d H:i:s') . "]";
 
-        $response = $this->gemini->generate($finalPrompt);
-
-        return $response;
+        log_message('info', '[Advisor] Prompt length: ' . strlen($finalPrompt) . ' chars');
+        
+        try {
+            $response = $this->gemini->generate($finalPrompt);
+            
+            if (!$response) {
+                log_message('error', '[Advisor] Gemini returned NULL response');
+                return '';
+            }
+            
+            log_message('info', '[Advisor] Gemini success, response: ' . strlen($response) . ' chars');
+            return $response;
+            
+        } catch (Exception $e) {
+            log_message('error', '[Advisor] Gemini exception: ' . $e->getMessage());
+            return '';
+        }
     }
 
     /**

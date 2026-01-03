@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Send Message</title>
+</head>
+<body>
+    <h1>Test Send Message API</h1>
+    <input type="text" id="advisorId" placeholder="Advisor ID (contoh: 1)" value="1">
+    <input type="text" id="message" placeholder="Pesan" value="Berikan saran bisnis modal 5 juta">
+    <button onclick="testSend()">Kirim Test</button>
+    
+    <h3>Response:</h3>
+    <pre id="response"></pre>
+    
+    <script>
+        function testSend() {
+            var advisorId = document.getElementById('advisorId').value;
+            var message = document.getElementById('message').value;
+            var responseEl = document.getElementById('response');
+            
+            responseEl.textContent = 'Loading...';
+            
+            fetch('http://localhost/usahain/advisor/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams({
+                    id: advisorId,
+                    message: message
+                })
+            })
+            .then(function(res) {
+                console.log('Status:', res.status);
+                console.log('Headers:', res.headers);
+                return res.text();
+            })
+            .then(function(text) {
+                responseEl.textContent = text;
+                console.log('Response text:', text);
+                
+                try {
+                    var json = JSON.parse(text);
+                    responseEl.textContent = JSON.stringify(json, null, 2);
+                } catch(e) {
+                    console.error('Not valid JSON:', e);
+                }
+            })
+            .catch(function(err) {
+                responseEl.textContent = 'ERROR: ' + err.message;
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>

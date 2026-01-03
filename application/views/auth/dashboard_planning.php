@@ -212,67 +212,98 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
     margin-bottom:32px
 }
 .quick-card{
-    background:var(--card-bg);
-    border-radius:16px;
-    padding:28px;
-    box-shadow:var(--shadow-sm);
-    transition:.3s ease;
-    border:2px solid transparent;
+    background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-radius:24px;
+    padding:32px;
+    box-shadow:0 6px 24px rgba(28,100,148,0.1);
+    transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border:2px solid rgba(28,100,148,0.08);
     text-align:center;
-    cursor:pointer
+    cursor:pointer;
+    position:relative;
+    overflow:hidden
+}
+.quick-card::before{
+    content:'';
+    position:absolute;
+    bottom:-50%;
+    left:50%;
+    width:200px;
+    height:200px;
+    background:radial-gradient(circle, rgba(28,100,148,0.06) 0%, transparent 70%);
+    border-radius:50%;
+    transform:translateX(-50%);
+    transition:all 0.5s
+}
+.quick-card:hover::before{
+    bottom:-20%;
+    transform:translateX(-50%) scale(1.2)
 }
 .quick-card:hover{
-    transform:translateY(-6px);
-    box-shadow:var(--shadow-lg);
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 16px 48px rgba(28,100,148,0.18);
     border-color:var(--secondary)
 }
 .quick-icon{
-    font-size:48px;
-    margin-bottom:16px
+    font-size:56px;
+    margin-bottom:18px;
+    transition:transform 0.3s;
+    position:relative;
+    z-index:2
+}
+.quick-card:hover .quick-icon{
+    transform:scale(1.15) rotate(5deg)
 }
 .quick-card h4{
-    font-size:18px;
-    font-weight:700;
+    font-size:19px;
+    font-weight:800;
     color:var(--primary);
-    margin-bottom:10px
+    margin-bottom:12px;
+    position:relative;
+    z-index:2
 }
 .quick-card p{
     font-size:14px;
     color:var(--text-secondary);
-    margin-bottom:16px;
-    line-height:1.5
+    margin-bottom:18px;
+    line-height:1.6;
+    position:relative;
+    z-index:2
 }
 .quick-btn{
     background:linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color:white;
-    padding:10px 24px;
-    border-radius:10px;
+    padding:12px 28px;
+    border-radius:14px;
     text-decoration:none;
     display:inline-block;
-    font-weight:600;
+    font-weight:700;
     font-size:14px;
-    transition:.3s ease
+    transition:all 0.3s;
+    box-shadow:0 4px 16px rgba(28,100,148,0.2);
+    position:relative;
+    z-index:2
 }
 .quick-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 6px 16px rgba(28,100,148,0.3)
+    transform:translateY(-3px);
+    box-shadow:0 8px 24px rgba(28,100,148,0.35)
 }
 
 /* TOOLS GRID */
 .tools-grid{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:18px;
+    gap:20px;
     margin-bottom:40px
 }
 .tool-box{
-    background:var(--card-bg);
-    border-radius:16px;
-    padding:24px;
-    box-shadow:var(--shadow-sm);
-    transition:.3s ease;
+    background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border-radius:24px;
+    padding:32px 28px;
+    box-shadow:0 4px 20px rgba(28,100,148,0.08);
+    transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor:pointer;
-    border:2px solid transparent;
+    border:2px solid rgba(28,100,148,0.08);
     position:relative;
     overflow:hidden
 }
@@ -280,64 +311,150 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
     content:'';
     position:absolute;
     top:0;left:0;right:0;
-    height:4px;
+    height:5px;
     background:linear-gradient(90deg, var(--primary), var(--secondary));
     transform:scaleX(0);
-    transition:.3s ease
+    transition:transform 0.4s
+}
+.tool-box::after{
+    content:'';
+    position:absolute;
+    top:-50%;
+    right:-50%;
+    width:200px;
+    height:200px;
+    background:radial-gradient(circle, rgba(28,100,148,0.05) 0%, transparent 70%);
+    transition:all 0.5s
+}
+.tool-box:hover::after{
+    transform:translate(-20%, 20%)
 }
 .tool-box:hover{
-    transform:translateY(-6px);
-    box-shadow:var(--shadow-lg);
-    border-color:var(--secondary)
+    transform:translateY(-8px) scale(1.02);
+    box-shadow:0 16px 50px rgba(28,100,148,0.15);
+    border-color:var(--secondary);
+    background:linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)
 }
 .tool-box:hover::before{
     transform:scaleX(1)
 }
-.tool-icon{font-size:40px;margin-bottom:14px}
-.tool-title{font-weight:700;margin-bottom:8px;font-size:16px;color:var(--primary)}
-.tool-desc{font-size:13px;color:var(--text-secondary);margin-bottom:12px;line-height:1.4}
+.tool-icon{
+    width:56px;
+    height:56px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    margin-bottom:16px;
+    box-shadow:0 4px 16px rgba(0,0,0,0.1);
+    position:relative;
+    z-index:2;
+    transition:all 0.4s
+}
+.tool-box:hover .tool-icon{
+    transform:scale(1.1) rotate(5deg);
+    box-shadow:0 8px 24px rgba(0,0,0,0.15)
+}
+.tool-icon{background:linear-gradient(135deg, #3b82f6, #1C6494)}
+.tool-title{
+    font-weight:800;
+    margin-bottom:12px;
+    font-size:18px;
+    color:var(--primary);
+    position:relative;
+    z-index:2
+}
+.tool-desc{
+    font-size:14px;
+    color:var(--text-secondary);
+    margin-bottom:16px;
+    line-height:1.6;
+    position:relative;
+    z-index:2
+}
 .tool-box a{
     color:var(--primary);
     text-decoration:none;
-    font-weight:600;
-    font-size:13px;
-    transition:.3s ease
+    font-weight:700;
+    font-size:14px;
+    transition:all 0.3s;
+    position:relative;
+    z-index:2;
+    display:inline-flex;
+    align-items:center;
+    gap:6px
 }
-.tool-box a:hover{
+.tool-box a::after{
+    content:'\2192';
+    transition:transform 0.3s
+}
+.tool-box:hover a{
     color:var(--secondary)
+}
+.tool-box:hover a::after{
+    transform:translateX(4px)
 }
 
 /* TIPS SECTION */
 .tips-container{
     background:linear-gradient(135deg, #fef5e7 0%, #fff9e6 100%);
-    border-radius:16px;
-    padding:28px;
-    margin-bottom:32px;
+    border-radius:24px;
+    padding:32px;
+    margin-bottom:36px;
     border-left:6px solid var(--warning);
-    box-shadow:var(--shadow-sm)
+    box-shadow:0 6px 24px rgba(243,156,18,0.12);
+    position:relative;
+    overflow:hidden
+}
+.tips-container::before{
+    content:'';
+    position:absolute;
+    top:-50%;
+    right:-10%;
+    width:300px;
+    height:300px;
+    background:radial-gradient(circle, rgba(243,156,18,0.08) 0%, transparent 70%);
+    border-radius:50%
 }
 .tips-container h3{
     color:var(--warning);
-    font-size:18px;
-    margin-bottom:16px;
+    font-size:20px;
+    margin-bottom:20px;
     display:flex;
     align-items:center;
-    gap:10px
+    gap:10px;
+    font-weight:800;
+    position:relative;
+    z-index:2
 }
 .tip-item{
     background:white;
-    padding:16px;
-    border-radius:10px;
-    margin-bottom:12px;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:14px;
     display:flex;
     align-items:flex-start;
-    gap:12px;
-    box-shadow:0 2px 6px rgba(243,156,18,0.1)
+    gap:14px;
+    box-shadow:0 3px 10px rgba(243,156,18,0.1);
+    transition:all 0.3s;
+    position:relative;
+    z-index:2;
+    border:2px solid transparent
+}
+.tip-item:hover{
+    transform:translateX(8px);
+    box-shadow:0 6px 20px rgba(243,156,18,0.15);
+    border-color:rgba(243,156,18,0.2)
 }
 .tip-item::before{
     content:'💡';
-    font-size:20px;
-    flex-shrink:0
+    font-size:24px;
+    flex-shrink:0;
+    transition:transform 0.3s
+}
+.tip-item:hover::before{
+    transform:scale(1.2) rotate(10deg)
 }
 .tip-item p{
     margin:0;
@@ -382,7 +499,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
     <div class="header-right">
         <a href="<?= site_url('auth/change_dashboard'); ?>" class="change-dashboard-btn">🔄 Ganti Dashboard</a>
         <div class="avatar"><?= strtoupper(substr($user['nama'], 0, 1)); ?></div>
-        <a href="<?= site_url('auth/logout'); ?>" class="logout-btn">Keluar</a>
+        <a href="<?= site_url('auth/logout'); ?>" class="logout-btn">Logout</a>
     </div>
 </div>
 
@@ -456,59 +573,59 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
     <div class="tools-grid">
         
         <div class="tool-box">
-            <div class="tool-icon">🤖</div>
+            <div class="tool-icon" style="background:linear-gradient(135deg, #06b6d4, #0891b2)">🤖</div>
             <div class="tool-title">AI Business Advisor</div>
-            <div class="tool-desc">Konsultasi gratis untuk ide usaha yang tepat</div>
-            <a href="<?= site_url('advisor'); ?>">Mulai Konsultasi →</a>
+            <div class="tool-desc">Konsultasi gratis dengan AI untuk ide usaha yang tepat</div>
+            <a href="<?= site_url('advisor'); ?>">Mulai Konsultasi</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon">💰</div>
+            <div class="tool-icon" style="background:linear-gradient(135deg, #3b82f6, #1C6494)">💰</div>
             <div class="tool-title">Kalkulator Modal</div>
-            <div class="tool-desc">Hitung kebutuhan modal awal bisnis</div>
-            <a href="<?= site_url('hpp'); ?>">Hitung Modal →</a>
+            <div class="tool-desc">Hitung kebutuhan modal awal untuk memulai bisnis</div>
+            <a href="<?= site_url('hpp'); ?>">Hitung Modal</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon">📊</div>
+            <div class="tool-icon" style="background:linear-gradient(135deg, #8b5cf6, #6d28d9)">📊</div>
             <div class="tool-title">Analisis Pasar</div>
-            <div class="tool-desc">Riset kompetitor dan peluang pasar</div>
-            <a href="<?= site_url('analisis'); ?>">Analisis →</a>
+            <div class="tool-desc">Riset kompetitor dan analisa peluang pasar</div>
+            <a href="<?= site_url('analisis'); ?>">Analisis</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon">🛡️</div>
+            <div class="tool-icon" style="background:linear-gradient(135deg, #f59e0b, #ea580c)">🛡️</div>
             <div class="tool-title">Manajemen Risiko</div>
-            <div class="tool-desc">Identifikasi dan antisipasi risiko bisnis</div>
-            <a href="<?= site_url('risiko'); ?>">Kelola Risiko →</a>
+            <div class="tool-desc">Identifikasi dan antisipasi risiko bisnis sejak dini</div>
+            <a href="<?= site_url('risiko'); ?>">Kelola Risiko</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon">📄</div>
+            <div class="tool-icon" style="background:linear-gradient(135deg, #ec4899, #be185d)">📄</div>
             <div class="tool-title">Template Dokumen</div>
-            <div class="tool-desc">Proposal, invoice, dan dokumen bisnis</div>
-            <a href="#templates">Download Template →</a>
+            <div class="tool-desc">Template proposal, invoice, dan dokumen bisnis lainnya</div>
+            <a href="#templates">Download Template</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon">📚</div>
+            <div class="tool-icon" style="background:linear-gradient(135deg, #10b981, #059669)">📚</div>
             <div class="tool-title">Panduan UMKM</div>
-            <div class="tool-desc">Artikel dan tutorial lengkap</div>
-            <a href="#guides">Baca Panduan →</a>
+            <div class="tool-desc">Artikel dan tutorial lengkap untuk UMKM pemula</div>
+            <a href="#guides">Baca Panduan</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon">💳</div>
+            <div class="tool-icon" style="background:linear-gradient(135deg, #ef4444, #dc2626)">💳</div>
             <div class="tool-title">Simulasi Pinjaman</div>
-            <div class="tool-desc">Hitung cicilan modal usaha</div>
-            <a href="#loan">Simulasi →</a>
+            <div class="tool-desc">Hitung cicilan dan bunga pinjaman modal usaha</div>
+            <a href="#loan">Simulasi</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon">🎓</div>
+            <div class="tool-icon" style="background:linear-gradient(135deg, #14b8a6, #0d9488)">🎓</div>
             <div class="tool-title">Pelatihan Gratis</div>
-            <div class="tool-desc">Webinar dan kursus untuk UMKM</div>
-            <a href="#training">Ikuti Pelatihan →</a>
+            <div class="tool-desc">Webinar, workshop, dan kursus gratis untuk UMKM</div>
+            <a href="#training">Ikuti Pelatihan</a>
         </div>
 
     </div>

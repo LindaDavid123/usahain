@@ -29,6 +29,9 @@ class Auth extends CI_Controller {
                 $user = $this->Auth_model->login($email, $password);
 
                 if ($user) {
+                    // Hapus dashboard_type lama agar user bisa pilih ulang
+                    $this->session->unset_userdata('dashboard_type');
+                    
                     $this->session->set_userdata([
                         'id_user' => $user->id_user,
                         'nama' => $user->nama,
