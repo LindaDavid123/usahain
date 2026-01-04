@@ -58,6 +58,91 @@ $transactions = $transactions ?? [];
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--text-primary)}
 
+/* NAVBAR MODERN */
+.navbar-operasional {
+    width: 100%;
+    background: linear-gradient(90deg, #eaf6ff 0%, #cbe7fa 100%);
+    padding: 18px 0 0 0;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 2px 12px rgba(74,144,226,0.08);
+    margin-bottom: 24px;
+}
+.navbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+}
+.navbar-logo {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1C6494;
+    letter-spacing: -1px;
+}
+.navbar-menu {
+    display: flex;
+    gap: 32px;
+}
+.navbar-link {
+    color: #1C6494;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.2s, color 0.2s;
+}
+.navbar-link.active {
+    font-weight: 700;
+    border-bottom: 2px solid #1C6494;
+}
+.navbar-link:hover {
+    color: #357ABD;
+    border-bottom: 2px solid #357ABD;
+}
+.navbar-actions {
+    display: flex;
+    gap: 12px;
+}
+.navbar-btn {
+    padding: 8px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px rgba(74,144,226,0.08);
+    display: inline-block;
+}
+.navbar-btn-outline {
+    background: #fff;
+    color: #1C6494;
+    border: 2px solid #1C6494;
+}
+.navbar-btn-outline:hover {
+    background: #eaf6ff;
+    color: #357ABD;
+    border-color: #357ABD;
+}
+.navbar-btn-primary {
+    background: #1C6494;
+    color: #fff;
+    border: 2px solid #1C6494;
+}
+.navbar-btn-primary:hover {
+    background: #357ABD;
+    border-color: #357ABD;
+}
+@media (max-width: 900px) {
+    .navbar-inner { flex-direction: column; gap: 12px; padding: 0 12px; }
+    .navbar-menu { gap: 18px; }
+    .navbar-actions { gap: 8px; }
+}
+
 /* HEADER / NAVBAR */
 .header{
     background:linear-gradient(135deg, #4A90E2 0%, #6BA4EC 100%);
@@ -960,14 +1045,14 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 </head>
 
 <body>
-<!-- HEADER -->
-<div class="header">
-    <div>
-        <h3>Dashboard Operasional</h3>
-        <small>Kelola Bisnis yang Sudah Berjalan</small>
-    </div>
-
-    <div class="header-right">
+<!-- NAVBAR MODERN -->
+<div class="navbar-operasional">
+    <div class="navbar-inner">
+        <div>
+            <h3>Dashboard Operasional</h3>
+            <small>Kelola Bisnis yang Sudah Berjalan</small>
+        </div>
+         <div class="header-right">
         <a href="<?= site_url('auth/dashboard_planning'); ?>" class="change-dashboard-btn">Dashboard perencanaan</a>
         <div class="avatar"><?= strtoupper(substr($user['nama'],0,1)); ?></div>
         <a href="<?= site_url('auth/logout'); ?>" 
@@ -978,8 +1063,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     </div>
 </div>
 
-<div class="container">
-
+<div class="container"> 
     <!-- BISNIS -->
     <div class="biz-card">
         <div class="biz-left">
@@ -997,58 +1081,128 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     </div>
 
     <!-- TOOLS -->
+    <div class="section-title">Analisis Produk Otomatis</div>
+    <div class="produk-analisis-card">
+        <div class="produk-analisis-flex">
+            <div class="produk-analisis-info">
+                <h3>Performa Produk Anda</h3>
+                <div id="produkSummary">
+                    <div class="produk-summary-item"><strong>Produk Terlaris:</strong> <span class="produk-terlaris">Nasi Ayam Geprek</span> <span class="produk-summary-meta">(150 terjual)</span></div>
+                    <div class="produk-summary-item"><strong>Profit Tertinggi:</strong> <span class="produk-profit">Es Teh Manis</span> <span class="produk-summary-meta">(Margin 70%)</span></div>
+                    <div class="produk-summary-item"><strong>Perlu Perhatian:</strong> <span class="produk-perhatian">Gado-gado</span> <span class="produk-summary-meta">(Penjualan menurun)</span></div>
+                </div>
+                <ul id="produkRekomendasi" class="produk-rekomendasi">
+                    <li>Tingkatkan stok Nasi Ayam Geprek karena permintaan tinggi</li>
+                    <li>Promosikan Es Teh Manis lebih gencar (margin tinggi)</li>
+                    <li>Evaluasi resep atau harga Gado-gado</li>
+                    <li>Pertimbangkan bundle promo untuk produk slow-moving</li>
+                </ul>
+            </div>
+            <div class="produk-analisis-chart">
+                <canvas id="produkChart" height="180"></canvas>
+            </div>
+        </div>
+    </div>
+    <style>
+    .produk-analisis-card {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(28,100,148,0.08);
+        border-radius: 18px;
+        padding: 24px 18px;
+        margin-bottom: 24px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        z-index: 2;
+    }
+    .produk-analisis-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+    .produk-analisis-info {
+        flex: 1 1 260px;
+        min-width: 220px;
+    }
+    .produk-analisis-info h3 {
+        font-size: 20px;
+        color: #1C6494;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    .produk-summary-item {
+        margin-bottom: 8px;
+        font-size: 15px;
+        color: #2c3e50;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .produk-terlaris { color: #357ABD; font-weight: 700; }
+    .produk-profit { color: #48C9B0; font-weight: 700; }
+    .produk-perhatian { color: #e74c3c; font-weight: 700; }
+    .produk-summary-meta { color: #7f8c8d; font-size: 13px; font-weight: 500; }
+    .produk-rekomendasi {
+        margin-top: 14px;
+        padding-left: 18px;
+        color: #1C6494;
+        font-size: 13px;
+        list-style: disc inside;
+    }
+    .produk-rekomendasi li { margin-bottom: 5px; }
+    .produk-analisis-chart {
+        flex: 1 1 220px;
+        min-width: 180px;
+        max-width: 320px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    @media (max-width: 900px) {
+        .produk-analisis-card { max-width: 98vw; padding: 12px 4vw; }
+        .produk-analisis-flex { flex-direction: column; gap: 12px; }
+        .produk-analisis-chart { max-width: 100%; min-width: 0; }
+    }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+    // Data dummy produk dan tren
+    const produkData = {
+        "Nasi Ayam Geprek": [120, 130, 140, 150, 160, 170, 180],
+        "Es Teh Manis": [80, 85, 90, 95, 100, 110, 120],
+        "Gado-gado": [60, 58, 55, 53, 50, 48, 45]
+    };
+    function renderProdukChart() {
+        const ctx = document.getElementById('produkChart').getContext('2d');
+        let labels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+        let datasets = Object.keys(produkData).map((produk, idx) => ({
+            label: produk,
+            data: produkData[produk],
+            borderColor: ["#1C6494", "#48C9B0", "#e74c3c"][idx],
+            backgroundColor: ["rgba(28,100,148,0.08)", "rgba(72,201,176,0.08)", "rgba(231,76,60,0.08)"][idx],
+            borderWidth: 3,
+            tension: 0.4,
+            fill: true
+        }));
+        new Chart(ctx, {
+            type: 'line',
+            data: { labels, datasets },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: true } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+    window.addEventListener('DOMContentLoaded', renderProdukChart);
+    </script>
     <div class="section-title">Tools Bisnis Lainnya</div>
     <div class="tools-grid">
-        
-        <!-- AI Advisor -->
-        <div class="tool-box">
-            <div class="tool-icon advisor">🤖</div>
-            <div class="tool-title">AI Advisor</div>
-            <div class="tool-desc">Konsultasi strategi bisnis dengan AI yang cerdas dan responsif</div>
-            <a href="<?= site_url('advisor'); ?>">Coba Sekarang →</a>
-        </div>
-
-        <!-- Kalkulator HPP -->
-        <div class="tool-box">
-            <div class="tool-icon hpp">🧮</div>
-            <div class="tool-title">Kalkulator HPP</div>
-            <div class="tool-desc">Hitung harga pokok produksi dan tentukan margin keuntungan optimal</div>
-            <a href="<?= site_url('hpp'); ?>">Hitung HPP →</a>
-        </div>
-
-        <!-- Pencatatan Keuangan -->
-        <div class="tool-box">
-            <div class="tool-icon keuangan">💰</div>
-            <div class="tool-title">Pencatatan Keuangan</div>
-            <div class="tool-desc">Catat & kelola pemasukan serta pengeluaran bisnis dengan mudah</div>
-            <a href="<?= site_url('keuangan'); ?>">Kelola Keuangan →</a>
-        </div>
-
-        <!-- Manajemen Risiko -->
-        <div class="tool-box">
-            <div class="tool-icon risiko">⚠️</div>
-            <div class="tool-title">Manajemen Risiko</div>
-            <div class="tool-desc">Identifikasi, evaluasi & mitigasi risiko usaha secara sistematis</div>
-            <a href="<?= site_url('risiko'); ?>">Kelola Risiko →</a>
-        </div>
-
-        <!-- Analisis Produk -->
-        <div class="tool-box">
-            <div class="tool-icon analisis">📊</div>
-            <div class="tool-title">Analisis Produk</div>
-            <div class="tool-desc">Analisa mendalam performa dan profitabilitas produk Anda</div>
-            <a href="<?= site_url('analisis'); ?>">Mulai Analisis →</a>
-        </div>
-
-        <!-- Rekomendasi Informasi Bisnis -->
-        <div class="tool-box">
-            <div class="tool-icon info">💡</div>
-            <div class="tool-title">Rekomendasi Informasi Bisnis</div>
-            <div class="tool-desc">Dapatkan tips, tren, dan informasi UMKM terkini untuk sukses</div>
-            <a href="<?= site_url('advisor/rekomendasi'); ?>">Lihat Info →</a>
-        </div>
-
-    </div>
+        <!-- ...existing code... -->
 
     <!-- AKSI CEPAT -->
     <div class="section-title">⚡ Aksi Cepat</div>

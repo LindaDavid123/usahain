@@ -31,14 +31,13 @@ class Auth extends CI_Controller {
                 if ($user) {
                     // Hapus dashboard_type lama agar user bisa pilih ulang
                     $this->session->unset_userdata('dashboard_type');
-                    
                     $this->session->set_userdata([
                         'id_user' => $user->id_user,
                         'nama' => $user->nama,
                         'email' => $user->email,
                         'role' => $user->role
                     ]);
-                    redirect('auth/dashboard');
+                    redirect('auth/dashboard_selection');
                 } else {
                     $data['error'] = 'Email atau password salah.';
                 }
@@ -124,7 +123,7 @@ class Auth extends CI_Controller {
         if (!$dashboard_type) {
             // Jika belum memilih, tampilkan halaman pemilihan
             $data['user'] = $this->session->userdata();
-            $this->load->view('auth/dashboard', $data);
+            $this->load->view('auth/dashboard_selection', $data);
             return;
         }
 
@@ -134,7 +133,7 @@ class Auth extends CI_Controller {
         if ($dashboard_type === 'planning') {
             $this->load->view('auth/dashboard_planning', $data);
         } else {
-            $this->load->view('auth/dashboard_operational', $data);
+            $this->load->view('auth/dashboard_operasional', $data);
         }
     }
 

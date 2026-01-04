@@ -67,3 +67,8 @@ $route['user/dashboard'] = 'user/dashboard';
 $route['user/view/(:num)'] = 'user/view/$1';
 $route['user/edit/(:num)'] = 'user/edit/$1';
 $route['user/delete/(:num)'] = 'user/delete/$1';
+
+// Auth routes
+$route['auth/login'] = 'auth/login';
+$route['auth/register'] = 'auth/register';
+$route['auth/dashboard'] = 'auth/dashboard';

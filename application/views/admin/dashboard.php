@@ -1,166 +1,198 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Admin Dashboard - UMKM Management</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background-color: #ecf0f1; }
-        nav { background-color: #2c3e50; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
-        nav a { color: white; margin-right: 15px; text-decoration: none; }
-        .nav-right { display: flex; align-items: center; }
-        .container { max-width: 1400px; margin: 20px auto; padding: 0 20px; }
-        h1 { margin-bottom: 30px; color: #2c3e50; }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 4px solid #3498db; }
-        .stat-card.revenue { border-left-color: #27ae60; }
-        .stat-card.income { border-left-color: #f39c12; }
-        .stat-card.expenses { border-left-color: #e74c3c; }
-        .stat-label { color: #7f8c8d; font-size: 14px; margin-bottom: 8px; }
-        .stat-value { font-size: 28px; font-weight: bold; color: #2c3e50; }
-        .stat-subtext { color: #95a5a6; font-size: 12px; margin-top: 5px; }
-        .card { background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px; }
-        .card-title { font-size: 18px; font-weight: bold; color: #2c3e50; margin-bottom: 15px; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ecf0f1; }
-        th { background-color: #f8f9fa; font-weight: bold; color: #2c3e50; }
-        .btn { display: inline-block; padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 12px; }
-        .btn-primary { background-color: #3498db; color: white; }
-        .btn-info { background-color: #17a2b8; color: white; }
-        .btn-success { background-color: #27ae60; color: white; }
-        .btn:hover { opacity: 0.8; }
-        .menu { margin-bottom: 20px; }
-        .menu a { display: inline-block; padding: 10px 15px; margin-right: 10px; background-color: #34495e; color: white; text-decoration: none; border-radius: 4px; }
-        .menu a:hover { background-color: #2c3e50; }
-        .admin-badge { background-color: #f39c12; color: white; padding: 4px 8px; border-radius: 3px; font-size: 11px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin - Usahain</title>
+
+<style>
+:root{
+    --primary:#4A90E2;
+    --secondary:#7EC8E3;
+    --bg:#F5F8FA;
+    --card:#FFFFFF;
+    --text:#2D3748;
+    --muted:#718096;
+    --shadow:0 4px 12px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+/* HEADER */
+.header{
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+    color:#fff;
+    padding:30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.header h1{font-size:28px}
+.avatar{
+    width:56px;height:56px;
+    border-radius:50%;
+    background:#fff;
+    color:var(--primary);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:22px;
+}
+
+/* TABS */
+.tabs{
+    max-width:900px;
+    margin:25px auto;
+    display:flex;
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+.tab{
+    flex:1;
+    padding:16px;
+    text-align:center;
+    font-weight:600;
+    color:var(--muted);
+}
+.tab.active{
+    background:#EDF2F7;
+    color:var(--primary);
+}
+
+/* CARDS */
+.container{max-width:1200px;margin:auto;padding:0 20px}
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:20px;
+}
+.card{
+    background:var(--card);
+    border-radius:16px;
+    padding:22px;
+    box-shadow:var(--shadow);
+}
+.card h3{color:var(--muted);font-size:15px}
+.card .value{font-size:28px;font-weight:800;margin-top:8px}
+.green{background:#E6F9ED;color:#2FB12F}
+.blue{background:#EAF2FF;color:#4A90E2}
+.purple{background:#F3E8FF;color:#B832E6}
+.orange{background:#FFF5E6;color:#E67E22}
+
+/* SECTION */
+.section{
+    margin-top:30px;
+    background:#fff;
+    border-radius:16px;
+    padding:24px;
+    box-shadow:var(--shadow);
+}
+.section h2{
+    font-size:18px;
+    margin-bottom:16px;
+    color:var(--primary);
+}
+
+/* BAR */
+.bar-bg{
+    background:#EDF2F7;
+    border-radius:10px;
+    height:14px;
+    overflow:hidden;
+}
+.bar{
+    height:100%;
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+}
+.row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:12px;
+}
+.row span{flex:1}
+.small{color:var(--muted);font-size:14px}
+</style>
 </head>
+
 <body>
-    <nav>
-        <div>
-            <a href="<?= site_url('admin/dashboard'); ?>">📊 Dashboard</a>
-            <a href="<?= site_url('admin/users'); ?>">👥 Users</a>
-            <a href="<?= site_url('admin/subscriptions'); ?>">💳 Subscriptions</a>
-            <a href="<?= site_url('admin/reports'); ?>">📈 Reports</a>
-        </div>
-        <div class="nav-right">
-            <span class="admin-badge">ADMIN</span>
-            <a href="<?= site_url('auth/logout'); ?>" style="margin-right: 0;">Logout (<?= $this->session->userdata('nama'); ?>)</a>
-        </div>
-    </nav>
 
-    <div class="container">
-        <h1>📊 Admin Dashboard - Pusat Kontrol UMKM</h1>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Total Pengguna</div>
-                <div class="stat-value"><?= $total_users; ?></div>
-                <div class="stat-subtext">+<?= $new_users_this_month; ?> bulan ini</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-label">Langganan Aktif</div>
-                <div class="stat-value"><?= $active_subscriptions; ?></div>
-                <div class="stat-subtext">dari <?= $total_subscriptions; ?> total</div>
-            </div>
-
-            <div class="stat-card revenue">
-                <div class="stat-label">Estimasi Revenue Bulanan</div>
-                <div class="stat-value">Rp <?= number_format($estimated_revenue, 0, ',', '.'); ?></div>
-                <div class="stat-subtext">dari langganan aktif</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-label">Total Produk Teranalisis</div>
-                <div class="stat-value"><?= $total_products; ?></div>
-                <div class="stat-subtext">di semua akun</div>
-            </div>
-
-            <div class="stat-card income">
-                <div class="stat-label">Total Pemasukan</div>
-                <div class="stat-value">Rp <?= number_format($total_income, 0, ',', '.'); ?></div>
-                <div class="stat-subtext">semua pengguna</div>
-            </div>
-
-            <div class="stat-card expenses">
-                <div class="stat-label">Total Pengeluaran</div>
-                <div class="stat-value">Rp <?= number_format($total_expenses, 0, ',', '.'); ?></div>
-                <div class="stat-subtext">semua pengguna</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">💰 Ringkasan Keuangan Keseluruhan</div>
-            <table>
-                <tr>
-                    <th>Metrik</th>
-                    <th>Nilai</th>
-                    <th>Status</th>
-                </tr>
-                <tr>
-                    <td>Total Pemasukan</td>
-                    <td><strong>Rp <?= number_format($total_income, 0, ',', '.'); ?></strong></td>
-                    <td><span class="btn btn-success">✓ Aktif</span></td>
-                </tr>
-                <tr>
-                    <td>Total Pengeluaran</td>
-                    <td><strong>Rp <?= number_format($total_expenses, 0, ',', '.'); ?></strong></td>
-                    <td><span class="btn btn-primary">💾 Tercatat</span></td>
-                </tr>
-                <tr>
-                    <td>Net Balance (Profit/Loss)</td>
-                    <td><strong style="color: <?= $net_balance >= 0 ? '#27ae60' : '#e74c3c'; ?>;">Rp <?= number_format($net_balance, 0, ',', '.'); ?></strong></td>
-                    <td><span class="btn btn-info">📊 Analisis</span></td>
-                </tr>
-                <tr>
-                    <td>Total Transaksi Tercatat</td>
-                    <td><strong><?= $total_transactions; ?></strong></td>
-                    <td><span class="btn btn-success">✓ Update</span></td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="card">
-            <div class="card-title">📋 Transaksi Keuangan Terbaru (10 Terakhir)</div>
-            <?php if (empty($recent_transactions)) : ?>
-                <p style="text-align: center; color: #7f8c8d; padding: 20px;">Belum ada transaksi tercatat.</p>
-            <?php else : ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID Transaksi</th>
-                            <th>ID User</th>
-                            <th>Kategori</th>
-                            <th>Jenis</th>
-                            <th>Nominal</th>
-                            <th>Tanggal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($recent_transactions as $trans) : ?>
-                        <tr>
-                            <td><?= $trans->id_transaksi; ?></td>
-                            <td><?= $trans->id_user; ?></td>
-                            <td><?= ucfirst($trans->kategori); ?></td>
-                            <td>
-                                <span class="btn <?= $trans->jenis === 'pemasukan' ? 'btn-success' : 'btn-primary'; ?>" style="font-size: 11px;">
-                                    <?= ucfirst($trans->jenis); ?>
-                                </span>
-                            </td>
-                            <td><strong>Rp <?= number_format($trans->nominal, 0, ',', '.'); ?></strong></td>
-                            <td><?= date('d M Y', strtotime($trans->tanggal)); ?></td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php endif; ?>
-        </div>
-
-        <div style="margin-bottom: 20px; text-align: center; color: #7f8c8d; font-size: 12px;">
-            <p>Dashboard diperbarui pada: <?= date('d M Y H:i:s'); ?></p>
-            <p>Akses menu di atas untuk melihat detail pengguna, langganan, dan laporan lengkap.</p>
-        </div>
+<!-- HEADER -->
+<div class="header">
+    <div>
+        <h1>Dashboard Admin</h1>
+        <div>Usahain Management System</div>
     </div>
+    <div class="avatar">
+        <?= strtoupper(substr($this->session->userdata('nama'),0,1)); ?>
+    </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+    <div class="tab active">📊 Overview</div>
+    <div class="tab active">👥 Pengguna</div>
+    <div class="tab active">🧩 Fitur</div>
+    <div class="tab active">⚙️ Pengaturan</div>
+</div>
+
+<div class="container">
+
+<!-- STAT CARDS -->
+<div class="cards">
+    <div class="card green">
+        <h3>Total Pengguna</h3>
+        <div class="value"><?= isset($total_users) ? $total_users : 0 ?></div>
+        <div class="small">+<?= isset($new_users) ? $new_users : 0 ?> bulan ini</div>
+    </div>
+
+    <div class="card blue">
+        <h3>Pengguna Aktif</h3>
+        <div class="value"><?= isset($active_users) ? $active_users : 0 ?></div>
+        <div class="small">Engagement rate</div>
+    </div>
+
+    <div class="card purple">
+        <h3>Premium Users</h3>
+        <div class="value"><?= isset($premium_users) ? $premium_users : 0 ?></div>
+        <div class="small">Conversion</div>
+    </div>
+
+    <div class="card orange">
+        <h3>Revenue Bulan Ini</h3>
+        <div class="value">Rp <?= number_format(isset($revenue) ? $revenue : 0,0,',','.') ?></div>
+        <div class="small">Dari subscription</div>
+    </div>
+</div>
+
+<!-- FEATURE USAGE -->
+<div class="section">
+<h2>📈 Penggunaan Fitur (30 Hari)</h2>
+
+<?php if (!empty($feature_usage) && is_array($feature_usage)): foreach($feature_usage as $f): ?>
+<div class="row">
+    <span><?= $f['name'] ?></span>
+    <div class="bar-bg">
+        <div class="bar" style="width:<?= $f['percent'] ?>%"></div>
+    </div>
+    <span class="small"><?= $f['count'] ?>x</span>
+</div>
+
+<?php endforeach; else: ?>
+<div class="small" style="color:#aaa">Tidak ada data penggunaan fitur.</div>
+<?php endif; ?>
+
+</div>
+
+</div>
+
 </body>
 </html>
