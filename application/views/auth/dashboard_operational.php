@@ -1026,7 +1026,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
             <div class="tool-icon info">💡</div>
             <div class="tool-title">Rekomendasi Informasi Bisnis</div>
             <div class="tool-desc">Dapatkan tips, tren, dan informasi UMKM terkini untuk sukses</div>
-            <a href="<?= site_url('advisor/rekomendasi'); ?>">Lihat Info →</a>
+            <a href="<?= site_url('info'); ?>">Lihat Info →</a>
         </div>
 
     </div>

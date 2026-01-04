@@ -42,142 +42,207 @@ $user = array_merge([
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
 
-/* HEADER */
-.header{
-    background:linear-gradient(135deg, #FFA76C 0%, #FF8C4B 100%);
-    padding:20px 40px;
-    color:#fff;
+/* === NAVBAR PICKANS STYLE === */
+.navbar-main{
+    background:#fff;
+    border-bottom:1px solid #e5e7eb;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 1px 3px rgba(0,0,0,0.08);
+}
+.navbar-container{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 24px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    box-shadow:0 2px 12px rgba(255,167,108,0.15);
-    position:relative;
-    overflow:hidden;
-    border-bottom:1px solid rgba(255,255,255,0.12)
+    height:70px;
+    gap:40px;
 }
-.header::before{
-    content:'';
-    position:absolute;
-    top:-60%;
-    right:-8%;
-    width:450px;
-    height:450px;
-    background:radial-gradient(circle, rgba(255,255,255,0.09) 0%, transparent 70%);
-    border-radius:50%;
-    pointer-events:none
-}
-.header-left{
+.navbar-left{
     display:flex;
     align-items:center;
-    gap:16px;
-    position:relative;
-    z-index:2
+    flex-shrink:0;
 }
-.header-icon{
-    width:48px;
-    height:48px;
-    border-radius:14px;
-    background:rgba(255,255,255,0.20);
-    backdrop-filter:blur(10px);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:24px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.10);
-    border:1px solid rgba(255,255,255,0.25)
-}
-.header-title h3{
-    font-size:19px;
-    font-weight:700;
-    margin-bottom:4px;
-    letter-spacing:-0.3px;
-    text-shadow:0 1px 2px rgba(0,0,0,0.08)
-}
-.header-title small{
-    opacity:.90;
-    font-size:13px;
-    font-weight:500;
-    display:flex;
-    align-items:center;
-    gap:6px
-}
-.header-title small::before{
-    content:'✨';
-    font-size:12px
-}
-.header-right{
+.navbar-brand{
     display:flex;
     align-items:center;
     gap:12px;
-    position:relative;
-    z-index:2
+    text-decoration:none;
+    transition:all 0.3s;
 }
-.avatar{
-    width:44px;
-    height:44px;
+.navbar-brand:hover{
+    opacity:0.8;
+}
+.navbar-logo{
+    width:45px;
+    height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.navbar-logo img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+.navbar-title{
+    font-size:22px;
+    font-weight:800;
+    color:#1c6494;
+    letter-spacing:-0.5px;
+}
+.navbar-center{
+    display:flex;
+    gap:32px;
+    align-items:center;
+    flex:1;
+    justify-content:center;
+}
+.navbar-link{
+    color:#4b5563;
+    text-decoration:none;
+    font-weight:500;
+    font-size:14px;
+    transition:all 0.3s;
+    position:relative;
+    padding:6px 0;
+}
+.navbar-link:hover{
+    color:#1c6494;
+}
+.navbar-link.active{
+    color:#1c6494;
+    font-weight:700;
+}
+.navbar-link.active::after{
+    content:'';
+    position:absolute;
+    bottom:-8px;
+    left:0;
+    right:0;
+    height:3px;
+    background:#1c6494;
+    border-radius:2px;
+}
+.navbar-right{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-shrink:0;
+}
+.navbar-btn{
+    padding:10px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+    transition:all 0.3s;
+    border:none;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+}
+.navbar-btn.btn-secondary{
+    background:#f3f4f6;
+    color:#374151;
+}
+.navbar-btn.btn-secondary:hover{
+    background:#e5e7eb;
+    transform:translateY(-2px);
+}
+.navbar-btn.btn-logout{
+    background:#dc2626;
+    color:#fff;
+}
+.navbar-btn.btn-logout:hover{
+    background:#b91c1c;
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(220,38,38,0.3);
+}
+.navbar-avatar{
+    width:40px;
+    height:40px;
     border-radius:50%;
-    background:linear-gradient(135deg, #FFFFFF 0%, #FFF5E6 100%);
-    color:var(--warning-dark);
+    background:linear-gradient(135deg,#4a90e2 0%,#6ba4ec 100%);
+    color:#fff;
     display:flex;
     align-items:center;
     justify-content:center;
     font-weight:700;
     font-size:16px;
-    box-shadow:0 3px 10px rgba(0,0,0,0.12);
-    border:2px solid rgba(255,255,255,0.35);
-    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1)
+    flex-shrink:0;
 }
-.avatar:hover{
-    transform:scale(1.08) rotate(5deg);
-    box-shadow:0 5px 15px rgba(0,0,0,0.18)
+
+/* RESPONSIVE NAVBAR */
+@media(max-width:1024px){
+    .navbar-container{
+        gap:24px;
+    }
+    .navbar-center{
+        gap:20px;
+    }
+    .navbar-link{
+        font-size:13px;
+    }
 }
-.logout-btn{
-    background:rgba(255,255,255,.22);
-    color:#fff;
-    padding:10px 22px;
-    border-radius:28px;
-    font-size:13px;
-    text-decoration:none;
-    font-weight:600;
-    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border:1px solid rgba(255,255,255,0.35);
-    backdrop-filter:blur(10px);
-    display:inline-flex;
-    align-items:center;
-    gap:8px
+@media(max-width:768px){
+    .navbar-container{
+        height:auto;
+        padding:12px 16px;
+        flex-wrap:wrap;
+        gap:12px;
+    }
+    .navbar-center{
+        gap:16px;
+        order:3;
+        width:100%;
+        justify-content:flex-start;
+        flex:none;
+    }
+    .navbar-link{
+        font-size:12px;
+    }
+    .navbar-right{
+        gap:8px;
+    }
+    .navbar-btn{
+        padding:8px 14px;
+        font-size:12px;
+    }
+    .navbar-title{
+        font-size:18px;
+    }
 }
-.logout-btn::before{
-    content:'🚪';
-    font-size:14px
+@media(max-width:576px){
+    .navbar-container{
+        padding:10px 12px;
+    }
+    .navbar-logo{
+        font-size:24px;
+    }
+    .navbar-title{
+        font-size:16px;
+    }
+    .navbar-center{
+        gap:12px;
+    }
+    .navbar-link{
+        font-size:11px;
+    }
+    .navbar-btn{
+        padding:6px 12px;
+        font-size:11px;
+    }
+    .navbar-avatar{
+        width:36px;
+        height:36px;
+        font-size:14px;
+    }
 }
-.logout-btn:hover{
-    background:rgba(255,255,255,.35);
-    border-color:rgba(255,255,255,0.55);
-    transform:translateY(-2px);
-    box-shadow:0 4px 14px rgba(0,0,0,0.15)
-}
-.change-dashboard-btn{
-    background:rgba(255,255,255,.18);
-    color:#fff;
-    padding:9px 18px;
-    border-radius:24px;
-    font-size:12px;
-    text-decoration:none;
-    font-weight:600;
-    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border:1px solid rgba(255,255,255,0.30);
-    backdrop-filter:blur(10px);
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-    white-space:nowrap
-}
-.change-dashboard-btn::before{
-    content:'🔄';
-    font-size:12px
-}
-.change-dashboard-btn:hover{
-    background:rgba(255,255,255,.32);
     transform:translateY(-2px);
     border-color:rgba(255,255,255,0.5);
     box-shadow:0 3px 10px rgba(0,0,0,0.12)
@@ -589,24 +654,42 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--bg);color:var(--text)}
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="header">
-    <div class="header-left">
-        <div class="header-icon">🚀</div>
-        <div class="header-title">
-            <h3>Dashboard Perencanaan</h3>
-            <small>Mulai perjalanan bisnis Anda</small>
+<!-- NAVBAR - PICKANS STYLE -->
+<nav class="navbar-main">
+    <div class="navbar-container">
+        <!-- Left: Logo & Brand -->
+        <div class="navbar-left">
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-brand">
+                <span class="navbar-logo"><img src="<?= base_url('assets/logo_usahain.png'); ?>" alt="Usahain"></span>
+                <span class="navbar-title">Usahain</span>
+            </a>
+        </div>
+
+        <!-- Center: Navigation Menu -->
+        <div class="navbar-center">
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-link active">Dashboard</a>
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-link">Fitur</a>
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-link">Bantuan</a>
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-link">Kontak</a>
+        </div>
+
+        <!-- Right: Action Buttons -->
+        <div class="navbar-right">
+            <a href="<?= site_url('auth/change_dashboard'); ?>" class="navbar-btn btn-secondary">🔄 Operasional</a>
+            <div class="navbar-avatar" title="<?= htmlspecialchars($user['nama']); ?>">
+                <?= strtoupper(substr($user['nama'], 0, 1)); ?>
+            </div>
+            <a href="<?= site_url('auth/logout'); ?>" 
+               class="navbar-btn btn-logout"
+               onclick="return confirm('Yakin ingin logout?')">
+               Logout
+            </a>
         </div>
     </div>
-    <div class="header-right">
-        <a href="<?= site_url('auth/dashboard_operational'); ?>" class="change-dashboard-btn">Dashboard Operasional</a>
-        <div class="avatar"><?= strtoupper(substr($user['nama'], 0, 1)); ?></div>
-        <a href="<?= site_url('auth/logout'); ?>" class="logout-btn">Logout</a>
-    </div>
-</div>
 
-<div class="container">
-
+    <div class="container">
+</nav>
+   
     <!-- WELCOME BANNER -->
     <div class="welcome-banner">
         <h1>Selamat datang, <?= htmlspecialchars($user['nama']); ?>!</h1>

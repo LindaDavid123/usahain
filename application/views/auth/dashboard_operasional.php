@@ -58,180 +58,206 @@ $transactions = $transactions ?? [];
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--text-primary)}
 
-/* NAVBAR MODERN */
-.navbar-operasional {
-    width: 100%;
-    background: linear-gradient(90deg, #eaf6ff 0%, #cbe7fa 100%);
-    padding: 18px 0 0 0;
-    border-radius: 0 0 24px 24px;
-    box-shadow: 0 2px 12px rgba(74,144,226,0.08);
-    margin-bottom: 24px;
+/* === NAVBAR PICKANS STYLE === */
+.navbar-main{
+    background:#fff;
+    border-bottom:1px solid #e5e7eb;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 1px 3px rgba(0,0,0,0.08);
 }
-.navbar-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 32px;
-}
-.navbar-logo {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #1C6494;
-    letter-spacing: -1px;
-}
-.navbar-menu {
-    display: flex;
-    gap: 32px;
-}
-.navbar-link {
-    color: #1C6494;
-    font-weight: 500;
-    font-size: 1rem;
-    text-decoration: none;
-    padding: 6px 0;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.2s, color 0.2s;
-}
-.navbar-link.active {
-    font-weight: 700;
-    border-bottom: 2px solid #1C6494;
-}
-.navbar-link:hover {
-    color: #357ABD;
-    border-bottom: 2px solid #357ABD;
-}
-.navbar-actions {
-    display: flex;
-    gap: 12px;
-}
-.navbar-btn {
-    padding: 8px 22px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-    box-shadow: 0 2px 8px rgba(74,144,226,0.08);
-    display: inline-block;
-}
-.navbar-btn-outline {
-    background: #fff;
-    color: #1C6494;
-    border: 2px solid #1C6494;
-}
-.navbar-btn-outline:hover {
-    background: #eaf6ff;
-    color: #357ABD;
-    border-color: #357ABD;
-}
-.navbar-btn-primary {
-    background: #1C6494;
-    color: #fff;
-    border: 2px solid #1C6494;
-}
-.navbar-btn-primary:hover {
-    background: #357ABD;
-    border-color: #357ABD;
-}
-@media (max-width: 900px) {
-    .navbar-inner { flex-direction: column; gap: 12px; padding: 0 12px; }
-    .navbar-menu { gap: 18px; }
-    .navbar-actions { gap: 8px; }
-}
-
-/* HEADER / NAVBAR */
-.header{
-    background:linear-gradient(135deg, #4A90E2 0%, #6BA4EC 100%);
-    padding:28px 36px;
-    color:#fff;
+.navbar-container{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 24px;
     display:flex;
     justify-content:space-between;
     align-items:center;
-    box-shadow:0 2px 12px rgba(74,144,226,0.12);
-    position:relative;
-    overflow:hidden;
-    border-bottom:1px solid rgba(255,255,255,0.15)
+    height:70px;
+    gap:40px;
 }
-.header::before{
-    content:'';
-    position:absolute;
-    top:-60%;
-    right:-8%;
-    width:450px;
-    height:450px;
-    background:radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
-    border-radius:50%
-}
-.header h3{
-    font-size:21px;
-    font-weight:700;
-    position:relative;
-    z-index:2;
-    letter-spacing:-0.3px
-}
-.header small{
-    opacity:.92;
-    font-size:13px;
-    position:relative;
-    z-index:2;
-    font-weight:500
-}
-
-.header-right{
+.navbar-left{
     display:flex;
     align-items:center;
-    gap:14px
+    flex-shrink:0;
 }
-
-.avatar{
-    width:46px;height:46px;border-radius:50%;
-    background:var(--card-bg);
-    color:var(--primary-color);
-    display:flex;align-items:center;justify-content:center;
+.navbar-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    transition:all 0.3s;
+}
+.navbar-brand:hover{
+    opacity:0.8;
+}
+.navbar-logo{
+    width:45px;
+    height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.navbar-logo img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+.navbar-title{
+    font-size:22px;
+    font-weight:800;
+    color:#1c6494;
+    letter-spacing:-0.5px;
+}
+.navbar-center{
+    display:flex;
+    gap:32px;
+    align-items:center;
+    flex:1;
+    justify-content:center;
+}
+.navbar-link{
+    color:#4b5563;
+    text-decoration:none;
+    font-weight:500;
+    font-size:14px;
+    transition:all 0.3s;
+    position:relative;
+    padding:6px 0;
+}
+.navbar-link:hover{
+    color:#1c6494;
+}
+.navbar-link.active{
+    color:#1c6494;
     font-weight:700;
-    box-shadow:var(--shadow-sm);
-    border:2px solid rgba(255,255,255,0.3)
 }
-
-.logout-btn{
-    background:rgba(255,255,255,.20);
-    color:#fff;
+.navbar-link.active::after{
+    content:'';
+    position:absolute;
+    bottom:-8px;
+    left:0;
+    right:0;
+    height:3px;
+    background:#1c6494;
+    border-radius:2px;
+}
+.navbar-right{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-shrink:0;
+}
+.navbar-btn{
     padding:10px 20px;
-    border-radius:28px;
-    font-size:13px;
+    border-radius:8px;
     text-decoration:none;
     font-weight:600;
-    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border:1px solid rgba(255,255,255,0.35);
-    backdrop-filter:blur(10px)
+    font-size:14px;
+    transition:all 0.3s;
+    border:none;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
 }
-.logout-btn:hover{
-    background:rgba(255,255,255,.32);
-    border-color:rgba(255,255,255,0.55);
+.navbar-btn.btn-secondary{
+    background:#f3f4f6;
+    color:#374151;
+}
+.navbar-btn.btn-secondary:hover{
+    background:#e5e7eb;
     transform:translateY(-2px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.12)
+}
+.navbar-btn.btn-logout{
+    background:#dc2626;
+    color:#fff;
+}
+.navbar-btn.btn-logout:hover{
+    background:#b91c1c;
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(220,38,38,0.3);
+}
+.navbar-avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#4a90e2 0%,#6ba4ec 100%);
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:16px;
+    flex-shrink:0;
 }
 
-.change-dashboard-btn{
-    background:rgba(255,255,255,.18);
-    color:#fff;
-    padding:9px 18px;
-    border-radius:24px;
-    font-size:12px;
-    text-decoration:none;
-    font-weight:600;
-    transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border:1px solid rgba(255,255,255,0.3);
-    backdrop-filter:blur(10px)
+/* RESPONSIVE NAVBAR */
+@media(max-width:1024px){
+    .navbar-container{
+        gap:24px;
+    }
+    .navbar-center{
+        gap:20px;
+    }
+    .navbar-link{
+        font-size:13px;
+    }
 }
-.change-dashboard-btn:hover{
-    background:rgba(255,255,255,.32);
-    transform:translateY(-2px);
-    border-color:rgba(255,255,255,0.5)
+@media(max-width:768px){
+    .navbar-container{
+        height:auto;
+        padding:12px 16px;
+        flex-wrap:wrap;
+        gap:12px;
+    }
+    .navbar-center{
+        gap:16px;
+        order:3;
+        width:100%;
+        justify-content:flex-start;
+        flex:none;
+    }
+    .navbar-link{
+        font-size:12px;
+    }
+    .navbar-right{
+        gap:8px;
+    }
+    .navbar-btn{
+        padding:8px 14px;
+        font-size:12px;
+    }
+    .navbar-title{
+        font-size:18px;
+    }
+}
+@media(max-width:576px){
+    .navbar-container{
+        padding:10px 12px;
+    }
+    .navbar-logo{
+        font-size:24px;
+    }
+    .navbar-title{
+        font-size:16px;
+    }
+    .navbar-center{
+        gap:12px;
+    }
+    .navbar-link{
+        font-size:11px;
+    }
+    .navbar-btn{
+        padding:6px 12px;
+        font-size:11px;
+    }
+    .navbar-avatar{
+        width:36px;
+        height:36px;
+        font-size:14px;
+    }
 }
 
 /* LAYOUT */
@@ -626,11 +652,6 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 @media(max-width:991px){
     .container{padding:0 20px}
     
-    /* Header adjustments */
-    .header{padding:18px 24px}
-    .header h3{font-size:18px}
-    .avatar{width:42px;height:42px}
-    
     /* Bisnis card */
     .biz-card{padding:24px;flex-direction:column;text-align:center}
     .biz-left{flex-direction:column;width:100%}
@@ -657,18 +678,6 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 /* === TABLET PORTRAIT & LARGE PHONES (576px - 767px) === */
 @media(max-width:767px){
     .container{padding:0 16px;margin:20px auto}
-    
-    /* Header - responsive */
-    .header{
-        padding:16px 20px;
-        flex-direction:row;
-        gap:12px
-    }
-    .header h3{font-size:16px}
-    .header small{font-size:12px}
-    .header-right{gap:10px}
-    .avatar{width:38px;height:38px;font-size:16px}
-    .logout-btn{padding:7px 14px;font-size:12px}
     
     /* Bisnis card */
     .biz-card{padding:20px;margin-bottom:20px}
@@ -725,26 +734,6 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 /* === SMARTPHONE (320px - 575px) === */
 @media(max-width:575px){
     .container{padding:0 12px;margin:16px auto}
-    
-    /* Header - compact mobile */
-    .header{
-        padding:14px 16px;
-        flex-wrap:nowrap
-    }
-    .header div:first-child{flex:1;min-width:0}
-    .header h3{
-        font-size:15px;
-        white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis
-    }
-    .header small{display:none}
-    .avatar{width:36px;height:36px;font-size:15px}
-    .logout-btn{
-        padding:6px 12px;
-        font-size:11px;
-        white-space:nowrap
-    }
     
     /* Bisnis card - compact */
     .biz-card{padding:16px;margin-bottom:16px}
@@ -1045,23 +1034,39 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 </head>
 
 <body>
-<!-- NAVBAR MODERN -->
-<div class="navbar-operasional">
-    <div class="navbar-inner">
-        <div>
-            <h3>Dashboard Operasional</h3>
-            <small>Kelola Bisnis yang Sudah Berjalan</small>
+<!-- NAVBAR - PICKANS STYLE -->
+<nav class="navbar-main">
+    <div class="navbar-container">
+        <!-- Left: Logo & Brand -->
+        <div class="navbar-left">
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-brand">
+                <span class="navbar-logo"><img src="<?= base_url('assets/logo_usahain.png'); ?>" alt="Usahain"></span>
+                <span class="navbar-title">Usahain</span>
+            </a>
         </div>
-         <div class="header-right">
-        <a href="<?= site_url('auth/dashboard_planning'); ?>" class="change-dashboard-btn">Dashboard perencanaan</a>
-        <div class="avatar"><?= strtoupper(substr($user['nama'],0,1)); ?></div>
-        <a href="<?= site_url('auth/logout'); ?>" 
-           class="logout-btn"
-           onclick="return confirm('Yakin ingin logout?')">
-           Logout
-        </a>
+
+        <!-- Center: Navigation Menu -->
+        <div class="navbar-center">
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-link active">Dashboard</a>
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-link">Fitur</a>
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-link">Bantuan</a>
+            <a href="<?= site_url('auth/dashboard'); ?>" class="navbar-link">Kontak</a>
+        </div>
+
+        <!-- Right: Action Buttons -->
+        <div class="navbar-right">
+            <a href="<?= site_url('auth/change_dashboard'); ?>" class="navbar-btn btn-secondary">🔄 Perencanaan</a>
+            <div class="navbar-avatar" title="<?= htmlspecialchars($user['nama']); ?>">
+                <?= strtoupper(substr($user['nama'],0,1)); ?>
+            </div>
+            <a href="<?= site_url('auth/logout'); ?>" 
+               class="navbar-btn btn-logout"
+               onclick="return confirm('Yakin ingin logout?')">
+               Logout
+            </a>
+        </div>
     </div>
-</div>
+</nav>
 
 <div class="container"> 
     <!-- BISNIS -->
@@ -1202,7 +1207,48 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     </script>
     <div class="section-title">Tools Bisnis Lainnya</div>
     <div class="tools-grid">
-        <!-- ...existing code... -->
+        <div class="tool-box">
+            <div class="tool-icon advisor" style="color:#fff">🤖</div>
+            <div class="tool-title">AI Advisor</div>
+            <div class="tool-desc">Konsultasi dengan AI untuk strategi bisnis yang lebih baik</div>
+            <a href="<?= site_url('advisor'); ?>">Minta Konsultasi</a>
+        </div>
+
+        <div class="tool-box">
+            <div class="tool-icon hpp" style="color:#fff">🧮</div>
+            <div class="tool-title">Kalkulator HPP</div>
+            <div class="tool-desc">Hitung Harga Pokok Penjualan untuk menentukan harga jual yang menguntungkan</div>
+            <a href="<?= site_url('hpp'); ?>">Hitung HPP</a>
+        </div>
+
+        <div class="tool-box">
+            <div class="tool-icon keuangan" style="color:#fff">💰</div>
+            <div class="tool-title">Pencatatan Keuangan</div>
+            <div class="tool-desc">Catat dan kelola semua transaksi keuangan bisnis Anda dengan mudah</div>
+            <a href="<?= site_url('keuangan'); ?>">Lihat Laporan</a>
+        </div>
+
+        <div class="tool-box">
+            <div class="tool-icon risiko" style="color:#fff">⚠️</div>
+            <div class="tool-title">Manajemen Risiko</div>
+            <div class="tool-desc">Identifikasi dan mitigasi risiko bisnis untuk melindungi usaha Anda</div>
+            <a href="<?= site_url('risiko'); ?>">Kelola Risiko</a>
+        </div>
+
+        <div class="tool-box">
+            <div class="tool-icon analisis" style="color:#fff">📊</div>
+            <div class="tool-title">Analisis Produk</div>
+            <div class="tool-desc">Analisis performa produk dan dapatkan rekomendasi untuk meningkatkan penjualan</div>
+            <a href="<?= site_url('analisis'); ?>">Lihat Analisis</a>
+        </div>
+
+        <div class="tool-box">
+            <div class="tool-icon info" style="color:#fff">ℹ️</div>
+            <div class="tool-title">Rekomendasi Informasi Bisnis</div>
+            <div class="tool-desc">Dapatkan informasi dan tips bisnis dari para ahli untuk mengembangkan usaha</div>
+            <a href="<?= site_url('info'); ?>">Baca Selengkapnya</a>
+        </div>
+    </div>
 
     <!-- AKSI CEPAT -->
     <div class="section-title">⚡ Aksi Cepat</div>
@@ -1323,6 +1369,24 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     </div>
 
 </div>
+
+<!-- FOOTER SIMPLE -->
+<footer class="footer-simple">
+    <div class="footer-inner">
+        <div class="footer-left">
+            © 2025 <span class="brand">Usahain</span> · Platform Manajemen UMKM Terpadu
+        </div>
+        <div class="footer-right">
+            <a href="#">Tentang</a>
+            <span>•</span>
+            <a href="#">Fitur</a>
+            <span>•</span>
+            <a href="#">Kebijakan Privasi</a>
+            <span>•</span>
+            <a href="#">Bantuan</a>
+        </div>
+    </div>
+</footer>
 
 <!-- Chart.js Library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>

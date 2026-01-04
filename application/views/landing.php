@@ -54,8 +54,8 @@
     }
 
     .navbar-brand img{
-      width: 36px;
-      height: 36px;
+      width: 45px;
+      height: 45px;
     }
 
     .nav-link{

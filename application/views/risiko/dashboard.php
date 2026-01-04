@@ -24,7 +24,7 @@ $transactions = $transactions ?? [];
 <meta name="theme-color" content="#1C6494">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Dashboard <?= htmlspecialchars($user['nama']); ?></title>
+<title>Analisis Risiko Bisnis - <?= htmlspecialchars($user['nama']); ?></title>
 
 <style>
 /* === THEME COLOR VARIABLES === */
@@ -220,54 +220,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 .tx.plus{border-left-color:var(--accent-dark);color:var(--accent-dark)}
 .tx.minus{border-left-color:#e74c3c;color:#e74c3c}
 
-/* TOOLS BISNIS */
-.tools-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:16px;
-    margin-bottom:40px
-}
-.tool-box{
-    background:var(--card-bg);
-    border-radius:16px;
-    padding:24px;
-    box-shadow:var(--shadow-sm);
-    transition:.3s ease;
-    cursor:pointer;
-    border:2px solid transparent;
-    position:relative;
-    overflow:hidden
-}
-.tool-box::before{
-    content:'';
-    position:absolute;
-    top:0;left:0;right:0;
-    height:4px;
-    background:linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    transform:scaleX(0);
-    transition:.3s ease
-}
-.tool-box:hover{
-    transform:translateY(-6px);
-    box-shadow:var(--shadow-lg);
-    border-color:var(--secondary-light)
-}
-.tool-box:hover::before{
-    transform:scaleX(1)
-}
-.tool-icon{font-size:36px;margin-bottom:12px}
-.tool-title{font-weight:700;margin-bottom:6px;font-size:15px;color:var(--primary-color)}
-.tool-desc{font-size:13px;color:var(--text-secondary);margin-bottom:10px}
-.tool-box a{
-    color:var(--primary-color);
-    text-decoration:none;
-    font-weight:600;
-    font-size:13px;
-    transition:.3s ease
-}
-.tool-box a:hover{
-    color:var(--secondary-color)
-}
+
 
 /* RESPONSIVE DESIGN */
 
@@ -279,7 +232,6 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 /* === LAPTOP & MEDIUM SCREENS (992px - 1199px) === */
 @media(max-width:1199px){
     .container{max-width:1000px}
-    .tools-grid{grid-template-columns:repeat(4,1fr)}
 }
 
 /* === TABLET LANDSCAPE & SMALL LAPTOP (768px - 991px) === */
@@ -309,9 +261,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     .chart-section{margin-bottom:20px}
     #salesChart{height:200px}
     
-    /* Tools - 2 columns */
-    .tools-grid{grid-template-columns:repeat(2,1fr);gap:14px}
-    .tool-box{padding:20px}
+
 }
 
 /* === TABLET PORTRAIT & LARGE PHONES (576px - 767px) === */
@@ -375,11 +325,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     .tx{padding:12px;flex-direction:column;align-items:flex-start;gap:8px}
     .tx div:last-child{align-self:flex-end;font-size:16px;font-weight:700}
     
-    /* Tools - still 2 columns but smaller */
-    .tool-box{padding:18px}
-    .tool-icon{font-size:32px;margin-bottom:10px}
-    .tool-title{font-size:14px}
-    .tool-desc{font-size:12px}
+
 }
 
 /* === SMARTPHONE (320px - 575px) === */
@@ -453,13 +399,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     .tx small{font-size:11px}
     .tx div:last-child{font-size:15px}
     
-    /* Tools - single column */
-    .tools-grid{grid-template-columns:1fr;gap:12px;margin-bottom:30px}
-    .tool-box{padding:16px}
-    .tool-icon{font-size:28px}
-    .tool-title{font-size:14px;margin-bottom:4px}
-    .tool-desc{font-size:11px;margin-bottom:8px}
-    .tool-box a{font-size:12px}
+
 }
 
 /* === EXTRA SMALL DEVICES (< 375px) === */
@@ -474,7 +414,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 /* Touch-friendly improvements for all mobile devices */
 @media(max-width:991px){
     /* Larger touch targets */
-    .action, .filter-btn, .logout-btn, .tool-box{
+    .action, .filter-btn, .logout-btn{
         min-height:44px;
         display:flex;
         align-items:center;
@@ -489,9 +429,6 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     
     /* Smooth scrolling */
     html{scroll-behavior:smooth}
-    
-    /* Remove hover effects on touch devices */
-    .tool-box:hover::before{transform:scaleX(0)}
 }
 
 /* ===== MODAL STYLES ===== */
@@ -708,8 +645,8 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 <!-- HEADER -->
 <div class="header">
     <div>
-        <h3>Dashboard <?= htmlspecialchars($user['nama']); ?></h3>
-        <small>Kelola Bisnis Anda</small>
+        <h3>⚠️ Analisis Risiko Bisnis</h3>
+        <small>Identifikasi dan mitigasi risiko untuk melindungi usaha Anda</small>
     </div>
 
     <div class="header-right">
@@ -724,314 +661,119 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 
 <div class="container">
 
-    <!-- BISNIS -->
-    <div class="biz-card">
-        <div class="biz-left">
-            <div class="biz-icon">🏬</div>
-            <div class="biz-info">
-                <h2><?= htmlspecialchars($user['usaha']); ?></h2>
-                <span><?= $user['type']; ?></span>
-                <span>Aktif Beroperasi</span>
-            </div>
-        </div>
-        <div class="biz-profit">
-            <small>Hari Ini</small>
-            <h2 id="labaBersihHeader">Rp <?= number_format($summary['today_profit'],0,',','.'); ?></h2>
-            <small>Laba Bersih</small>
-        </div>
+    <!-- PAGE TITLE & DESCRIPTION -->
+    <div style="text-align:center; margin-bottom:40px; padding:30px 0;">
+        <div style="font-size:48px; margin-bottom:10px;">🛡️</div>
+        <h1 style="font-size:32px; font-weight:700; margin-bottom:12px; color:#1C6494;">Manajemen Risiko</h1>
+        <p style="font-size:16px; color:#718096; max-width:600px; margin:0 auto;">Identifikasi dan kelola risiko bisnis Anda dengan checklist praktis</p>
     </div>
 
-    <!-- AKSI CEPAT -->
-    <div class="section-title">⚡ Aksi Cepat</div>
-    <div class="actions">
-        <a href="#" onclick="openModalPenjualan(); return false;" class="action sale">💰<br>Catat Penjualan</a>
-        <a href="#" onclick="openModalPengeluaran(); return false;" class="action expense">🧾<br>Catat Pengeluaran</a>
-        <a href="<?= base_url('hpp'); ?>" class="action stock">📦<br>Hitung HPP</a>
-        <a href="#" onclick="openModalRisiko(); return false;" class="action report">📊<br>Manajemen Risiko</a>
-         <a href="<?= base_url(''); ?>
-    </div>
-
-    <!-- RINGKASAN -->
-    <div class="section-title">💰 Ringkasan Keuangan</div>
-    
-    <!-- FILTER PERIODE -->
-    <div class="filter-periode">
-        <a href="?periode=hari" class="filter-btn active">Hari Ini</a>
-        <a href="?periode=minggu" class="filter-btn">Minggu Ini</a>
-        <a href="?periode=bulan" class="filter-btn">Bulan Ini</a>
-        <a href="?periode=tahun" class="filter-btn">Tahun Ini</a>
-    </div>
-    
-    <div class="summary">
-        <div class="sum-card">
-            <small>Penjualan</small>
-            <h3 class="green" id="totalPenjualan">Rp <?= number_format($summary['today_sales'],0,',','.'); ?></h3>
-            <small id="jumlahPenjualan">1 transaksi</small>
-        </div>
-        <div class="sum-card">
-            <small>Pengeluaran</small>
-            <h3 class="red" id="totalPengeluaran">Rp <?= number_format($summary['today_expense'],0,',','.'); ?></h3>
-            <small id="jumlahPengeluaran">1 transaksi</small>
-        </div>
-        <div class="sum-card">
-            <small>Laba Bersih</small>
-            <h3 class="blue" id="labaBersih">Rp <?= number_format($summary['today_profit'],0,',','.'); ?></h3>
-            <small id="marginProfit">Margin: <?= ($summary['today_sales']>0)?round(($summary['today_profit']/$summary['today_sales'])*100,1):0; ?>%</small>
-        </div>
-    </div>
-
-    <!-- GRAFIK & INSIGHT -->
-<div class="chart-insight-wrapper">
-
-    <!-- GRAFIK -->
-    <div class="chart-section">
-        <div class="chart-header">
-            <h4>📊 Tren Keuangan (7 Hari Terakhir)</h4>
-            <div class="chart-legend">
-                <div class="legend-item">
-                    <div class="legend-color legend-sales"></div>
-                    <span>Penjualan</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color legend-expense"></div>
-                    <span>Pengeluaran</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color legend-profit"></div>
-                    <span>Laba</span>
-                </div>
+    <!-- RISK CATEGORIES GRID -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px; margin-bottom:40px;">
+        
+        <!-- RISIKO TINGGI -->
+        <div style="background:#f5e6e8; border-radius:12px; padding:24px; border:2px solid #e8b4c0;">
+            <h3 style="font-size:18px; font-weight:700; color:#c1314d; margin-bottom:16px;">🔴 Risiko Tinggi</h3>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" style="width:18px; height:18px;">
+                    <span>Tidak ada asuransi bisnis</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" style="width:18px; height:18px;">
+                    <span>Bergantung pada 1 supplier</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" style="width:18px; height:18px;">
+                    <span>Tidak ada dana darurat</span>
+                </label>
             </div>
         </div>
 
-        <!-- WRAPPER WAJIB -->
-        <div class="chart-canvas-wrapper">
-            <canvas id="salesChart"></canvas>
-        </div>
-    </div>
-
-    <!-- INSIGHT -->
-    <div class="insight-section">
-        <h4>💡 Insight Bisnis</h4>
-
-        <div class="insight-item">
-            <div class="insight-icon">📈</div>
-            <strong>Performa Baik</strong>
-            <p>Penjualan hari ini meningkat dibanding hari sebelumnya.</p>
-        </div>
-
-        <div class="insight-item">
-            <div class="insight-icon">💰</div>
-            <strong>Efisiensi Biaya</strong>
-            <p>Pengeluaran relatif stabil dan terkontrol.</p>
-        </div>
-
-        <div class="insight-item">
-            <div class="insight-icon">🎯</div>
-            <strong>Rekomendasi</strong>
-            <p>Tambahkan stok produk favorit untuk memaksimalkan penjualan.</p>
-        </div>
-    </div>
-
-</div>
-
-
-    <!-- TRANSAKSI -->
-    <div class="section-title">📋 Transaksi Terbaru <span style="font-size:13px;font-weight:normal;margin-left:10px;color:#999" id="jumlahTransaksi"><?= count($transactions); ?> transaksi</span></div>
-    <div class="transaksi" id="transaksiList">
-        <?php if($transactions): foreach($transactions as $tx): $neg = ($tx['amount'] < 0); ?>
-        <div class="tx <?= $neg?'minus':'plus'; ?>">
-            <div>
-                <strong><?= htmlspecialchars($tx['title']); ?></strong><br>
-                <small><?= $tx['type']; ?></small>
+        <!-- RISIKO SEDANG -->
+        <div style="background:#f0ecd4; border-radius:12px; padding:24px; border:2px solid #e4d89f;">
+            <h3 style="font-size:18px; font-weight:700; color:#a68c2a; margin-bottom:16px;">🟡 Risiko Sedang</h3>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" style="width:18px; height:18px;">
+                    <span>Kompetitor baru muncul</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" style="width:18px; height:18px;">
+                    <span>Ketergantungan musiman</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" style="width:18px; height:18px;">
+                    <span>Fluktuasi harga bahan baku</span>
+                </label>
             </div>
-            <div><?= $neg?'-':'+'; ?> Rp <?= number_format(abs($tx['amount']),0,',','.'); ?></div>
         </div>
-        <?php endforeach; else: ?>
-        <p class="text-muted">Belum ada transaksi</p>
-        <?php endif; ?>
+
+        <!-- MITIGASI RISIKO -->
+        <div style="background:#d4f4dd; border-radius:12px; padding:24px; border:2px solid #9dd4ab;">
+            <h3 style="font-size:18px; font-weight:700; color:#2ecc71; margin-bottom:16px;">✅ Mitigasi Risiko</h3>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" checked style="width:18px; height:18px;">
+                    <span>Buat kontrak dengan supplier</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" checked style="width:18px; height:18px;">
+                    <span>Siapkan dana darurat 6 bulan</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" style="width:18px; height:18px;">
+                    <span>Buat SOP untuk semua proses</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- RENCANA KONTINJENSI -->
+        <div style="background:#d4e4f5; border-radius:12px; padding:24px; border:2px solid #9dc7e8;">
+            <h3 style="font-size:18px; font-weight:700; color:#1e5a96; margin-bottom:16px;">📋 Rencana Kontinjensi</h3>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" style="width:18px; height:18px;">
+                    <span>Backup supplier alternatif</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" checked style="width:18px; height:18px;">
+                    <span>Sistem pembayaran digital</span>
+                </label>
+                <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
+                    <input type="checkbox" style="width:18px; height:18px;">
+                    <span>Asuransi properti & inventori</span>
+                </label>
+            </div>
+        </div>
+
     </div>
 
-    <!-- TOOLS -->
-    <div class="section-title">🔧 Tools Bisnis Lainnya</div>
-    <div class="tools-grid">
-        <div class="tool-box">
-            <div class="tool-icon">🤖</div>
-            <div class="tool-title">AI Advisor</div>
-            <div class="tool-desc">Konsultasi strategis bisnis</div>
-            <a href="<?= site_url('advisor'); ?>">Coba Sekarang →</a>
-        </div>
-        <div class="tool-box">
-            <div class="tool-icon">💡</div>
-            <div class="tool-title">Rekomendasi Informasi Bisnis</div>
-            <div class="tool-desc">Tips & tren UMKM</div>
-            <a href="#">Belajar →</a>
-        </div>
-        <div class="tool-box">
-            <div class="tool-icon">🛡️</div>
-            <div class="tool-title">Manajemen Risiko</div>
-            <div class="tool-desc">Kelola risiko usaha</div>
-            <a href="<?= site_url('risiko'); ?>">Kelola Risiko →</a>
-        </div>
-        <div class="tool-box">
-            <div class="tool-icon">🎯</div>
-            <div class="tool-title">Subscription</div>
-            <div class="tool-desc">Akses fitur premium</div>
-            <a href="<?= site_url('subscription'); ?>">Subs →</a>
-        </div>
+    <!-- ANALISIS RISIKO BUTTON -->
+    <div style="text-align:center; margin:30px 0;">
+        <button onclick="openModalRisiko(); return false;" style="background:#1e5a96; color:white; border:none; padding:12px 32px; border-radius:24px; font-size:16px; font-weight:600; cursor:pointer; transition:all 0.3s;">
+            🔍 Analisis Risiko
+        </button>
     </div>
 
-</div>
+    <!-- RISK SCORE SECTION -->
+    <div style="background:#e8f4f8; border-radius:12px; padding:24px; margin-bottom:30px;">
+        <h4 style="font-size:16px; font-weight:700; margin-bottom:12px;">Skor Risiko Anda</h4>
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+            <div style="flex:1; height:12px; background:#ccc; border-radius:10px; overflow:hidden;">
+                <div style="width:60%; height:100%; background:#2ecc71; border-radius:10px;"></div>
+            </div>
+            <span style="font-weight:700; color:#2ecc71; font-size:14px;">60%</span>
+        </div>
+        <p style="color:#718096; font-size:14px; margin:0;">Risiko sedang - Perlu perhatian pada beberapa area. Fokus pada mitigasi risiko tinggi terlebih dahulu.</p>
+    </div>
 
-<!-- Chart.js Library -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-<script>
-// Data dummy untuk demo (nanti bisa diambil dari backend)
-const chartData = {
-    labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
-    sales: [2500000, 3200000, 2800000, 4100000, 3600000, 4800000, 3900000],
-    expense: [1200000, 1500000, 1100000, 1800000, 1400000, 2000000, 1600000],
-    profit: [1300000, 1700000, 1700000, 2300000, 2200000, 2800000, 2300000]
-};
-
-// Initialize Chart
-const ctx = document.getElementById('salesChart').getContext('2d');
-const salesChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: chartData.labels,
-        datasets: [
-            {
-                label: 'Penjualan',
-                data: chartData.sales,
-                borderColor: '#2ecc71',
-                backgroundColor: 'rgba(46, 204, 113, 0.1)',
-                borderWidth: 3,
-                tension: 0.4,
-                fill: true,
-                pointRadius: 5,
-                pointHoverRadius: 7,
-                pointBackgroundColor: '#2ecc71',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2
-            },
-            {
-                label: 'Pengeluaran',
-                data: chartData.expense,
-                borderColor: '#e74c3c',
-                backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                borderWidth: 3,
-                tension: 0.4,
-                fill: true,
-                pointRadius: 5,
-                pointHoverRadius: 7,
-                pointBackgroundColor: '#e74c3c',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2
-            },
-            {
-                label: 'Laba Bersih',
-                data: chartData.profit,
-                borderColor: '#1C6494',
-                backgroundColor: 'rgba(28, 100, 148, 0.1)',
-                borderWidth: 3,
-                tension: 0.4,
-                fill: true,
-                pointRadius: 5,
-                pointHoverRadius: 7,
-                pointBackgroundColor: '#1C6494',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                padding: 12,
-                titleFont: {
-                    size: 14,
-                    weight: 'bold'
-                },
-                bodyFont: {
-                    size: 13
-                },
-                callbacks: {
-                    label: function(context) {
-                        let label = context.dataset.label || '';
-                        if (label) {
-                            label += ': ';
-                        }
-                        label += 'Rp ' + context.parsed.y.toLocaleString('id-ID');
-                        return label;
-                    }
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    callback: function(value) {
-                        return 'Rp ' + (value / 1000000) + 'jt';
-                    },
-                    font: {
-                        size: 11
-                    }
-                },
-                grid: {
-                    color: 'rgba(0, 0, 0, 0.05)'
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    font: {
-                        size: 11,
-                        weight: '600'
-                    }
-                }
-            }
-        }
-    }
-});
-
-// Filter periode functionality
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Update active state
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Get periode parameter
-        const periode = this.href.split('periode=')[1];
-        
-        // Update chart title based on periode
-        const titles = {
-            'hari': '7 Hari Terakhir',
-            'minggu': '4 Minggu Terakhir',
-            'bulan': '12 Bulan Terakhir',
-            'tahun': '5 Tahun Terakhir'
-        };
-        
-        document.querySelector('.chart-header h4').innerHTML = 
-            '📊 Tren Keuangan (' + titles[periode] + ')';
-        
-        // Here you can add AJAX call to fetch new data based on periode
-        // For demo, we'll just keep the same data
-        console.log('Filter changed to:', periode);
-    });
-});
+    <!-- SIMPAN BUTTON -->
+    <div style="text-align:right;">
+        <button onclick="savRisiko();" style="background:#2ecc71; color:white; border:none; padding:12px 40px; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; transition:all 0.3s;">
+            ✓ Simpan
+        </button>
+    </div>
 </script>
 
 <!-- FOOTER SIMPLE -->
@@ -1662,6 +1404,27 @@ styleAnimations.textContent = `
     }
 `;
 document.head.appendChild(styleAnimations);
+
+// Risk Management Functions
+function openModalRisiko() {
+    alert('Fitur Analisis Risiko Otomatis sedang diaktifkan...\nSistem akan menganalisis data bisnis Anda dan memberikan rekomendasi risiko.');
+}
+
+function savRisiko() {
+    // Collect checkbox values
+    const riskItems = document.querySelectorAll('input[type="checkbox"]');
+    let riskData = {
+        high_risks: [],
+        medium_risks: [],
+        mitigation: [],
+        contingency: []
+    };
+    
+    // This would send data to backend
+    console.log('Saving risk data...');
+    alert('✅ Checklist risiko berhasil disimpan!');
+}
+
 </script>
 
 </body>

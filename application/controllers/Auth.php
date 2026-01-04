@@ -35,7 +35,9 @@ class Auth extends CI_Controller {
                         'id_user' => $user->id_user,
                         'nama' => $user->nama,
                         'email' => $user->email,
-                        'role' => $user->role
+                        'role' => $user->role,
+                        'usaha' => $user->nama_usaha ?? 'Bisnis Anda',
+                        'type' => 'UMKM'
                     ]);
                     redirect('auth/dashboard_selection');
                 } else {
@@ -130,6 +132,26 @@ class Auth extends CI_Controller {
         // Load dashboard sesuai tipe
         $data['user'] = $this->session->userdata();
         
+        // Load Dashboard Model untuk mendapatkan data
+        $this->load->model('Dashboard_model');
+        $id_user = $this->session->userdata('id_user');
+        $periode = $this->input->get('periode') ?? 'hari';
+        
+        // Get summary data
+        $data['summary'] = $this->Dashboard_model->getSummary($id_user, $periode);
+        
+        // Get recent transactions
+        $data['transactions'] = $this->Dashboard_model->getTransactions($id_user, 10);
+        
+        // Convert transactions to correct format for view
+        if (!empty($data['transactions'])) {
+            foreach ($data['transactions'] as &$tx) {
+                $tx['amount'] = $tx['jenis'] === 'pengeluaran' ? -$tx['nominal'] : $tx['nominal'];
+                $tx['title'] = $tx['catatan'] ?? $tx['kategori'];
+                $tx['type'] = ucfirst($tx['jenis']);
+            }
+        }
+        
         if ($dashboard_type === 'planning') {
             $this->load->view('auth/dashboard_planning', $data);
         } else {
@@ -156,6 +178,19 @@ class Auth extends CI_Controller {
 
         // Redirect ke dashboard
         redirect('auth/dashboard');
+    }
+
+    /**
+     * Dashboard selection page
+     */
+    public function dashboard_selection()
+    {
+        if (!$this->session->userdata('id_user')) {
+            redirect('auth/login');
+        }
+
+        $data['user'] = $this->session->userdata();
+        $this->load->view('auth/dashboard_selection', $data);
     }
 
     /**
