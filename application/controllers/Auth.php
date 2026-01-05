@@ -1,7 +1,8 @@
 ﻿<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends CI_Controller
+{
 
     public function __construct()
     {
@@ -16,6 +17,11 @@ class Auth extends CI_Controller {
     public function login()
     {
         if ($this->session->userdata('id_user')) {
+            // Jika sudah login dan ada parameter redirect, arahkan kesana
+            $redirect = $this->input->get('redirect');
+            if ($redirect) {
+                redirect($redirect);
+            }
             redirect('auth/dashboard');
         }
 
@@ -23,22 +29,29 @@ class Auth extends CI_Controller {
             $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
 
-            if ($this->form_validation->run() === TRUE) {
-                $email = $this->input->post('email');
+            if ($this->form_validation->run() === true) {
+                $email    = $this->input->post('email');
                 $password = $this->input->post('password');
-                $user = $this->Auth_model->login($email, $password);
+                $user     = $this->Auth_model->login($email, $password);
 
                 if ($user) {
                     // Hapus dashboard_type lama agar user bisa pilih ulang
                     $this->session->unset_userdata('dashboard_type');
                     $this->session->set_userdata([
                         'id_user' => $user->id_user,
-                        'nama' => $user->nama,
-                        'email' => $user->email,
-                        'role' => $user->role,
-                        'usaha' => $user->nama_usaha ?? 'Bisnis Anda',
-                        'type' => 'UMKM'
+                        'nama'    => $user->nama,
+                        'email'   => $user->email,
+                        'role'    => $user->role,
+                        'usaha'   => $user->nama_usaha ?? 'Bisnis Anda',
+                        'type'    => 'UMKM',
                     ]);
+
+                    // Cek apakah ada parameter redirect
+                    $redirect = $this->input->get('redirect') ?: $this->input->post('redirect');
+                    if ($redirect) {
+                        redirect($redirect);
+                    }
+
                     redirect('auth/dashboard_selection');
                 } else {
                     $data['error'] = 'Email atau password salah.';
@@ -46,6 +59,8 @@ class Auth extends CI_Controller {
             }
         }
 
+        // Pass redirect parameter ke view agar bisa di-post kembali
+        $data['redirect'] = $this->input->get('redirect');
         $this->load->view('auth/login', isset($data) ? $data : []);
     }
 
@@ -69,12 +84,12 @@ class Auth extends CI_Controller {
 
             // FIX: Cocokkan dengan name="konfirmasi_password" di form HTML
             $this->form_validation->set_rules(
-                'konfirmasi_password', 
-                'Konfirmasi Password', 
+                'konfirmasi_password',
+                'Konfirmasi Password',
                 'required|matches[password]'
             );
 
-            if ($this->form_validation->run() === TRUE) {
+            if ($this->form_validation->run() === true) {
 
                 $email = $this->input->post('email');
 
@@ -83,8 +98,8 @@ class Auth extends CI_Controller {
                     $data['error'] = 'Email sudah terdaftar.';
                 } else {
 
-                    $nama = $this->input->post('nama');
-                    $password = $this->input->post('password');
+                    $nama       = $this->input->post('nama');
+                    $password   = $this->input->post('password');
                     $nama_usaha = $this->input->post('nama_usaha');
 
                     // simpan user baru
@@ -115,14 +130,14 @@ class Auth extends CI_Controller {
      */
     public function dashboard()
     {
-        if (!$this->session->userdata('id_user')) {
+        if (! $this->session->userdata('id_user')) {
             redirect('auth/login');
         }
 
         // Cek apakah user sudah memilih tipe dashboard
         $dashboard_type = $this->session->userdata('dashboard_type');
-        
-        if (!$dashboard_type) {
+
+        if (! $dashboard_type) {
             // Jika belum memilih, tampilkan halaman pemilihan
             $data['user'] = $this->session->userdata();
             $this->load->view('auth/dashboard_selection', $data);
@@ -131,27 +146,27 @@ class Auth extends CI_Controller {
 
         // Load dashboard sesuai tipe
         $data['user'] = $this->session->userdata();
-        
+
         // Load Dashboard Model untuk mendapatkan data
         $this->load->model('Dashboard_model');
         $id_user = $this->session->userdata('id_user');
         $periode = $this->input->get('periode') ?? 'hari';
-        
+
         // Get summary data
         $data['summary'] = $this->Dashboard_model->getSummary($id_user, $periode);
-        
+
         // Get recent transactions
         $data['transactions'] = $this->Dashboard_model->getTransactions($id_user, 10);
-        
+
         // Convert transactions to correct format for view
-        if (!empty($data['transactions'])) {
+        if (! empty($data['transactions'])) {
             foreach ($data['transactions'] as &$tx) {
                 $tx['amount'] = $tx['jenis'] === 'pengeluaran' ? -$tx['nominal'] : $tx['nominal'];
-                $tx['title'] = $tx['catatan'] ?? $tx['kategori'];
-                $tx['type'] = ucfirst($tx['jenis']);
+                $tx['title']  = $tx['catatan'] ?? $tx['kategori'];
+                $tx['type']   = ucfirst($tx['jenis']);
             }
         }
-        
+
         if ($dashboard_type === 'planning') {
             $this->load->view('auth/dashboard_planning', $data);
         } else {
@@ -164,12 +179,12 @@ class Auth extends CI_Controller {
      */
     public function set_dashboard_type($type = 'operasional')
     {
-        if (!$this->session->userdata('id_user')) {
+        if (! $this->session->userdata('id_user')) {
             redirect('auth/login');
         }
 
         // Validasi tipe dashboard
-        if (!in_array($type, ['planning', 'operasional'])) {
+        if (! in_array($type, ['planning', 'operasional'])) {
             $type = 'operasional';
         }
 
@@ -185,7 +200,7 @@ class Auth extends CI_Controller {
      */
     public function dashboard_selection()
     {
-        if (!$this->session->userdata('id_user')) {
+        if (! $this->session->userdata('id_user')) {
             redirect('auth/login');
         }
 
@@ -198,7 +213,7 @@ class Auth extends CI_Controller {
      */
     public function change_dashboard()
     {
-        if (!$this->session->userdata('id_user')) {
+        if (! $this->session->userdata('id_user')) {
             redirect('auth/login');
         }
 

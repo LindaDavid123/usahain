@@ -6,8 +6,10 @@
     <title>Paket Langganan - Usahain</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Midtrans Snap.js -->
-    <script src="https://app.midtrans.com/snap/snap.js" data-client-key="Mid-client-DfXdVd5IoBrCwNT4"></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="<?php echo isset($midtrans_client_key) ? $midtrans_client_key : 'SB-Mid-client-PsNdWysSRWU44dJt'; ?>"></script>
     <script>
     function choosePlan(plan) {
         const planPrices = {
@@ -16,39 +18,148 @@
             'growth': 45000,
             'elite': 85000
         };
+
         if (plan === 'starter') {
-            alert('Paket Starter gratis!');
-            // Redirect or handle free plan logic here
+            Swal.fire({
+                icon: 'info',
+                title: 'Paket Gratis',
+                text: 'Paket Starter gratis! Anda dapat langsung menggunakannya.',
+                confirmButtonColor: '#1C6494',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = '<?php echo site_url('user'); ?>';
+            });
             return;
         }
-        if (confirm(`Anda memilih paket ${plan.toUpperCase()}\nHarga: Rp ${planPrices[plan].toLocaleString('id-ID')}\n\nLanjutkan ke pembayaran?`)) {
-            // AJAX ke backend untuk dapatkan snapToken
-            fetch('<?= site_url('subscription/get_snap_token'); ?>', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ paket: plan })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.snapToken) {
-                    window.snap.pay(data.snapToken, {
-                        onSuccess: function(result){
-                            alert('Pembayaran berhasil!');
-                            window.location.reload();
-                        },
-                        onPending: function(result){
-                            alert('Transaksi belum selesai. Silakan selesaikan pembayaran.');
-                        },
-                        onError: function(result){
-                            alert('Pembayaran gagal. Silakan coba lagi.');
-                        }
-                    });
-                } else {
-                    alert('Gagal mendapatkan token pembayaran.');
-                }
-            })
-            .catch(() => alert('Gagal menghubungi server pembayaran.'));
-        }
+
+        // Debug log
+        console.log('Fetching snap token for plan:', plan);
+        console.log('Endpoint:', '<?php echo site_url('subscription/get_snap_token'); ?>');
+
+        // Show loading
+        Swal.fire({
+            title: 'Memproses...',
+            text: 'Mohon tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        // Langsung fetch snapToken tanpa confirm
+        fetch('<?php echo site_url('subscription/get_snap_token'); ?>', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paket: plan })
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            return response.json();
+        })
+        .then(data => {
+            console.log('Response data:', data);
+            Swal.close();
+
+            if (data.snapToken) {
+                console.log('Opening Snap popup with token:', data.snapToken);
+                window.snap.pay(data.snapToken, {
+                    onSuccess: function(result){
+                        console.log('Payment success:', result);
+
+                        // Show processing
+                        Swal.fire({
+                            title: 'Mengaktifkan Langganan...',
+                            text: 'Mohon tunggu',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        });
+
+                        // Save subscription to database
+                        fetch('<?php echo site_url('subscription/payment_success'); ?>', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                order_id: result.order_id,
+                                paket: plan,
+                                transaction_id: result.transaction_id,
+                                payment_type: result.payment_type
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(saveResult => {
+                            console.log('Save result:', saveResult);
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Pembayaran Berhasil!',
+                                text: 'Langganan Anda telah diaktifkan.',
+                                confirmButtonColor: '#1C6494',
+                                confirmButtonText: 'Lihat Langganan'
+                            }).then(() => {
+                                window.location.href = '<?php echo site_url('subscription'); ?>';
+                            });
+                        })
+                        .catch(err => {
+                            console.error('Save error:', err);
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Pembayaran Berhasil',
+                                text: 'Pembayaran berhasil, tetapi terjadi kesalahan saat mengaktifkan langganan. Silakan hubungi admin.',
+                                confirmButtonColor: '#1C6494'
+                            }).then(() => {
+                                window.location.href = '<?php echo site_url('subscription'); ?>';
+                            });
+                        });
+                    },
+                    onPending: function(result){
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Transaksi Tertunda',
+                            text: 'Silakan selesaikan pembayaran Anda.',
+                            confirmButtonColor: '#1C6494'
+                        });
+                        console.log(result);
+                    },
+                    onError: function(result){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Pembayaran Gagal',
+                            text: 'Silakan coba lagi.',
+                            confirmButtonColor: '#1C6494'
+                        });
+                        console.log(result);
+                    },
+                    onClose: function(){
+                        console.log('Popup pembayaran ditutup tanpa menyelesaikan transaksi');
+                    }
+                });
+            } else if (data.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error,
+                    confirmButtonColor: '#1C6494'
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: 'Gagal mendapatkan token pembayaran.',
+                    confirmButtonColor: '#1C6494'
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Fetch error:', err);
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Kesalahan Koneksi',
+                text: 'Gagal menghubungi server pembayaran.',
+                confirmButtonColor: '#1C6494'
+            });
+        });
     }
     </script>
     <style>
@@ -110,7 +221,7 @@
                 <div class="plan-subtitle">Mulai Perjalanan</div>
                 <div class="price-tag">Rp0</div>
                 <div class="price-period">Gratis Selamanya</div>
-                
+
                 <ul class="features-list">
                     <li>3 AI Advisor/bulan</li>
                     <li>Max 20 transaksi</li>
@@ -127,7 +238,7 @@
                 <div class="plan-subtitle">Otomatisasi Efisien</div>
                 <div class="price-tag">Rp18K</div>
                 <div class="price-period">per bulan</div>
-                
+
                 <ul class="features-list">
                     <li>10 AI Advisor/bulan</li>
                     <li>Unlimited pencatatan</li>
@@ -144,7 +255,7 @@
                 <div class="plan-subtitle">Kembangkan Bisnis</div>
                 <div class="price-tag">Rp45K</div>
                 <div class="price-period">per bulan</div>
-                
+
                 <ul class="features-list">
                     <li>Unlimited AI Advisor</li>
                     <li>5 Analisis kompetitor</li>
@@ -161,7 +272,7 @@
                 <div class="plan-subtitle">Pendampingan Personal</div>
                 <div class="price-tag">Rp85K</div>
                 <div class="price-period">per bulan</div>
-                
+
                 <ul class="features-list">
                     <li>2 sesi konsultasi 1-on-1</li>
                     <li>Unlimited analisis</li>
@@ -173,23 +284,8 @@
         </div>
 
         <div class="footer-note">
-            <p>💡 <strong>Detail lengkap fitur dan perbandingan tersedia di</strong> <a href="<?= site_url('subscription/compare'); ?>">halaman langganan</a></p>
+            <p>💡 <strong>Detail lengkap fitur dan perbandingan tersedia di</strong> <a href="<?php echo site_url('subscription/compare'); ?>">halaman langganan</a></p>
         </div>
     </div>
-
-    <script>
-        function choosePlan(plan) {
-            const planPrices = {
-                'starter': 0,
-                'essential': 18000,
-                'growth': 45000,
-                'elite': 85000
-            };
-
-            if (confirm(`Anda memilih paket ${plan.toUpperCase()}.\n\nHarga: Rp ${planPrices[plan].toLocaleString('id-ID')}\n\nLanjutkan ke pembayaran?`)) {
-                window.location.href = '<?= site_url("subscription/checkout/"); ?>' + plan;
-            }
-        }
-    </script>
 </body>
 </html>

@@ -47,7 +47,7 @@
         <div class="title">Selamat Datang Kembali!</div>
         <div class="subtitle">Masuk ke akun Usahain Anda</div>
 
-        <?php if ($this->form_validation->run() === FALSE): ?>
+        <?php if ($this->form_validation->run() === false): ?>
                 <?php if (validation_errors()): ?>
                         <div class="validation-errors"><?php echo validation_errors(); ?></div>
                 <?php endif; ?>
@@ -58,6 +58,10 @@
         <?php endif; ?>
 
         <form method="post" novalidate>
+            <?php if (isset($redirect) && $redirect): ?>
+                <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect); ?>">
+            <?php endif; ?>
+
             <div class="field">
                 <label for="email">Email</label>
                 <input class="input" type="email" id="email" name="email" placeholder="nama@email.com" value="<?php echo set_value('email'); ?>" required>
@@ -89,7 +93,7 @@
 
         <div class="divider">atau</div>
 
-        <a href="<?php echo site_url('googleauth/login'); ?>" class="btn-google" style="text-decoration:none">
+        <a href="<?php echo site_url('googleauth/login' . (isset($redirect) && $redirect ? '?redirect=' . urlencode($redirect) : '')); ?>" class="btn-google" style="text-decoration:none">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
             <span>Lanjutkan dengan Google</span>
         </a>

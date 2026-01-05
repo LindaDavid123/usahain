@@ -3,6 +3,11 @@
 # Environment files with sensitive data
 .env
 
+# Sensitive config files - DO NOT PUSH
+application/config/database.php
+application/config/midtrans.php
+application/config/google_oauth.php
+
 application/cache/*
 !application/cache/index.html
 

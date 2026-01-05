@@ -51,40 +51,46 @@
         </div>
     </div>
     <div class="main">
-        <h1>Data Subscription Saya</h1>
-        <a href="<?php echo site_url('subscription/create'); ?>" class="btn-add">+ Tambah Subscription</a>
+        <h1>Langganan Saya</h1>
+        <a href="<?php echo site_url('subscription/pricing'); ?>" class="btn-add">+ Upgrade Paket</a>
 
-        <?php if (!empty($subscriptions)): ?>
+        <?php if (! empty($subscriptions)): ?>
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Paket</th>
                         <th>Status</th>
-                        <th>Tgl Aktif</th>
-                        <th>Tgl Kadaluarsa</th>
-                        <th>Aksi</th>
+                        <th>Tanggal Aktif</th>
+                        <th>Tanggal Berakhir</th>
+                        <th>Sisa Hari</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($subscriptions as $s): ?>
+                        <?php
+                            $now       = new DateTime();
+                            $expired   = new DateTime($s->tgl_expired);
+                            $diff      = $now->diff($expired);
+                            $days_left = $expired > $now ? $diff->days : 0;
+                        ?>
                         <tr>
-                            <td><?php echo $s->id_subs; ?></td>
                             <td style="font-weight:700; text-transform:capitalize; color:#357ABD;"><?php echo htmlspecialchars($s->paket); ?></td>
                             <td>
                                 <?php $status = strtolower($s->status); ?>
-                                <span class="badge <?php echo $status; ?>">
+                                <span class="badge<?php echo $status; ?>">
                                     <?php echo ucfirst($s->status); ?>
                                 </span>
                             </td>
-                            <td><?php echo $s->tgl_aktif; ?></td>
-                            <td><?php echo $s->tgl_expired; ?></td>
+                            <td><?php echo date('d M Y', strtotime($s->tgl_aktif)); ?></td>
+                            <td><?php echo date('d M Y', strtotime($s->tgl_expired)); ?></td>
                             <td>
-                                <div class="action-btns">
-                                    <a href="<?php echo site_url('subscription/view/' . $s->id_subs); ?>" class="btn-action btn-view">Lihat</a>
-                                    <a href="<?php echo site_url('subscription/edit/' . $s->id_subs); ?>" class="btn-action btn-edit">Edit</a>
-                                    <a href="<?php echo site_url('subscription/delete/' . $s->id_subs); ?>" class="btn-action btn-delete">Hapus</a>
-                                </div>
+                                <?php if ($days_left > 0): ?>
+                                    <strong style="color:<?php echo $days_left < 7 ? '#c62828' : '#2e7d32'; ?>">
+                                        <?php echo $days_left; ?> hari
+                                    </strong>
+                                <?php else: ?>
+                                    <span style="color: #999;">Expired</span>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -92,7 +98,8 @@
             </table>
         <?php else: ?>
             <div class="empty">
-                <p>Belum ada subscription. <a href="<?php echo site_url('subscription/create'); ?>">Buat baru</a></p>
+                <p>Anda belum memiliki paket langganan aktif.</p>
+                <a href="<?php echo site_url('subscription/pricing'); ?>" class="btn-add" style="margin-top: 16px;">Pilih Paket Langganan</a>
             </div>
         <?php endif; ?>
     </div>
