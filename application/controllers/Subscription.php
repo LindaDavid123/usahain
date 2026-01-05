@@ -3,6 +3,70 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Subscription extends CI_Controller {
 
+    // Midtrans Snap token generator for AJAX
+    public function get_snap_token()
+    {
+        header('Content-Type: application/json');
+        $json = json_decode(file_get_contents('php://input'), true);
+        $paket = isset($json['paket']) ? $json['paket'] : null;
+        if (!$paket) {
+            echo json_encode(['error' => 'Paket tidak valid']);
+            return;
+        }
+
+        // Paket & harga (hardcoded, sesuaikan dengan kebutuhan)
+        $paketList = [
+            'essential' => 18000,
+            'growth' => 45000,
+            'elite' => 85000
+        ];
+        if (!isset($paketList[$paket])) {
+            echo json_encode(['error' => 'Paket tidak ditemukan']);
+            return;
+        }
+        $harga = $paketList[$paket];
+
+        // Midtrans config
+        require_once APPPATH . 'third_party/midtrans/Midtrans.php';
+        \Midtrans\Config::$serverKey = 'Mid-server-bfrJB66Sbo1p4kFT2P3GxHP3'; // Ganti dengan server key Anda
+        \Midtrans\Config::$isProduction = false; // true jika live
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+
+        $user_id = $this->session->userdata('id_user') ?: 'guest';
+        $order_id = 'SUBS-' . $user_id . '-' . time();
+
+        $params = [
+            'transaction_details' => [
+                'order_id' => $order_id,
+                'gross_amount' => $harga
+            ],
+            'item_details' => [[
+                'id' => $paket,
+                'price' => $harga,
+                'quantity' => 1,
+                'name' => ucfirst($paket) . ' Subscription'
+            ]],
+            'customer_details' => [
+                'first_name' => $this->session->userdata('nama') ?: 'User',
+                'email' => $this->session->userdata('email') ?: 'user@example.com',
+            ]
+        ];
+
+        try {
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
+            echo json_encode(['snapToken' => $snapToken]);
+        } catch (Exception $e) {
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
+
+    // Show subscription pricing page
+    public function pricing()
+    {
+        $this->load->view('subscription/pricing');
+    }
+
     public function __construct()
     {
         parent::__construct();

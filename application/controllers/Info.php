@@ -12,7 +12,8 @@ class Info extends CI_Controller {
     public function index() {
         // Check if user is logged in
         if (!$this->session->userdata('user_id')) {
-            redirect('landing');
+            $this->session->set_flashdata('warning', 'Silakan login terlebih dahulu untuk mengakses halaman Informasi Bisnis');
+            redirect('auth/login');
         }
 
         $user = $this->session->userdata();

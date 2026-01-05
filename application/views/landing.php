@@ -990,7 +990,7 @@
                   <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Dashboard dasar
                 </li>
               </ul>
-              <a href="<?= site_url('subscription/pricing'); ?>" style="background: #e74c3c; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s;">
+              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" style="background: #e74c3c; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s;">
                 Pilih Paket
               </a>
             </div>
@@ -1021,7 +1021,7 @@
                   <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Export PDF
                 </li>
               </ul>
-              <a href="<?= site_url('subscription/pricing'); ?>" style="background: #1C6494; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s; box-shadow: 0 4px 16px rgba(28, 100, 148, 0.3);">
+              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" style="background: #1C6494; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s; box-shadow: 0 4px 16px rgba(28, 100, 148, 0.3);">
                 Pilih Paket
               </a>
             </div>
@@ -1052,7 +1052,7 @@
                   <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Smart Alert
                 </li>
               </ul>
-              <a href="<?= site_url('subscription/pricing'); ?>" style="background: #9b59ff; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s;">
+              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" style="background: #9b59ff; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s;">
                 Pilih Paket
               </a>
             </div>
@@ -1083,7 +1083,7 @@
                   <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Priority Support
                 </li>
               </ul>
-              <a href="<?= site_url('subscription/pricing'); ?>" style="background: #ff9800; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s;">
+              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" style="background: #ff9800; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s;">
                 Pilih Paket
               </a>
             </div>
@@ -1241,7 +1241,7 @@
         <h6 style="font-size: 1rem; font-weight: 700; color: white; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px;">Perusahaan</h6>
         <ul style="list-style: none; padding: 0; margin: 0;">
           <li style="margin-bottom: 12px;"><a href="#why" style="color: #94a3b8; text-decoration: none; font-size: 0.95rem; transition: color 0.3s;">Tentang Kami</a></li>
-          <li style="margin-bottom: 12px;"><a href="<?= site_url('subscription'); ?>" style="color: #94a3b8; text-decoration: none; font-size: 0.95rem; transition: color 0.3s;">Harga</a></li>
+          <li style="margin-bottom: 12px;"><a href="<?= site_url('subscription/pricing'); ?>" style="color: #94a3b8; text-decoration: none; font-size: 0.95rem; transition: color 0.3s;">Harga</a></li>
           <li style="margin-bottom: 12px;"><a href="#" style="color: #94a3b8; text-decoration: none; font-size: 0.95rem; transition: color 0.3s;">Karir</a></li>
           <li style="margin-bottom: 12px;"><a href="#" style="color: #94a3b8; text-decoration: none; font-size: 0.95rem; transition: color 0.3s;">Kontak</a></li>
         </ul>

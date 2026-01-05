@@ -125,7 +125,7 @@ $user = array_merge([
       background: linear-gradient(135deg, #fff9f0 0%, #ffffff 100%);
     }
 
-    .dashboard-card.operational {
+    .dashboard-card.operasional {
       background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%);
     }
 
@@ -146,7 +146,7 @@ $user = array_merge([
       box-shadow: 0 12px 30px rgba(251, 191, 36, 0.3);
     }
 
-    .dashboard-card.operational .card-icon {
+    .dashboard-card.operasional .card-icon {
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
       box-shadow: 0 12px 30px rgba(28, 100, 148, 0.3);
     }
@@ -272,7 +272,7 @@ $user = array_merge([
     <div class="dashboard-cards">
       
       <!-- Dashboard Operasional (Sudah Punya Usaha) -->
-      <div class="dashboard-card operational" onclick="selectDashboard('operational')">
+      <div class="dashboard-card operasional" onclick="selectDashboard('operasional')">
         <div class="card-icon">🚀</div>
         <h3>Sudah Memiliki Usaha</h3>
         <div class="subtitle">Dashboard Operasional</div>

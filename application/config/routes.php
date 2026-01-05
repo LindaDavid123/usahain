@@ -56,8 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 // User routes (friendly URLs)
 $route['dashboard'] = 'user/dashboard';  // User dashboard dengan modal penjualan
 $route['risiko/dashboard'] = 'risiko/dashboard';  // Dashboard Manajemen Risiko
-$route['usahain/info'] = 'info/index';  // Rekomendasi Informasi Bisnis
-$route['info'] = 'info/index';  // Rekomendasi Informasi Bisnis (alias)
+$route['info'] = 'info';  // Rekomendasi Informasi Bisnis
 $route['users'] = 'user/index';
 $route['users/create'] = 'user/create';
 $route['users/view/(:num)'] = 'user/view/$1';

@@ -1246,7 +1246,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
             <div class="tool-icon info" style="color:#fff">ℹ️</div>
             <div class="tool-title">Rekomendasi Informasi Bisnis</div>
             <div class="tool-desc">Dapatkan informasi dan tips bisnis dari para ahli untuk mengembangkan usaha</div>
-            <a href="<?= site_url('info'); ?>">Baca Selengkapnya</a>
+            <a href="<?= site_url('info'); ?>">Baca Selanjutnya</a>
         </div>
     </div>
 

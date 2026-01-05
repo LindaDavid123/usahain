@@ -35,6 +35,7 @@ class Analisis extends CI_Controller {
     // Create analisis
     public function create()
     {
+        $success_message = null;
         if ($this->input->method() === 'post') {
             $this->form_validation->set_rules('nama_produk', 'Nama Produk', 'required|max_length[250]');
             $this->form_validation->set_rules('analisis', 'Analisis', 'required');
@@ -51,12 +52,13 @@ class Analisis extends CI_Controller {
                     'biaya_produksi' => $this->input->post('biaya_produksi'),
                 ];
                 $this->db->insert('analisis_produk', $data);
-                redirect('analisis');
-                return;
+                $success_message = 'Data analisis produk berhasil disimpan!';
+                // Kosongkan value form setelah sukses
+                $_POST = [];
             }
         }
 
-        $this->load->view('analisis/form');
+        $this->load->view('analisis/form', isset($success_message) ? ['success_message' => $success_message] : []);
     }
 
     // Edit analisis

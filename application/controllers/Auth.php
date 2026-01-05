@@ -162,15 +162,15 @@ class Auth extends CI_Controller {
     /**
      * Set Dashboard Type
      */
-    public function set_dashboard_type($type = 'operational')
+    public function set_dashboard_type($type = 'operasional')
     {
         if (!$this->session->userdata('id_user')) {
             redirect('auth/login');
         }
 
         // Validasi tipe dashboard
-        if (!in_array($type, ['planning', 'operational'])) {
-            $type = 'operational';
+        if (!in_array($type, ['planning', 'operasional'])) {
+            $type = 'operasional';
         }
 
         // Set session
