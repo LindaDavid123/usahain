@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Hpp extends CI_Controller {
@@ -49,9 +49,38 @@ class Hpp extends CI_Controller {
                     'total_biaya' => $total_biaya,
                     'harga_jual' => $harga_jual,
                 ];
-                $this->db->insert('kalkulator_hpp', $data);
+                $insert_result = $this->db->insert('kalkulator_hpp', $data);
+                
+                // Check if this is AJAX request
+                if ($this->input->is_ajax_request()) {
+                    header('Content-Type: application/json; charset=utf-8');
+                    if ($insert_result) {
+                        http_response_code(200);
+                        echo json_encode([
+                            'status' => 'success',
+                            'message' => 'Data HPP berhasil ditambahkan!'
+                        ]);
+                    } else {
+                        http_response_code(500);
+                        echo json_encode([
+                            'status' => 'error',
+                            'message' => 'Gagal menyimpan data ke database'
+                        ]);
+                    }
+                    exit();
+                }
                 redirect('hpp');
                 return;
+            } else {
+                if ($this->input->is_ajax_request()) {
+                    header('Content-Type: application/json; charset=utf-8');
+                    http_response_code(400);
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Validasi gagal: ' . validation_errors()
+                    ]);
+                    exit();
+                }
             }
         }
         $this->load->view('hpp/form');
@@ -80,7 +109,26 @@ class Hpp extends CI_Controller {
                     'total_biaya' => $total_biaya,
                     'harga_jual' => $this->input->post('harga_jual'),
                 ];
-                $this->db->where('id_hpp', $id)->update('kalkulator_hpp', $update_data);
+                $update_result = $this->db->where('id_hpp', $id)->update('kalkulator_hpp', $update_data);
+                
+                // Check if this is AJAX request
+                if ($this->input->is_ajax_request()) {
+                    header('Content-Type: application/json; charset=utf-8');
+                    if ($update_result) {
+                        http_response_code(200);
+                        echo json_encode([
+                            'status' => 'success',
+                            'message' => 'Data HPP berhasil diupdate!'
+                        ]);
+                    } else {
+                        http_response_code(500);
+                        echo json_encode([
+                            'status' => 'error',
+                            'message' => 'Gagal mengupdate data ke database'
+                        ]);
+                    }
+                    exit();
+                }
                 redirect('hpp');
                 return;
             }

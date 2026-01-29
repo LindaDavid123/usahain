@@ -1,4 +1,4 @@
-﻿xx<?php
+xx<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Analisis extends CI_Controller {

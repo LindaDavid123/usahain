@@ -177,150 +177,559 @@
     }
     </script>
     <style>
-        :root {
-            /* Color System - Usahain Brand */
-            --primary: #1F6B99;           /* Main brand blue */
-            --primary-dark: #154A6F;      /* Dark blue */
-            --primary-light: #2E7DB9;     /* Light blue */
-            --accent: #7EC8E3;            /* Light cyan accent */
-            --accent-dark: #5BA3BF;       /* Medium cyan */
-            --success: #2E7D32;           /* Green */
-            --warning: #F57C00;           /* Orange */
-            --danger: #C62828;            /* Red */
-            --info: #1976D2;              /* Info blue */
-            --text-dark: #1E293B;         /* Dark text */
-            --text-muted: #64748B;        /* Muted text */
-            --border-color: #E2E8F0;      /* Light border */
-            --bg-light: #F8FAFC;          /* Light background */
-            --bg-muted: #f0f4f8;          /* Muted background */
-            --gradient-primary: linear-gradient(135deg, #1F6B99 0%, #2E7DB9 100%);
-            --gradient-accent: linear-gradient(135deg, #7EC8E3 0%, #5BA3BF 100%);
-            --gradient-dark: linear-gradient(135deg, #154A6F 0%, #0F2E47 100%);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f0f8fc 100%);
+            min-height: 100vh;
+            padding: 60px 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* === CLOSE BUTTON === */
+        .close-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #64748b;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            background: #f8fafc;
+            border-color: #1f6b99;
+            color: #1f6b99;
+            box-shadow: 0 4px 12px rgba(31, 107, 153, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* === PRICING HEADER === */
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 60px;
         }
 
         .pricing-header h1 {
             font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-weight: 800;
+            color: #1e293b;
             margin-bottom: 12px;
+            letter-spacing: -0.5px;
         }
-        .pricing-header p { font-size: 1.1rem; color: var(--text-muted); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 40px; }
-        .pricing-card { background: white; border-radius: 24px; padding: 36px 28px; box-shadow: 0 4px 20px rgba(31, 107, 153, 0.08); transition: all 0.3s ease; position: relative; border: 3px solid transparent; }
-        .pricing-card:hover { transform: translateY(-8px); box-shadow: 0 12px 40px rgba(31, 107, 153, 0.15); }
-        .pricing-card.starter { background: linear-gradient(135deg, #ffe4e8 0%, #ffd4db 100%); }
-        .pricing-card.essential { background: linear-gradient(135deg, #cfe5f2 0%, #b8d9ed 100%); border-color: var(--primary); }
-        .pricing-card.growth { background: linear-gradient(135deg, #e4d9f5 0%, #d4c5ed 100%); }
-        .pricing-card.elite { background: linear-gradient(135deg, #fff4d9 0%, #ffe8b8 100%); }
-        .badge-top { position: absolute; top: -12px; right: 20px; background: #FFD700; color: var(--primary); padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 700; text-transform: uppercase; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4); }
-        .badge-top.promo { background: #FFD700; }
-        .badge-top.populer { background: #ff9800; color: white; }
-        .badge-top.terbaik { background: var(--success); color: white; }
-        .plan-name { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
-        .starter .plan-name { color: #e74c3c; }
-        .essential .plan-name { color: var(--primary); }
-        .growth .plan-name { color: #9b59ff; }
-        .elite .plan-name { color: #ff9800; }
-        .plan-subtitle { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px; font-style: italic; }
-        .price-tag { font-size: 3rem; font-weight: 700; margin-bottom: 8px; line-height: 1; }
-        .starter .price-tag { color: #e74c3c; }
-        .essential .price-tag { color: var(--primary); }
-        .growth .price-tag { color: #9b59ff; }
-        .elite .price-tag { color: #ff9800; }
-        .price-period { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px; }
-        .features-list { list-style: none; padding: 0; margin: 24px 0; }
-        .features-list li { padding: 10px 0; color: var(--text-dark); display: flex; align-items: flex-start; gap: 8px; }
-        .features-list li:before { content: "✓"; color: var(--success); font-weight: bold; font-size: 1.2rem; }
-        .btn-choose { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
-        .starter .btn-choose { background: #e74c3c; color: white; }
-        .essential .btn-choose { background: var(--primary); color: white; }
-        .growth .btn-choose { background: #9b59ff; color: white; }
-        .elite .btn-choose { background: #ff9800; color: white; }
-        .btn-choose:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); }
-        .footer-note { text-align: center; margin-top: 40px; color: var(--text-muted); }
-        .footer-note a { color: var(--primary); text-decoration: none; font-weight: 600; }
-        @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+        .pricing-header p {
+            font-size: 1.1rem;
+            color: #64748b;
+        }
+
+        /* === TABS === */
+        .pricing-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 60px;
+        }
+
+        .tab-btn {
+            padding: 12px 32px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: #64748b;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .tab-btn:hover {
+            border-color: #1f6b99;
+            color: #1f6b99;
+            background: #f0f6fb;
+        }
+
+        .tab-btn.active {
+            background: #1f6b99;
+            color: white;
+            border-color: #1f6b99;
+            box-shadow: 0 4px 12px rgba(31, 107, 153, 0.3);
+        }
+
+        /* === PRICING GRID === */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        /* === PRICING CARD === */
+        .pricing-card {
+            border-radius: 16px;
+            padding: 32px 24px;
+            border: 2px solid #e2e8f0;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Starter - Pink */
+        .pricing-card:nth-child(1) {
+            background: #FCE4E6;
+            border-top: 4px solid #E74C3C;
+        }
+
+        /* Essential - Blue */
+        .pricing-card:nth-child(2) {
+            background: #E3F2FD;
+            border-top: 4px solid #1F6B99;
+        }
+
+        /* Growth - Purple */
+        .pricing-card:nth-child(3) {
+            background: #EDE9FE;
+            border-top: 4px solid #7C3AED;
+        }
+
+        /* Elite - Yellow/Orange */
+        .pricing-card:nth-child(4) {
+            background: #FEF3E2;
+            border-top: 4px solid #F59E0B;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(31, 107, 153, 0.12);
+        }
+
+        /* Highlighted card untuk Growth/Populer */
+        .pricing-card.highlighted {
+            border-color: #7C3AED;
+            transform: scale(1.02);
+        }
+
+        /* === BADGE === */
+        .badge-popular {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, #1f6b99 0%, #154a6f 100%);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(31, 107, 153, 0.3);
+        }
+
+        /* === PLAN NAME === */
+        .plan-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .plan-subtitle {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        /* === PRICE === */
+        .price-section {
+            margin-bottom: 4px;
+        }
+
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f6b99;
+            letter-spacing: -0.5px;
+        }
+
+        .price-period {
+            font-size: 0.95rem;
+            color: #64748b;
+            font-weight: 500;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .plan-description {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 24px;
+            min-height: 20px;
+        }
+
+        /* === FEATURES LIST === */
+        .features-list {
+            list-style: none;
+            margin: 0 0 32px 0;
+            flex-grow: 1;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            color: #475569;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            color: #1f6b99;
+            font-weight: 800;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* === BUTTON === */
+        .btn-choose {
+            width: 100%;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-transform: capitalize;
+            margin-top: auto;
+            color: white;
+        }
+
+        .pricing-card:nth-child(1) .btn-choose {
+            background: #E74C3C;
+        }
+
+        .pricing-card:nth-child(1) .btn-choose:hover {
+            background: #C0392B;
+        }
+
+        .pricing-card:nth-child(2) .btn-choose {
+            background: #1F6B99;
+        }
+
+        .pricing-card:nth-child(2) .btn-choose:hover {
+            background: #154A6F;
+        }
+
+        .pricing-card:nth-child(3) .btn-choose {
+            background: #7C3AED;
+        }
+
+        .pricing-card:nth-child(3) .btn-choose:hover {
+            background: #6D28D9;
+        }
+
+        .pricing-card:nth-child(4) .btn-choose {
+            background: #F59E0B;
+        }
+
+        .pricing-card:nth-child(4) .btn-choose:hover {
+            background: #D97706;
+        }
+
+        .btn-choose:active {
+            transform: translateY(0);
+        }
+
+        /* === FOOTER NOTE === */
+        .footer-note {
+            text-align: center;
+            margin-top: 60px;
+            padding: 32px;
+            background: white;
+            border-radius: 16px;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .footer-note a {
+            color: #1f6b99;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .footer-note a:hover {
+            color: #154a6f;
+            text-decoration: underline;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 1200px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .pricing-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .pricing-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .pricing-card {
+                padding: 28px 24px;
+            }
+
+            .pricing-card.highlighted {
+                transform: scale(1);
+            }
+
+            .pricing-card.highlighted:hover {
+                transform: translateY(-8px) scale(1);
+            }
+
+            .price-tag {
+                font-size: 2rem;
+            }
+
+            .features-list li {
+                font-size: 0.9rem;
+                padding: 10px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .pricing-header {
+                margin-bottom: 40px;
+            }
+
+            .pricing-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .pricing-header p {
+                font-size: 0.95rem;
+            }
+
+            .plan-name {
+                font-size: 1.35rem;
+            }
+
+            .price-tag {
+                font-size: 1.75rem;
+            }
+
+            .btn-choose {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+
+            .features-list li {
+                font-size: 0.85rem;
+                padding: 8px 0;
+            }
+
+            .pricing-card {
+                padding: 24px;
+            }
+
+            .badge-popular {
+                padding: 5px 12px;
+                font-size: 0.7rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Close Button -->
+    <button class="close-btn" onclick="window.location.href='<?= site_url('auth/dashboard_operasional'); ?>'" title="Kembali ke Dashboard">×</button>
+
     <div class="container">
+        <!-- Header -->
         <div class="pricing-header">
             <h1>Pilih Paket yang Tepat untuk Bisnis Anda</h1>
             <p>Mulai gratis atau tingkatkan dengan fitur premium</p>
         </div>
 
-        <div class="pricing-grid">
-            <!-- Starter -->
-            <div class="pricing-card starter">
-                <div class="plan-name">Starter</div>
-                <div class="plan-subtitle">Mulai Perjalanan</div>
-                <div class="price-tag">Rp0</div>
-                <div class="price-period">Gratis Selamanya</div>
-
-                <ul class="features-list">
-                    <li>3 AI Advisor/bulan</li>
-                    <li>Max 20 transaksi</li>
-                    <li>Dashboard dasar</li>
-                </ul>
-
-                <button class="btn-choose" onclick="choosePlan('starter')">Pilih Paket</button>
-            </div>
-
-            <!-- Essential -->
-            <div class="pricing-card essential">
-                <span class="badge-top promo">PROMO</span>
-                <div class="plan-name">Essential</div>
-                <div class="plan-subtitle">Otomatisasi Efisien</div>
-                <div class="price-tag">Rp18K</div>
-                <div class="price-period">per bulan</div>
-
-                <ul class="features-list">
-                    <li>10 AI Advisor/bulan</li>
-                    <li>Unlimited pencatatan</li>
-                    <li>Export PDF</li>
-                </ul>
-
-                <button class="btn-choose" onclick="choosePlan('essential')">Pilih Paket</button>
-            </div>
-
-            <!-- Growth -->
-            <div class="pricing-card growth">
-                <span class="badge-top populer">POPULER</span>
-                <div class="plan-name">Growth</div>
-                <div class="plan-subtitle">Kembangkan Bisnis</div>
-                <div class="price-tag">Rp45K</div>
-                <div class="price-period">per bulan</div>
-
-                <ul class="features-list">
-                    <li>Unlimited AI Advisor</li>
-                    <li>5 Analisis kompetitor</li>
-                    <li>Smart Alert</li>
-                </ul>
-
-                <button class="btn-choose" onclick="choosePlan('growth')">Pilih Paket</button>
-            </div>
-
-            <!-- Elite -->
-            <div class="pricing-card elite">
-                <span class="badge-top terbaik">TERBAIK</span>
-                <div class="plan-name">Elite</div>
-                <div class="plan-subtitle">Pendampingan Personal</div>
-                <div class="price-tag">Rp85K</div>
-                <div class="price-period">per bulan</div>
-
-                <ul class="features-list">
-                    <li>2 sesi konsultasi 1-on-1</li>
-                    <li>Unlimited analisis</li>
-                    <li>Priority Support</li>
-                </ul>
-
-                <button class="btn-choose" onclick="choosePlan('elite')">Pilih Paket</button>
-            </div>
+        <!-- Tabs -->
+        <div class="pricing-tabs">
+            <button class="tab-btn active" onclick="switchTab('bulan')">Bulan</button>
+            <button class="tab-btn" onclick="switchTab('pertahun')">Pertahun</button>
         </div>
 
+        <!-- Pricing Grid -->
+        <div class="pricing-grid" id="pricingGrid">
+        </div>
+
+        <!-- Footer Note -->
         <div class="footer-note">
-            <p>💡 <strong>Detail lengkap fitur dan perbandingan tersedia di</strong> <a href="<?php echo site_url('subscription/compare'); ?>">halaman langganan</a></p>
+            <p><strong>Need more capabilities for your business?</strong><br>See <a href="#">Enterprise</a></p>
         </div>
     </div>
-</body>
-</html>
+
+    <script>
+        const pricingData = {
+            bulan: [
+                {
+                    name: 'Starter',
+                    subtitle: 'Mulai Perjalanan',
+                    price: 'Rp0',
+                    period: 'Gratis Selamanya',
+                    badge: '',
+                    features: ['3 AI Advisor/bulan', 'Max 20 transaksi', 'Dashboard dasar'],
+                    plan: 'starter'
+                },
+                {
+                    name: 'Essential',
+                    subtitle: 'Otomatisasi Efisien',
+                    price: 'Rp18K',
+                    period: 'per bulan',
+                    badge: 'PROMO',
+                    features: ['10 AI Advisor/bulan', 'Unlimited pencatatan', 'Export PDF'],
+                    plan: 'essential'
+                },
+                {
+                    name: 'Growth',
+                    subtitle: 'Kembangkan Bisnis',
+                    price: 'Rp45K',
+                    period: 'per bulan',
+                    badge: 'POPULER',
+                    features: ['Unlimited AI Advisor', '5 Analisis kompetitor', 'Smart Alert'],
+                    plan: 'growth',
+                    highlighted: true
+                },
+                {
+                    name: 'Elite',
+                    subtitle: 'Pendampingan Personal',
+                    price: 'Rp85K',
+                    period: 'per bulan',
+                    badge: 'TERBAIK',
+                    features: ['2 sesi konsultasi 1-on-1', 'Unlimited analisis', 'Priority Support'],
+                    plan: 'elite'
+                }
+            ],
+            pertahun: [
+                {
+                    name: 'Starter',
+                    subtitle: 'Mulai Perjalanan',
+                    price: 'Rp0',
+                    period: 'Gratis Selamanya',
+                    badge: '',
+                    features: ['3 AI Advisor/bulan', 'Max 20 transaksi', 'Dashboard dasar'],
+                    plan: 'starter'
+                },
+                {
+                    name: 'Essential',
+                    subtitle: 'Otomatisasi Efisien',
+                    price: 'Rp180K',
+                    period: 'per tahun',
+                    badge: 'PROMO',
+                    features: ['10 AI Advisor/bulan', 'Unlimited pencatatan', 'Export PDF'],
+                    plan: 'essential'
+                },
+                {
+                    name: 'Growth',
+                    subtitle: 'Kembangkan Bisnis',
+                    price: 'Rp450K',
+                    period: 'per tahun',
+                    badge: 'POPULER',
+                    features: ['Unlimited AI Advisor', '5 Analisis kompetitor', 'Smart Alert'],
+                    plan: 'growth',
+                    highlighted: true
+                },
+                {
+                    name: 'Elite',
+                    subtitle: 'Pendampingan Personal',
+                    price: 'Rp850K',
+                    period: 'per tahun',
+                    badge: 'TERBAIK',
+                    features: ['2 sesi konsultasi 1-on-1', 'Unlimited analisis', 'Priority Support'],
+                    plan: 'elite'
+                }
+            ]
+        };
+
+        function switchTab(tab) {
+            // Update active tab
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Render pricing cards
+            renderPricingCards(tab);
+        }
+
+        function renderPricingCards(tab) {
+            const grid = document.getElementById('pricingGrid');
+            const data = pricingData[tab];
+
+            grid.innerHTML = data.map(card => `
+                <div class="pricing-card ${card.highlighted ? 'highlighted' : ''}">
+                    ${card.badge ? `<span class="badge-popular">${card.badge}</span>` : ''}
+                    <div class="plan-name">${card.name}</div>
+                    <div class="plan-subtitle">${card.subtitle}</div>
+                    <div class="price-section">
+                        <span class="price-tag">${card.price}</span>
+                    </div>
+                    <span class="price-period">${card.period}</span>
+                    <div class="plan-description"></div>
+
+                    <ul class="features-list">
+                        ${card.features.map(feature => `<li>${feature}</li>`).join('')}
+                    </ul>
+
+                    <button class="btn-choose" onclick="choosePlan('${card.plan}')">Pilih Paket</button>
+                </div>
+            `).join('');
+        }
+
+        // Initialize with bulan
+        renderPricingCards('bulan');
+    </script>

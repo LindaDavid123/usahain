@@ -759,7 +759,7 @@
     <!-- NAVBAR INNER WRAPPER - CAPSULE DESIGN -->
     <div style="
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       width: 100%;
       background: #FFFFFF;
@@ -778,6 +778,7 @@
         gap: 12px;
         flex-shrink: 0;
         min-width: auto;
+        margin-right: auto;
       ">
         <img src="<?= base_url('assets/logo.png'); ?>" alt="Usahain Logo" style="
           width: 40px;
@@ -799,8 +800,8 @@
         gap: 8px;
         margin: 0;
         list-style: none;
-        flex: 1;
-        justify-content: center;
+        flex-shrink: 0;
+        justify-content: flex-start;
       " id="desktopMenu">
         <li class="nav-item" style="margin: 0;"><a class="nav-link" href="#features" style="
           color: #64748B;

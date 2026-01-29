@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Keuangan extends CI_Controller {
@@ -121,5 +121,169 @@ class Keuangan extends CI_Controller {
 
         $this->load->view('keuangan/summary', $data);
     }
+    
+    // API untuk get data transaksi (untuk frontend)
+    public function get_data()
+    {
+        header('Content-Type: application/json');
+        $id_user = $this->session->userdata('id_user');
+        if (!$id_user) {
+            echo json_encode(['success' => false, 'message' => 'User not logged in']);
+            return;
+        }
+        
+        $transaksi = $this->db->where('id_user', $id_user)
+            ->order_by('tanggal', 'DESC')
+            ->get('pencatatan_keuangan')
+            ->result();
+        
+        // Format tanggal untuk frontend
+        foreach ($transaksi as $tx) {
+            $date = new DateTime($tx->tanggal);
+            $tx->tanggal_display = $date->format('D, d F Y');
+            $tx->tanggal = $tx->tanggal; // Keep original date for sorting
+        }
+        
+        echo json_encode([
+            'success' => true,
+            'transaksi' => $transaksi
+        ]);
+    }
+    
+    // API untuk save transaksi dari frontend
+    public function save_transaksi()
+    {
+        header('Content-Type: application/json');
+        $id_user = $this->session->userdata('id_user');
+        if (!$id_user) {
+            echo json_encode(['success' => false, 'message' => 'User not logged in']);
+            return;
+        }
+        
+        $jenis = $this->input->post('jenis');
+        $deskripsi = $this->input->post('deskripsi');
+        $tanggal = $this->input->post('tanggal');
+        $jumlah = (int) $this->input->post('jumlah');
+        
+        // Validasi
+        if (!$jenis || !$deskripsi || !$tanggal || $jumlah <= 0) {
+            echo json_encode(['success' => false, 'message' => 'Invalid data']);
+            return;
+        }
+        
+        if (!in_array($jenis, ['masuk', 'keluar'])) {
+            echo json_encode(['success' => false, 'message' => 'Invalid jenis']);
+            return;
+        }
+        
+        // Map dari frontend (masuk/keluar) ke database (pemasukan/pengeluaran)
+        $jenis_db = ($jenis === 'masuk') ? 'pemasukan' : 'pengeluaran';
+        
+        $data = [
+            'id_user' => $id_user,
+            'jenis' => $jenis_db,
+            'deskripsi' => $deskripsi,
+            'tanggal' => $tanggal,
+            'nominal' => $jumlah,
+            'kategori' => $deskripsi, // Use deskripsi as kategori
+            'created_at' => date('Y-m-d H:i:s')
+        ];
+        
+        $this->db->insert('pencatatan_keuangan', $data);
+        $id_inserted = $this->db->insert_id();
+        
+        echo json_encode([
+            'success' => true,
+            'id_transaksi' => $id_inserted,
+            'message' => 'Data saved successfully'
+        ]);
+    }
+    
+    // API untuk update transaksi
+    public function update_transaksi($id = null)
+    {
+        header('Content-Type: application/json');
+        $id_user = $this->session->userdata('id_user');
+        if (!$id_user) {
+            echo json_encode(['success' => false, 'message' => 'User not logged in']);
+            return;
+        }
+        
+        if (!$id) {
+            echo json_encode(['success' => false, 'message' => 'ID required']);
+            return;
+        }
+        
+        // Check if transaction belongs to user
+        $check = $this->db->get_where('pencatatan_keuangan', 
+            ['id_transaksi' => $id, 'id_user' => $id_user])->row();
+        if (!$check) {
+            echo json_encode(['success' => false, 'message' => 'Transaction not found']);
+            return;
+        }
+        
+        $jenis = $this->input->post('jenis');
+        $deskripsi = $this->input->post('deskripsi');
+        $tanggal = $this->input->post('tanggal');
+        $jumlah = (int) $this->input->post('jumlah');
+        
+        // Validasi
+        if (!$jenis || !$deskripsi || !$tanggal || $jumlah <= 0) {
+            echo json_encode(['success' => false, 'message' => 'Invalid data']);
+            return;
+        }
+        
+        if (!in_array($jenis, ['masuk', 'keluar'])) {
+            echo json_encode(['success' => false, 'message' => 'Invalid jenis']);
+            return;
+        }
+        
+        $jenis_db = ($jenis === 'masuk') ? 'pemasukan' : 'pengeluaran';
+        
+        $update_data = [
+            'jenis' => $jenis_db,
+            'deskripsi' => $deskripsi,
+            'tanggal' => $tanggal,
+            'nominal' => $jumlah,
+            'kategori' => $deskripsi
+        ];
+        
+        $this->db->where('id_transaksi', $id)->update('pencatatan_keuangan', $update_data);
+        
+        echo json_encode([
+            'success' => true,
+            'message' => 'Data updated successfully'
+        ]);
+    }
+    
+    // API untuk delete transaksi
+    public function delete_transaksi($id = null)
+    {
+        header('Content-Type: application/json');
+        $id_user = $this->session->userdata('id_user');
+        if (!$id_user) {
+            echo json_encode(['success' => false, 'message' => 'User not logged in']);
+            return;
+        }
+        
+        if (!$id) {
+            echo json_encode(['success' => false, 'message' => 'ID required']);
+            return;
+        }
+        
+        // Check if transaction belongs to user
+        $check = $this->db->get_where('pencatatan_keuangan', 
+            ['id_transaksi' => $id, 'id_user' => $id_user])->row();
+        if (!$check) {
+            echo json_encode(['success' => false, 'message' => 'Transaction not found']);
+            return;
+        }
+        
+        $this->db->delete('pencatatan_keuangan', ['id_transaksi' => $id]);
+        
+        echo json_encode([
+            'success' => true,
+            'message' => 'Data deleted successfully'
+        ]);
+    }
 }
-

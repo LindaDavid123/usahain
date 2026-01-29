@@ -33,7 +33,7 @@ class Dashboard extends CI_Controller {
             'transactions' => []
         ];
         
-        $this->load->view('dashboard/perencanaan', $data);
+        $this->load->view('auth/dashboard_planning', $data);
     }
     
     /**
@@ -56,7 +56,7 @@ class Dashboard extends CI_Controller {
             'transactions' => []
         ];
         
-        $this->load->view('dashboard/operasional', $data);
+        $this->load->view('auth/dashboard_operasional', $data);
     }
 }
 ?>

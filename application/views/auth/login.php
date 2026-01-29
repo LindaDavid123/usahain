@@ -8,7 +8,7 @@
     <style>
         :root{--bg:#F8FAFC;--card:#FFFFFF;--primary:#1F6B99;--primary-dark:#154A6F;--secondary:#7EC8E3;--success:#10B981;--danger:#EF4444;--text:#1E293B;--text-secondary:#64748B;--border:#E2E8F0}
         *{box-sizing:border-box}
-        body{margin:0;background:linear-gradient(135deg, #F8FAFC 0%, #E0EFF8 100%);font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:var(--text);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+        body{margin:0;background:linear-gradient(180deg, #F8FBFD 0%, #F7FAFC 100%);font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:var(--text);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
         
         .login-container{display:flex;width:100%;max-width:900px;background:var(--card);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.12);overflow:hidden;gap:0}
         

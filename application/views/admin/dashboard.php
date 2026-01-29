@@ -39,68 +39,113 @@ body{
 
 /* NAVBAR */
 .navbar-main {
-    background: var(--card);
+    background: linear-gradient(135deg, var(--card) 0%, #f8fafc 100%);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: var(--shadow);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(8px);
 }
 
 .navbar-container {
-    max-width: 1400px;
+    max-width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 40px;
-    height: 70px;
-    padding: 0 32px;
+    gap: 20px;
+    height: 72px;
+    padding: 0 48px;
 }
 
 .navbar-left {
     display: flex;
     align-items: center;
     min-width: fit-content;
+    gap: 8px;
+    flex: 0 0 auto;
 }
 
 .navbar-brand {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 12px;
     text-decoration: none;
     color: var(--primary);
     font-weight: 800;
-    font-size: 22px;
-    transition: opacity 0.2s;
+    font-size: 20px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    letter-spacing: -0.5px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .navbar-brand:hover {
-    opacity: 0.8;
+    background: rgba(28, 100, 148, 0.08);
+    color: var(--primary);
+}
+
+.navbar-brand:active {
+    transform: scale(0.98);
+}
+
+.navbar-brand:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.navbar-brand:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
 }
 
 .navbar-logo {
-    width:45px;
-    height:45px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
     border-radius: 8px;
+    box-shadow: none;
+    padding: 4px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
 }
 
-.navbar-logo img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
+.navbar-brand:hover .navbar-logo {
+    background: rgba(28, 100, 148, 0.1);
+}
+
+.navbar-brand:active .navbar-logo {
+    transform: scale(0.96);
+}
+
+.navbar-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .navbar-center {
     display: flex;
-    gap: 32px;
-    justify-content: center;
+    gap: 8px;
+    justify-content: flex-start;
     flex: 1;
     align-items: center;
+    min-width: 0;
 }
 
 .navbar-link {
@@ -108,36 +153,31 @@ body{
     color: var(--muted);
     text-decoration: none;
     font-weight: 500;
-    font-size: 14px;
-    transition: color 0.2s;
-    padding-bottom: 8px;
+    font-size: 13px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 8px 12px;
+    border-radius: 6px;
+    outline: none;
+    white-space: nowrap;
 }
 
 .navbar-link:hover {
     color: var(--primary);
+    background: rgba(28, 100, 148, 0.06);
 }
 
 .navbar-link.active {
     color: var(--primary);
-    font-weight: 700;
-}
-
-.navbar-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--primary);
-    border-radius: 2px;
+    font-weight: 600;
+    background: rgba(28, 100, 148, 0.08);
 }
 
 .navbar-right {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     min-width: fit-content;
+    flex: 0 0 auto;
 }
 
 .navbar-btn {
@@ -145,9 +185,9 @@ body{
     border-radius: 8px;
     border: none;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     white-space: nowrap;
     text-decoration: none;
     display: inline-flex;
@@ -158,6 +198,70 @@ body{
 .navbar-btn.btn-secondary {
     background: var(--bg);
     color: var(--muted);
+}
+
+.navbar-btn.btn-logout {
+    background: var(--danger);
+    color: white;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+}
+
+.navbar-btn.btn-logout:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+}
+
+.navbar-avatar {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary), #0f3a7d);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(28, 100, 148, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.navbar-avatar:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(28, 100, 148, 0.35);
+}
+
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-toggle:hover {
+    background: var(--bg);
+    color: var(--secondary);
+    transform: scale(1.05);
+}
+
+.navbar-toggle.active {
+    color: var(--secondary);
+    background: rgba(28, 100, 148, 0.1);
+}
+
+.navbar-toggle:active {
+    transform: scale(0.95);
+}
 }
 
 .navbar-btn.btn-secondary:hover {
@@ -199,13 +303,49 @@ body{
 .sidebar {
     position: fixed;
     left: 0;
-    top: 70px;
+    top: 74px;
     width: 250px;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 74px);
     background: var(--card);
     border-right: 1px solid var(--border);
     overflow-y: auto;
     padding: 20px 0;
+    z-index: 50;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.closed {
+    transform: translateX(-100%);
+    width: 250px;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+    width: 250px;
+}
+
+/* Sidebar overlay for mobile */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 45;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.sidebar-overlay.open {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+}
+    pointer-events: auto;
 }
 
 .sidebar-menu {
@@ -219,23 +359,26 @@ body{
 .sidebar-link {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 20px;
+    gap: 14px;
+    padding: 14px 22px;
     color: var(--muted);
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.2s;
-    border-left: 3px solid transparent;
+    font-size: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-left: 4px solid transparent;
+    margin-bottom: 6px;
 }
 
 .sidebar-link:hover {
     background: var(--bg);
     color: var(--primary);
     border-left-color: var(--primary);
+    padding-left: 24px;
 }
 
 .sidebar-link.active {
-    background: rgba(28, 100, 148, 0.1);
+    background: rgba(28, 100, 148, 0.12);
     color: var(--primary);
     border-left-color: var(--primary);
     font-weight: 700;
@@ -244,14 +387,15 @@ body{
 /* TABS STYLING */
 .tabs {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     border-bottom: 2px solid var(--border);
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     flex-wrap: wrap;
+    padding-bottom: 0;
 }
 
 .tab-btn {
-    padding: 12px 24px;
+    padding: 14px 28px;
     background: none;
     border: none;
     border-bottom: 3px solid transparent;
@@ -262,6 +406,7 @@ body{
     transition: all 0.3s ease;
     position: relative;
     white-space: nowrap;
+    margin-bottom: -2px;
 }
 
 .tab-btn:hover {
@@ -296,78 +441,90 @@ body{
 /* MAIN CONTENT */
 .main-content {
     margin-left: 250px;
-    padding: 30px;
+    padding: 40px 50px;
+    flex: 1;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--bg);
+    min-height: calc(100vh - 74px);
+}
+
+.main-content.sidebar-closed {
+    margin-left: 250px;
 }
 
 .page-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+    align-items: flex-start;
+    margin-bottom: 50px;
 }
 
 .page-title {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 800;
     color: var(--text);
+    letter-spacing: -0.5px;
 }
 
 .page-subtitle {
     color: var(--muted);
-    font-size: 14px;
-    margin-top: 4px;
+    font-size: 15px;
+    margin-top: 8px;
+    font-weight: 500;
 }
 
 /* CARDS GRID */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+    margin-bottom: 60px;
+    margin-top: 0;
 }
 
 .stat-card {
     background: var(--card);
     border-radius: 16px;
-    padding: 24px;
-    box-shadow: var(--shadow);
+    padding: 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     border: 1px solid var(--border);
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+    border-color: var(--primary);
 }
 
 .stat-card.green {
-    border-top: 3px solid var(--success);
+    border-top: 4px solid var(--success);
 }
 
 .stat-card.blue {
-    border-top: 3px solid var(--primary);
+    border-top: 4px solid var(--primary);
 }
 
 .stat-card.purple {
-    border-top: 3px solid #a855f7;
+    border-top: 4px solid #a855f7;
 }
 
 .stat-card.orange {
-    border-top: 3px solid var(--warning);
+    border-top: 4px solid var(--warning);
 }
 
 .stat-label {
     color: var(--muted);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
 .stat-value {
-    font-size: 32px;
+    font-size: 36px;
     font-weight: 800;
-    margin: 12px 0;
+    margin: 16px 0;
     color: var(--text);
 }
 
@@ -388,35 +545,46 @@ body{
 .section {
     background: var(--card);
     border-radius: 16px;
-    padding: 24px;
-    box-shadow: var(--shadow);
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     border: 1px solid var(--border);
-    margin-bottom: 30px;
+    margin-bottom: 50px;
+    transition: all 0.3s ease;
+}
+
+.section:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 16px;
+    margin-bottom: 32px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
 .section-title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
-    color: var(--primary);
+    color: var(--text);
+    margin: 0;
 }
 
 .section-actions {
     display: flex;
-    gap: 10px;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 /* TABLE */
 .table-responsive {
     overflow-x: auto;
+    margin-top: 20px;
+    margin-bottom: 24px;
 }
 
 table {
@@ -427,36 +595,45 @@ table {
 
 th {
     background: var(--bg);
-    padding: 12px;
+    padding: 16px 14px;
     text-align: left;
     font-weight: 700;
     color: var(--text);
     border-bottom: 2px solid var(--border);
+    letter-spacing: 0.3px;
 }
 
 td {
-    padding: 14px 12px;
+    padding: 16px 14px;
     border-bottom: 1px solid var(--border);
+    color: var(--text);
 }
 
 tr:hover {
     background: var(--bg);
+    transition: background 0.2s ease;
+}
+
+tr:last-child td {
+    border-bottom: none;
 }
 
 /* BUTTON */
 .btn {
-    padding: 10px 18px;
+    padding: 12px 24px;
     border-radius: 8px;
     border: none;
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    gap: 8px;
     white-space: nowrap;
+    letter-spacing: 0.3px;
 }
 
 .btn-primary {
@@ -572,10 +749,12 @@ tr:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     z-index: 1000;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(2px);
+    transition: background 0.3s ease;
 }
 
 .modal.active {
@@ -585,27 +764,40 @@ tr:hover {
 .modal-content {
     background: var(--card);
     border-radius: 16px;
-    padding: 30px;
-    max-width: 500px;
+    padding: 40px;
+    max-width: 550px;
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 16px;
+    margin-bottom: 28px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 18px;
 }
 
 .modal-title {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--text);
+    letter-spacing: -0.3px;
 }
 
 .modal-close {
@@ -614,38 +806,53 @@ tr:hover {
     font-size: 24px;
     cursor: pointer;
     color: var(--muted);
+    transition: all 0.2s ease;
+    padding: 8px;
+}
+
+.modal-close:hover {
+    color: var(--text);
+    transform: rotate(90deg);
 }
 
 .modal-body {
-    margin-bottom: 20px;
+    margin-bottom: 28px;
 }
 
 .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .form-label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     font-weight: 600;
     color: var(--text);
     font-size: 14px;
+    letter-spacing: 0.2px;
 }
 
 .form-control {
     width: 100%;
-    padding: 10px 12px;
+    padding: 12px 16px;
     border: 1px solid var(--border);
     border-radius: 8px;
     font-size: 14px;
     font-family: inherit;
-    transition: border-color 0.2s;
+    transition: all 0.3s ease;
+    background: var(--card);
+    color: var(--text);
+}
+
+.form-control:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .form-control:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(28, 100, 148, 0.1);
+    box-shadow: 0 0 0 3px rgba(28, 100, 148, 0.15);
 }
 
 /* RESPONSIVE */
@@ -656,6 +863,7 @@ tr:hover {
     
     .main-content {
         margin-left: 200px;
+        padding: 24px;
     }
 
     .cards-grid {
@@ -665,92 +873,620 @@ tr:hover {
     .navbar-center {
         gap: 20px;
     }
-}
 
-@media (max-width: 768px) {
-    .sidebar {
-        width: 0;
-        overflow: hidden;
-        transition: width 0.3s;
-    }
-
-    .sidebar.active {
-        width: 200px;
-    }
-
-    .main-content {
-        margin-left: 0;
+    .stat-card {
         padding: 20px;
-    }
-
-    .cards-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .navbar-container {
-        gap: 20px;
-        height: auto;
-        padding: 12px 16px;
-        flex-wrap: wrap;
-    }
-
-    .navbar-center {
-        order: 3;
-        width: 100%;
-        gap: 16px;
-        margin-top: 10px;
-    }
-
-    .page-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-    }
-
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .section-actions {
-        width: 100%;
-    }
-
-    .btn {
-        flex: 1;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 576px) {
-    .navbar-link {
-        display: none;
-    }
-
-    .page-title {
-        font-size: 22px;
     }
 
     .stat-value {
         font-size: 24px;
     }
 
+    .section {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar-container {
+        padding: 0 40px;
+        gap: 16px;
+    }
+
+    .navbar-center {
+        gap: 6px;
+    }
+
+    .navbar-link {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+    .navbar-btn {
+        padding: 9px 18px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-toggle {
+        display: block !important;
+    }
+
+    .navbar-main {
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .navbar-container {
+        padding: 0 16px;
+        height: 64px;
+        gap: 12px;
+        justify-content: space-between;
+    }
+
+    .navbar-left {
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .navbar-brand {
+        font-size: 17px;
+        gap: 8px;
+        padding: 6px 8px;
+        flex-shrink: 0;
+    }
+
+    .navbar-logo {
+        width: 44px;
+        height: 44px;
+        padding: 3px;
+    }
+
+    .navbar-center {
+        display: none;
+    }
+
+    .navbar-link {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+    .navbar-right {
+        gap: 8px;
+    }
+
+    .navbar-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    .navbar-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    /* Mobile sidebar overlay behavior */
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 64px;
+        width: 250px;
+        height: calc(100vh - 64px);
+        background: var(--card);
+        border-right: 1px solid var(--border);
+        overflow-y: auto;
+        padding: 20px 0;
+        z-index: 60;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.12);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sidebar.open {
+        transform: translateX(0) !important;
+    }
+
+    .sidebar.closed {
+        transform: translateX(-100%) !important;
+    }
+
+    .sidebar-overlay {
+        display: none;
+    }
+
+    .sidebar-overlay.open {
+        display: block !important;
+    }    .sidebar-overlay.open {
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 24px 16px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .page-header {
+        margin-bottom: 28px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .stat-label {
+        font-size: 12px;
+        letter-spacing: 0.6px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+        margin: 12px 0;
+    }
+
+    .section {
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 32px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+
+    .section-actions {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .section-actions .btn {
+        flex: 1;
+    }
+
+    .tabs {
+        overflow-x: auto;
+        gap: 6px;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+        padding: 12px 20px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    table {
+        font-size: 13px;
+        min-width: 550px;
+    }
+
+    th {
+        padding: 14px 10px;
+        font-size: 12px;
+    }
+
+    td {
+        padding: 12px 10px;
+    }
+
+    .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-control {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .badge {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+}
+
+    .badge-danger {
+        background-color: #ef4444;
+        color: white;
+    }
+
+    .badge-info {
+        background-color: #3b82f6;
+        color: white;
+    }
+
+    .badge-warning {
+        background-color: #f59e0b;
+        color: white;
+    }
+
+    /* Action Buttons in Table */
+    td .btn {
+        padding: 5px 10px;
+        font-size: 12px;
+        margin-right: 4px;
+        border: none;
+    }
+
+    .btn-sm {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .btn-info {
+        background-color: #3b82f6;
+        color: white;
+    }
+
+    .btn-info:hover {
+        background-color: #2563eb;
+        color: white;
+    }
+
+    .btn-warning {
+        background-color: #f59e0b;
+        color: white;
+    }
+
+    .btn-warning:hover {
+        background-color: #d97706;
+        color: white;
+    }
+
+    .btn-danger {
+        background-color: #ef4444;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #dc2626;
+        color: white;
+    }
+
+    .btn-primary {
+        background-color: #6366f1;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #4f46e5;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #6b7280;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #4b5563;
+        color: white;
+    }
+
+    /* Section Headers & Title */
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .section-title {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--primary);
+    }
+
+    .section-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .section-actions .btn {
+        flex-grow: 0;
+        white-space: nowrap;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .form-label {
+        font-weight: 500;
+        font-size: 14px;
+        color: var(--text);
+    }
+
+    .form-control {
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    /* Responsive Settings Grid */
+    .settings-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .section-actions {
+        flex-wrap: wrap;
+    }
+
+    .section-actions .btn {
+        min-width: 100px;
+        flex-grow: 1;
+    }
+
+    .form-control {
+        font-size: 14px;
+    }
+
+    /* Settings Grid Responsive */
+    .settings-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    }
+
+    .section-header {
+        gap: 12px;
+    }
+
+    .section-title {
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-main {
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .navbar-container {
+        padding: 0 12px;
+        height: 60px;
+        gap: 8px;
+    }
+
+    .navbar-left {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .navbar-brand {
+        font-size: 16px;
+        gap: 6px;
+        padding: 4px 6px;
+    }
+
+    .navbar-logo {
+        width: 40px;
+        height: 40px;
+        padding: 2px;
+    }
+
+    .navbar-center {
+        display: none;
+    }
+
+    .navbar-right {
+        gap: 6px;
+    }
+
+    .navbar-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    .navbar-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+    }
+
+    .main-content {
+        padding: 16px 12px;
+    }
+
+    .page-header {
+        margin-bottom: 20px;
+    }
+
+    .page-title {
+        font-size: 20px;
+    }
+
+    .page-subtitle {
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+    .cards-grid {
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .stat-card {
+        padding: 16px;
+        border-radius: 10px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+        font-size: 22px;
+        margin: 10px 0;
+    }
+
+    .stat-change {
+        font-size: 12px;
+    }
+
+    .section {
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 24px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 16px;
+    }
+
     .section-title {
         font-size: 16px;
     }
 
-    table {
-        font-size: 12px;
+    .section-actions {
+        width: 100%;
+        gap: 8px;
     }
 
-    th, td {
-        padding: 8px;
+    .section-actions .btn {
+        flex: 1;
+    }
+
+    .tabs {
+        gap: 4px;
+        margin-bottom: 16px;
+        padding-bottom: 10px;
+    }
+
+    .tab-btn {
+        padding: 10px 14px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .tab-content {
+        animation: none;
+    }
+
+    table {
+        font-size: 12px;
+        min-width: 450px;
+    }
+
+    th {
+        padding: 12px 8px;
+        font-size: 11px;
+    }
+
+    td {
+        padding: 10px 8px;
+    }
+
+    /* Hide extra columns in table on mobile */
+    table th:nth-child(4),
+    table td:nth-child(4) {
+        display: none;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 24px;
+        max-width: none;
+    }
+
+    .modal-header {
+        margin-bottom: 20px;
+    }
+
+    .modal-title {
+        font-size: 18px;
+    }
+
+    .form-group {
+        margin-bottom: 16px;
+    }
+
+    .form-label {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        padding: 10px 12px;
+        font-size: 14px;
     }
 
     .btn {
-        padding: 8px 12px;
-        font-size: 12px;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .btn-sm {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    .badge {
+        padding: 4px 10px;
+        font-size: 10px;
+    }
+    .section-actions {
+        width: 100%;
+    }
+
+    .section-actions .btn {
+        font-size: 11px;
+        padding: 6px 10px;
+    }
+}
+    td .btn {
+        padding: 4px 8px;
+        font-size: 11px;
+        margin-right: 2px;
     }
 }
 </style>
@@ -761,10 +1497,13 @@ tr:hover {
 <nav class="navbar-main">
     <div class="navbar-container">
         <div class="navbar-left">
-            <a href="<?= site_url('admin/dashboard'); ?>" class="navbar-brand">
+            <button class="navbar-toggle" id="sidebarToggle" onclick="toggleSidebar()" style="display: none; margin-right: 12px;">
+                <span>☰</span>
+            </button>
+            <button class="navbar-brand" onclick="toggleSidebar(event)" title="Toggle Sidebar">
                 <span class="navbar-logo"><img src="<?= base_url('assets/logo.png'); ?>" alt="Usahain"></span>
                 <span>Usahain Admin</span>
-            </a>
+            </button>
         </div>
         <div class="navbar-right">
             <div class="navbar-avatar" title="Profile Admin"><?= strtoupper(substr($this->session->userdata('nama') ?? 'A',0,1)); ?></div>
@@ -775,42 +1514,43 @@ tr:hover {
     </div>
 </nav>
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
+<!-- Sidebar Overlay untuk Mobile -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div><!-- SIDEBAR -->
+<aside class="sidebar closed" id="sidebar">
     <ul class="sidebar-menu">
         <li class="sidebar-item">
             <a href="javascript:void(0)" class="sidebar-link active" onclick="setActive(this); switchTab('overview')">
-                <span>📊</span> Dashboard
+                Dashboard
             </a>
         </li>
         <li class="sidebar-item">
             <a href="javascript:void(0)" class="sidebar-link" onclick="setActive(this); switchTab('pengguna')">
-                <span>👥</span> Pengguna
+                Pengguna
             </a>
         </li>
         <li class="sidebar-item">
             <a href="javascript:void(0)" class="sidebar-link" onclick="setActive(this); switchTab('bisnis')">
-                <span>🏢</span> Data Bisnis
+                Data Bisnis
             </a>
         </li>
         <li class="sidebar-item">
             <a href="javascript:void(0)" class="sidebar-link" onclick="setActive(this); switchTab('subscription')">
-                <span>💳</span> Subscription
+                Subscription
             </a>
         </li>
         <li class="sidebar-item">
             <a href="javascript:void(0)" class="sidebar-link" onclick="setActive(this); switchTab('fitur')">
-                <span>💡</span> Fitur
-            </a>
-        </li>
-        <li class="sidebar-item">
-            <a href="javascript:void(0)" class="sidebar-link" onclick="setActive(this); switchTab('pengaturan')">
-                <span>⚙️</span> Pengaturan
+                Fitur
             </a>
         </li>
         <li class="sidebar-item">
             <a href="javascript:void(0)" class="sidebar-link" onclick="setActive(this); switchTab('laporan')">
-                <span>📈</span> Laporan
+                Laporan
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="javascript:void(0)" class="sidebar-link" onclick="setActive(this); switchTab('pengaturan')">
+                Pengaturan
             </a>
         </li>
     </ul>
@@ -827,17 +1567,8 @@ tr:hover {
         </div>
     </div>
 
-    <!-- TABS -->
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('overview')">📊 Overview</button>
-        <button class="tab-btn" onclick="switchTab('pengguna')">👥 Pengguna</button>
-        <button class="tab-btn" onclick="switchTab('bisnis')">🏢 Data Bisnis</button>
-        <button class="tab-btn" onclick="switchTab('subscription')">💳 Subscription</button>
-        <button class="tab-btn" onclick="switchTab('fitur')">💡 Fitur</button>
-        <button class="tab-btn" onclick="switchTab('laporan')">📈 Laporan</button>
-        <button class="tab-btn" onclick="switchTab('filter')">🔍 Filter</button>
-        <button class="tab-btn" onclick="switchTab('pengaturan')">⚙️ Pengaturan</button>
-    </div>
+    <!-- TABS - Quick Navigation (Optional, can be removed) -->
+    <!-- This section is optional for quick filtering/viewing within Overview tab -->
 
     <!-- TAB: OVERVIEW -->
     <div id="overview" class="tab-content active">
@@ -864,79 +1595,19 @@ tr:hover {
             <div class="stat-value">Rp <?= number_format(isset($revenue) ? $revenue : 0,0,',','.'); ?></div>
             <div class="stat-change positive">+<?= isset($revenue_increase) ? $revenue_increase : '8'; ?>% dari bulan lalu</div>
         </div>
-    </div>
-
-    <!-- PENGGUNAAN FITUR -->
-    <div class="section">
-        <div class="section-header">
-            <h2 class="section-title">📈 Penggunaan Fitur (30 Hari)</h2>
-            <div class="section-actions">
-                <button class="btn btn-secondary btn-sm" onclick="refreshFeatureUsage()">🔄 Refresh</button>
-                <button class="btn btn-info btn-sm" onclick="openExportModal()">📥 Export</button>
-            </div>
-        </div>
-
-        <div class="table-responsive">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Fitur</th>
-                        <th>Penggunaan</th>
-                        <th>Persentase</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                    $features = array(
-                        array('name' => 'AI Advisor', 'count' => 1250, 'percent' => 95),
-                        array('name' => 'Kalkulator HPP', 'count' => 980, 'percent' => 78),
-                        array('name' => 'Pencatatan Keuangan', 'count' => 1100, 'percent' => 88),
-                        array('name' => 'Analisis Produk', 'count' => 650, 'percent' => 52),
-                        array('name' => 'Manajemen Risiko', 'count' => 520, 'percent' => 42),
-                    );
-                    
-                    if (!empty($features) && is_array($features)): 
-                        foreach($features as $f): 
-                    ?>
-                    <tr>
-                        <td><strong><?= $f['name']; ?></strong></td>
-                        <td>
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width:<?= $f['percent']; ?>%"></div>
-                            </div>
-                        </td>
-                        <td><span class="badge badge-info"><?= $f['percent']; ?>%</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-secondary" onclick="viewFeatureDetails('<?= $f['name']; ?>')">Detail</button>
-                        </td>
-                    </tr>
-                    <?php 
-                        endforeach; 
-                    else: 
-                    ?>
-                    <tr>
-                        <td colspan="4" style="text-align:center;color:var(--muted)">Tidak ada data penggunaan fitur.</td>
-                    </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
     </div><!-- End Overview Tab -->
 
     <!-- TAB: PENGGUNA -->
     <div id="pengguna" class="tab-content">
-        <div class="section-header">
-            <h2 class="section-title">👥 Pengguna Terbaru</h2>
+        <div class="section">
+            <div class="section-header">
+            <h2 class="section-title">Pengguna Terbaru</h2>
             <div class="section-actions">
                 <button class="btn btn-primary btn-sm" onclick="openAddUserModal()">+ Tambah Pengguna</button>
-                <button class="btn btn-secondary btn-sm" onclick="refreshUsers()">🔄 Refresh</button>
+                <button class="btn btn-secondary btn-sm" onclick="refreshUsers()">Refresh</button>
             </div>
-        </div>
 
-        <div class="table-responsive">
+            <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
@@ -976,6 +1647,7 @@ tr:hover {
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 
@@ -985,10 +1657,10 @@ tr:hover {
     <div id="fitur" class="tab-content">
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">📈 Penggunaan Fitur (30 Hari)</h2>
+                <h2 class="section-title">Penggunaan Fitur (30 Hari)</h2>
                 <div class="section-actions">
-                    <button class="btn btn-secondary btn-sm" onclick="refreshFeatureUsage()">🔄 Refresh</button>
-                    <button class="btn btn-info btn-sm" onclick="openExportModal()">📥 Export</button>
+                    <button class="btn btn-secondary btn-sm" onclick="refreshFeatureUsage()">Refresh</button>
+                    <button class="btn btn-info btn-sm" onclick="openExportModal()">Export</button>
                 </div>
             </div>
 
@@ -1042,7 +1714,7 @@ tr:hover {
 
         <div class="section" style="margin-top: 30px;">
             <div class="section-header">
-                <h2 class="section-title">📊 Statistik Fitur</h2>
+                <h2 class="section-title">Statistik Fitur</h2>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
                 <div class="stat-card blue">
@@ -1064,71 +1736,6 @@ tr:hover {
         </div>
     </div><!-- End Fitur Tab -->
 
-    <!-- TAB: FILTER -->
-    <div id="filter" class="tab-content">
-        <div class="section">
-            <div class="section-header">
-                <h2 class="section-title">🔍 Filter & Search Data</h2>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                <div class="form-group">
-                    <label class="form-label">Cari Pengguna</label>
-                    <input type="text" class="form-control" placeholder="Nama atau email...">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Status</label>
-                    <select class="form-control">
-                        <option value="">-- Semua Status --</option>
-                        <option value="aktif">Aktif</option>
-                        <option value="inactive">Inactive</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Paket</label>
-                    <select class="form-control">
-                        <option value="">-- Semua Paket --</option>
-                        <option value="free">Free</option>
-                        <option value="starter">Starter</option>
-                        <option value="premium">Premium</option>
-                        <option value="elite">Elite</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Tanggal</label>
-                    <input type="date" class="form-control">
-                </div>
-            </div>
-
-            <div style="margin-top: 20px; display: flex; gap: 10px;">
-                <button class="btn btn-primary" onclick="applyFilter()">🔍 Terapkan Filter</button>
-                <button class="btn btn-secondary" onclick="resetFilter()">↺ Reset</button>
-            </div>
-
-            <hr style="margin: 30px 0; border: 1px solid var(--border);">
-
-            <h3 style="color: var(--primary); margin-bottom: 20px;">Hasil Filter</h3>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Paket</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="5" style="text-align: center; color: var(--muted);">Gunakan filter untuk menampilkan data</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div><!-- End Filter Tab -->
-
     <!-- TAB: PENGATURAN -->
     <div id="pengaturan" class="tab-content">
         <div class="section">
@@ -1136,10 +1743,10 @@ tr:hover {
                 <h2 class="section-title">⚙️ Pengaturan Aplikasi</h2>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px;" class="settings-grid">
                 <!-- General Settings -->
                 <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--primary); margin-bottom: 16px;">📱 Pengaturan Umum</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 16px;">Pengaturan Umum</h3>
                     <div class="form-group">
                         <label class="form-label">Nama Aplikasi</label>
                         <input type="text" class="form-control" value="Usahain" onchange="saveSetting(this)">
@@ -1156,7 +1763,7 @@ tr:hover {
 
                 <!-- Security Settings -->
                 <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--primary); margin-bottom: 16px;">🔒 Keamanan</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 16px;">Keamanan</h3>
                     <div class="form-group">
                         <label class="form-label">
                             <input type="checkbox" checked> Aktifkan Two-Factor Authentication
@@ -1176,7 +1783,7 @@ tr:hover {
 
                 <!-- Email Settings -->
                 <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--primary); margin-bottom: 16px;">📧 Email Settings</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 16px;">Email Settings</h3>
                     <div class="form-group">
                         <label class="form-label">SMTP Host</label>
                         <input type="text" class="form-control" value="smtp.gmail.com" onchange="saveSetting(this)">
@@ -1185,12 +1792,12 @@ tr:hover {
                         <label class="form-label">SMTP Port</label>
                         <input type="number" class="form-control" value="587" onchange="saveSetting(this)">
                     </div>
-                    <button class="btn btn-info" onclick="testEmail()">📨 Test Email</button>
+                    <button class="btn btn-info" onclick="testEmail()">Test Email</button>
                 </div>
 
                 <!-- Payment Settings -->
                 <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--primary); margin-bottom: 16px;">💳 Payment Gateway</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 16px;">Payment Gateway</h3>
                     <div class="form-group">
                         <label class="form-label">Midtrans Server Key</label>
                         <input type="password" class="form-control" placeholder="Masukkan key..." onchange="saveSetting(this)">
@@ -1199,22 +1806,22 @@ tr:hover {
                         <label class="form-label">Midtrans Client Key</label>
                         <input type="password" class="form-control" placeholder="Masukkan key..." onchange="saveSetting(this)">
                     </div>
-                    <button class="btn btn-info" onclick="testPayment()">💰 Test Payment</button>
+                    <button class="btn btn-info" onclick="testPayment()">Test Payment</button>
                 </div>
 
                 <!-- Backup Settings -->
                 <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--primary); margin-bottom: 16px;">💾 Backup Database</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 16px;">Backup Database</h3>
                     <div style="margin-bottom: 12px;">
                         <p style="font-size: 13px; color: var(--muted);">Last Backup: 2026-01-08 15:30:00</p>
                     </div>
-                    <button class="btn btn-success" onclick="backupDatabase()" style="width: 100%; margin-bottom: 8px;">📥 Backup Sekarang</button>
-                    <button class="btn btn-secondary" onclick="restoreDatabase()" style="width: 100%;">↩️ Restore Backup</button>
+                    <button class="btn btn-success" onclick="backupDatabase()" style="width: 100%; margin-bottom: 8px;">Backup Sekarang</button>
+                    <button class="btn btn-secondary" onclick="restoreDatabase()" style="width: 100%;">Restore Backup</button>
                 </div>
 
                 <!-- System Info -->
                 <div style="border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
-                    <h3 style="color: var(--primary); margin-bottom: 16px;">ℹ️ Informasi Sistem</h3>
+                    <h3 style="color: var(--primary); margin-bottom: 16px;">Informasi Sistem</h3>
                     <div style="font-size: 13px; color: var(--muted); line-height: 1.8;">
                         <p><strong>Versi App:</strong> 1.0.0</p>
                         <p><strong>Database:</strong> MySQL 5.7</p>
@@ -1231,9 +1838,9 @@ tr:hover {
     <div id="bisnis" class="tab-content">
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">🏢 Data Bisnis Pengguna</h2>
+                <h2 class="section-title">Data Bisnis Pengguna</h2>
                 <div class="section-actions">
-                    <button class="btn btn-secondary btn-sm" onclick="refreshBisnis()">🔄 Refresh</button>
+                    <button class="btn btn-secondary btn-sm" onclick="refreshBisnis()">Refresh</button>
                     <button class="btn btn-success btn-sm" onclick="openAddBisnis()">➕ Tambah</button>
                 </div>
             </div>
@@ -1281,9 +1888,9 @@ tr:hover {
     <div id="subscription" class="tab-content">
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">💳 Subscription Pengguna</h2>
+                <h2 class="section-title">Subscription Pengguna</h2>
                 <div class="section-actions">
-                    <button class="btn btn-secondary btn-sm" onclick="refreshSubscription()">🔄 Refresh</button>
+                    <button class="btn btn-secondary btn-sm" onclick="refreshSubscription()">Refresh</button>
                 </div>
             </div>
 
@@ -1332,10 +1939,10 @@ tr:hover {
     <div id="laporan" class="tab-content">
         <div class="section">
             <div class="section-header">
-                <h2 class="section-title">📈 Laporan & Analisis</h2>
+                <h2 class="section-title">Laporan & Analisis</h2>
                 <div class="section-actions">
-                    <button class="btn btn-secondary btn-sm" onclick="generateReport()">📊 Generate</button>
-                    <button class="btn btn-info btn-sm" onclick="openExportModal()">📥 Export</button>
+                    <button class="btn btn-secondary btn-sm" onclick="generateReport()">Generate</button>
+                    <button class="btn btn-info btn-sm" onclick="openExportModal()">Export</button>
                 </div>
             </div>
 
@@ -1606,6 +2213,118 @@ tr:hover {
     function generateReport() {
         alert('Generate laporan sedang diproses...');
     }
+
+    // Sidebar Toggle dengan Real-time Animation
+    let sidebarOpen = false;
+
+    function toggleSidebar(event) {
+        if (event) {
+            event.preventDefault();
+        }
+        
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        
+        if (!sidebar) {
+            console.error('Sidebar not found');
+            return;
+        }
+        
+        const isMobile = window.innerWidth <= 768;
+        
+        console.log('Toggle Sidebar - Mobile:', isMobile, 'Open:', sidebarOpen, 'Width:', window.innerWidth);
+        
+        // Toggle sidebar on mobile
+        sidebarOpen = !sidebarOpen;
+        
+        if (sidebarOpen) {
+            sidebar.classList.remove('closed');
+            sidebar.classList.add('open');
+            if (overlay) overlay.classList.add('open');
+            console.log('Sidebar opened');
+        } else {
+            sidebar.classList.remove('open');
+            sidebar.classList.add('closed');
+            if (overlay) overlay.classList.remove('open');
+            console.log('Sidebar closed');
+        }
+    }
+
+    function openSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const isMobile = window.innerWidth <= 768;
+        
+        if (!sidebar || sidebarOpen) return;
+        
+        if (isMobile) {
+            sidebarOpen = true;
+            sidebar.classList.remove('closed');
+            sidebar.classList.add('open');
+            if (overlay) overlay.classList.add('open');
+        }
+    }
+
+    function closeSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const isMobile = window.innerWidth <= 768;
+        
+        if (!sidebar || !sidebarOpen) return;
+        
+        if (isMobile) {
+            sidebarOpen = false;
+            sidebar.classList.remove('open');
+            sidebar.classList.add('closed');
+            if (overlay) overlay.classList.remove('open');
+        }
+    }
+
+    // Show hamburger toggle on mobile
+    function updateResponsive() {
+        const toggle = document.getElementById('sidebarToggle');
+        if (toggle) {
+            if (window.innerWidth <= 768) {
+                toggle.style.display = 'block';
+            } else {
+                toggle.style.display = 'none';
+                closeSidebar();
+            }
+        }
+    }
+
+    // Call on page load and window resize
+    updateResponsive();
+    window.addEventListener('resize', updateResponsive);
+    
+    // Initialize sidebar state
+    const initSidebar = document.getElementById('sidebar');
+    if (initSidebar) {
+        console.log('Sidebar initialized - has closed class:', initSidebar.classList.contains('closed'));
+        console.log('Sidebar classes:', initSidebar.className);
+    }
+
+    // Close sidebar when clicking on a link (mobile only)
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                setTimeout(closeSidebar, 150);
+            }
+        });
+    });
+
+    // Close sidebar when clicking overlay
+    const overlay = document.getElementById('sidebarOverlay');
+    if (overlay) {
+        overlay.addEventListener('click', closeSidebar);
+    }
+
+    // Close sidebar on window resize if back to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && sidebarOpen) {
+            closeSidebar();
+        }
+    });
 
     // Close modal when clicking outside
     document.querySelectorAll('.modal').forEach(modal => {

@@ -138,20 +138,23 @@ $user = array_merge([
             border-radius: 10px;
             text-decoration: none;
             color: var(--text-secondary);
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-weight: 500;
             font-size: 14px;
+            position: relative;
         }
 
         .sidebar-menu-link:hover {
-            background: var(--bg);
+            background: rgba(31, 107, 153, 0.08);
             color: var(--primary);
+            transform: translateX(4px);
         }
 
         .sidebar-menu-link.active {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: #fff;
             font-weight: 600;
+            box-shadow: 0 4px 12px rgba(31, 107, 153, 0.2);
         }
 
         .sidebar-menu-icon {
@@ -190,11 +193,18 @@ $user = array_merge([
         .sidebar-footer-btn.logout-btn {
             background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
             color: #fff;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
         }
 
         .sidebar-footer-btn.logout-btn:hover {
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
             transform: translateY(-2px);
+        }
+
+        .sidebar-footer-btn.logout-btn:active {
+            transform: translateY(0);
         }
 
         /* ===== MAIN WRAPPER ===== */
@@ -217,14 +227,23 @@ $user = array_merge([
             justify-content: space-between;
             align-items: center;
             height: 70px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
             position: sticky;
             top: 0;
             z-index: 40;
         }
 
         .header-left { display: flex; align-items: center; gap: 16px; flex: 1; }
-        .header-title { font-size: 20px; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+        .header-title { 
+            font-size: 22px; 
+            font-weight: 700; 
+            color: var(--primary); 
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
 
         .header-right {
             display: flex;
@@ -235,8 +254,8 @@ $user = array_merge([
         .header-icon-btn {
             width: 40px;
             height: 40px;
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
             background: #fff;
             color: var(--text-secondary);
             cursor: pointer;
@@ -244,12 +263,13 @@ $user = array_merge([
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .header-icon-btn:hover {
-            background: var(--bg);
+            background: var(--primary-very-light);
             color: var(--primary);
+            border-color: var(--primary-light);
         }
 
         .header-divider { width: 1px; height: 24px; background: var(--border); }
@@ -258,7 +278,15 @@ $user = array_merge([
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 0 12px;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 8px;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .header-user:hover {
+            background: var(--primary-very-light);
         }
 
         .header-user-avatar {
@@ -277,6 +305,82 @@ $user = array_merge([
         .header-user-info { display: flex; flex-direction: column; gap: 2px; }
         .header-user-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
         .header-user-email { font-size: 11px; color: var(--text-secondary); }
+
+        /* ===== USER DROPDOWN MENU ===== */
+        .user-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #fff;
+            border-radius: 10px;
+            min-width: 200px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(31, 107, 153, 0.1);
+            display: none;
+            flex-direction: column;
+            z-index: 100;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .user-dropdown-menu.show {
+            display: flex;
+            animation: slideDown 0.3s ease cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: var(--text-primary);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-align: left;
+            width: 100%;
+        }
+
+        .dropdown-item:hover {
+            background: var(--primary-very-light);
+            color: var(--primary);
+        }
+
+        .dropdown-item span:first-child {
+            font-size: 16px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 4px 0;
+        }
+
+        .dropdown-logout {
+            color: #EF4444;
+        }
+
+        .dropdown-logout:hover {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* ===== MAIN CONTENT ===== */
         .content {
@@ -302,14 +406,17 @@ $user = array_merge([
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 12px;
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: -0.5px;
             line-height: 1.2;
         }
 
         .welcome-card p {
             font-size: 1.1rem;
-            color: var(--primary-light);
+            color: var(--text-secondary);
             margin-bottom: 24px;
             line-height: 1.6;
             font-weight: 400;
@@ -321,7 +428,8 @@ $user = array_merge([
             border-radius: 14px;
             padding: 24px;
             margin-bottom: 40px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            border: 1px solid rgba(31, 107, 153, 0.08);
         }
 
         .progress-label {
@@ -367,7 +475,8 @@ $user = array_merge([
             border-radius: 14px;
             padding: 32px;
             margin-bottom: 40px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            border: 1px solid rgba(31, 107, 153, 0.06);
         }
 
         .section-title {
@@ -392,26 +501,32 @@ $user = array_merge([
             display: flex;
             align-items: center;
             gap: 12px;
-            background: var(--bg);
+            background: #fff;
             border-radius: 10px;
             padding: 14px 18px;
             font-size: 0.95rem;
             font-weight: 500;
-            color: var(--primary);
-            transition: all 0.3s;
+            color: var(--text-primary);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
             user-select: none;
+            border: 1px solid rgba(31, 107, 153, 0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
 
         .checklist-item:hover {
             background: var(--primary-very-light);
             transform: translateY(-2px);
+            border-color: var(--primary-light);
+            box-shadow: 0 4px 12px rgba(31, 107, 153, 0.1);
         }
 
         .checklist-item.checked {
             background: linear-gradient(135deg, #d1f7c4 0%, #a8f0b0 100%);
             color: #2e7d32;
             font-weight: 600;
+            border-color: #7cb342;
+            box-shadow: 0 2px 8px rgba(124, 179, 66, 0.15);
         }
 
         .checklist-item .icon { 
@@ -447,15 +562,15 @@ $user = array_merge([
             flex-direction: column;
             align-items: center;
             text-align: center;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid var(--border);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(31, 107, 153, 0.08);
         }
 
         .tool-card:hover {
             box-shadow: 0 12px 32px rgba(31, 107, 153, 0.15);
             transform: translateY(-6px);
-            border-color: var(--primary);
+            border-color: var(--primary-light);
         }
 
         .tool-icon {
@@ -487,14 +602,15 @@ $user = array_merge([
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             border: none;
             cursor: pointer;
+            box-shadow: 0 2px 8px rgba(31, 107, 153, 0.2);
         }
 
         .tool-link:hover {
-            box-shadow: 0 8px 16px rgba(31, 107, 153, 0.25);
-            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(31, 107, 153, 0.35);
+            transform: translateY(-2px);
         }
 
         /* ===== GUIDE SECTION ===== */
@@ -723,20 +839,22 @@ $user = array_merge([
             max-width: 420px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 1px solid rgba(31, 107, 153, 0.08);
         }
 
         .logout-modal-icon {
             width: 64px;
             height: 64px;
             margin: 0 auto 20px;
-            background: #FEE2E2;
+            background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 32px;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
         }
 
         .logout-modal h2 {
@@ -768,33 +886,39 @@ $user = array_merge([
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
             color: #fff;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
         }
 
         .logout-btn-confirm:hover {
-            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.35);
             transform: translateY(-2px);
+        }
+
+        .logout-btn-confirm:active {
+            transform: translateY(0);
         }
 
         .logout-btn-cancel {
             flex: 1;
             padding: 12px 24px;
-            border: 2px solid var(--border);
+            border: 1.5px solid var(--border);
             border-radius: 8px;
             background: #fff;
             color: var(--text-secondary);
             font-weight: 600;
             font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .logout-btn-cancel:hover {
             border-color: var(--primary);
             color: var(--primary);
             background: var(--primary-very-light);
+            transform: translateY(-1px);
         }
 
         @media (max-width: 1024px) {
@@ -854,6 +978,24 @@ $user = array_merge([
                     <span class="sidebar-menu-text">AI Advisor</span>
                 </a>
             </li>
+             <li class="sidebar-menu-item">
+                <a href="<?= site_url('hpp'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon">🧮</span>
+                    <span class="sidebar-menu-text">Kalkulator HPP</span>
+                </a>
+            </li>
+             <li class="sidebar-menu-item">
+                <a href="<?= site_url('keuangan'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon">💰</span>
+                    <span class="sidebar-menu-text">Keuangan</span>
+                </a>
+            </li>
+             <li class="sidebar-menu-item">
+                <a href="<?= site_url('analisis'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon">🎯</span>
+                    <span class="sidebar-menu-text">Analisis Produk</span>
+                </a>
+            </li>
             <li class="sidebar-menu-item">
                 <a href="<?= site_url('risiko'); ?>" class="sidebar-menu-link">
                     <span class="sidebar-menu-icon">🛡️</span>
@@ -861,9 +1003,9 @@ $user = array_merge([
                 </a>
             </li>
             <li class="sidebar-menu-item">
-                <a href="<?= site_url('info'); ?>" class="sidebar-menu-link">
+                <a href="<?= site_url('auth/info_bisnis'); ?>" class="sidebar-menu-link">
                     <span class="sidebar-menu-icon">📚</span>
-                    <span class="sidebar-menu-text">Info Bisnis</span>
+                    <span class="sidebar-menu-text">Informasi Bisnis</span>
                 </a>
             </li>
         </ul>
@@ -879,16 +1021,32 @@ $user = array_merge([
         <!-- TOP HEADER -->
         <div class="top-header">
             <div class="header-left">
-                <div class="header-title">Perencanaan Bisnis</div>
+                <div class="header-title">Dashboard Perencanaan</div>
             </div>
             <div class="header-right">
                 <button class="header-icon-btn" title="Notifikasi">•</button>
                 <div class="header-divider"></div>
-                <div class="header-user">
+                <div class="header-user" onclick="toggleUserDropdown(event)">
                     <div class="header-user-avatar"><?= strtoupper(substr($user['nama'] ?? 'U', 0, 1)); ?></div>
                     <div class="header-user-info">
                         <div class="header-user-name"><?= htmlspecialchars($user['nama'] ?? 'User'); ?></div>
                         <div class="header-user-email">Calon Pengusaha</div>
+                    </div>
+                    <!-- Dropdown Menu -->
+                    <div class="user-dropdown-menu" id="userDropdownMenu">
+                        <a href="<?= site_url('user/profile'); ?>" class="dropdown-item">
+                            <span>◆</span>
+                            <span>Profil Saya</span>
+                        </a>
+                        <a href="<?= site_url('user/settings'); ?>" class="dropdown-item">
+                            <span>⚙</span>
+                            <span>Pengaturan</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button onclick="showLogoutModal()" class="dropdown-item dropdown-logout">
+                            <span>✕</span>
+                            <span>Logout</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -963,32 +1121,32 @@ $user = array_merge([
                             <a href="<?= site_url('advisor'); ?>" class="tool-link">Konsultasi</a>
                         </div>
                         <div class="tool-card">
-                            <div class="tool-icon">📊</div>
+                            <div class="tool-icon">🧮</div>
                             <div class="tool-title">Kalkulator HPP</div>
                             <div class="tool-desc">Hitung harga pokok produksi dengan akurat</div>
                             <a href="<?= site_url('hpp'); ?>" class="tool-link">Hitung HPP</a>
                         </div>
                         <div class="tool-card">
-                            <div class="tool-icon">📈</div>
-                            <div class="tool-title">Proyeksi Keuangan</div>
+                            <div class="tool-icon">💰</div>
+                            <div class="tool-title">Pencatatan Keuangan</div>
                             <div class="tool-desc">Simulasi untung-rugi bisnis Anda</div>
                             <a href="<?= site_url('keuangan'); ?>" class="tool-link">Simulasi</a>
                         </div>
+                         <div class="tool-card">
+                            <div class="tool-icon">⚠️</div>
+                            <div class="tool-title">Manajemen Risiko</div>
+                            <div class="tool-desc">Identifikasi risiko bisnis sejak awal</div>
+                            <a href="<?= site_url('risiko'); ?>" class="tool-link">Kelola Risiko</a>
+                        </div>
                         <div class="tool-card">
-                            <div class="tool-icon">🔍</div>
+                            <div class="tool-icon">📊</div>
                             <div class="tool-title">Analisis Produk</div>
                             <div class="tool-desc">Riset pasar untuk produk atau layanan</div>
                             <a href="<?= site_url('analisis'); ?>" class="tool-link">Analisis</a>
                         </div>
                         <div class="tool-card">
-                            <div class="tool-icon">⚠️</div>
-                            <div class="tool-title">Analisis Risiko</div>
-                            <div class="tool-desc">Identifikasi risiko bisnis sejak awal</div>
-                            <a href="<?= site_url('risiko'); ?>" class="tool-link">Kelola Risiko</a>
-                        </div>
-                        <div class="tool-card">
-                            <div class="tool-icon">💡</div>
-                            <div class="tool-title">Informasi Bisnis</div>
+                            <div class="tool-icon">ℹ️</div>
+                            <div class="tool-title">Rekomendasi Informasi Bisnis</div>
                             <div class="tool-desc">Tips dan insight dunia UMKM</div>
                             <a href="<?= site_url('info'); ?>" class="tool-link">Info</a>
                         </div>
@@ -1175,6 +1333,22 @@ $user = array_merge([
         document.getElementById('logoutModal')?.addEventListener('click', function(e) {
             if (e.target === this) {
                 closeLogoutModal();
+            }
+        });
+
+        // User Dropdown Menu Functions
+        function toggleUserDropdown(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById('userDropdownMenu');
+            dropdown?.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const userSection = document.querySelector('.header-user');
+            const dropdown = document.getElementById('userDropdownMenu');
+            if (!userSection.contains(e.target)) {
+                dropdown?.classList.remove('show');
             }
         });
     </script>

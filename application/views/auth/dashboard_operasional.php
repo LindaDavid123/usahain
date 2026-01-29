@@ -167,7 +167,7 @@ body {
 .sidebar-menu-link {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 0;
     padding: 12px 16px;
     border-radius: 10px;
     text-decoration: none;
@@ -175,27 +175,65 @@ body {
     transition: all 0.3s;
     font-weight: 500;
     font-size: 14px;
+    position: relative;
 }
 
 .sidebar-menu-link:hover {
     background: var(--background);
     color: var(--primary-color);
+    transform: translateX(4px);
 }
 
 .sidebar-menu-link.active {
     background: linear-gradient(135deg, #1F6B99 0%, #3A88BA 100%);
     color: #fff;
     font-weight: 600;
+    box-shadow: 0 4px 12px rgba(31, 107, 153, 0.25);
+}
+
+.sidebar-menu-badge {
+    margin-left: auto;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    background: rgba(31, 107, 153, 0.1);
+    color: var(--primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+}
+
+.sidebar-menu-link:hover .sidebar-menu-badge {
+    background: rgba(31, 107, 153, 0.2);
+}
+
+.sidebar-menu-link.active .sidebar-menu-badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.sidebar-menu-badge.new {
+    background: linear-gradient(135deg, rgba(76, 201, 240, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+    color: #0891B2;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 .sidebar-menu-icon {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
+    display: none;
+}
+
+.sidebar-menu-link:hover .sidebar-menu-icon {
+    transform: scale(1.15);
+}
+
+.sidebar-menu-link.active .sidebar-menu-icon {
+    transform: scale(1.2);
 }
 
 .sidebar.collapsed .sidebar-menu-text {
@@ -209,8 +247,97 @@ body {
     gap: 8px;
 }
 
-.sidebar-footer-btn {
+.sidebar-subscription {
+    padding: 12px 12px;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-subscription-card {
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-align: center;
+}
+
+.sidebar-subscription-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(31, 107, 153, 0.2);
+}
+
+.sidebar-subscription-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    transition: all 0.5s;
+}
+
+.sidebar-subscription-card:hover::before {
+    transform: translate(-20%, 20%);
+}
+
+.subscription-icon {
+    display: none;
+}
+
+.subscription-info {
     flex: 1;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    text-align: center;
+}
+
+.subscription-label {
+    font-size: 8px;
+    color: #1F6B99;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.subscription-plan {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0D47A1;
+    margin: 2px 0;
+}
+
+.subscription-status {
+    display: none;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981;
+    display: inline-block;
+    animation: pulse 2s infinite;
+}
+
+.subscription-manage {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-subscription {
+    display: none;
+}
+
+.sidebar-footer-btn {
     padding: 10px 12px;
     border: none;
     border-radius: 8px;
@@ -220,6 +347,9 @@ body {
     transition: all 0.3s;
     font-size: 12px;
     font-weight: 600;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 0;
 }
 
 .sidebar-footer-btn:hover {
@@ -227,17 +357,37 @@ body {
     color: #fff;
 }
 
-.sidebar-footer-btn.logout-btn {
-    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-    color: #fff;
-}
-
-.sidebar-footer-btn.logout-btn:hover {
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-    transform: translateY(-2px);
-}
-
-/* MAIN CONTENT WRAPPER */
+    .sidebar-footer-btn.logout-btn {
+        background: transparent;
+        color: #64748b;
+        font-weight: 500;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: none;
+        font-size: 14px;
+        padding: 8px 0;
+        min-width: 0;
+        min-height: 0;
+        height: auto;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin: 0;
+        border-radius: 0;
+        border: none;
+        cursor: pointer;
+        text-transform: capitalize;
+        letter-spacing: 0;
+    }
+    .sidebar-footer-btn.logout-btn:hover {
+        box-shadow: none;
+        transform: none;
+        color: #1f6b99;
+    }
+    .sidebar-footer-btn.logout-btn:active {
+        transform: none;
+    }
 .main-wrapper {
     margin-left: 260px;
     flex: 1;
@@ -309,12 +459,7 @@ body.sidebar-collapsed .main-wrapper {
 }
 
 .header-search::before {
-    content: '🔍';
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 14px;
+    display: none;
 }
 
 .header-right {
@@ -348,12 +493,19 @@ body.sidebar-collapsed .main-wrapper {
     height: 24px;
     background: var(--border-color);
 }
-
 .header-user {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 0 12px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.header-user:hover {
+    background: rgba(31, 107, 153, 0.08);
 }
 
 .header-user-avatar {
@@ -384,6 +536,72 @@ body.sidebar-collapsed .main-wrapper {
 .header-user-email {
     font-size: 11px;
     color: var(--text-secondary);
+}
+
+/* ===== USER DROPDOWN MENU ===== */
+.user-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border-radius: 10px;
+    min-width: 200px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(31, 107, 153, 0.1);
+    display: none;
+    flex-direction: column;
+    z-index: 100;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.user-dropdown-menu.show {
+    display: flex;
+    animation: slideDown 0.3s ease cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s;
+    text-align: left;
+    width: 100%;
+}
+
+.dropdown-item:hover {
+    background: rgba(31, 107, 153, 0.08);
+    color: var(--primary-color);
+}
+
+.dropdown-item span:first-child {
+    font-size: 16px;
+    width: 18px;
+    text-align: center;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 4px 0;
+}
+
+.dropdown-logout {
+    color: #EF4444;
+    font-weight: 700;
+}
+
+.dropdown-logout:hover {
+    background: #FEE2E2;
+    color: #DC2626;
 }
 
 .header-subscription-status {
@@ -427,6 +645,204 @@ body.sidebar-collapsed .main-wrapper {
     display: none;
 }
 
+/* ===== SUBSCRIPTION STATUS MODAL ===== */
+.subscription-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+}
+
+.subscription-modal.show {
+    display: flex;
+}
+
+.subscription-modal-content {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 500px;
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+.subscription-modal-header {
+    padding: 28px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #FEF3C7 0%, #FCD34D 100%);
+}
+
+.subscription-modal-header h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #78350F;
+    margin: 0;
+    letter-spacing: -0.3px;
+}
+
+.subscription-modal-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.4);
+    color: #78350F;
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.subscription-modal-close:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: rotate(90deg);
+}
+
+.subscription-modal-body {
+    padding: 28px;
+}
+
+.subscription-item {
+    margin-bottom: 24px;
+}
+
+.subscription-item:last-child {
+    margin-bottom: 0;
+}
+
+.subscription-item label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.subscription-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    padding: 14px 16px;
+    background: var(--background);
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-color);
+    word-break: break-word;
+}
+
+.subscription-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
+    color: #065F46;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1.5px solid #6EE7B7;
+    margin-top: 8px;
+}
+
+.subscription-features {
+    margin: 24px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #F0F7FF 0%, #E8F4FB 100%);
+    border-radius: 12px;
+    border: 1px solid #A5D8E8;
+}
+
+.subscription-features h4 {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.subscription-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subscription-features li {
+    padding: 8px 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.subscription-features li::before {
+    content: '✓';
+    color: #10B981;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.subscription-modal-footer {
+    padding: 20px 28px 28px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.subscription-modal-btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.subscription-modal-btn.primary {
+    background: linear-gradient(135deg, #1F6B99 0%, #154A6F 100%);
+    color: white;
+    flex: 1;
+    box-shadow: 0 4px 12px rgba(31, 107, 153, 0.2);
+}
+
+.subscription-modal-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(31, 107, 153, 0.3);
+}
+
+.subscription-modal-btn.secondary {
+    background: var(--background);
+    color: var(--text-secondary);
+    border: 1.5px solid var(--border-color);
+    flex: 1;
+}
+
+.subscription-modal-btn.secondary:hover {
+    background: #f1f5f9;
+    color: var(--text-primary);
+    border-color: var(--primary-light);
+}
+
 /* ===== LOGOUT MODAL ===== */
 .logout-modal {
     display: none;
@@ -454,20 +870,22 @@ body.sidebar-collapsed .main-wrapper {
     max-width: 420px;
     width: 90%;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(31, 107, 153, 0.08);
 }
 
 .logout-modal-icon {
     width: 64px;
     height: 64px;
     margin: 0 auto 20px;
-    background: #FEE2E2;
+    background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 32px;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
 }
 
 .logout-modal h2 {
@@ -499,33 +917,39 @@ body.sidebar-collapsed .main-wrapper {
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
     color: #fff;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
 }
 
 .logout-btn-confirm:hover {
-    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.35);
     transform: translateY(-2px);
+}
+
+.logout-btn-confirm:active {
+    transform: translateY(0);
 }
 
 .logout-btn-cancel {
     flex: 1;
     padding: 12px 24px;
-    border: 2px solid var(--border-color);
+    border: 1.5px solid var(--border-color);
     border-radius: 8px;
     background: #fff;
     color: var(--text-secondary);
     font-weight: 600;
     font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .logout-btn-cancel:hover {
     border-color: var(--primary-color);
     color: var(--primary-color);
     background: var(--primary-very-light);
+    transform: translateY(-1px);
 }
 
 @keyframes fadeIn {
@@ -1153,14 +1577,16 @@ body.sidebar-collapsed .main-wrapper {
 }
 .tool-box{
     background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
-    border-radius: 20px;
+    border-radius: 16px;
     padding: 28px 24px;
     box-shadow: var(--shadow-sm);
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor: pointer;
-    border: 1px solid var(--border-color);
+    border: 1.5px solid var(--border-color);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 .tool-box::before{
     content: '';
@@ -1187,8 +1613,8 @@ body.sidebar-collapsed .main-wrapper {
     transform: translate(-20%, 20%);
 }
 .tool-box:hover{
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 12px 28px rgba(31, 107, 153, 0.12);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 16px 32px rgba(31, 107, 153, 0.15);
     border-color: var(--primary-light);
     background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
 }
@@ -1198,20 +1624,20 @@ body.sidebar-collapsed .main-wrapper {
 .tool-icon{
     width: 54px;
     height: 54px;
-    border-radius: 16px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 26px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     position: relative;
     z-index: 2;
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .tool-box:hover .tool-icon{
-    transform: scale(1.12) rotate(-3deg);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    transform: scale(1.15) rotate(-2deg);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 .tool-icon.hpp{
     background: linear-gradient(135deg, #3B82F6, #1F6B99);
@@ -1231,14 +1657,77 @@ body.sidebar-collapsed .main-wrapper {
 .tool-icon.advisor{
     background: linear-gradient(135deg, #06B6D4, #0891B2);
 }
-.tool-title{
-    font-weight: 800;
+
+.tool-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     margin-bottom: 12px;
-    font-size: 18px;
-    color: var(--text-primary);
     position: relative;
     z-index: 2;
 }
+
+.tool-title{
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text-primary);
+    flex: 1;
+}
+
+.tool-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.tool-badge.popular {
+    background: linear-gradient(135deg, #FCD34D 0%, #FBBF24 100%);
+    color: #78350F;
+    box-shadow: 0 2px 8px rgba(252, 211, 77, 0.3);
+}
+
+.tool-badge.new {
+    background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    animation: bounce 2s infinite;
+}
+
+.tool-badge.essential {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.tool-badge.alert {
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.tool-badge.pro {
+    background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.tool-badge.learn {
+    background: linear-gradient(135deg, #FB7185 0%, #EC4899 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(236, 72, 153, 0.3);
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
 .tool-desc{
     font-size: 14px;
     color: var(--text-secondary);
@@ -1246,8 +1735,34 @@ body.sidebar-collapsed .main-wrapper {
     line-height: 1.6;
     position: relative;
     z-index: 2;
+    flex: 1;
 }
-.tool-box a{
+
+.tool-meta {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+    flex-wrap: wrap;
+}
+
+.meta-item {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding: 4px 8px;
+    background: var(--background);
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.tool-box:hover .meta-item {
+    background: rgba(31, 107, 153, 0.1);
+    color: var(--primary-color);
+}
+
+.tool-link{
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 700;
@@ -1257,17 +1772,22 @@ body.sidebar-collapsed .main-wrapper {
     z-index: 2;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    padding: 8px 0;
 }
-.tool-box a::after{
+
+.tool-link::after{
     content: '→';
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-weight: 800;
 }
-.tool-box:hover a{
+
+.tool-box:hover .tool-link{
     color: var(--primary-dark);
 }
-.tool-box:hover a::after{
-    transform: translateX(6px);
+
+.tool-box:hover .tool-link::after{
+    transform: translateX(8px);
 }
 
 /* RESPONSIVE DESIGN */
@@ -1275,17 +1795,47 @@ body.sidebar-collapsed .main-wrapper {
 /* === DESKTOP & LARGE SCREENS (>1200px) === */
 @media(min-width:1200px){
     .container{max-width:1200px}
+    .tools-grid{grid-template-columns:repeat(3,1fr)}
 }
 
 /* === LAPTOP & MEDIUM SCREENS (992px - 1199px) === */
 @media(max-width:1199px){
     .container{max-width:1000px}
-    .tools-grid{grid-template-columns:repeat(4,1fr)}
+    .tools-grid{grid-template-columns:repeat(2,1fr);gap:20px}
+    
+    .tool-box {
+        padding: 24px 20px;
+    }
+    
+    .tool-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .meta-item {
+        width: 100%;
+    }
+}
 }
 
 /* === TABLET LANDSCAPE & SMALL LAPTOP (768px - 991px) === */
 @media(max-width:991px){
     .container{padding:0 20px}
+    
+    /* Tools - 2 columns */
+    .tools-grid{grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:32px}
+    
+    .tool-box {
+        padding: 20px 16px;
+    }
+    
+    .tool-title {
+        font-size: 16px;
+    }
+    
+    .tool-desc {
+        font-size: 13px;
+    }
     
     /* Bisnis card */
     .biz-card{padding:24px;flex-direction:column;text-align:center}
@@ -1303,6 +1853,178 @@ body.sidebar-collapsed .main-wrapper {
     /* Chart & Insight - stack vertically */
     .chart-insight-wrapper{grid-template-columns:1fr}
     .chart-section{margin-bottom:20px}
+}
+
+/* === MOBILE LANDSCAPE & TABLET PORTRAIT (480px - 767px) === */
+@media(max-width:767px){
+    .container{padding:0 16px;margin-top:20px}
+    .main-wrapper{margin-left:0}
+    .sidebar{position:fixed;left:0;transform:translateX(-100%);z-index:999;width:280px;height:100vh;background:white;box-shadow:2px 0 8px rgba(0,0,0,0.1)}
+    .sidebar.mobile-open{transform:translateX(0)}
+    
+    #mobileMenuBtn{display:flex!important}
+    
+    .top-header{padding:16px 20px;height:60px}
+    .header-left{gap:12px}
+    .header-title{font-size:16px}
+    .header-search{display:none}
+    
+    /* Sidebar - single column */
+    .sidebar-menu{padding:12px 8px}
+    .sidebar-menu-link{padding:10px 12px;font-size:13px}
+    .sidebar-menu-icon{width:18px;height:18px;font-size:16px}
+    .sidebar-menu-text{display:block}
+    .sidebar-menu-badge{display:inline-block;margin-left:auto}
+    
+    /* Tools - single column */
+    .tools-grid{grid-template-columns:1fr;gap:14px;margin-bottom:24px}
+    
+    .tool-box {
+        padding: 18px 14px;
+    }
+    
+    .tool-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+    
+    .tool-title {
+        font-size: 15px;
+    }
+    
+    .tool-desc {
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .tool-meta {
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+    
+    .meta-item {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+    
+    .tool-link {
+        font-size: 13px;
+    }
+    
+    .biz-card{padding:18px;flex-direction:column}
+    .biz-left{flex-direction:column;width:100%}
+    .biz-profit{margin-top:14px}
+    .biz-info h2{font-size:18px}
+    
+    .actions{grid-template-columns:1fr;gap:10px}
+    .action{padding:14px;font-size:13px}
+    
+    .section-title{font-size:15px;margin-bottom:16px;padding:0}
+    
+    .summary{grid-template-columns:1fr;gap:12px}
+    .sum-card{padding:14px}
+    .sum-card small{font-size:11px}
+    .sum-card h3{font-size:16px;margin:6px 0}
+    
+    .chart-insight-wrapper{grid-template-columns:1fr;gap:0}
+    .chart-canvas-wrapper{height:250px}
+    
+    .insight-item {
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+    
+    .insight-item strong {
+        font-size: 13px;
+    }
+    
+    .insight-item p {
+        font-size: 12px;
+    }
+    
+    .filter-periode{gap:8px;margin-bottom:16px}
+    .filter-btn{padding:8px 12px;font-size:12px}
+    
+    .transaksi{gap:8px;padding:12px}
+    .tx{padding:10px;font-size:13px;margin-bottom:8px}
+    .tx strong{font-size:13px}
+    .tx small{font-size:11px}
+    .tx div:last-child{font-size:13px}
+}
+
+/* === MOBILE PORTRAIT (< 480px) === */
+@media(max-width:479px){
+    .container{padding:0 12px;margin-top:16px}
+    
+    .top-header{padding:12px 16px;height:56px}
+    .header-title{font-size:14px}
+    
+    .header-right{gap:8px}
+    .header-divider{display:none}
+    .header-user-info{display:none}
+    
+    .biz-card{padding:14px}
+    .biz-info h2{font-size:16px}
+    .biz-info span{font-size:11px}
+    
+    .tools-grid{gap:12px;margin-bottom:20px}
+    
+    .tool-box {
+        padding: 16px 12px;
+        border-radius: 12px;
+    }
+    
+    .tool-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    
+    .tool-header {
+        margin-bottom: 10px;
+    }
+    
+    .tool-title {
+        font-size: 14px;
+    }
+    
+    .tool-badge {
+        font-size: 9px;
+        padding: 3px 6px;
+    }
+    
+    .tool-desc {
+        font-size: 11px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+    }
+    
+    .tool-meta {
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+    
+    .meta-item {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+    
+    .tool-link {
+        font-size: 12px;
+    }
+    
+    .actions{grid-template-columns:1fr;gap:8px}
+    .action{padding:12px;font-size:12px}
+    
+    .section-title{font-size:14px;margin-bottom:12px}
+    
+    .footer-simple{padding:12px 16px}
+    .footer-inner{flex-direction:column;gap:8px;text-align:center}
+    .footer-right{display:none}
+}
     #salesChart{height:200px}
     
     /* Tools - 2 columns */
@@ -2316,61 +3038,63 @@ body.sidebar-collapsed .main-wrapper {
     <ul class="sidebar-menu">
         <li class="sidebar-menu-item">
             <a href="<?= site_url('auth/dashboard_operasional'); ?>" class="sidebar-menu-link active">
-                <span class="sidebar-menu-icon">📊</span>
+                <span class="sidebar-menu-icon">▦</span>
                 <span class="sidebar-menu-text">Dashboard</span>
+                <span class="sidebar-menu-badge">Home</span>
             </a>
         </li>
          <li class="sidebar-menu-item">
             <a href="<?= site_url('advisor'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">🤖</span>
+                <span class="sidebar-menu-icon">◆</span>
                 <span class="sidebar-menu-text">AI Advisor</span>
+                <span class="sidebar-menu-badge new">New</span>
             </a>
         </li>
         <li class="sidebar-menu-item">
             <a href="<?= site_url('hpp'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">🧮</span>
+                <span class="sidebar-menu-icon">⚒</span>
                 <span class="sidebar-menu-text">Kalkulator HPP</span>
             </a>
         </li>
         <li class="sidebar-menu-item">
             <a href="<?= site_url('keuangan'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">💰</span>
+                <span class="sidebar-menu-icon">≈</span>
                 <span class="sidebar-menu-text">Keuangan</span>
             </a>
         </li>
         <li class="sidebar-menu-item">
-            <a href="<?= site_url('risiko'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">🛡️</span>
-                <span class="sidebar-menu-text">Manajemen Risiko</span>
-            </a>
-        </li>
-        <li class="sidebar-menu-item">
             <a href="<?= site_url('analisis'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">🎯</span>
+                <span class="sidebar-menu-icon">►</span>
                 <span class="sidebar-menu-text">Analisis Produk</span>
             </a>
         </li>
         <li class="sidebar-menu-item">
+            <a href="<?= site_url('risiko'); ?>" class="sidebar-menu-link">
+                <span class="sidebar-menu-icon">▲</span>
+                <span class="sidebar-menu-text">Manajemen Risiko</span>
+            </a>
+        </li>
+        <li class="sidebar-menu-item">
             <a href="<?= site_url('auth/info_bisnis'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">📚</span>
-                <span class="sidebar-menu-text">Informasi</span>
+                <span class="sidebar-menu-icon">◉</span>
+                <span class="sidebar-menu-text">Informasi Bisnis</span>
             </a>
         </li>
     </ul>
     
     <!-- SUBSCRIPTION STATUS IN SIDEBAR -->
-    <div style="padding: 16px 12px; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
-        <div style="background: linear-gradient(135deg, #FEF3C7 0%, #FCD34D 100%); border-radius: 12px; padding: 12px 14px; text-align: center;">
-            <div style="font-size: 24px; margin-bottom: 6px;">✨</div>
-            <div style="font-size: 12px; font-weight: 700; color: #78350F; margin-bottom: 4px;">Premium Plan</div>
-            <div style="font-size: 10px; color: #B45309; margin-bottom: 8px;">Aktif</div>
-            <button onclick="openSubscriptionModal()" style="width: 100%; background: linear-gradient(135deg, #1F6B99 0%, #154A6F 100%); color: white; border: none; padding: 6px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.3s;" onmouseover="this.transform='translateY(-1px)'; this.boxShadow='0 4px 12px rgba(31, 107, 153, 0.25)'" onmouseout="this.transform='translateY(0)'; this.boxShadow='none'">Kelola</button>
+    <div class="sidebar-subscription">
+        <div class="sidebar-subscription-card" onclick="openSubscriptionModal()">
+            <div class="subscription-info">
+                <div class="subscription-label">Paket Aktif</div>
+                <div class="subscription-plan">Upgrade</div>
+            </div>
         </div>
     </div>
     
-        <a href="<?= site_url('auth/change_dashboard'); ?>" class="sidebar-footer-btn" style="text-align: center; text-decoration: none;">⊕</a>
         <button class="sidebar-footer-btn logout-btn" onclick="showLogoutModal()">
-            Logout
+            <span>⊳</span>
+            <span>Log out</span>
         </button>
     </div>
 </aside>
@@ -2381,22 +3105,22 @@ body.sidebar-collapsed .main-wrapper {
     <header class="top-header">
         <div class="header-left">
             <button class="sidebar-toggle" id="mobileMenuBtn" style="display: none; font-size: 20px; width: auto; border: none; background: none; color: var(--text-secondary); cursor: pointer;">≡</button>
-            <div class="header-title">Operasional Bisnis</div>
+            <div class="header-title">Dashboard Operasional</div>
             <div class="header-search">
                 <input type="text" placeholder="Cari...">
             </div>
         </div>
         
         <div class="header-right">
-            <button class="header-icon-btn" title="Notifikasi">•</button>
+           
             <div class="header-divider"></div>
-            <div class="header-user" onclick="openProfileModal()" style="cursor: pointer;">
+            <a href="<?= site_url('user/profile'); ?>" class="header-user" style="text-decoration: none; color: inherit;">
                 <div class="header-user-avatar"><?= strtoupper(substr($user['nama'], 0, 1)); ?></div>
                 <div class="header-user-info">
                     <div class="header-user-name"><?= htmlspecialchars($user['nama']); ?></div>
                     <div class="header-user-email"><?= htmlspecialchars($user['email']); ?></div>
                 </div>
-            </div>
+            </a>
         </div>
     </header>
     
@@ -2421,48 +3145,90 @@ body.sidebar-collapsed .main-wrapper {
     </div>
 
     <!-- TOOLS -->
-    <div class="section-title">Tools Bisnis Lainnya</div>
+    <div class="section-title">Tools Bisnis & Analisis</div>
     <div class="tools-grid">
         <div class="tool-box">
-            <div class="tool-icon advisor" style="color:#fff">🤖</div>
-            <div class="tool-title">AI Advisor</div>
-            <div class="tool-desc">Konsultasi dengan AI untuk strategi bisnis yang lebih baik</div>
-            <a href="<?= site_url('advisor'); ?>">Minta Konsultasi</a>
+            <div class="tool-icon advisor" style="color:#fff">◆</div>
+            <div class="tool-header">
+                <div class="tool-title">AI Advisor</div>
+                <span class="tool-badge new">AI-Powered</span>
+            </div>
+            <div class="tool-desc">Dapatkan konsultasi strategi bisnis dari Artificial Intelligence yang canggih dan berpengalaman</div>
+            <div class="tool-meta">
+                <span class="meta-item">5-10 menit</span>
+                <span class="meta-item">◆ Advanced</span>
+            </div>
+            <a href="<?= site_url('advisor'); ?>" class="tool-link">Mulai Konsultasi</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon hpp" style="color:#fff">🧮</div>
-            <div class="tool-title">Kalkulator HPP</div>
-            <div class="tool-desc">Hitung Harga Pokok Penjualan untuk menentukan harga jual yang menguntungkan</div>
-            <a href="<?= site_url('hpp'); ?>">Hitung HPP</a>
+            <div class="tool-icon hpp" style="color:#fff">⚒</div>
+            <div class="tool-header">
+                <div class="tool-title">Kalkulator HPP</div>
+                <span class="tool-badge popular">Populer</span>
+            </div>
+            <div class="tool-desc">Hitung Harga Pokok Penjualan secara akurat untuk menentukan harga jual yang menguntungkan bisnis Anda</div>
+            <div class="tool-meta">
+                <span class="meta-item">⏱ 2-3 menit</span>
+                <span class="meta-item">⚒ Calculation</span>
+            </div>
+            <a href="<?= site_url('hpp'); ?>" class="tool-link">Mulai Hitung</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon keuangan" style="color:#fff">💰</div>
-            <div class="tool-title">Pencatatan Keuangan</div>
-            <div class="tool-desc">Catat dan kelola semua transaksi keuangan bisnis Anda dengan mudah</div>
-            <a href="<?= site_url('keuangan'); ?>">Lihat Laporan</a>
+            <div class="tool-icon keuangan" style="color:#fff">≈</div>
+            <div class="tool-header">
+                <div class="tool-title">Pencatatan Keuangan</div>
+                <span class="tool-badge essential">Essential</span>
+            </div>
+            <div class="tool-desc">Catat, kelola, dan analisis semua transaksi keuangan bisnis Anda dengan sistem yang terorganisir</div>
+            <div class="tool-meta">
+                <span class="meta-item">⏱ Real-time</span>
+                <span class="meta-item">≈ Accounting</span>
+            </div>
+            <a href="<?= site_url('keuangan'); ?>" class="tool-link">Buka Pencatatan</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon risiko" style="color:#fff">⚠️</div>
-            <div class="tool-title">Manajemen Risiko</div>
-            <div class="tool-desc">Identifikasi dan mitigasi risiko bisnis untuk melindungi usaha Anda</div>
-            <a href="<?= site_url('risiko'); ?>">Kelola Risiko</a>
+            <div class="tool-icon risiko" style="color:#fff">▲</div>
+            <div class="tool-header">
+                <div class="tool-title">Manajemen Risiko</div>
+                <span class="tool-badge alert">Critical</span>
+            </div>
+            <div class="tool-desc">Identifikasi, analisis, dan buat strategi mitigasi untuk melindungi usaha dari risiko bisnis yang mungkin terjadi</div>
+            <div class="tool-meta">
+                <span class="meta-item">⏱ 10-15 menit</span>
+                <span class="meta-item">▲ Risk Management</span>
+            </div>
+            <a href="<?= site_url('risiko'); ?>" class="tool-link">Kelola Risiko</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon analisis" style="color:#fff">📊</div>
-            <div class="tool-title">Analisis Produk</div>
-            <div class="tool-desc">Analisis performa produk dan dapatkan rekomendasi untuk meningkatkan penjualan</div>
-            <a href="<?= site_url('analisis'); ?>">Lihat Analisis</a>
+            <div class="tool-icon analisis" style="color:#fff">►</div>
+            <div class="tool-header">
+                <div class="tool-title">Analisis Produk</div>
+                <span class="tool-badge pro">Pro</span>
+            </div>
+            <div class="tool-desc">Analisis mendalam performa produk, identifikasi trend penjualan, dan dapatkan rekomendasi strategi peningkatan</div>
+            <div class="tool-meta">
+                <span class="meta-item">⏱ 5 menit</span>
+                <span class="meta-item">► Analytics</span>
+            </div>
+            <a href="<?= site_url('analisis'); ?>" class="tool-link">Lihat Analisis</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon info" style="color:#fff">ℹ️</div>
-            <div class="tool-title">Rekomendasi Informasi Bisnis</div>
-            <div class="tool-desc">Dapatkan informasi dan tips bisnis dari para ahli untuk mengembangkan usaha</div>
-            <a href="<?= site_url('auth/info_bisnis'); ?>">Baca Selanjutnya</a>
+            <div class="tool-icon info" style="color:#fff">◉</div>
+            <div class="tool-header">
+                <div class="tool-title">Informasi Bisnis</div>
+                <span class="tool-badge learn">Learning</span>
+            </div>
+            <div class="tool-desc">Baca panduan, tips, dan best practices dari para expert untuk mengembangkan bisnis Anda secara optimal</div>
+            <div class="tool-meta">
+                <span class="meta-item">⏱ Bebas</span>
+                <span class="meta-item">◉ Knowledge Base</span>
+            </div>
+            <a href="<?= site_url('auth/info_bisnis'); ?>" class="tool-link">Jelajahi Artikel</a>
         </div>
     </div>
 
@@ -2751,6 +3517,50 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     });
 });
 </script>
+
+<!-- ===== SUBSCRIPTION STATUS MODAL ===== -->
+<div class="subscription-modal" id="subscriptionModal" onclick="if(event.target===this) closeSubscriptionModal()">
+    <div class="subscription-modal-content">
+        <div class="subscription-modal-header">
+            <h2>Status Langganan</h2>
+            <button class="subscription-modal-close" onclick="closeSubscriptionModal()">×</button>
+        </div>
+        <div class="subscription-modal-body">
+            <div class="subscription-item">
+                <label>Paket Saat Ini</label>
+                <div class="subscription-value">Premium Plan</div>
+            </div>
+            <div class="subscription-item">
+                <label>Status</label>
+                <div class="subscription-value" style="border-left-color: #10B981;">
+                    <div class="subscription-status-badge">
+                        <span>●</span>
+                        <span>Aktif</span>
+                    </div>
+                </div>
+            </div>
+            <div class="subscription-item">
+                <label>Tanggal Berakhir</label>
+                <div class="subscription-value">15 April 2026</div>
+            </div>
+            <div class="subscription-features">
+                <h4>Fitur Premium</h4>
+                <ul>
+                    <li>Analitik Lanjutan</li>
+                    <li>Export Data Unlimited</li>
+                    <li>Support Prioritas 24/7</li>
+                    <li>Custom Report</li>
+                    <li>API Access</li>
+                    <li>Team Collaboration</li>
+                </ul>
+            </div>
+        </div>
+        <div class="subscription-modal-footer">
+            <button class="subscription-modal-btn secondary" onclick="closeSubscriptionModal()">Tutup</button>
+            <button class="subscription-modal-btn primary" onclick="window.location.href='<?= site_url('subscription'); ?>'">Lihat Paket Lain</button>
+        </div>
+    </div>
+</div>
 
 <!-- MODAL CATAT PENJUALAN -->
 <div class="modal-overlay" id="modalPenjualan" onclick="if(event.target===this) closeModalPenjualan()">
@@ -3363,6 +4173,30 @@ styleAnimations.textContent = `
 `;
 document.head.appendChild(styleAnimations);
 
+// Subscription Modal Functions
+function openSubscriptionModal() {
+    const modal = document.getElementById('subscriptionModal');
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeSubscriptionModal() {
+    const modal = document.getElementById('subscriptionModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeSubscriptionModal();
+    }
+});
+
 // Sidebar Toggle Function
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
@@ -3485,6 +4319,22 @@ window.addEventListener('resize', updateResponsive);
 </div>
 
 <script>
+// User Dropdown Functions
+function toggleUserDropdown(event) {
+    event.stopPropagation();
+    const menu = document.getElementById('userDropdownMenu');
+    menu.classList.toggle('show');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const menu = document.getElementById('userDropdownMenu');
+    const userDiv = event.target.closest('.header-user');
+    if (!userDiv && menu.classList.contains('show')) {
+        menu.classList.remove('show');
+    }
+});
+
 function openProfileModal() {
     document.getElementById('profileModal').classList.add('show');
 }
