@@ -105,7 +105,11 @@ class Auth extends CI_Controller
                     // simpan user baru
                     $id = $this->Auth_model->register($nama, $email, $password, $nama_usaha);
 
-                    if ($id) {
+                    // DEBUG (sementara, bisa dihapus nanti)
+                    if (!$id) {
+                        $data['error'] = 'Gagal insert ke database!';
+                    } else {
+                        // kalau berhasil
                         $this->session->set_flashdata('success', 'Registrasi berhasil! Silakan login.');
                         redirect('auth/login');
                     }

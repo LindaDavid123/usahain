@@ -20,6 +20,7 @@ class Auth_model extends CI_Model {
             'email' => $email,
             'password' => password_hash($password, PASSWORD_BCRYPT),
             'nama_usaha' => $nama_usaha,
+            'jenis_usaha' => 'Umum',
             'role' => 'user',
             'oauth_provider' => 'local'
         ];

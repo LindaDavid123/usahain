@@ -39,13 +39,11 @@
         <div class="heading">Daftar Akun Baru</div>
         <div class="sub">Bergabunglah dengan ribuan pengusaha sukses</div>
 
-        <?php if ($this->form_validation->run() === FALSE): ?>
-            <?php if (validation_errors()): ?>
-                <div class="helper" style="background:#fff3f2;border:1px solid #FECACA;padding:10px;border-radius:8px;margin-bottom:12px;color:#9b2c2c">
-                    <?php echo validation_errors(); ?>
-                </div>
-            <?php endif; ?>
-        <?php endif; ?>
+        <?php if (validation_errors()): ?>
+    <div style="background:#fff3f2;border:1px solid #FECACA;padding:10px;border-radius:8px;margin-bottom:12px;color:#9b2c2c">
+        <?php echo validation_errors(); ?>
+    </div>
+<?php endif; ?>
 
         <form method="post" novalidate>
             <div class="field">
@@ -62,7 +60,13 @@
             <div class="field">
                 <label for="password">Password</label>
                 <div class="input-wrap">
-                    <input class="input padding-right" type="password" id="password" name="password" placeholder="Minimal 6 karakter" required>
+                    <input class="input padding-right" 
+       type="password" 
+       id="password" 
+       name="password" 
+       placeholder="Minimal 6 karakter"
+       value="<?php echo set_value('password'); ?>" 
+       required>
                     <button type="button" class="toggle-pass" id="togglePassReg" aria-label="Tampilkan password" aria-pressed="false">
                         <svg id="iconShowReg" width="18" height="18" viewBox="0 0 24 24" fill="none">
                             <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z" stroke="#0f1724" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -80,7 +84,13 @@
             <div class="field">
                 <label for="konfirmasi_password">Konfirmasi Password</label>
                 <div class="input-wrap">
-                    <input class="input padding-right" type="password" id="konfirmasi_password" name="konfirmasi_password" placeholder="Ulangi password Anda" required>
+                    <input class="input padding-right" 
+       type="password" 
+       id="konfirmasi_password" 
+       name="konfirmasi_password" 
+       placeholder="Ulangi password Anda"
+       value="<?php echo set_value('konfirmasi_password'); ?>" 
+       required>
                     <button type="button" class="toggle-pass" id="togglePassReg2" aria-label="Tampilkan password" aria-pressed="false">
                         <svg id="iconShowReg2" width="18" height="18" viewBox="0 0 24 24" fill="none">
                             <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12z" stroke="#0f1724" stroke-width="1.4" fill="none"/>
