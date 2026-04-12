@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HPP Calculator - Usahain</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -44,49 +45,11 @@
             pointer-events: none;
             z-index: 0;
         }
-        nav {
-            background: linear-gradient(135deg, #0b6ea8 0%, #1a8dd5 50%, #27b0e3 100%);
-            color: #fff;
-            padding: 18px 32px;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            box-shadow: 0 8px 32px rgba(11,110,168,0.3);
-            position: relative;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        nav ul {
-            width: 100%;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 10px 16px;
-            border-radius: 8px;
-            display: inline-block;
-            position: relative;
-        }
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: rgba(255,255,255,0.6);
-        }
-        nav a:hover {
-            background: rgba(255,255,255,0.15);
-        }
-        nav a[aria-current="page"] {
-            background: rgba(255,255,255,0.25);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        nav .logout {
-            margin-left: auto;
+        .sidebar-menu {
+            background: none;
+            box-shadow: none;
+            backdrop-filter: none;
+            border-bottom: none;
         }
         .breadcrumb-nav {
             margin-bottom: 20px;
@@ -1033,7 +996,7 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            color: var(--primary);
+            color: #1E293B;
             font-weight: 800;
             font-size: 16px;
             flex: 1;
@@ -1064,9 +1027,9 @@
         }
 
         .sidebar-toggle-btn:hover {
-            background: var(--primary-light);
-            color: var(--primary);
-            border-color: var(--primary);
+            background: #F1F5F9;
+            color: #1E293B;
+            border-color: #CBD5E1;
         }
 
         .sidebar-menu {
@@ -1086,7 +1049,7 @@
             font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
-            color: var(--text-secondary);
+            color: #94A3B8;
             padding: 12px 16px 8px;
             letter-spacing: 0.5px;
         }
@@ -1098,7 +1061,7 @@
             padding: 12px 16px;
             border-radius: 10px;
             text-decoration: none;
-            color: var(--text-secondary);
+            color: #475569;
             transition: all 0.3s;
             font-weight: 500;
             font-size: 14px;
@@ -1106,16 +1069,16 @@
         }
 
         .menu-item:hover {
-            background: var(--primary-light);
-            color: var(--primary);
+            background: #F1F5F9;
+            color: #1E293B;
             transform: translateX(4px);
         }
 
         .menu-item.active {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: #1E293B;
             color: #fff;
             font-weight: 600;
-            box-shadow: var(--shadow);
+            box-shadow: 0 4px 12px rgba(30, 41, 59, 0.2);
         }
 
         .menu-icon {
@@ -1156,8 +1119,8 @@
         }
 
         .footer-item:hover {
-            background: var(--primary-light);
-            color: var(--primary);
+            background: #F1F5F9;
+            color: #1E293B;
         }
 
         .footer-item.logout {
@@ -1230,14 +1193,14 @@
                 <img src="<?= base_url('assets/logo.png'); ?>" alt="Usahain">
                 <span class="logo-text">Usahain</span>
             </a>
-            <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+            <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle sidebar"><i class="bi bi-list"></i></button>
         </div>
         
         <nav class="sidebar-menu">
             <div class="menu-section">
                 <div class="section-title">Dashboard</div>
                 <a href="<?= site_url('auth/dashboard_operasional'); ?>" class="menu-item">
-                    <span class="menu-icon">▦</span>
+                    <span class="menu-icon"><i class="bi bi-grid-1x2"></i></span>
                     <span class="menu-text">Dashboard Utama</span>
                 </a>
             </div>
@@ -1245,23 +1208,23 @@
             <div class="menu-section">
                 <div class="section-title">Tools Bisnis</div>
                 <a href="<?= site_url('hpp'); ?>" class="menu-item active">
-                    <span class="menu-icon">⚒</span>
+                    <span class="menu-icon"><i class="bi bi-calculator"></i></span>
                     <span class="menu-text">Kalkulator HPP</span>
                 </a>
                 <a href="<?= site_url('advisor'); ?>" class="menu-item">
-                    <span class="menu-icon">◆</span>
+                    <span class="menu-icon"><i class="bi bi-chat-square-text"></i></span>
                     <span class="menu-text">AI Advisor</span>
                 </a>
                 <a href="<?= site_url('keuangan'); ?>" class="menu-item">
-                    <span class="menu-icon">≈</span>
+                    <span class="menu-icon"><i class="bi bi-wallet2"></i></span>
                     <span class="menu-text">Keuangan</span>
                 </a>
                 <a href="<?= site_url('analisis'); ?>" class="menu-item">
-                    <span class="menu-icon">►</span>
+                    <span class="menu-icon"><i class="bi bi-bar-chart-line"></i></span>
                     <span class="menu-text">Analisis Produk</span>
                 </a>
                 <a href="<?= site_url('risiko'); ?>" class="menu-item">
-                    <span class="menu-icon">▲</span>
+                    <span class="menu-icon"><i class="bi bi-shield-check"></i></span>
                     <span class="menu-text">Manajemen Risiko</span>
                 </a>
             </div>
@@ -1269,15 +1232,15 @@
             <div class="menu-section">
                 <div class="section-title">Informasi</div>
                 <a href="<?= site_url('auth/info_bisnis'); ?>" class="menu-item">
-                    <span class="menu-icon">◉</span>
+                    <span class="menu-icon"><i class="bi bi-book"></i></span>
                     <span class="menu-text">Informasi Bisnis</span>
                 </a>
             </div>
         </nav>
 
         <div class="sidebar-footer">
-            <a href="<?= site_url('user/profile'); ?>" class="footer-item">Profil</a>
-            <a href="<?= site_url('auth/logout'); ?>" class="footer-item logout">Logout</a>
+            <a href="<?= site_url('user/profile'); ?>" class="footer-item"><i class="bi bi-person-circle"></i> Profil</a>
+            <a href="<?= site_url('auth/logout'); ?>" class="footer-item logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
         </div>
     </aside>
 
@@ -1301,10 +1264,10 @@
                             <span>Export Data</span>
                         </button>
                         <button class="btn-header secondary" id="printBtn" type="button" title="Cetak data (Ctrl+P)" onclick="printTable()">
-                            <span>🖨 Cetak</span>
+                            <span><i class="bi bi-printer"></i> Cetak</span>
                         </button>
                         <button class="btn-header secondary" id="recalculateBtn" type="button" title="Hitung ulang semua margin" onclick="recalculateMargins()">
-                            <span>⚡ Hitung Ulang</span>
+                            <span><i class="bi bi-arrow-clockwise"></i> Hitung Ulang</span>
                         </button>
                     </div>
                 </div>
@@ -1391,9 +1354,9 @@
                                     </td>
                                     <td>
                                         <div class="action-buttons">
-                                            <a href="<?= site_url('hpp/view/'.$hpp->id_hpp); ?>" class="action-btn view" title="Lihat">👁</a>
-                                            <a href="<?= site_url('hpp/edit/'.$hpp->id_hpp); ?>" class="action-btn edit" title="Edit">✎</a>
-                                            <a href="<?= site_url('hpp/delete/'.$hpp->id_hpp); ?>" class="action-btn delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus?')">✕</a>
+                                            <a href="<?= site_url('hpp/view/'.$hpp->id_hpp); ?>" class="action-btn view" title="Lihat"><i class="bi bi-eye"></i></a>
+                                            <a href="<?= site_url('hpp/edit/'.$hpp->id_hpp); ?>" class="action-btn edit" title="Edit"><i class="bi bi-pencil"></i></a>
+                                            <a href="<?= site_url('hpp/delete/'.$hpp->id_hpp); ?>" class="action-btn delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus?')"><i class="bi bi-trash3"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -1439,7 +1402,7 @@
                     </div>
                     <div class="margin-value">Rp <?= number_format($avg_margin, 0, ',', '.') ?></div>
                     <div class="margin-change <?= $avg_margin > 0 ? '' : 'negative' ?>">
-                        <?= $avg_margin > 0 ? '↑' : '↓' ?> <?= abs($avg_margin_percentage) ?>%
+                        <i class="bi bi-<?= $avg_margin > 0 ? 'arrow-up' : 'arrow-down' ?>"></i> <?= abs($avg_margin_percentage) ?>%
                     </div>
                 </div>
                 
@@ -1451,7 +1414,7 @@
                     </div>
                     <div class="margin-value">Rp <?= number_format($max_margin, 0, ',', '.') ?></div>
                     <div class="margin-change">
-                        ⭐ Produk Terbaik
+                        <i class="bi bi-trophy"></i> Produk Terbaik
                     </div>
                 </div>
                 
@@ -1463,7 +1426,7 @@
                     </div>
                     <div class="margin-value">Rp <?= number_format($min_margin, 0, ',', '.') ?></div>
                     <div class="margin-change <?= $min_margin < 0 ? 'negative' : '' ?>">
-                        <?= $min_margin < 0 ? '⚠️ Rugi' : '⚠️ Rendah' ?>
+                        <i class="bi bi-exclamation-triangle"></i> <?= $min_margin < 0 ? 'Rugi' : 'Rendah' ?>
                     </div>
                 </div>
                 
@@ -1475,7 +1438,7 @@
                     </div>
                     <div class="margin-value" style="font-size: 1.4rem;"><?= $positive_count ?>/<?= count($hpp_list) ?></div>
                     <div class="margin-change">
-                        ✓ <?= $positive_count ?> Untung | <?= $negative_count ?> Rugi
+                        <i class="bi bi-check-circle"></i> <?= $positive_count ?> Untung | <?= $negative_count ?> Rugi
                     </div>
                 </div>
             <?php endif; ?>
@@ -1604,7 +1567,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn-cancel" onclick="closeHppModal()">Batal</button>
-                        <button type="submit" class="btn-submit">💾 Simpan HPP</button>
+                        <button type="submit" class="btn-submit"><i class="bi bi-check-lg"></i> Simpan HPP</button>
                     </div>
                 </form>
             </div>
@@ -1680,7 +1643,7 @@
                 </style>
             </head>
             <body>
-                <h1>📊 Laporan HPP Calculator</h1>
+                <h1>Laporan HPP Calculator</h1>
                 <p style="text-align: center; color: #666;">Tanggal Cetak: ${new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 ${table.outerHTML}
                 <div class="footer">
@@ -1698,7 +1661,7 @@
             printWindow.print();
         };
         
-        showNotification('✓ Siap untuk dicetak');
+        showNotification('Siap untuk dicetak');
     }
     
     // Recalculate margins function
@@ -1742,7 +1705,7 @@
             }
         });
         
-        showNotification(`✓ ${updatedCount} data berhasil dihitung ulang`);
+        showNotification(`${updatedCount} data berhasil dihitung ulang`);
     }
     
     // Format number function
@@ -1802,7 +1765,7 @@
             avgCard.classList.remove('success', 'warning', 'danger');
             avgCard.classList.add(avg_margin > 0 ? 'success' : (avg_margin < 0 ? 'danger' : 'warning'));
             avgCard.querySelector('.margin-value').textContent = 'Rp ' + number_format(avg_margin);
-            avgCard.querySelector('.margin-change').textContent = (avg_margin > 0 ? '↑' : '↓') + ' ' + Math.abs(avg_margin_percentage) + '%';
+            avgCard.querySelector('.margin-change').innerHTML = '<i class="bi bi-' + (avg_margin > 0 ? 'arrow-up' : 'arrow-down') + '"></i> ' + Math.abs(avg_margin_percentage) + '%';
             avgCard.style.animation = 'none';
             setTimeout(() => avgCard.style.animation = 'slideInUp 0.3s ease', 10);
         }
@@ -1816,12 +1779,12 @@
             minCard.classList.remove('danger', 'warning');
             minCard.classList.add(min_margin < 0 ? 'danger' : 'warning');
             minCard.querySelector('.margin-value').textContent = 'Rp ' + number_format(min_margin);
-            minCard.querySelector('.margin-change').innerHTML = (min_margin < 0 ? '⚠️ Rugi' : '⚠️ Rendah');
+            minCard.querySelector('.margin-change').innerHTML = '<i class="bi bi-exclamation-triangle"></i> ' + (min_margin < 0 ? 'Rugi' : 'Rendah');
         }
         if (cards.length > 3) {
             // Update profitability stats
             cards[3].querySelector('.margin-value').textContent = positive_count + '/' + margins.length;
-            cards[3].querySelector('.margin-change').innerHTML = '✓ ' + positive_count + ' Untung | ' + negative_count + ' Rugi';
+            cards[3].querySelector('.margin-change').innerHTML = '<i class="bi bi-check-circle"></i> ' + positive_count + ' Untung | ' + negative_count + ' Rugi';
         }
     }
     
@@ -2023,7 +1986,7 @@
         link.download = filename;
         link.click();
         
-        showNotification('✓ Data berhasil diekspor ke CSV');
+        showNotification('Data berhasil diekspor ke CSV');
     }
 
     // Real-time search on input

@@ -14,6 +14,7 @@ $user = array_merge([
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Perencanaan</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         :root {
             --primary: #1F6B99;
@@ -968,43 +969,43 @@ $user = array_merge([
         <ul class="sidebar-menu">
             <li class="sidebar-menu-item">
                 <a href="<?= site_url('auth/dashboard_planning'); ?>" class="sidebar-menu-link active">
-                    <span class="sidebar-menu-icon">🏠</span>
+                    <span class="sidebar-menu-icon"><i class="bi bi-grid-1x2"></i></span>
                     <span class="sidebar-menu-text">Dashboard</span>
                 </a>
             </li>
             <li class="sidebar-menu-item">
                 <a href="<?= site_url('advisor'); ?>" class="sidebar-menu-link">
-                    <span class="sidebar-menu-icon">🤖</span>
+                    <span class="sidebar-menu-icon"><i class="bi bi-chat-square-text"></i></span>
                     <span class="sidebar-menu-text">AI Advisor</span>
                 </a>
             </li>
              <li class="sidebar-menu-item">
                 <a href="<?= site_url('hpp'); ?>" class="sidebar-menu-link">
-                    <span class="sidebar-menu-icon">🧮</span>
+                    <span class="sidebar-menu-icon"><i class="bi bi-calculator"></i></span>
                     <span class="sidebar-menu-text">Kalkulator HPP</span>
                 </a>
             </li>
              <li class="sidebar-menu-item">
                 <a href="<?= site_url('keuangan'); ?>" class="sidebar-menu-link">
-                    <span class="sidebar-menu-icon">💰</span>
+                    <span class="sidebar-menu-icon"><i class="bi bi-wallet2"></i></span>
                     <span class="sidebar-menu-text">Keuangan</span>
                 </a>
             </li>
              <li class="sidebar-menu-item">
                 <a href="<?= site_url('analisis'); ?>" class="sidebar-menu-link">
-                    <span class="sidebar-menu-icon">🎯</span>
+                    <span class="sidebar-menu-icon"><i class="bi bi-bar-chart-line"></i></span>
                     <span class="sidebar-menu-text">Analisis Produk</span>
                 </a>
             </li>
             <li class="sidebar-menu-item">
                 <a href="<?= site_url('risiko'); ?>" class="sidebar-menu-link">
-                    <span class="sidebar-menu-icon">🛡️</span>
+                    <span class="sidebar-menu-icon"><i class="bi bi-shield-check"></i></span>
                     <span class="sidebar-menu-text">Risiko Bisnis</span>
                 </a>
             </li>
             <li class="sidebar-menu-item">
                 <a href="<?= site_url('auth/info_bisnis'); ?>" class="sidebar-menu-link">
-                    <span class="sidebar-menu-icon">📚</span>
+                    <span class="sidebar-menu-icon"><i class="bi bi-book"></i></span>
                     <span class="sidebar-menu-text">Informasi Bisnis</span>
                 </a>
             </li>
@@ -1035,16 +1036,16 @@ $user = array_merge([
                     <!-- Dropdown Menu -->
                     <div class="user-dropdown-menu" id="userDropdownMenu">
                         <a href="<?= site_url('user/profile'); ?>" class="dropdown-item">
-                            <span>◆</span>
+                            <span><i class="bi bi-person"></i></span>
                             <span>Profil Saya</span>
                         </a>
                         <a href="<?= site_url('user/settings'); ?>" class="dropdown-item">
-                            <span>⚙</span>
+                            <span><i class="bi bi-gear"></i></span>
                             <span>Pengaturan</span>
                         </a>
                         <div class="dropdown-divider"></div>
                         <button onclick="showLogoutModal()" class="dropdown-item dropdown-logout">
-                            <span>✕</span>
+                            <span><i class="bi bi-box-arrow-left"></i></span>
                             <span>Logout</span>
                         </button>
                     </div>
@@ -1115,37 +1116,37 @@ $user = array_merge([
                     <div class="section-title">Tools Perencanaan Bisnis</div>
                     <div class="tools-grid">
                         <div class="tool-card">
-                            <div class="tool-icon">🤖</div>
+                            <div class="tool-icon"><i class="bi bi-chat-square-text" style="font-size:24px"></i></div>
                             <div class="tool-title">AI Business Advisor</div>
                             <div class="tool-desc">Konsultasi cerdas untuk strategi bisnis Anda</div>
                             <a href="<?= site_url('advisor'); ?>" class="tool-link">Konsultasi</a>
                         </div>
                         <div class="tool-card">
-                            <div class="tool-icon">🧮</div>
+                            <div class="tool-icon"><i class="bi bi-calculator" style="font-size:24px"></i></div>
                             <div class="tool-title">Kalkulator HPP</div>
                             <div class="tool-desc">Hitung harga pokok produksi dengan akurat</div>
                             <a href="<?= site_url('hpp'); ?>" class="tool-link">Hitung HPP</a>
                         </div>
                         <div class="tool-card">
-                            <div class="tool-icon">💰</div>
+                            <div class="tool-icon"><i class="bi bi-wallet2" style="font-size:24px"></i></div>
                             <div class="tool-title">Pencatatan Keuangan</div>
                             <div class="tool-desc">Simulasi untung-rugi bisnis Anda</div>
                             <a href="<?= site_url('keuangan'); ?>" class="tool-link">Simulasi</a>
                         </div>
                          <div class="tool-card">
-                            <div class="tool-icon">⚠️</div>
+                            <div class="tool-icon"><i class="bi bi-shield-check" style="font-size:24px"></i></div>
                             <div class="tool-title">Manajemen Risiko</div>
                             <div class="tool-desc">Identifikasi risiko bisnis sejak awal</div>
                             <a href="<?= site_url('risiko'); ?>" class="tool-link">Kelola Risiko</a>
                         </div>
                         <div class="tool-card">
-                            <div class="tool-icon">📊</div>
+                            <div class="tool-icon"><i class="bi bi-bar-chart-line" style="font-size:24px"></i></div>
                             <div class="tool-title">Analisis Produk</div>
                             <div class="tool-desc">Riset pasar untuk produk atau layanan</div>
                             <a href="<?= site_url('analisis'); ?>" class="tool-link">Analisis</a>
                         </div>
                         <div class="tool-card">
-                            <div class="tool-icon">ℹ️</div>
+                            <div class="tool-icon"><i class="bi bi-info-circle" style="font-size:24px"></i></div>
                             <div class="tool-title">Rekomendasi Informasi Bisnis</div>
                             <div class="tool-desc">Tips dan insight dunia UMKM</div>
                             <a href="<?= site_url('info'); ?>" class="tool-link">Info</a>
@@ -1169,7 +1170,7 @@ $user = array_merge([
                     </div>
                     <div class="guide-grid">
                         <div class="guide-card">
-                            <div class="guide-icon">🚀</div>
+                            <div class="guide-icon"><i class="bi bi-rocket-takeoff" style="font-size:22px"></i></div>
                             <div class="guide-title">Cara Memulai UMKM dari Nol</div>
                             <div class="guide-desc">Panduan lengkap untuk pemula yang ingin memulai usaha</div>
                             <a href="<?= site_url('panduan/umkm'); ?>" class="tool-link">Baca</a>
@@ -1179,7 +1180,7 @@ $user = array_merge([
                             </div>
                         </div>
                         <div class="guide-card">
-                            <div class="guide-icon">🔍</div>
+                            <div class="guide-icon"><i class="bi bi-search" style="font-size:22px"></i></div>
                             <div class="guide-title">Riset Pasar yang Efektif</div>
                             <div class="guide-desc">Teknik riset pasar untuk kesuksesan UMKM</div>
                             <a href="<?= site_url('panduan/risetpasar'); ?>" class="tool-link">Baca</a>
@@ -1189,7 +1190,7 @@ $user = array_merge([
                             </div>
                         </div>
                         <div class="guide-card">
-                            <div class="guide-icon">💰</div>
+                            <div class="guide-icon"><i class="bi bi-cash-stack" style="font-size:22px"></i></div>
                             <div class="guide-title">Kelola Modal Usaha</div>
                             <div class="guide-desc">Best practice pengelolaan keuangan bisnis</div>
                             <a href="<?= site_url('panduan/modalusaha'); ?>" class="tool-link">Baca</a>

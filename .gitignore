@@ -4,9 +4,12 @@
 .env
 
 # Sensitive config files - DO NOT PUSH
+# Use the *_sample.php files as templates
 application/config/database.php
+application/config/database.php.bak
 application/config/midtrans.php
 application/config/google_oauth.php
+application/config/gemini.php
 
 application/cache/*
 !application/cache/index.html

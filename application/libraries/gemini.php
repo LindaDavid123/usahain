@@ -43,7 +43,10 @@ class Gemini {
                 'temperature' => 1.0,
                 'topP' => 0.95,
                 'topK' => 40,
-                'maxOutputTokens' => 1024
+                'maxOutputTokens' => 8192,
+                'thinkingConfig' => [
+                    'thinkingBudget' => 0
+                ]
             ]
         ];
 
@@ -151,9 +154,21 @@ class Gemini {
     {
         if (!is_array($data)) return null;
 
-        // Common older shape: candidates -> content -> parts -> text
-        if (isset($data['candidates'][0]['content']['parts'][0]['text'])) {
-            return $data['candidates'][0]['content']['parts'][0]['text'];
+        // Gemini 2.5 models may return multiple parts (thinking + answer).
+        // Pick the last non-thinking part's text.
+        if (isset($data['candidates'][0]['content']['parts']) && is_array($data['candidates'][0]['content']['parts'])) {
+            $parts = $data['candidates'][0]['content']['parts'];
+            // Iterate backwards to find the last non-thinking text part
+            for ($i = count($parts) - 1; $i >= 0; $i--) {
+                if (!empty($parts[$i]['thought'])) continue; // skip thinking parts
+                if (isset($parts[$i]['text']) && strlen(trim($parts[$i]['text'])) > 0) {
+                    return $parts[$i]['text'];
+                }
+            }
+            // Fallback: return first part with text
+            if (isset($parts[0]['text'])) {
+                return $parts[0]['text'];
+            }
         }
 
         // Another shape: candidates -> text
