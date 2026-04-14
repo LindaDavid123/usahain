@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --primary: #0b6ea8;
@@ -26,11 +27,12 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            font-family: 'Inter', Arial, sans-serif; 
+            font-family: 'Inter', sans-serif; 
             background: linear-gradient(180deg, #F8FBFD 0%, #F7FAFC 100%);
             color: var(--text); 
             min-height: 100vh;
             position: relative;
+            line-height: 1.5;
         }
         body::before {
             content: '';
@@ -70,9 +72,9 @@
             background: none;
         }
         .container { 
-            max-width: 1400px; 
-            margin: 32px auto; 
-            padding: 0 18px;
+            max-width: 1180px;
+            margin: 28px auto;
+            padding: 0 24px;
             position: relative;
             z-index: 1;
         }
@@ -80,9 +82,9 @@
         /* Header/Hero Section */
         .page-header {
             margin-bottom: 32px;
-            background: linear-gradient(135deg, #0b6ea8 0%, #084f8a 50%, #0a3d6f 100%);
+            background: #1c6494;
             border-radius: 20px;
-            padding: 56px 48px;
+            padding: 28px 32px;
             color: white;
             position: relative;
             overflow: hidden;
@@ -90,24 +92,10 @@
         }
 
         .page-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
-            border-radius: 50%;
+            content: none;
         }
         .page-header::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -5%;
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            border-radius: 50%;
+            content: none;
         }
 
         .header-content {
@@ -119,23 +107,19 @@
             align-items: center;
         }
         .header-text h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.95) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 0;
+            color: #ffffff;
         }
         .header-text p {
-            font-size: 1.15rem;
-            color: rgba(255,255,255,0.95);
+            font-size: 12px;
+            color: rgba(255,255,255,0.75);
             margin: 0;
-            line-height: 1.8;
+            line-height: 1.5;
             max-width: 520px;
-            font-weight: 300;
+            font-weight: 400;
         }
         .header-stats {
             display: grid;
@@ -144,10 +128,10 @@
             margin-top: 24px;
         }
         .header-stat {
-            background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.10) 100%);
+            background: rgba(255,255,255,0.14);
             backdrop-filter: blur(25px);
             border-radius: 16px;
-            padding: 28px 32px;
+            padding: 20px 24px;
             border: 2px solid rgba(255,255,255,0.35);
             text-align: center;
             position: relative;
@@ -159,10 +143,10 @@
             justify-content: center;
         }
         .header-stat .label {
-            font-size: 0.75rem;
+            font-size: 10px;
             color: rgba(255,255,255,0.85);
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             letter-spacing: 0.8px;
             text-transform: uppercase;
             position: relative;
@@ -170,33 +154,33 @@
             font-family: 'Inter', sans-serif;
         }
         .header-stat .value {
-            font-size: 2.2rem;
-            font-weight: 800;
+            font-size: 22px;
+            font-weight: 700;
             color: #fff;
             line-height: 1.1;
             position: relative;
             z-index: 1;
             font-family: 'Inter', sans-serif;
-            letter-spacing: -0.3px;
+            letter-spacing: 0;
         }
         .header-actions {
             position: relative;
             z-index: 2;
             display: flex;
-            gap: 18px;
-            margin-top: 28px;
-            grid-column: 1 / -1;
-            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: nowrap;
             align-items: center;
+            overflow-x: auto;
         }
         .btn-header {
-            padding: 16px 32px;
-            border-radius: 12px;
+            padding: 9px 18px;
+            border-radius: 8px;
             font-weight: 800;
             text-decoration: none;
             border: none;
             cursor: pointer;
-            font-size: 1.05rem;
+            font-size: 13px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -207,9 +191,12 @@
             white-space: nowrap;
             text-shadow: 0 2px 4px rgba(0,0,0,0.15);
             letter-spacing: 0.3px;
-            min-height: 50px;
+            min-height: 36px;
             pointer-events: auto;
             z-index: 10;
+        }
+        .btn-header i {
+            font-size: 14px;
         }
         .btn-header span {
             position: relative;
@@ -231,21 +218,38 @@
         }
 
         .btn-header.primary {
-            background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
-            color: #fff;
-            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+            background: #ffffff;
+            color: #1c6494;
+            font-weight: 600;
+            padding: 9px 18px;
+            border-radius: 8px;
+            border: none;
+            box-shadow: none;
         }
         .btn-header.primary:active {
             
         }
         .btn-header.secondary {
-            background: linear-gradient(135deg, #0b6ea8 0%, #27b0e3 100%);
+            background: rgba(255,255,255,0.15);
             color: #fff;
-            border: 2px solid rgba(255,255,255,0.3);
-            box-shadow: 0 8px 24px rgba(11, 110, 168, 0.3);
+            border: 1px solid rgba(255,255,255,0.4);
+            font-weight: 500;
+            padding: 9px 18px;
+            border-radius: 8px;
+            box-shadow: none;
         }
         .btn-header.secondary:active {
             
+        }
+        #recalculateBtn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+            font-weight: 500;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            box-shadow: none;
         }
         .breadcrumb {
             position: relative;
@@ -357,6 +361,22 @@
         .chart-wrapper { 
             position: relative; 
             height: 300px;
+        }
+
+        .chart-empty-state {
+            display: none;
+            position: absolute;
+            inset: 0;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            background: #f8fafc;
+            border: 1px dashed var(--border);
+            border-radius: 10px;
+            padding: 16px;
         }
         
         /* Right Sidebar */
@@ -500,14 +520,15 @@
             width: 100%; 
             border-collapse: separate; 
             border-spacing: 0; 
-            font-size: 0.9rem;
+            font-size: 13px;
         }
         thead { 
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: #1c6494;
         }
         th { 
-            padding: 16px 14px; 
+            padding: 10px 12px; 
             color: #fff; 
+            font-size: 12px;
             font-weight: 700; 
             text-align: left; 
             border: none;
@@ -525,8 +546,9 @@
         tbody tr:last-child td:first-child { border-radius: 0 0 0 12px; }
         tbody tr:last-child td:last-child { border-radius: 0 0 12px 0; }
         td { 
-            padding: 14px; 
-            color: var(--text); 
+            padding: 10px 12px; 
+            color: #111827; 
+            font-size: 13px;
             border: none;
         }
         td:first-child { 
@@ -536,8 +558,12 @@
         .currency { 
             text-align: right; 
             font-weight: 700; 
-            color: var(--primary);
-            font-family: 'Courier New', monospace;
+            color: #111827;
+            font-family: 'Inter', sans-serif;
+        }
+        #hppTable tbody td.currency,
+        #hppTable tbody td.currency strong {
+            color: #111827;
         }
         .badge { 
             display: inline-block; 
@@ -566,40 +592,45 @@
             justify-content: center;
         }
         .action-btn { 
-            padding: 8px 12px; 
-            border-radius: 8px; 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            padding: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px; 
+            background: #1c6494;
             color: #fff; 
             border: none; 
             cursor: pointer; 
-            font-size: 1rem; 
+            font-size: 14px;
             font-weight: 600;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            min-width: 35px;
+            min-width: 28px;
             justify-content: center;
+        }
+        .action-btn i {
+            font-size: 13px;
         }
         .action-btn:hover { 
             opacity: 0.95;
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(11,110,168,0.25);
+            box-shadow: 0 6px 16px rgba(28,100,148,0.25);
         }
         .action-btn.view {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: #1c6494;
         }
         .action-btn.view:hover {
-            box-shadow: 0 6px 16px rgba(11,110,168,0.25);
+            box-shadow: 0 6px 16px rgba(28,100,148,0.25);
         }
         .action-btn.edit { 
-            background: linear-gradient(135deg, var(--warning), #FBBF24);
+            background: #f59e0b;
         }
         .action-btn.edit:hover {
             box-shadow: 0 6px 16px rgba(245,158,11,0.25);
         }
         .action-btn.delete { 
-            background: linear-gradient(135deg, var(--danger), #F87171);
+            background: #ef4444;
         }
         .action-btn.delete:hover {
             box-shadow: 0 6px 16px rgba(239,68,68,0.25);
@@ -622,19 +653,13 @@
             overflow: hidden;
         }
         .margin-analysis-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--success), #34D399);
+            content: none;
         }
         .margin-analysis-card.warning::before {
-            background: linear-gradient(90deg, var(--warning), #FBBF24);
+            content: none;
         }
         .margin-analysis-card.danger::before {
-            background: linear-gradient(90deg, var(--danger), #F87171);
+            content: none;
         }
         .margin-label {
             font-size: 0.85rem;
@@ -645,40 +670,69 @@
             margin-bottom: 8px;
         }
         .margin-value {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary);
+            font-size: 18px;
+            font-weight: 700;
+            color: #1c6494;
             margin-bottom: 12px;
-            font-family: 'Courier New', monospace;
+            font-family: 'Inter', sans-serif;
         }
         .margin-analysis-card.success .margin-value {
-            color: var(--success);
+            color: #1c6494;
         }
         .margin-analysis-card.warning .margin-value {
-            color: var(--warning);
+            color: #1c6494;
         }
         .margin-analysis-card.danger .margin-value {
-            color: var(--danger);
+            color: #1c6494;
+        }
+        .margin-analysis-card.profit-positive .margin-value {
+            color: #16a34a;
+        }
+        .margin-analysis-card.profit-negative .margin-value {
+            color: #ef4444;
+        }
+        .margin-analysis-card.profit-neutral .margin-value {
+            color: #1c6494;
+        }
+        .margin-min-card .margin-value {
+            color: #ef4444;
+        }
+        .margin-min-card .margin-indicator {
+            background: #ef4444;
         }
         .margin-change {
             font-size: 0.8rem;
             font-weight: 600;
-            padding: 6px 10px;
-            border-radius: 6px;
-            display: inline-block;
-            background: rgba(16,185,129,0.1);
-            color: var(--success);
+            padding: 0;
+            border-radius: 0;
+            display: inline;
+            background: none;
+            border: 0;
+            color: #1c6494;
+        }
+        .margin-change i[data-lucide] {
+            width: 12px;
+            height: 12px;
+            stroke-width: 2;
+            vertical-align: -2px;
+            margin-right: 4px;
         }
         .margin-change.negative {
-            background: rgba(239,68,68,0.1);
+            background: none;
+            border: 0;
             color: var(--danger);
+        }
+        .margin-change.low {
+            background: none;
+            color: #ef4444;
+            border: 0;
         }
         .margin-indicator {
             display: inline-block;
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: var(--success);
+            background: #1c6494;
             margin-right: 6px;
         }
         .margin-indicator.warning {
@@ -686,6 +740,202 @@
         }
         .margin-indicator.danger {
             background: var(--danger);
+        }
+        .margin-analysis-card.profit-positive .margin-indicator {
+            background: #16a34a;
+        }
+        .margin-analysis-card.profit-negative .margin-indicator {
+            background: #ef4444;
+        }
+        .margin-analysis-card.profit-neutral .margin-indicator {
+            background: #1c6494;
+        }
+
+        .analysis-section-divider {
+            margin: 30px 0 18px;
+            padding-top: 18px;
+            border-top: 1px solid #dbe7f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .analysis-section-divider h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1c6494;
+            margin: 0;
+        }
+
+        .analysis-panel {
+            background: linear-gradient(135deg, var(--card) 0%, #f8fafb 100%);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 18px;
+        }
+
+        .analysis-panel-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .analysis-table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+        }
+
+        .analysis-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .analysis-table th,
+        .analysis-table td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .analysis-table th {
+            font-size: 12px;
+            font-weight: 600;
+            color: #374151;
+            background: #f8fafc;
+        }
+
+        .analysis-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .analysis-money {
+            font-weight: 600;
+        }
+
+        .analysis-money.positive {
+            color: #166534;
+        }
+
+        .analysis-money.negative {
+            color: #991b1b;
+        }
+
+        .analysis-status {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 3px 9px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .analysis-status.good {
+            background: rgba(22, 163, 74, 0.12);
+            color: #166534;
+        }
+
+        .analysis-status.bad {
+            background: rgba(220, 38, 38, 0.12);
+            color: #991b1b;
+        }
+
+        .analysis-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 999px;
+            padding: 3px 9px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .analysis-trend.up {
+            background: rgba(22, 163, 74, 0.12);
+            color: #166534;
+        }
+
+        .analysis-trend.down {
+            background: rgba(220, 38, 38, 0.12);
+            color: #991b1b;
+        }
+
+        .analysis-trend.stable {
+            background: rgba(107, 114, 128, 0.14);
+            color: #374151;
+        }
+
+        .analysis-trend i,
+        .analysis-trend svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .analysis-source-badge {
+            display: inline;
+            font-size: 11px;
+            font-weight: 500;
+            color: #9ca3af;
+        }
+
+        .analysis-chart-wrap {
+            position: relative;
+            height: 240px;
+        }
+
+        .analysis-chart-empty {
+            display: none;
+            position: absolute;
+            inset: 0;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            background: #f8fafc;
+            border: 1px dashed var(--border);
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .analysis-recommend-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .analysis-recommend-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .analysis-recommend-icon,
+        .analysis-recommend-icon i,
+        .analysis-recommend-icon svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .analysis-recommend-icon.positive {
+            color: #16a34a;
+        }
+
+        .analysis-recommend-icon.warning {
+            color: #ef4444;
+        }
+
+        .analysis-recommend-text {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.6;
         }
 
         /* Real-time update notification */
@@ -742,31 +992,28 @@
             .summary-cards { grid-template-columns: 1fr; }
             .chart-wrapper { height: 200px; }
             .header-stats { grid-template-columns: 1fr; }
-            .header-text h1 { font-size: 2.2rem; }
-            .page-header { padding: 36px 24px; }
+            .page-header { padding: 28px 24px; }
             .table-header { flex-direction: column; align-items: flex-start; }
             .filter-row { width: 100%; }
             .filter-row input, .filter-row select { width: 100%; }
-            table { font-size: 0.8rem; }
-            td, th { padding: 10px 8px; }
-            .action-btn { padding: 6px 10px; font-size: 0.7rem; }
+            table { font-size: 13px; }
+            td, th { padding: 10px 12px; }
+            .action-btn { padding: 6px 10px; }
         }
         @media (max-width: 480px) {
             .summary-cards { grid-template-columns: 1fr; }
-            .header-text h1 { font-size: 1.8rem; }
-            .header-actions { flex-direction: column; }
-            .btn-header { width: 100%; justify-content: center; }
+            .header-actions { flex-wrap: nowrap; }
+            .btn-header { justify-content: center; }
             .page-header { padding: 24px 16px; }
-            .container { padding: 0 12px; margin: 20px auto; }
-            th { padding: 12px 8px; font-size: 0.75rem; }
-            td { padding: 8px; }
+            .container { padding: 0 16px; margin: 20px auto; }
+            th { padding: 10px 12px; font-size: 12px; }
+            td { padding: 10px 12px; }
             .action-buttons { gap: 4px; }
-            .action-btn { padding: 6px 10px; font-size: 0.9rem; min-width: 32px; }
+            .action-btn { padding: 6px 10px; min-width: 32px; }
             .table-header { flex-direction: column; gap: 12px; }
             .filter-row { width: 100%; flex-direction: column; }
             .filter-row input, .filter-row select { width: 100%; }
             .card, .chart-container, .table-container { padding: 20px; }
-            .header-stat { padding: 16px 12px; }
             .summary-card { padding: 20px; }
         }
 
@@ -837,15 +1084,15 @@
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 14px;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text);
-            font-size: 0.95rem;
+            font-weight: 500;
+            color: #374151;
+            font-size: 13px;
         }
 
         .required {
@@ -857,13 +1104,20 @@
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 12px 14px;
+            padding: 9px 12px;
             border: 2px solid var(--border);
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 13px;
             font-family: inherit;
-            color: var(--text);
+            color: #111827;
             background: white;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            font-size: 13px;
+            color: #9ca3af;
+            opacity: 1;
         }
 
         .form-group textarea {
@@ -911,8 +1165,12 @@
         }
 
         .modal-large {
-            max-width: 600px;
-            width: 95%;
+            max-width: 480px;
+            width: 90%;
+        }
+
+        #hppModal .modal-large {
+            max-width: 420px;
         }
 
         .modal-footer {
@@ -923,15 +1181,49 @@
             border-top: 1px solid var(--border);
         }
 
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 24px;
+        }
+
+        .detail-item {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 12px;
+        }
+
+        .detail-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: var(--text);
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .detail-item.full {
+            grid-column: 1 / -1;
+        }
+
         .btn-cancel {
-            padding: 10px 24px;
+            padding: 9px 16px;
             border: 2px solid var(--border);
             background: white;
             color: var(--text);
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 13px;
         }
 
         .btn-cancel:hover {
@@ -939,14 +1231,14 @@
         }
 
         .btn-submit {
-            padding: 10px 24px;
+            padding: 9px 16px;
             border: none;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 13px;
         }
 
         .btn-submit:hover {
@@ -960,20 +1252,20 @@
             }
         }
 
-        /* ===== SIDEBAR STYLES ===== */
+        /* ===== SIDEBAR STYLES (Dashboard Main) ===== */
         .app-sidebar {
             position: fixed;
             left: 0;
             top: 0;
             height: 100vh;
             width: 260px;
-            background: var(--card);
+            background: #fff;
             border-right: 1px solid var(--border);
             display: flex;
             flex-direction: column;
             z-index: 999;
-            box-shadow: 0 4px 16px rgba(11,110,168,0.08);
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             overflow-y: auto;
             overflow-x: hidden;
         }
@@ -987,7 +1279,7 @@
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             gap: 12px;
         }
 
@@ -996,11 +1288,12 @@
             align-items: center;
             gap: 12px;
             text-decoration: none;
-            color: #1E293B;
+            color: #1f6b99;
             font-weight: 800;
             font-size: 16px;
-            flex: 1;
             white-space: nowrap;
+            min-width: 40px;
+            flex: 1;
         }
 
         .sidebar-logo img {
@@ -1014,12 +1307,14 @@
         }
 
         .sidebar-toggle-btn {
-            display: none;
             width: 36px;
             height: 36px;
             border: 1px solid var(--border);
             border-radius: 8px;
-            background: var(--bg);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: none;
             color: var(--text-secondary);
             cursor: pointer;
             font-size: 18px;
@@ -1027,41 +1322,30 @@
         }
 
         .sidebar-toggle-btn:hover {
-            background: #F1F5F9;
-            color: #1E293B;
-            border-color: #CBD5E1;
+            background: var(--bg);
+            color: #1f6b99;
         }
 
         .sidebar-menu {
             flex: 1;
-            padding: 16px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
             overflow-y: auto;
+            padding: 16px 12px;
+            list-style: none;
+            margin: 0;
         }
 
-        .menu-section {
+        .sidebar-menu-item {
             margin-bottom: 8px;
-        }
-
-        .section-title {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #94A3B8;
-            padding: 12px 16px 8px;
-            letter-spacing: 0.5px;
         }
 
         .menu-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 0;
             padding: 12px 16px;
             border-radius: 10px;
             text-decoration: none;
-            color: #475569;
+            color: var(--text-secondary);
             transition: all 0.3s;
             font-weight: 500;
             font-size: 14px;
@@ -1069,71 +1353,46 @@
         }
 
         .menu-item:hover {
-            background: #F1F5F9;
-            color: #1E293B;
+            background: var(--bg);
+            color: #1f6b99;
             transform: translateX(4px);
         }
 
         .menu-item.active {
-            background: #1E293B;
+            background: linear-gradient(135deg, #1f6b99 0%, #3a88ba 100%);
             color: #fff;
             font-weight: 600;
-            box-shadow: 0 4px 12px rgba(30, 41, 59, 0.2);
+            box-shadow: 0 4px 12px rgba(31,107,153,0.25);
         }
 
         .menu-icon {
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .app-sidebar.collapsed .menu-text {
             display: none;
         }
 
-        .sidebar-footer {
-            padding: 16px 12px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+        .menu-text {
+            display: inline-flex;
+            align-items: center;
         }
 
-        .footer-item {
-            padding: 10px 12px;
-            border: none;
-            border-radius: 8px;
-            background: var(--bg);
-            color: var(--text-secondary);
-            cursor: pointer;
+        .menu-badge {
+            margin-left: auto;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            background: rgba(31,107,153,0.1);
+            color: #1f6b99;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             transition: all 0.3s;
-            font-size: 12px;
-            font-weight: 600;
-            text-decoration: none;
-            text-align: center;
         }
 
-        .footer-item:hover {
-            background: #F1F5F9;
-            color: #1E293B;
-        }
-
-        .footer-item.logout {
-            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        .menu-item.active .menu-badge {
+            background: #1c6494;
             color: #fff;
         }
 
-        .footer-item.logout:hover {
-            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
-        }
-
-        .app-wrapper {
+        .main-wrapper {
             margin-left: 260px;
             flex: 1;
             display: flex;
@@ -1141,15 +1400,11 @@
             transition: margin-left 0.3s ease;
         }
 
-        .app-sidebar.collapsed ~ .app-wrapper {
-            margin-left: 80px;
-        }
-
         body.sidebar-collapsed .app-sidebar {
             width: 80px;
         }
 
-        body.sidebar-collapsed .app-wrapper {
+        body.sidebar-collapsed .main-wrapper {
             margin-left: 80px;
         }
 
@@ -1162,7 +1417,7 @@
                 z-index: 999;
                 width: 280px;
                 height: 100vh;
-                background: white;
+                background: #fff;
                 box-shadow: 2px 0 8px rgba(0,0,0,0.1);
                 transition: transform 0.3s ease;
             }
@@ -1175,76 +1430,69 @@
                 display: flex !important;
             }
 
-            .app-wrapper {
+            .main-wrapper {
                 margin-left: 0;
             }
 
-            .main-navbar {
-                padding: 12px 16px !important;
+            body.sidebar-collapsed .main-wrapper {
+                margin-left: 0;
             }
         }
     </style>
 </head>
 <body>
     <!-- SIDEBAR KIRI -->
-    <aside class="app-sidebar">
+    <aside class="app-sidebar" id="sidebar">
         <div class="sidebar-header">
-            <a href="<?= site_url('dashboard'); ?>" class="sidebar-logo">
+            <a href="<?= site_url('auth/dashboard'); ?>" class="sidebar-logo">
                 <img src="<?= base_url('assets/logo.png'); ?>" alt="Usahain">
                 <span class="logo-text">Usahain</span>
             </a>
             <button class="sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle sidebar"><i class="bi bi-list"></i></button>
         </div>
         
-        <nav class="sidebar-menu">
-            <div class="menu-section">
-                <div class="section-title">Dashboard</div>
-                <a href="<?= site_url('auth/dashboard_operasional'); ?>" class="menu-item">
+        <ul class="sidebar-menu">
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('auth/dashboard'); ?>" class="menu-item">
                     <span class="menu-icon"><i class="bi bi-grid-1x2"></i></span>
-                    <span class="menu-text">Dashboard Utama</span>
+                    <span class="menu-text">Dashboard</span>
+                    <span class="menu-badge">Home</span>
                 </a>
-            </div>
-
-            <div class="menu-section">
-                <div class="section-title">Tools Bisnis</div>
-                <a href="<?= site_url('hpp'); ?>" class="menu-item active">
-                    <span class="menu-icon"><i class="bi bi-calculator"></i></span>
-                    <span class="menu-text">Kalkulator HPP</span>
-                </a>
+            </li>
+            <li class="sidebar-menu-item">
                 <a href="<?= site_url('advisor'); ?>" class="menu-item">
                     <span class="menu-icon"><i class="bi bi-chat-square-text"></i></span>
                     <span class="menu-text">AI Advisor</span>
                 </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('hpp'); ?>" class="menu-item active">
+                    <span class="menu-icon"><i class="bi bi-calculator"></i></span>
+                    <span class="menu-text">Kalkulator HPP</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
                 <a href="<?= site_url('keuangan'); ?>" class="menu-item">
                     <span class="menu-icon"><i class="bi bi-wallet2"></i></span>
-                    <span class="menu-text">Keuangan</span>
+                    <span class="menu-text">Pencatatan Keuangan</span>
                 </a>
-                <a href="<?= site_url('analisis'); ?>" class="menu-item">
-                    <span class="menu-icon"><i class="bi bi-bar-chart-line"></i></span>
-                    <span class="menu-text">Analisis Produk</span>
-                </a>
+            </li>
+            <li class="sidebar-menu-item">
                 <a href="<?= site_url('risiko'); ?>" class="menu-item">
                     <span class="menu-icon"><i class="bi bi-shield-check"></i></span>
                     <span class="menu-text">Manajemen Risiko</span>
                 </a>
-            </div>
-
-            <div class="menu-section">
-                <div class="section-title">Informasi</div>
+            </li>
+            <li class="sidebar-menu-item">
                 <a href="<?= site_url('auth/info_bisnis'); ?>" class="menu-item">
                     <span class="menu-icon"><i class="bi bi-book"></i></span>
                     <span class="menu-text">Informasi Bisnis</span>
                 </a>
-            </div>
-        </nav>
-
-        <div class="sidebar-footer">
-            <a href="<?= site_url('user/profile'); ?>" class="footer-item"><i class="bi bi-person-circle"></i> Profil</a>
-            <a href="<?= site_url('auth/logout'); ?>" class="footer-item logout"><i class="bi bi-box-arrow-left"></i> Logout</a>
-        </div>
+            </li>
+        </ul>
     </aside>
 
-    <div class="app-wrapper">
+    <div class="main-wrapper">
 
     <div class="container">
 
@@ -1254,20 +1502,17 @@
                 <div>
                     <div class="header-text">
                         <h1>HPP Calculator</h1>
-                        <p>Kelola biaya produksi dengan akurat dan analisis margin keuntungan bisnis Anda secara real-time</p>
+                        <p>Kelola dan analisis biaya produksi bisnis Anda</p>
                     </div>
                     <div class="header-actions">
-                        <button type="button" id="addHppBtn" class="btn-header primary" title="Tambah HPP Baru" onclick="openHppModal()">
-                            <span>+ Tambah HPP Baru</span>
-                        </button>
-                        <button class="btn-header secondary" id="exportBtn" type="button" title="Export data ke CSV" onclick="exportTableToCSV()">
-                            <span>Export Data</span>
-                        </button>
-                        <button class="btn-header secondary" id="printBtn" type="button" title="Cetak data (Ctrl+P)" onclick="printTable()">
-                            <span><i class="bi bi-printer"></i> Cetak</span>
+                        <button type="button" id="addHppBtn" class="btn-header primary" title="Tambah HPP" onclick="openHppModal()">
+                            <span>Tambah HPP</span>
                         </button>
                         <button class="btn-header secondary" id="recalculateBtn" type="button" title="Hitung ulang semua margin" onclick="recalculateMargins()">
-                            <span><i class="bi bi-arrow-clockwise"></i> Hitung Ulang</span>
+                            <span>Hitung Ulang</span>
+                        </button>
+                        <button class="btn-header secondary" id="printBtn" type="button" title="Cetak data (Ctrl+P)" onclick="printTable()">
+                            <span>Cetak</span>
                         </button>
                     </div>
                 </div>
@@ -1275,11 +1520,11 @@
                 <div class="header-stats">
                     <div class="header-stat">
                         <div class="label">Total Produk</div>
-                        <div class="value"><?= isset($hpp_list) ? count($hpp_list) : 0 ?></div>
+                        <div class="value" id="totalProdukValue"><?= isset($hpp_list) ? count($hpp_list) : 0 ?></div>
                     </div>
                     <div class="header-stat">
                         <div class="label">Total Penjualan</div>
-                        <div class="value">Rp <?php
+                        <div class="value" id="totalPenjualanValue">Rp <?php
                             $total_jual = 0;
                             if (!empty($hpp_list)) {
                                 foreach ($hpp_list as $hpp) {
@@ -1291,7 +1536,7 @@
                     </div>
                     <div class="header-stat">
                         <div class="label">Total Biaya</div>
-                        <div class="value">Rp <?php
+                        <div class="value" id="totalBiayaValue">Rp <?php
                             $total_biaya = 0;
                             if (!empty($hpp_list)) {
                                 foreach ($hpp_list as $hpp) {
@@ -1313,40 +1558,44 @@
                     <input type="text" id="searchInput" placeholder="Cari data..." autocomplete="off">
                     <select id="marginFilter">
                         <option value="">Semua Margin</option>
-                        <option value="plus">Margin Positif</option>
-                        <option value="minus">Margin Negatif</option>
+                        <option value="tinggi">Margin Tinggi</option>
+                        <option value="rendah">Margin Rendah</option>
                     </select>
                 </div>
             </div>
 
-            <?php if (empty($hpp_list)): ?>
-                <div class="empty-state">
-                    <p style="font-size: 1.15rem; font-weight: 600; color: var(--text); margin-bottom: 8px;">Belum ada data HPP</p>
-                    <p style="margin-bottom: 24px;">Mulai buat perhitungan HPP pertama Anda untuk memantau biaya produksi</p>
-                </div>
-            <?php else: ?>
-                <div class="table-wrapper">
-                    <table id="hppTable">
-                        <thead>
-                            <tr>
-                                <th style="width: 40px;">No</th>
-                                <th>Biaya Bahan</th>
-                                <th>Biaya Tenaga Kerja</th>
-                                <th>Total Biaya</th>
-                                <th>Harga Jual</th>
-                                <th>Margin</th>
-                                <th style="width: 140px;">Aksi</th>
+            <div class="table-wrapper">
+                <table id="hppTable">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">No</th>
+                            <th>Nama Produk</th>
+                            <th>Kategori</th>
+                            <th>Total Biaya Produksi</th>
+                            <th>Harga Jual</th>
+                            <th>Margin</th>
+                            <th style="width: 140px;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="hppTableBody">
+                        <?php if (empty($hpp_list)): ?>
+                            <tr id="noResults">
+                                <td colspan="7" style="text-align: center; padding: 32px; color: #6b7280;">Belum ada data HPP</td>
                             </tr>
-                        </thead>
-                        <tbody>
+                        <?php else: ?>
                             <?php $no = 1; foreach ($hpp_list as $hpp): ?>
-                                <?php $margin = $hpp->harga_jual - $hpp->total_biaya; ?>
-                                <tr data-margin="<?= $margin >= 0 ? 'plus' : 'minus' ?>" data-search="<?= strtolower($no . ' ' . $hpp->bahan . ' ' . $hpp->tenaga_kerja . ' ' . $hpp->total_biaya . ' ' . $hpp->harga_jual . ' ' . $margin) ?>">
+                                <?php
+                                    $margin = (float) $hpp->harga_jual - (float) $hpp->total_biaya;
+                                    $namaProduk = trim((string) ($hpp->nama_produk ?? '')) !== '' ? $hpp->nama_produk : ('Produk #' . $hpp->id_hpp);
+                                    $kategori = trim((string) ($hpp->kategori ?? '')) !== '' ? $hpp->kategori : 'Lainnya';
+                                    $marginBucket = $margin >= 0 ? 'tinggi' : 'rendah';
+                                ?>
+                                <tr data-id="<?= (int) $hpp->id_hpp ?>" data-margin="<?= $marginBucket ?>" data-search="<?= strtolower($namaProduk . ' ' . $kategori . ' ' . $hpp->total_biaya . ' ' . $hpp->harga_jual . ' ' . $margin) ?>">
                                     <td><?= $no++; ?></td>
-                                    <td class="currency">Rp <?= number_format($hpp->bahan, 0, ',', '.'); ?></td>
-                                    <td class="currency">Rp <?= number_format($hpp->tenaga_kerja, 0, ',', '.'); ?></td>
-                                    <td class="currency"><strong>Rp <?= number_format($hpp->total_biaya, 0, ',', '.'); ?></strong></td>
-                                    <td class="currency">Rp <?= number_format($hpp->harga_jual, 0, ',', '.'); ?></td>
+                                    <td><?= htmlspecialchars($namaProduk) ?></td>
+                                    <td><?= htmlspecialchars($kategori) ?></td>
+                                    <td class="currency"><strong>Rp <?= number_format((float) $hpp->total_biaya, 0, ',', '.'); ?></strong></td>
+                                    <td class="currency">Rp <?= number_format((float) $hpp->harga_jual, 0, ',', '.'); ?></td>
                                     <td>
                                         <span class="badge <?= $margin > 0 ? 'success' : ($margin < 0 ? 'danger' : 'warning') ?>">
                                             <?= $margin > 0 ? '+' : '' ?>Rp <?= number_format($margin, 0, ',', '.'); ?>
@@ -1354,95 +1603,102 @@
                                     </td>
                                     <td>
                                         <div class="action-buttons">
-                                            <a href="<?= site_url('hpp/view/'.$hpp->id_hpp); ?>" class="action-btn view" title="Lihat"><i class="bi bi-eye"></i></a>
-                                            <a href="<?= site_url('hpp/edit/'.$hpp->id_hpp); ?>" class="action-btn edit" title="Edit"><i class="bi bi-pencil"></i></a>
-                                            <a href="<?= site_url('hpp/delete/'.$hpp->id_hpp); ?>" class="action-btn delete" title="Hapus" onclick="return confirm('Yakin ingin menghapus?')"><i class="bi bi-trash3"></i></a>
+                                            <button type="button" class="action-btn view" data-action="view" data-id="<?= (int) $hpp->id_hpp ?>" title="Lihat"><i class="bi bi-eye"></i></button>
+                                            <button type="button" class="action-btn edit" data-action="edit" data-id="<?= (int) $hpp->id_hpp ?>" title="Edit"><i class="bi bi-pencil"></i></button>
+                                            <button type="button" class="action-btn delete" data-action="delete" data-id="<?= (int) $hpp->id_hpp ?>" title="Hapus"><i class="bi bi-trash3"></i></button>
                                         </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            <?php endif; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
         <div class="margin-analysis-container" id="marginAnalysisContainer">
-            <?php if (!empty($hpp_list)): ?>
-                <?php
-                    // Calculate margin statistics
-                    $margins = [];
-                    $margin_percentages = [];
-                    $total_margin_amount = 0;
-                    $positive_count = 0;
-                    $negative_count = 0;
-                    
-                    foreach ($hpp_list as $hpp) {
-                        $margin = $hpp->harga_jual - $hpp->total_biaya;
-                        $margin_percentage = ($hpp->total_biaya > 0) ? (($margin / $hpp->harga_jual) * 100) : 0;
-                        
-                        $margins[] = $margin;
-                        $margin_percentages[] = $margin_percentage;
-                        $total_margin_amount += $margin;
-                        
-                        if ($margin > 0) $positive_count++;
-                        if ($margin < 0) $negative_count++;
-                    }
-                    
-                    $avg_margin = count($margins) > 0 ? round(array_sum($margins) / count($margins), 0) : 0;
-                    $max_margin = count($margins) > 0 ? max($margins) : 0;
-                    $min_margin = count($margins) > 0 ? min($margins) : 0;
-                    $avg_margin_percentage = count($margin_percentages) > 0 ? round(array_sum($margin_percentages) / count($margin_percentages), 1) : 0;
-                ?>
-                
-                <!-- Average Margin -->
-                <div class="margin-analysis-card <?= $avg_margin > 0 ? 'success' : ($avg_margin < 0 ? 'danger' : 'warning') ?>">
-                    <div class="margin-label">
-                        <span class="margin-indicator <?= $avg_margin > 0 ? '' : ($avg_margin < 0 ? 'danger' : 'warning') ?>"></span>
-                        Margin Rata-Rata
-                    </div>
-                    <div class="margin-value">Rp <?= number_format($avg_margin, 0, ',', '.') ?></div>
-                    <div class="margin-change <?= $avg_margin > 0 ? '' : 'negative' ?>">
-                        <i class="bi bi-<?= $avg_margin > 0 ? 'arrow-up' : 'arrow-down' ?>"></i> <?= abs($avg_margin_percentage) ?>%
-                    </div>
+            <div class="margin-analysis-card success" id="avgMarginCard">
+                <div class="margin-label">
+                    <span class="margin-indicator"></span>
+                    Margin Rata-Rata
                 </div>
-                
-                <!-- Maximum Margin -->
-                <div class="margin-analysis-card success">
-                    <div class="margin-label">
-                        <span class="margin-indicator"></span>
-                        Margin Tertinggi
-                    </div>
-                    <div class="margin-value">Rp <?= number_format($max_margin, 0, ',', '.') ?></div>
-                    <div class="margin-change">
-                        <i class="bi bi-trophy"></i> Produk Terbaik
-                    </div>
+                <div class="margin-value" id="avgMarginValue">Rp 0</div>
+                <div class="margin-change" id="avgMarginChange"><i data-lucide="trending-up"></i> 0%</div>
+            </div>
+
+            <div class="margin-analysis-card success" id="maxMarginCard">
+                <div class="margin-label">
+                    <span class="margin-indicator"></span>
+                    Margin Tertinggi
                 </div>
-                
-                <!-- Minimum Margin -->
-                <div class="margin-analysis-card <?= $min_margin < 0 ? 'danger' : 'warning' ?>">
-                    <div class="margin-label">
-                        <span class="margin-indicator <?= $min_margin < 0 ? 'danger' : 'warning' ?>"></span>
-                        Margin Terendah
-                    </div>
-                    <div class="margin-value">Rp <?= number_format($min_margin, 0, ',', '.') ?></div>
-                    <div class="margin-change <?= $min_margin < 0 ? 'negative' : '' ?>">
-                        <i class="bi bi-exclamation-triangle"></i> <?= $min_margin < 0 ? 'Rugi' : 'Rendah' ?>
-                    </div>
+                <div class="margin-value" id="maxMarginValue">Rp 0</div>
+                <div class="margin-change">Produk Terbaik</div>
+            </div>
+
+            <div class="margin-analysis-card margin-min-card warning" id="minMarginCard">
+                <div class="margin-label">
+                    <span class="margin-indicator"></span>
+                    Margin Terendah
                 </div>
-                
-                <!-- Profitability Stats -->
-                <div class="margin-analysis-card success">
-                    <div class="margin-label">
-                        <span class="margin-indicator"></span>
-                        Status Profitabilitas
-                    </div>
-                    <div class="margin-value" style="font-size: 1.4rem;"><?= $positive_count ?>/<?= count($hpp_list) ?></div>
-                    <div class="margin-change">
-                        <i class="bi bi-check-circle"></i> <?= $positive_count ?> Untung | <?= $negative_count ?> Rugi
-                    </div>
+                <div class="margin-value" id="minMarginValue">Rp 0</div>
+                <div class="margin-change low" id="minMarginChange">Rendah</div>
+            </div>
+
+            <div class="margin-analysis-card success profit-neutral" id="profitStatusCard">
+                <div class="margin-label">
+                    <span class="margin-indicator"></span>
+                    Status Profitabilitas
                 </div>
-            <?php endif; ?>
+                <div class="margin-value" id="profitStatusValue">0/0</div>
+                <div class="margin-change" id="profitStatusChange"><i data-lucide="check-circle"></i> 0 Untung | 0 Rugi</div>
+            </div>
         </div>
+
+        <div class="analysis-section-divider" id="analisis-produk">
+            <h2>Analisis Produk</h2>
+        </div>
+
+        <section class="analysis-panel">
+            <h3 class="analysis-panel-title">Perbandingan Performa Antar Produk</h3>
+            <div class="analysis-table-wrap">
+                <table class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th>Nama Produk</th>
+                            <th>Sumber Data</th>
+                            <th>Total Penjualan</th>
+                            <th>Biaya Produksi</th>
+                            <th>Margin</th>
+                            <th>Status</th>
+                            <th>Tren</th>
+                        </tr>
+                    </thead>
+                    <tbody id="analysisComparisonBody">
+                        <tr>
+                            <td colspan="7" style="text-align: center; padding: 20px; color: #6b7280;">Belum ada data analisis produk</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="analysis-panel">
+            <h3 class="analysis-panel-title">Grafik Perbandingan Penjualan Antar Produk</h3>
+            <div class="analysis-chart-wrap">
+                <canvas id="analysisProdukChart"></canvas>
+                <div class="analysis-chart-empty" id="analysisChartEmpty">Belum ada data analisis produk</div>
+            </div>
+        </section>
+
+        <section class="analysis-panel">
+            <h3 class="analysis-panel-title">Rekomendasi Otomatis</h3>
+            <div class="analysis-recommend-list" id="analysisRecommendationList">
+                <div class="analysis-recommend-item">
+                    <i data-lucide="info" class="analysis-recommend-icon"></i>
+                    <div class="analysis-recommend-text">Rekomendasi otomatis akan muncul setelah tersedia data produk.</div>
+                </div>
+            </div>
+        </section>
 
         <!-- Charts and Sidebar -->
         <div class="dashboard-grid">
@@ -1453,6 +1709,7 @@
                     <div class="chart-title">Analisis Margin Keuntungan</div>
                     <div class="chart-wrapper">
                         <canvas id="marginChart"></canvas>
+                        <div class="chart-empty-state" id="marginChartEmpty">Belum ada data HPP</div>
                     </div>
                 </div>
                 <!-- Cost Breakdown -->
@@ -1460,6 +1717,7 @@
                     <div class="chart-title">Breakdown Biaya Produksi</div>
                     <div class="chart-wrapper">
                         <canvas id="costChart"></canvas>
+                        <div class="chart-empty-state" id="costChartEmpty">Belum ada data HPP</div>
                     </div>
                 </div>
             </div>
@@ -1469,7 +1727,7 @@
                 <div class="card">
                     <div class="card-title">Panduan Cepat</div>
                     <div style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.8;">
-                        <p style="margin-bottom: 12px;"><strong>1. Buat HPP Baru</strong><br/>Klik tombol "+ Tambah HPP Baru" untuk menambahkan data produk dengan biaya bahan dan tenaga kerja.</p>
+                        <p style="margin-bottom: 12px;"><strong>1. Buat HPP Baru</strong><br/>Klik tombol "Tambah HPP" untuk menambahkan data produk, total biaya produksi, dan harga jual.</p>
                         <p style="margin-bottom: 12px;"><strong>2. Analisis Margin</strong><br/>Pantau margin keuntungan dan identifikasi produk yang paling menguntungkan.</p>
                         <p><strong>3. Kelola Data</strong><br/>Edit atau hapus data produk sesuai kebutuhan. Lihat breakdown biaya secara detail.</p>
                     </div>
@@ -1481,684 +1739,891 @@
         <div class="modal-overlay" id="hppModal">
             <div class="modal-content modal-large">
                 <div class="modal-header">
-                    <h2 id="modalTitle">Tambah HPP Baru</h2>
+                    <h2 id="modalTitle">Tambah HPP</h2>
                     <button type="button" class="modal-close" id="closeModalBtn" onclick="closeHppModal()">&times;</button>
                 </div>
                 <form id="hppForm" method="POST">
-                    <!-- Row 1: Nama Produk & Kategori -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Nama Produk <span class="required">*</span></label>
-                            <input type="text" name="nama_produk" id="nama_produk" placeholder="Misal: Kemeja Batik" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Kategori <span class="required">*</span></label>
-                            <select name="kategori" id="kategori" required>
-                                <option value="">Pilih Kategori</option>
-                                <option value="Garmen">Garmen</option>
-                                <option value="Makanan">Makanan</option>
-                                <option value="Kerajinan">Kerajinan</option>
-                                <option value="Elektronik">Elektronik</option>
-                                <option value="Lainnya">Lainnya</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label>Nama Produk</label>
+                        <input type="text" name="nama_produk" id="nama_produk" placeholder="Contoh: Kemeja Batik Premium" required>
                     </div>
 
-                    <!-- Row 2: Jumlah Produksi & Satuan -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Jumlah Produksi <span class="required">*</span></label>
-                            <input type="number" name="jumlah_produksi" id="jumlah_produksi" placeholder="Berapa unit?" required min="1">
-                        </div>
-                        <div class="form-group">
-                            <label>Satuan <span class="required">*</span></label>
-                            <select name="satuan" id="satuan" required>
-                                <option value="">Pilih Satuan</option>
-                                <option value="Pcs">Pcs (Piece)</option>
-                                <option value="Buah">Buah</option>
-                                <option value="Set">Set</option>
-                                <option value="Kg">Kg</option>
-                                <option value="L">L (Liter)</option>
-                                <option value="Box">Box</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <select name="kategori" id="kategori" required>
+                            <option value="">Pilih kategori produk</option>
+                            <option value="Garmen">Garmen</option>
+                            <option value="Makanan">Makanan</option>
+                            <option value="Kerajinan">Kerajinan</option>
+                            <option value="Elektronik">Elektronik</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
                     </div>
 
-                    <!-- Row 3: Biaya Produksi -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Biaya Bahan <span class="required">*</span></label>
-                            <input type="number" name="bahan" id="bahan" placeholder="Rp 0" required min="0">
-                            <small class="form-hint">Total biaya untuk semua bahan baku</small>
-                        </div>
-                        <div class="form-group">
-                            <label>Biaya Tenaga Kerja <span class="required">*</span></label>
-                            <input type="number" name="tenaga_kerja" id="tenaga_kerja" placeholder="Rp 0" required min="0">
-                            <small class="form-hint">Upah/gaji untuk produksi</small>
-                        </div>
+                    <div class="form-group">
+                        <label>Total Biaya Produksi</label>
+                        <input type="number" name="total_biaya_produksi" id="total_biaya_produksi" placeholder="Masukkan total biaya produksi (Rp)" required min="0">
                     </div>
 
-                    <!-- Row 4: Biaya Overhead & Harga Jual -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Biaya Overhead (Opsional)</label>
-                            <input type="number" name="overhead" id="overhead" placeholder="Rp 0" min="0" value="0">
-                            <small class="form-hint">Listrik, air, sewa, dll</small>
-                        </div>
-                        <div class="form-group">
-                            <label>Harga Jual <span class="required">*</span></label>
-                            <input type="number" name="harga_jual" id="harga_jual" placeholder="Rp 0" required min="0">
-                            <small class="form-hint">Harga jual per unit/produk</small>
-                        </div>
+                    <div class="form-group">
+                        <label>Harga Jual</label>
+                        <input type="number" name="harga_jual" id="harga_jual" placeholder="Masukkan harga jual (Rp)" required min="0">
                     </div>
 
-                    <!-- Row 5: Margin Display & Deskripsi -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Margin Keuntungan (Otomatis)</label>
-                            <input type="text" id="marginDisplay" placeholder="Rp 0" readonly>
-                            <small class="form-hint">Dihitung otomatis dari harga jual - total biaya</small>
-                        </div>
-                        <div class="form-group">
-                            <label>Deskripsi (Opsional)</label>
-                            <textarea name="deskripsi" id="deskripsi" placeholder="Catatan atau keterangan produk" rows="3"></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label>Jumlah Produksi</label>
+                        <input type="number" name="jumlah_produksi" id="jumlah_produksi" placeholder="Masukkan jumlah unit produksi" required min="1">
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn-cancel" onclick="closeHppModal()">Batal</button>
-                        <button type="submit" class="btn-submit"><i class="bi bi-check-lg"></i> Simpan HPP</button>
+                        <button type="submit" class="btn-submit">Simpan HPP</button>
                     </div>
                 </form>
             </div>
         </div>
 
+        <div class="modal-overlay" id="hppDetailModal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <h2>Detail Produk HPP</h2>
+                    <button type="button" class="modal-close" onclick="closeDetailModal()">&times;</button>
+                </div>
+                <div class="detail-grid">
+                    <div class="detail-item full">
+                        <div class="detail-label">Nama Produk</div>
+                        <div class="detail-value" id="detailNamaProduk">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Kategori</div>
+                        <div class="detail-value" id="detailKategori">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Jumlah Produksi</div>
+                        <div class="detail-value" id="detailJumlahProduksi">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Total Biaya Produksi</div>
+                        <div class="detail-value" id="detailTotalBiaya">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Harga Jual</div>
+                        <div class="detail-value" id="detailHargaJual">-</div>
+                    </div>
+                    <div class="detail-item full">
+                        <div class="detail-label">Margin Otomatis</div>
+                        <div class="detail-value" id="detailMargin">-</div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding: 0 24px 24px; border-top: none;">
+                    <button type="button" class="btn-cancel" onclick="closeDetailModal()">Tutup</button>
+                </div>
+            </div>
+        </div>
+
     <script>
-    // Global modal functions
-    function openHppModal() {
+    const HPP_ENDPOINTS = {
+        list: '<?= site_url("hpp/list_json") ?>',
+        create: '<?= site_url("hpp/create") ?>',
+        editBase: '<?= site_url("hpp/edit/") ?>',
+        deleteBase: '<?= site_url("hpp/delete/") ?>',
+        detailBase: '<?= site_url("hpp/detail_json/") ?>',
+        recalculate: '<?= site_url("hpp/recalculate") ?>'
+    };
+
+    const hppState = {
+        items: [],
+        marginChart: null,
+        costChart: null,
+        analysisChart: null,
+        payload: null
+    };
+
+    function number_format(num) {
+        return Math.round(Number(num || 0)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    function formatRupiah(num) {
+        return 'Rp ' + number_format(num);
+    }
+
+    function formatCompactRupiah(num) {
+        const value = Number(num || 0);
+        if (Math.abs(value) >= 1000000) {
+            return 'Rp ' + (value / 1000000).toLocaleString('id-ID', {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1
+            }) + 'M';
+        }
+        return formatRupiah(value);
+    }
+
+    function formatRupiahShort(value) {
+        const num = Number(value || 0);
+        const abs = Math.abs(num);
+
+        if (abs >= 1000000000) {
+            return 'Rp ' + (num / 1000000000).toFixed(abs >= 10000000000 ? 0 : 1).replace('.0', '') + 'M';
+        }
+
+        if (abs >= 1000000) {
+            return 'Rp ' + (num / 1000000).toFixed(abs >= 10000000 ? 0 : 1).replace('.0', '') + 'jt';
+        }
+
+        if (abs >= 1000) {
+            return 'Rp ' + (num / 1000).toFixed(abs >= 10000 ? 0 : 1).replace('.0', '') + 'rb';
+        }
+
+        return 'Rp ' + num.toLocaleString('id-ID');
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `update-notification ${type}`;
+        notification.innerHTML = `<span>${escapeHtml(message)}</span>`;
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.classList.add('show'), 10);
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    async function requestJson(url, options = {}) {
+        const config = {
+            method: options.method || 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                ...(options.headers || {})
+            }
+        };
+
+        if (options.body) {
+            config.body = options.body;
+        }
+
+        const response = await fetch(url, config);
+        const data = await response.json().catch(() => ({
+            status: 'error',
+            message: 'Respon server tidak valid.'
+        }));
+
+        if (!response.ok || data.status === 'error') {
+            throw new Error(data.message || 'Terjadi kesalahan pada server.');
+        }
+
+        return data;
+    }
+
+    function openHppModal(item = null) {
         const hppModal = document.getElementById('hppModal');
         const hppForm = document.getElementById('hppForm');
-        if (hppForm) hppForm.reset();
         const modalTitle = document.getElementById('modalTitle');
-        if (modalTitle) modalTitle.textContent = 'Tambah HPP Baru';
-        if (hppForm) hppForm.dataset.id = '';
-        if (hppModal) hppModal.classList.add('show');
-        console.log('Modal opened');
+
+        if (!hppModal || !hppForm) return;
+
+        hppForm.reset();
+        hppForm.dataset.id = item ? String(item.id_hpp) : '';
+
+        if (item) {
+            if (modalTitle) modalTitle.textContent = 'Edit HPP';
+            hppForm.nama_produk.value = item.nama_produk || '';
+            hppForm.kategori.value = item.kategori || '';
+            hppForm.total_biaya_produksi.value = item.total_biaya || 0;
+            hppForm.harga_jual.value = item.harga_jual || 0;
+            hppForm.jumlah_produksi.value = item.jumlah_produksi || 1;
+        } else if (modalTitle) {
+            modalTitle.textContent = 'Tambah HPP';
+        }
+
+        hppModal.classList.add('show');
     }
 
     function closeHppModal() {
         const hppModal = document.getElementById('hppModal');
         if (hppModal) hppModal.classList.remove('show');
-        console.log('Modal closed');
     }
 
-    // Show notification
-    function showNotification(message, type = 'success') {
-        const notification = document.createElement('div');
-        notification.className = `update-notification ${type}`;
-        notification.innerHTML = `
-            <span>${message}</span>
-        `;
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 10);
-        
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                notification.remove();
-            }, 300);
-        }, 3000);
+    function closeDetailModal() {
+        const modal = document.getElementById('hppDetailModal');
+        if (modal) modal.classList.remove('show');
     }
-    
-    // Print table function
-    function printTable() {
-        const table = document.getElementById('hppTable');
-        if (!table) {
-            showNotification('Tidak ada data untuk dicetak', 'error');
+
+    function openDetailModal(item) {
+        if (!item) return;
+        const modal = document.getElementById('hppDetailModal');
+        if (!modal) return;
+
+        document.getElementById('detailNamaProduk').textContent = item.nama_produk || '-';
+        document.getElementById('detailKategori').textContent = item.kategori || '-';
+        document.getElementById('detailJumlahProduksi').textContent = (item.jumlah_produksi || 1) + ' unit';
+        document.getElementById('detailTotalBiaya').textContent = formatRupiah(item.total_biaya || 0);
+        document.getElementById('detailHargaJual').textContent = formatRupiah(item.harga_jual || 0);
+        document.getElementById('detailMargin').textContent = formatRupiah(item.margin || 0);
+
+        modal.classList.add('show');
+    }
+
+    function renderHeaderStats(stats) {
+        document.getElementById('totalProdukValue').textContent = stats.total_produk || 0;
+        document.getElementById('totalPenjualanValue').textContent = formatCompactRupiah(stats.total_penjualan || 0);
+        document.getElementById('totalBiayaValue').textContent = formatCompactRupiah(stats.total_biaya || 0);
+    }
+
+    function getMarginBadgeClass(margin) {
+        if (margin > 0) return 'success';
+        if (margin < 0) return 'danger';
+        return 'warning';
+    }
+
+    function renderTable(items) {
+        const tbody = document.getElementById('hppTableBody');
+        if (!tbody) return;
+
+        if (!items.length) {
+            tbody.innerHTML = '<tr id="noResults"><td colspan="7" style="text-align: center; padding: 32px; color: #6b7280;">Belum ada data HPP</td></tr>';
             return;
         }
-        
-        const printWindow = window.open('', '', 'width=900,height=600');
-        const html = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <title>HPP Calculator - Laporan Cetak</title>
-                <style>
-                    body { font-family: Arial, sans-serif; margin: 20px; }
-                    h1 { color: #0b6ea8; text-align: center; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-                    th { background-color: #0b6ea8; color: white; font-weight: bold; }
-                    tr:nth-child(even) { background-color: #f8fafc; }
-                    .currency { text-align: right; }
-                    .badge { padding: 4px 8px; border-radius: 4px; }
-                    .success { background-color: #D1FAE5; color: #065F46; }
-                    .danger { background-color: #FEE2E2; color: #991B1B; }
-                    .warning { background-color: #FEF3C7; color: #92400E; }
-                    .footer { margin-top: 30px; text-align: center; color: #666; font-size: 12px; }
-                </style>
-            </head>
-            <body>
-                <h1>Laporan HPP Calculator</h1>
-                <p style="text-align: center; color: #666;">Tanggal Cetak: ${new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                ${table.outerHTML}
-                <div class="footer">
-                    <p>Dokumen ini dicetak dari Usahain HPP Calculator</p>
-                    <p>© ${new Date().getFullYear()} - Semua Hak Dilindungi</p>
-                </div>
-            </body>
-            </html>
-        `;
-        
-        printWindow.document.write(html);
-        printWindow.document.close();
-        
-        printWindow.onload = function() {
-            printWindow.print();
-        };
-        
-        showNotification('Siap untuk dicetak');
+
+        tbody.innerHTML = items.map((item, index) => {
+            const marginClass = getMarginBadgeClass(item.margin);
+            const marginLabel = `${item.margin > 0 ? '+' : ''}Rp ${number_format(item.margin)}`;
+            const searchBlob = `${item.nama_produk || ''} ${item.kategori || ''} ${item.total_biaya || ''} ${item.harga_jual || ''} ${item.margin || ''}`.toLowerCase();
+
+            return `
+                <tr data-id="${item.id_hpp}" data-margin="${item.margin_bucket || (item.margin >= 0 ? 'tinggi' : 'rendah')}" data-search="${escapeHtml(searchBlob)}">
+                    <td>${index + 1}</td>
+                    <td>${escapeHtml(item.nama_produk || '-')}</td>
+                    <td>${escapeHtml(item.kategori || '-')}</td>
+                    <td class="currency"><strong>Rp ${number_format(item.total_biaya)}</strong></td>
+                    <td class="currency">Rp ${number_format(item.harga_jual)}</td>
+                    <td><span class="badge ${marginClass}">${marginLabel}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button type="button" class="action-btn view" data-action="view" data-id="${item.id_hpp}" title="Lihat"><i class="bi bi-eye"></i></button>
+                            <button type="button" class="action-btn edit" data-action="edit" data-id="${item.id_hpp}" title="Edit"><i class="bi bi-pencil"></i></button>
+                            <button type="button" class="action-btn delete" data-action="delete" data-id="${item.id_hpp}" title="Hapus"><i class="bi bi-trash3"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join('');
     }
-    
-    // Recalculate margins function
-    function recalculateMargins() {
-        const table = document.getElementById('hppTable');
-        if (!table) return;
-        
-        const rows = table.querySelectorAll('tbody tr');
-        if (rows.length === 0) {
-            showNotification('Tidak ada data untuk dihitung', 'error');
+
+    function renderMarginCards(cards) {
+        const avgCard = document.getElementById('avgMarginCard');
+        const maxCard = document.getElementById('maxMarginCard');
+        const minCard = document.getElementById('minMarginCard');
+        const statusCard = document.getElementById('profitStatusCard');
+
+        document.getElementById('avgMarginValue').textContent = formatRupiah(cards.avg_margin || 0);
+        document.getElementById('avgMarginChange').innerHTML = `<i data-lucide="trending-up"></i> ${Math.abs(cards.avg_margin_percentage || 0)}%`;
+        document.getElementById('maxMarginValue').textContent = formatRupiah(cards.max_margin || 0);
+        document.getElementById('minMarginValue').textContent = formatRupiah(cards.min_margin || 0);
+        document.getElementById('minMarginChange').textContent = (cards.min_margin || 0) < 0 ? 'Rugi' : 'Rendah';
+        document.getElementById('profitStatusValue').textContent = `${cards.positive_count || 0}/${cards.total_count || 0}`;
+        document.getElementById('profitStatusChange').innerHTML = `<i data-lucide="check-circle"></i> ${cards.positive_count || 0} Untung | ${cards.negative_count || 0} Rugi`;
+
+        avgCard.classList.remove('success', 'warning', 'danger');
+        if ((cards.avg_margin || 0) > 0) avgCard.classList.add('success');
+        else if ((cards.avg_margin || 0) < 0) avgCard.classList.add('danger');
+        else avgCard.classList.add('warning');
+
+        maxCard.classList.remove('success', 'warning', 'danger');
+        maxCard.classList.add((cards.max_margin || 0) > 0 ? 'success' : 'warning');
+
+        minCard.classList.remove('success', 'warning', 'danger');
+        minCard.classList.add((cards.min_margin || 0) < 0 ? 'danger' : 'warning');
+
+        statusCard.classList.remove('profit-positive', 'profit-negative', 'profit-neutral');
+        if ((cards.negative_count || 0) > 0) statusCard.classList.add('profit-negative');
+        else if ((cards.positive_count || 0) > 0) statusCard.classList.add('profit-positive');
+        else statusCard.classList.add('profit-neutral');
+    }
+
+    function toggleChartEmpty(canvasId, emptyId, shouldShow) {
+        const canvas = document.getElementById(canvasId);
+        const empty = document.getElementById(emptyId);
+        if (!canvas || !empty) return;
+
+        if (shouldShow) {
+            canvas.style.display = 'none';
+            empty.style.display = 'flex';
+        } else {
+            canvas.style.display = 'block';
+            empty.style.display = 'none';
+        }
+    }
+
+    function renderMarginChart(items) {
+        const canvas = document.getElementById('marginChart');
+        if (!canvas) return;
+
+        if (!items.length) {
+            if (hppState.marginChart) {
+                hppState.marginChart.destroy();
+                hppState.marginChart = null;
+            }
+            toggleChartEmpty('marginChart', 'marginChartEmpty', true);
             return;
         }
-        
-        let updatedCount = 0;
-        rows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            if (cells.length >= 6) {
-                const bahan = parseFloat(cells[1].innerText.replace(/\D/g, '') || 0);
-                const tk = parseFloat(cells[2].innerText.replace(/\D/g, '') || 0);
-                const harga_jual = parseFloat(cells[4].innerText.replace(/\D/g, '') || 0);
-                
-                const total_biaya = bahan + tk;
-                const margin = harga_jual - total_biaya;
-                
-                // Update cells
-                cells[3].innerHTML = '<strong>Rp ' + number_format(total_biaya) + '</strong>';
-                
-                // Update margin badge
-                let badgeClass = 'success';
-                let marginText = '+Rp ' + number_format(margin);
-                if (margin < 0) {
-                    badgeClass = 'danger';
-                    marginText = 'Rp ' + number_format(margin);
-                } else if (margin === 0) {
-                    badgeClass = 'warning';
-                    marginText = 'Rp 0';
-                }
-                
-                cells[5].innerHTML = `<span class="badge ${badgeClass}">${marginText}</span>`;
-                updatedCount++;
-            }
-        });
-        
-        showNotification(`${updatedCount} data berhasil dihitung ulang`);
-    }
-    
-    // Format number function
-    function number_format(num) {
-        return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
-    
-    // Update margin analysis in real-time
-    function updateMarginAnalysis() {
-        const table = document.getElementById('hppTable');
-        if (!table) return;
-        
-        const rows = table.querySelectorAll('tbody tr:not(#noResults)');
-        if (rows.length === 0) return;
-        
-        const margins = [];
-        const margin_percentages = [];
-        let positive_count = 0;
-        let negative_count = 0;
-        let total_margin = 0;
-        
-        rows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            if (cells.length >= 6) {
-                const bahan = parseFloat(cells[1].innerText.replace(/\D/g, '') || 0);
-                const tk = parseFloat(cells[2].innerText.replace(/\D/g, '') || 0);
-                const harga_jual = parseFloat(cells[4].innerText.replace(/\D/g, '') || 0);
-                
-                const total_biaya = bahan + tk;
-                const margin = harga_jual - total_biaya;
-                const margin_percentage = (harga_jual > 0) ? ((margin / harga_jual) * 100) : 0;
-                
-                margins.push(margin);
-                margin_percentages.push(margin_percentage);
-                total_margin += margin;
-                
-                if (margin > 0) positive_count++;
-                if (margin < 0) negative_count++;
-            }
-        });
-        
-        if (margins.length === 0) return;
-        
-        const avg_margin = Math.round(total_margin / margins.length);
-        const max_margin = Math.max(...margins);
-        const min_margin = Math.min(...margins);
-        const avg_margin_percentage = (margin_percentages.reduce((a, b) => a + b, 0) / margin_percentages.length).toFixed(1);
-        
-        // Update cards with animation
-        const container = document.getElementById('marginAnalysisContainer');
-        if (!container) return;
-        
-        const cards = container.querySelectorAll('.margin-analysis-card');
-        if (cards.length > 0) {
-            // Update average margin card
-            const avgCard = cards[0];
-            avgCard.classList.remove('success', 'warning', 'danger');
-            avgCard.classList.add(avg_margin > 0 ? 'success' : (avg_margin < 0 ? 'danger' : 'warning'));
-            avgCard.querySelector('.margin-value').textContent = 'Rp ' + number_format(avg_margin);
-            avgCard.querySelector('.margin-change').innerHTML = '<i class="bi bi-' + (avg_margin > 0 ? 'arrow-up' : 'arrow-down') + '"></i> ' + Math.abs(avg_margin_percentage) + '%';
-            avgCard.style.animation = 'none';
-            setTimeout(() => avgCard.style.animation = 'slideInUp 0.3s ease', 10);
-        }
-        if (cards.length > 1) {
-            // Update max margin card
-            cards[1].querySelector('.margin-value').textContent = 'Rp ' + number_format(max_margin);
-        }
-        if (cards.length > 2) {
-            // Update min margin card
-            const minCard = cards[2];
-            minCard.classList.remove('danger', 'warning');
-            minCard.classList.add(min_margin < 0 ? 'danger' : 'warning');
-            minCard.querySelector('.margin-value').textContent = 'Rp ' + number_format(min_margin);
-            minCard.querySelector('.margin-change').innerHTML = '<i class="bi bi-exclamation-triangle"></i> ' + (min_margin < 0 ? 'Rugi' : 'Rendah');
-        }
-        if (cards.length > 3) {
-            // Update profitability stats
-            cards[3].querySelector('.margin-value').textContent = positive_count + '/' + margins.length;
-            cards[3].querySelector('.margin-change').innerHTML = '<i class="bi bi-check-circle"></i> ' + positive_count + ' Untung | ' + negative_count + ' Rugi';
-        }
-    }
-    
-    // Margin Chart
-    const marginCtx = document.getElementById('marginChart');
-    if (marginCtx) {
-        const marginLabels = [<?php 
-            if (!empty($hpp_list)) { 
-                $count = 0; 
-                foreach ($hpp_list as $h) { 
-                    echo "'Produk " . (++$count) . "'"; 
-                    if ($count < count($hpp_list)) echo ", "; 
-                } 
-            } else { 
-                echo "'Tidak Ada Data'"; 
-            } 
-        ?>];
-        
-        const marginValues = [<?php 
-            if (!empty($hpp_list)) { 
-                $values = [];
-                foreach ($hpp_list as $h) { 
-                    $values[] = ($h->harga_jual - $h->total_biaya);
-                }
-                echo implode(', ', $values);
-            } else { 
-                echo "0"; 
-            } 
-        ?>];
-        
-        console.log('Margin Labels:', marginLabels);
-        console.log('Margin Values:', marginValues);
-        
-        const marginData = {
-            labels: marginLabels,
+
+        toggleChartEmpty('marginChart', 'marginChartEmpty', false);
+
+        const data = {
+            labels: items.map(item => item.nama_produk),
             datasets: [{
                 label: 'Margin Keuntungan',
-                data: marginValues,
-                borderColor: '#10B981',
-                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                data: items.map(item => item.margin),
+                borderColor: '#16a34a',
+                backgroundColor: 'rgba(22, 163, 74, 0.12)',
                 borderWidth: 3,
                 fill: true,
-                tension: 0.4
+                tension: 0.35
             }]
         };
-        new Chart(marginCtx, {
-            type: 'line',
-            data: marginData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return 'Rp ' + (value / 1000).toFixed(0) + 'K';
+
+        if (!hppState.marginChart) {
+            hppState.marginChart = new Chart(canvas, {
+                type: 'line',
+                data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => 'Rp ' + number_format(value)
                             }
                         }
                     }
                 }
-            }
-        });
-    }
-
-    // Cost Chart
-    const costCtx = document.getElementById('costChart');
-    if (costCtx) {
-        <?php 
-            $total_bahan = 0; 
-            $total_tk = 0; 
-            $total_margin = 0; 
-            if (!empty($hpp_list)) { 
-                foreach ($hpp_list as $h) { 
-                    $total_bahan += $h->bahan; 
-                    $total_tk += $h->tenaga_kerja; 
-                    $total_margin += ($h->harga_jual - $h->total_biaya); 
-                } 
-            } 
-        ?>
-        const costData = {
-            labels: ['Biaya Bahan', 'Biaya Tenaga Kerja', 'Margin'],
-            datasets: [{
-                data: [<?= $total_bahan ?>, <?= $total_tk ?>, <?= $total_margin ?>],
-                backgroundColor: ['#0b6ea8', '#27b0e3', '#10B981']
-            }]
-        };
-        
-        console.log('Cost Data:', {bahan: <?= $total_bahan ?>, tk: <?= $total_tk ?>, margin: <?= $total_margin ?>});
-        new Chart(costCtx, {
-            type: 'doughnut',
-            data: costData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-    }
-
-    // Enhanced Filter & Search Function
-    function filterTable() {
-        var searchInput = document.getElementById('searchInput');
-        var marginFilter = document.getElementById('marginFilter');
-        var table = document.getElementById('hppTable');
-        
-        if (!table || !searchInput || !marginFilter) return;
-        
-        var searchText = searchInput.value.toLowerCase().trim();
-        var filterValue = marginFilter.value;
-        var tbody = table.getElementsByTagName('tbody')[0];
-        
-        if (!tbody) return;
-        
-        var rows = tbody.getElementsByTagName('tr');
-        var visibleCount = 0;
-        
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-            var searchAttr = row.getAttribute('data-search') || '';
-            var marginAttr = row.getAttribute('data-margin') || '';
-            
-            // Search filter
-            var matchSearch = true;
-            if (searchText) {
-                matchSearch = searchAttr.toLowerCase().indexOf(searchText) !== -1;
-            }
-            
-            // Margin filter
-            var matchMargin = true;
-            if (filterValue) {
-                matchMargin = marginAttr === filterValue;
-            }
-            
-            // Show or hide row
-            if (matchSearch && matchMargin) {
-                row.style.display = '';
-                visibleCount++;
-            } else {
-                row.style.display = 'none';
-            }
-        }
-        
-        // Show empty message if no results
-        var emptyMsg = document.getElementById('noResults');
-        if (visibleCount === 0) {
-            if (!emptyMsg) {
-                emptyMsg = document.createElement('tr');
-                emptyMsg.id = 'noResults';
-                emptyMsg.innerHTML = '<td colspan="7" style="text-align: center; padding: 40px; color: #999;">Tidak ada data yang sesuai</td>';
-                tbody.appendChild(emptyMsg);
-            }
-            emptyMsg.style.display = '';
-        } else if (emptyMsg) {
-            emptyMsg.style.display = 'none';
-        }
-        
-        // Update margin analysis after filter
-        updateMarginAnalysis();
-    }
-
-    // Export Table to CSV
-    function exportTableToCSV(filename = 'hpp_calculator.csv') {
-        var table = document.getElementById('hppTable');
-        if (!table) {
-            showNotification('Tidak ada data untuk diekspor', 'error');
+            });
             return;
         }
-        
-        var csv = [];
-        var rows = table.querySelectorAll('tr');
-        
-        rows.forEach(function(row) {
-            var cols = row.querySelectorAll('td, th');
-            var rowData = [];
-            cols.forEach(function(col, index) {
-                // Skip action column
-                if (index !== cols.length - 1) {
-                    rowData.push('"' + col.innerText.trim().replace(/"/g, '""') + '"');
-                }
-            });
-            if (rowData.length > 0) {
-                csv.push(rowData.join(','));
-            }
-        });
-        
-        var csvContent = csv.join('\n');
-        var link = document.createElement('a');
-        link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
-        link.download = filename;
-        link.click();
-        
-        showNotification('Data berhasil diekspor ke CSV');
+
+        hppState.marginChart.data = data;
+        hppState.marginChart.update();
     }
 
-    // Real-time search on input
-    document.addEventListener('DOMContentLoaded', function() {
-        // Search and filter functionality
-        var searchInput = document.getElementById('searchInput');
-        if (searchInput) {
-            searchInput.addEventListener('input', function() {
-                filterTable();
-            });
-            searchInput.addEventListener('keyup', function() {
-                filterTable();
-            });
-        }
-        
-        var marginFilter = document.getElementById('marginFilter');
-        if (marginFilter) {
-            marginFilter.addEventListener('change', function() {
-                filterTable();
-            });
-        }
-        
-        const refreshBtn = document.getElementById('refreshBtn');
-        if (refreshBtn) {
-            refreshBtn.removeAttribute('onclick');
-            refreshBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                location.reload();
-            });
-        }
-        
-        // Animate table rows on load
-        var rows = document.querySelectorAll('#hppTable tbody tr');
-        rows.forEach(function(row, index) {
-            row.style.opacity = '1';
-        });
-        
-        // Initial margin analysis update
-        updateMarginAnalysis();
-        
-        // Update margin analysis every 2 seconds
-        setInterval(updateMarginAnalysis, 2000);
+    function renderCostChart(costData, hasData) {
+        const canvas = document.getElementById('costChart');
+        if (!canvas) return;
 
-        // Modal Management
-        const hppModal = document.getElementById('hppModal');
-        const addHppBtn = document.getElementById('addHppBtn');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const hppForm = document.getElementById('hppForm');
-        const bahanInput = document.getElementById('bahan');
-        const tenagaKerjaInput = document.getElementById('tenaga_kerja');
-        const overheadInput = document.getElementById('overhead');
-        const hargaJualInput = document.getElementById('harga_jual');
-        const marginDisplay = document.getElementById('marginDisplay');
+        if (!hasData) {
+            if (hppState.costChart) {
+                hppState.costChart.destroy();
+                hppState.costChart = null;
+            }
+            toggleChartEmpty('costChart', 'costChartEmpty', true);
+            return;
+        }
 
-        // Update margin display on input
-        function updateMarginDisplay() {
-            const bahan = parseFloat(bahanInput.value) || 0;
-            const tk = parseFloat(tenagaKerjaInput.value) || 0;
-            const overhead = parseFloat(overheadInput.value) || 0;
-            const jual = parseFloat(hargaJualInput.value) || 0;
-            const totalBiaya = bahan + tk + overhead;
-            const margin = jual - totalBiaya;
-            
-            if (marginDisplay) {
-                marginDisplay.value = 'Rp ' + number_format(margin);
-                // Change color berdasarkan margin
-                if (margin > 0) {
-                    marginDisplay.style.borderColor = '#10B981';
-                    marginDisplay.style.backgroundColor = 'rgba(16, 185, 129, 0.05)';
-                } else if (margin < 0) {
-                    marginDisplay.style.borderColor = '#ef4444';
-                    marginDisplay.style.backgroundColor = 'rgba(239, 68, 68, 0.05)';
-                } else {
-                    marginDisplay.style.borderColor = 'var(--border)';
-                    marginDisplay.style.backgroundColor = 'var(--bg)';
+        toggleChartEmpty('costChart', 'costChartEmpty', false);
+
+        const data = {
+            labels: ['Biaya Bahan', 'Biaya Tenaga Kerja', 'Margin'],
+            datasets: [{
+                data: [costData.bahan || 0, costData.tenaga_kerja || 0, costData.margin || 0],
+                backgroundColor: ['#1c6494', '#f59e0b', '#16a34a']
+            }]
+        };
+
+        if (!hppState.costChart) {
+            hppState.costChart = new Chart(canvas, {
+                type: 'doughnut',
+                data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
                 }
-            }
+            });
+            return;
         }
 
-        if (bahanInput) bahanInput.addEventListener('input', updateMarginDisplay);
-        if (tenagaKerjaInput) tenagaKerjaInput.addEventListener('input', updateMarginDisplay);
-        if (overheadInput) overheadInput.addEventListener('input', updateMarginDisplay);
-        if (hargaJualInput) hargaJualInput.addEventListener('input', updateMarginDisplay);
+        hppState.costChart.data = data;
+        hppState.costChart.update();
+    }
 
-        // Close modal when clicking outside
-        hppModal.addEventListener('click', function(e) {
-            if (e.target === hppModal) {
-                closeHppModal();
+    function getTrendPresentation(direction) {
+        if (direction === 'up') {
+            return {
+                className: 'up',
+                icon: 'trending-up'
+            };
+        }
+        if (direction === 'down') {
+            return {
+                className: 'down',
+                icon: 'trending-down'
+            };
+        }
+        return {
+            className: 'stable',
+            icon: 'minus'
+        };
+    }
+
+    function renderAnalysisComparisonTable(items) {
+        const tbody = document.getElementById('analysisComparisonBody');
+        if (!tbody) return;
+
+        if (!Array.isArray(items) || items.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 20px; color: #6b7280;">Belum ada data analisis produk</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = items.map(item => {
+            const margin = Number(item.margin || 0);
+            const isPositive = margin >= 0;
+            const trend = getTrendPresentation(item.trend_direction || 'stable');
+            const trendPercentage = Number(item.trend_percentage || 0);
+            const trendLabel = trendPercentage > 0
+                ? `${escapeHtml(item.trend_label || 'Stabil')} (${trendPercentage.toFixed(1)}%)`
+                : escapeHtml(item.trend_label || 'Stabil');
+
+            return `
+                <tr>
+                    <td>${escapeHtml(item.nama_produk || '-')}</td>
+                    <td><span class="analysis-source-badge">${escapeHtml(item.sumber_data_label || 'Data HPP saja')}</span></td>
+                    <td class="analysis-money">Rp ${number_format(item.total_penjualan || 0)}</td>
+                    <td class="analysis-money">Rp ${number_format(item.biaya_produksi || 0)}</td>
+                    <td class="analysis-money ${isPositive ? 'positive' : 'negative'}">Rp ${number_format(margin)}</td>
+                    <td><span class="analysis-status ${isPositive ? 'good' : 'bad'}">${escapeHtml(item.status || (isPositive ? 'Untung' : 'Rugi'))}</span></td>
+                    <td><span class="analysis-trend ${trend.className}"><i data-lucide="${trend.icon}"></i>${trendLabel}</span></td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    function renderAnalysisRecommendations(items) {
+        const container = document.getElementById('analysisRecommendationList');
+        if (!container) return;
+
+        if (!Array.isArray(items) || items.length === 0) {
+            container.innerHTML = `
+                <div class="analysis-recommend-item">
+                    <i data-lucide="info" class="analysis-recommend-icon"></i>
+                    <div class="analysis-recommend-text">Rekomendasi otomatis akan muncul setelah tersedia data produk.</div>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = items.map(text => {
+            const recommendationText = String(text || '');
+            const isWarning = recommendationText.toLowerCase().includes('margin negatif') || recommendationText.toLowerCase().includes('evaluasi');
+            const iconName = isWarning ? 'alert-triangle' : 'check-circle';
+            const iconClass = isWarning ? 'warning' : 'positive';
+
+            return `
+                <div class="analysis-recommend-item">
+                    <i data-lucide="${iconName}" class="analysis-recommend-icon ${iconClass}"></i>
+                    <div class="analysis-recommend-text">${escapeHtml(recommendationText)}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    function renderAnalysisChart(chartData) {
+        const canvas = document.getElementById('analysisProdukChart');
+        if (!canvas) return;
+
+        const labels = Array.isArray(chartData && chartData.labels) ? chartData.labels : [];
+        const values = Array.isArray(chartData && chartData.values) ? chartData.values : [];
+        const hasData = labels.length > 0 && values.length > 0;
+
+        if (!hasData) {
+            if (hppState.analysisChart) {
+                hppState.analysisChart.destroy();
+                hppState.analysisChart = null;
+            }
+            toggleChartEmpty('analysisProdukChart', 'analysisChartEmpty', true);
+            return;
+        }
+
+        toggleChartEmpty('analysisProdukChart', 'analysisChartEmpty', false);
+
+        const maxBars = 10;
+        const data = {
+            labels: labels.slice(0, maxBars),
+            datasets: [{
+                label: 'Total Penjualan',
+                data: values.slice(0, maxBars),
+                backgroundColor: '#1c6494',
+                borderColor: '#1c6494',
+                borderWidth: 1,
+                borderRadius: 8
+            }]
+        };
+
+        if (!hppState.analysisChart) {
+            hppState.analysisChart = new Chart(canvas.getContext('2d'), {
+                type: 'bar',
+                data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = Number(context.raw || 0);
+                                    return 'Rp ' + value.toLocaleString('id-ID');
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return formatRupiahShort(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            return;
+        }
+
+        hppState.analysisChart.data = data;
+        hppState.analysisChart.update();
+    }
+
+    function renderAnalysisSections(analysis) {
+        const analysisPayload = analysis || {};
+        renderAnalysisComparisonTable(Array.isArray(analysisPayload.produk_comparison) ? analysisPayload.produk_comparison : []);
+        renderAnalysisChart(analysisPayload.chart || {});
+        renderAnalysisRecommendations(Array.isArray(analysisPayload.rekomendasi) ? analysisPayload.rekomendasi : []);
+    }
+
+    function applyTableFilters() {
+        const tbody = document.getElementById('hppTableBody');
+        const searchInput = document.getElementById('searchInput');
+        const marginFilter = document.getElementById('marginFilter');
+        if (!tbody || !searchInput || !marginFilter) return;
+
+        const query = searchInput.value.trim().toLowerCase();
+        const margin = marginFilter.value;
+        const rows = Array.from(tbody.querySelectorAll('tr')).filter(row => row.id !== 'noResults');
+
+        let visibleCount = 0;
+        rows.forEach(row => {
+            const searchBlob = (row.getAttribute('data-search') || '').toLowerCase();
+            const marginBucket = row.getAttribute('data-margin') || '';
+
+            const matchesSearch = !query || searchBlob.includes(query);
+            const matchesMargin = !margin || marginBucket === margin;
+            const shouldShow = matchesSearch && matchesMargin;
+
+            row.style.display = shouldShow ? '' : 'none';
+            if (shouldShow) visibleCount += 1;
+        });
+
+        let emptyRow = document.getElementById('noResults');
+        if (!emptyRow) {
+            emptyRow = document.createElement('tr');
+            emptyRow.id = 'noResults';
+            emptyRow.innerHTML = '<td colspan="7" style="text-align: center; padding: 32px; color: #6b7280;">Tidak ada data yang sesuai</td>';
+            tbody.appendChild(emptyRow);
+        }
+
+        emptyRow.style.display = visibleCount === 0 ? '' : 'none';
+    }
+
+    function ensureLucideIcons() {
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons({
+                attrs: {
+                    width: '12',
+                    height: '12'
+                }
+            });
+        }
+    }
+
+    function renderFromPayload(payload) {
+        hppState.payload = payload;
+        hppState.items = payload.items || [];
+
+        renderTable(hppState.items);
+        renderHeaderStats(payload.stats || {
+            total_produk: 0,
+            total_penjualan: 0,
+            total_biaya: 0
+        });
+        renderMarginCards(payload.margin_cards || {
+            avg_margin: 0,
+            avg_margin_percentage: 0,
+            max_margin: 0,
+            min_margin: 0,
+            positive_count: 0,
+            negative_count: 0,
+            total_count: 0
+        });
+
+        renderMarginChart(hppState.items);
+        renderCostChart(payload.charts ? payload.charts.cost || {} : {}, hppState.items.length > 0);
+        renderAnalysisSections(payload.analysis || {});
+        applyTableFilters();
+        ensureLucideIcons();
+    }
+
+    async function refreshFromDatabase() {
+        try {
+            const response = await requestJson(HPP_ENDPOINTS.list);
+            renderFromPayload(response.payload || {});
+        } catch (error) {
+            showNotification(error.message || 'Gagal memuat data HPP.', 'error');
+        }
+    }
+
+    async function handleFormSubmit(event) {
+        event.preventDefault();
+        const form = document.getElementById('hppForm');
+        if (!form) return;
+
+        const id = form.dataset.id || '';
+        const formData = new FormData();
+        formData.append('nama_produk', form.nama_produk.value.trim());
+        formData.append('kategori', form.kategori.value);
+        formData.append('total_biaya_produksi', form.total_biaya_produksi.value || '0');
+        formData.append('harga_jual', form.harga_jual.value || '0');
+        formData.append('jumlah_produksi', form.jumlah_produksi.value || '1');
+
+        try {
+            const response = await requestJson(id ? (HPP_ENDPOINTS.editBase + id) : HPP_ENDPOINTS.create, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.payload) {
+                renderFromPayload(response.payload);
+            } else {
+                await refreshFromDatabase();
+            }
+
+            closeHppModal();
+            showNotification(response.message || (id ? 'Data HPP berhasil diupdate.' : 'Data HPP berhasil ditambahkan.'), 'success');
+        } catch (error) {
+            showNotification(error.message || 'Gagal menyimpan data HPP.', 'error');
+        }
+    }
+
+    async function handleDelete(id) {
+        if (!id) return;
+        const confirmDelete = confirm('Yakin ingin menghapus data HPP ini?');
+        if (!confirmDelete) return;
+
+        try {
+            const response = await requestJson(HPP_ENDPOINTS.deleteBase + id, {
+                method: 'POST'
+            });
+            if (response.payload) {
+                renderFromPayload(response.payload);
+            } else {
+                await refreshFromDatabase();
+            }
+            showNotification(response.message || 'Data HPP berhasil dihapus.', 'success');
+        } catch (error) {
+            showNotification(error.message || 'Gagal menghapus data HPP.', 'error');
+        }
+    }
+
+    async function recalculateMargins() {
+        try {
+            const response = await requestJson(HPP_ENDPOINTS.recalculate, {
+                method: 'POST'
+            });
+            if (response.payload) {
+                renderFromPayload(response.payload);
+            } else {
+                await refreshFromDatabase();
+            }
+            showNotification(response.message || 'Perhitungan margin berhasil diperbarui.', 'success');
+        } catch (error) {
+            showNotification(error.message || 'Gagal menghitung ulang margin.', 'error');
+        }
+    }
+
+    function printTable() {
+        const sourceTable = document.getElementById('hppTable');
+        const marginCards = document.getElementById('marginAnalysisContainer');
+
+        if (!sourceTable) {
+            showNotification('Tidak ada data untuk dicetak.', 'error');
+            return;
+        }
+
+        const tableClone = sourceTable.cloneNode(true);
+        tableClone.querySelectorAll('tr').forEach(row => {
+            if (row.cells.length > 0) {
+                row.deleteCell(row.cells.length - 1);
             }
         });
 
-        // Form submission
+        const printWindow = window.open('', '', 'width=1024,height=720');
+        const html = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Laporan HPP</title>
+                <style>
+                    body { font-family: Inter, Arial, sans-serif; margin: 24px; color: #0f172a; }
+                    h1 { margin: 0 0 6px; color: #1c6494; }
+                    .meta { margin-bottom: 18px; color: #64748b; font-size: 13px; }
+                    .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+                    .card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px; background: #f8fafc; }
+                    .label { font-size: 11px; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
+                    .value { font-size: 18px; font-weight: 700; color: #1c6494; }
+                    table { width: 100%; border-collapse: collapse; }
+                    th, td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; font-size: 13px; }
+                    th { background: #1c6494; color: white; }
+                    .currency { text-align: right; }
+                    .badge { padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+                    .success { background: #d1fae5; color: #065f46; }
+                    .danger { background: #fee2e2; color: #991b1b; }
+                    .warning { background: #fef3c7; color: #92400e; }
+                </style>
+            </head>
+            <body>
+                <h1>Laporan HPP</h1>
+                <div class="meta">Tanggal Cetak: ${new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+                <div class="cards">${marginCards ? marginCards.innerHTML.replace(/margin-analysis-card/g, 'card').replace(/margin-label/g, 'label').replace(/margin-value/g, 'value') : ''}</div>
+                ${tableClone.outerHTML}
+            </body>
+            </html>
+        `;
+
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.onload = function() {
+            printWindow.print();
+        };
+    }
+
+    function findItemById(id) {
+        const numericId = Number(id);
+        return hppState.items.find(item => Number(item.id_hpp) === numericId) || null;
+    }
+
+    async function handleView(id) {
+        const localItem = findItemById(id);
+        if (localItem) {
+            openDetailModal(localItem);
+            return;
+        }
+
+        try {
+            const response = await requestJson(HPP_ENDPOINTS.detailBase + id);
+            openDetailModal(response.item || null);
+        } catch (error) {
+            showNotification(error.message || 'Gagal mengambil detail HPP.', 'error');
+        }
+    }
+
+    function handleEdit(id) {
+        const item = findItemById(id);
+        if (!item) {
+            showNotification('Data tidak ditemukan untuk diedit.', 'error');
+            return;
+        }
+        openHppModal(item);
+    }
+
+    function handleTableActionClick(event) {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+
+        const action = button.dataset.action;
+        const id = button.dataset.id;
+
+        if (action === 'view') {
+            handleView(id);
+            return;
+        }
+        if (action === 'edit') {
+            handleEdit(id);
+            return;
+        }
+        if (action === 'delete') {
+            handleDelete(id);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const hppForm = document.getElementById('hppForm');
+        const hppModal = document.getElementById('hppModal');
+        const detailModal = document.getElementById('hppDetailModal');
+        const tableBody = document.getElementById('hppTableBody');
+        const searchInput = document.getElementById('searchInput');
+        const marginFilter = document.getElementById('marginFilter');
+
         if (hppForm) {
-            hppForm.addEventListener('submit', function(e) {
-                e.preventDefault();
+            hppForm.addEventListener('submit', handleFormSubmit);
+        }
 
-                const bahan = bahanInput.value;
-                const tenagaKerja = tenagaKerjaInput.value;
-                const hargaJual = hargaJualInput.value;
-                const id = hppForm.dataset.id || '';
-
-                const formData = new FormData();
-                formData.append('bahan', bahan);
-                formData.append('tenaga_kerja', tenagaKerja);
-                formData.append('harga_jual', hargaJual);
-
-                const url = id ? '<?= site_url("hpp/edit/") ?>' + id : '<?= site_url("hpp/create") ?>';
-                const method = id ? 'POST' : 'POST';
-
-                fetch(url, {
-                    method: method,
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => {
-                    // Parse JSON response
-                    return response.json().then(data => ({
-                        status: response.status,
-                        ok: response.ok,
-                        data: data
-                    }));
-                })
-                .then(({ status, ok, data }) => {
-                    console.log('Response:', { status, ok, data });
-                    
-                    if (ok && data.status === 'success') {
-                        showNotification(data.message || (id ? 'Data berhasil diupdate!' : 'Data HPP berhasil ditambahkan!'), 'success');
-                        closeHppModal();
-                        // Reload page to update table and charts
-                        setTimeout(() => {
-                            location.reload();
-                        }, 500);
-                    } else {
-                        const errorMsg = data.message || (id ? 'Gagal mengupdate data' : 'Gagal menyimpan data');
-                        showNotification(errorMsg, 'error');
-                        console.error('Error response:', data);
-                    }
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    showNotification('Gagal menyimpan data. Periksa koneksi Anda.', 'error');
-                });
+        if (hppModal) {
+            hppModal.addEventListener('click', function(e) {
+                if (e.target === hppModal) closeHppModal();
             });
         }
-        
-        // Keyboard shortcuts
+
+        if (detailModal) {
+            detailModal.addEventListener('click', function(e) {
+                if (e.target === detailModal) closeDetailModal();
+            });
+        }
+
+        if (tableBody) {
+            tableBody.addEventListener('click', handleTableActionClick);
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', applyTableFilters);
+        }
+
+        if (marginFilter) {
+            marginFilter.addEventListener('change', applyTableFilters);
+        }
+
         document.addEventListener('keydown', function(e) {
-            // Ctrl/Cmd + E = Export
-            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
-                e.preventDefault();
-                exportTableToCSV();
-            }
-            // Ctrl/Cmd + F = Focus search
             if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
                 e.preventDefault();
                 if (searchInput) searchInput.focus();
             }
-            // Ctrl/Cmd + P = Print
             if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
                 e.preventDefault();
                 printTable();
             }
-            // Ctrl/Cmd + R = Recalculate
             if ((e.ctrlKey || e.metaKey) && e.key === 'r') {
                 e.preventDefault();
                 recalculateMargins();
             }
         });
+
+        refreshFromDatabase();
     });
     </script>
-    </div><!-- app-wrapper -->
+    </div><!-- main-wrapper -->
 </body>
 </html>
