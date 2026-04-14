@@ -10,7 +10,8 @@ $user = array_merge([
 $summary = array_merge([
     'today_sales'   => 0,
     'today_expense' => 0,
-    'today_profit'  => 0
+    'today_profit'  => 0,
+    'total_transaksi' => 0
 ], $summary ?? []);
 
 $transactions = $transactions ?? [];
@@ -25,6 +26,7 @@ $transactions = $transactions ?? [];
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Dashboard <?= htmlspecialchars($user['nama']); ?></title>
+<link rel="stylesheet" href="<?= base_url('assets/css/dashboard-shared.css'); ?>">
 
 <style>
 /* === THEME COLOR VARIABLES === */
@@ -58,14 +60,15 @@ $transactions = $transactions ?? [];
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,Segoe UI,Arial;background:linear-gradient(135deg, var(--background) 0%, #F0F8FC 100%);color:var(--text-primary)}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg, var(--background) 0%, #F0F8FC 100%);color:var(--text-primary);line-height:1.5}
 
 /* === SIDEBAR + HEADER LAYOUT (Donezo Style) === */
 body {
     display: flex;
-    font-family: Inter, Segoe UI, Arial;
+    font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, var(--background) 0%, #F0F8FC 100%);
     color: var(--text-primary);
+    line-height: 1.5;
 }
 
 /* SIDEBAR STYLES */
@@ -209,7 +212,7 @@ body {
 }
 
 .sidebar-menu-link.active .sidebar-menu-badge {
-    background: rgba(255, 255, 255, 0.2);
+    background: #1C6494;
     color: #fff;
 }
 
@@ -254,65 +257,60 @@ body {
 }
 
 .sidebar-subscription-card {
-    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    background: #1C6494;
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 12px 16px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 4px;
+    justify-content: flex-start;
+    gap: 10px;
     position: relative;
-    overflow: hidden;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    text-align: center;
+    transition: background 0.2s ease;
+    text-align: left;
 }
 
 .sidebar-subscription-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(31, 107, 153, 0.2);
+    background: #1558a0;
 }
 
-.sidebar-subscription-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-    transition: all 0.5s;
+.subscription-upgrade-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
 }
 
-.sidebar-subscription-card:hover::before {
-    transform: translate(-20%, 20%);
+.subscription-upgrade-icon i,
+.subscription-upgrade-icon svg {
+    width: 14px;
+    height: 14px;
 }
 
-.subscription-icon {
-    display: none;
-}
-
-.subscription-info {
+.sidebar-subscription .subscription-info {
     flex: 1;
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    text-align: center;
+    width: auto;
+    text-align: left;
 }
 
-.subscription-label {
-    font-size: 8px;
-    color: #1F6B99;
+.sidebar-subscription .subscription-label {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.7);
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.7px;
 }
 
-.subscription-plan {
-    font-size: 13px;
-    font-weight: 700;
-    color: #0D47A1;
+.sidebar-subscription .subscription-plan {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
     margin: 2px 0;
 }
 
@@ -337,57 +335,6 @@ body {
     display: none;
 }
 
-.sidebar-footer-btn {
-    padding: 10px 12px;
-    border: none;
-    border-radius: 8px;
-    background: var(--background);
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all 0.3s;
-    font-size: 12px;
-    font-weight: 600;
-    width: 100%;
-    box-sizing: border-box;
-    margin-bottom: 0;
-}
-
-.sidebar-footer-btn:hover {
-    background: var(--text-secondary);
-    color: #fff;
-}
-
-    .sidebar-footer-btn.logout-btn {
-        background: transparent;
-        color: #64748b;
-        font-weight: 500;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        box-shadow: none;
-        font-size: 14px;
-        padding: 8px 0;
-        min-width: 0;
-        min-height: 0;
-        height: auto;
-        max-width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin: 0;
-        border-radius: 0;
-        border: none;
-        cursor: pointer;
-        text-transform: capitalize;
-        letter-spacing: 0;
-    }
-    .sidebar-footer-btn.logout-btn:hover {
-        box-shadow: none;
-        transform: none;
-        color: #1f6b99;
-    }
-    .sidebar-footer-btn.logout-btn:active {
-        transform: none;
-    }
 .main-wrapper {
     margin-left: 260px;
     flex: 1;
@@ -423,11 +370,11 @@ body.sidebar-collapsed .main-wrapper {
 }
 
 .header-title {
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c6494;
     white-space: nowrap;
-    letter-spacing: -0.5px;
+    letter-spacing: 0px;
 }
 
 .header-search {
@@ -791,7 +738,11 @@ body.sidebar-collapsed .main-wrapper {
 }
 
 .subscription-features li::before {
-    content: '✓';
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10B981;
     color: #10B981;
     font-weight: 800;
     flex-shrink: 0;
@@ -841,115 +792,6 @@ body.sidebar-collapsed .main-wrapper {
     background: #f1f5f9;
     color: var(--text-primary);
     border-color: var(--primary-light);
-}
-
-/* ===== LOGOUT MODAL ===== */
-.logout-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-    animation: fadeIn 0.3s ease;
-}
-
-.logout-modal.show {
-    display: flex;
-}
-
-.logout-modal-content {
-    background: #fff;
-    border-radius: 16px;
-    padding: 40px 32px;
-    max-width: 420px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    border: 1px solid rgba(31, 107, 153, 0.08);
-}
-
-.logout-modal-icon {
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 20px;
-    background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
-}
-
-.logout-modal h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin-bottom: 12px;
-    letter-spacing: -0.3px;
-}
-
-.logout-modal p {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    margin-bottom: 28px;
-    line-height: 1.5;
-}
-
-.logout-modal-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-}
-
-.logout-btn-confirm {
-    flex: 1;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
-}
-
-.logout-btn-confirm:hover {
-    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.35);
-    transform: translateY(-2px);
-}
-
-.logout-btn-confirm:active {
-    transform: translateY(0);
-}
-
-.logout-btn-cancel {
-    flex: 1;
-    padding: 12px 24px;
-    border: 1.5px solid var(--border-color);
-    border-radius: 8px;
-    background: #fff;
-    color: var(--text-secondary);
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.logout-btn-cancel:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-    background: var(--primary-very-light);
-    transform: translateY(-1px);
 }
 
 @keyframes fadeIn {
@@ -1060,102 +902,46 @@ body.sidebar-collapsed .main-wrapper {
 
 /* LAYOUT */
 .container{
-    max-width: 1200px;
-    margin: 32px auto;
+    max-width: 1180px;
+    margin: 28px auto;
     padding: 0 24px;
 }
 
 /* BISNIS CARD - ELEGANT DESIGN */
 .biz-card{
-    background: linear-gradient(135deg, #E0F2FF 0%, #D1E7F5 100%);
-    border-radius: 20px;
-    padding: 40px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 40px;
-    box-shadow: 0 4px 20px rgba(31, 107, 153, 0.15);
-    border: 1.5px solid #A5D8E8;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    min-height: 160px;
-}
-.biz-card::before{
-    display: none;
-}
-.biz-card::after {
-    display: none;
-}
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(20px); }
-}
-.biz-card:hover{
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(31, 107, 153, 0.18);
-    border-color: #A5D8E8;
 }
 .biz-left{
-    display: flex;
-    gap: 32px;
-    align-items: center;
-    position: relative;
-    z-index: 2;
     flex: 1;
-}
-.biz-info h2{
-    font-size: 32px;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 16px;
-    letter-spacing: -0.5px;
 }
 .biz-info{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
-.biz-info span{
-    background: linear-gradient(135deg, #C7E0EE 0%, #D6E9F6 100%);
-    color: var(--primary-color);
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    border: 1px solid #A5D8E8;
-    display: inline-block;
-    transition: all 0.3s ease;
+.biz-badges {
     width: fit-content;
 }
-.biz-info span:hover{
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(31, 107, 153, 0.15);
+.biz-badge{
+    white-space: nowrap;
 }
 .biz-profit{
-    text-align: right;
-    color: var(--primary-color);
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
+    gap: 10px;
 }
-.biz-profit small{
-    font-size: 12px;
-    font-weight: 600;
-    display: block;
+.biz-main-stat small{
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: var(--text-secondary);
 }
 .biz-profit h2{
     margin: 0;
-    font-size: 32px;
-    font-weight: 800;
-    text-shadow: 0 3px 12px rgba(0,0,0,0.2);
-    line-height: 1;
+}
+.biz-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.biz-stat {
+    gap: 8px;
 }
 
 /* SUBSCRIPTION STATUS CARD */
@@ -1257,32 +1043,25 @@ body.sidebar-collapsed .main-wrapper {
 
 /* SECTION */
 .section-title{
-    font-weight: 700;
-    margin: 40px 0 24px;
+    font-weight: var(--ds-section-title-weight, 600);
+    margin: 34px 0 16px;
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--primary-color);
-    font-size: 20px;
-    position: relative;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--primary-very-light);
-}
-
-.section-title::before {
-    content: '';
-    width: 4px;
-    height: 4px;
-    background: var(--primary-color);
-    border-radius: 50%;
+    color: var(--ds-section-title-color, #1a1a2e);
+    font-size: var(--ds-section-title-size, 16px);
+    letter-spacing: var(--ds-section-title-letter-spacing, 0.3px);
+    line-height: var(--ds-heading-line-height, 1.3);
+    border-left: 3px solid var(--ds-section-title-accent, #1E6FBA);
+    padding-left: var(--ds-section-title-padding-left, 12px);
 }
 
 /* AKSI CEPAT - Action Buttons */
 .actions {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 24px;
-    margin-bottom: 40px;
+    gap: 18px;
+    margin-bottom: 34px;
 }
 
 .action {
@@ -1406,19 +1185,24 @@ body.sidebar-collapsed .main-wrapper {
 .summary{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-bottom: 40px;
+    gap: 16px;
+    margin-bottom: 34px;
+    align-items: stretch;
 }
 
 .sum-card{
     background: linear-gradient(135deg, #FFFFFF 0%, #F9FAFB 100%);
     border-radius: 16px;
-    padding: 28px 24px;
+    padding: 24px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     border: 1.5px solid var(--border-color);
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 160px;
 }
 
 .sum-card::before{
@@ -1457,38 +1241,34 @@ body.sidebar-collapsed .main-wrapper {
     box-shadow: 0 8px 20px rgba(31, 107, 153, 0.1);
     border-color: var(--border-color);
 }
-.sum-card small{
-    color: var(--text-secondary);
-    font-weight: 600;
-    font-size: 13px;
-    text-transform: uppercase;
+.sum-card .sum-label{
+    font-size: 11px;
+    font-weight: 500;
     letter-spacing: 0.8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 14px;
+    text-transform: uppercase;
+    color: #6b7280;
+    line-height: 1.4;
+    margin-bottom: 8px;
     position: relative;
     z-index: 2;
-}
-.sum-card small::before{
-    content: '';
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    transition: transform 0.3s;
-}
-.sum-card:hover small::before{
-    transform: scale(1.5);
 }
 .sum-card h3{
     margin-top: 0;
-    font-size: 32px;
-    font-weight: 800;
+    font-size: 28px;
+    font-weight: 700;
     line-height: 1.2;
     position: relative;
     z-index: 2;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.3px;
+}
+.sum-card .sum-sub-label{
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    line-height: 1.5;
+    margin-top: 8px;
+    position: relative;
+    z-index: 2;
 }
 .sum-card .green::before,
 .sum-card:has(.green)::before{
@@ -1503,15 +1283,6 @@ body.sidebar-collapsed .main-wrapper {
 .sum-card .blue::before,
 .sum-card:has(.blue)::before{
     background: linear-gradient(90deg, #1F6B99, #154A6F);
-}
-.sum-card:has(.green) small::before{
-    background: #10B981;
-}
-.sum-card:has(.red) small::before{
-    background: #EF4444;
-}
-.sum-card:has(.blue) small::before{
-    background: #1F6B99;
 }
 .green{
     color: #059669;
@@ -1530,9 +1301,9 @@ body.sidebar-collapsed .main-wrapper {
 .transaksi{
     background: var(--card-bg);
     border-radius: 20px;
-    padding: 24px;
+    padding: 22px;
     box-shadow: var(--shadow-sm);
-    margin-bottom: 30px;
+    margin-bottom: 34px;
     border: 1px solid var(--border-color);
 }
 .tx{
@@ -1540,7 +1311,7 @@ body.sidebar-collapsed .main-wrapper {
     justify-content: space-between;
     align-items: center;
     background: linear-gradient(135deg, #f8fbfc 0%, #f0f6f9 100%);
-    padding: 16px 20px;
+    padding: 14px 18px;
     border-radius: 14px;
     margin-bottom: 12px;
     border-left: 5px solid transparent;
@@ -1572,13 +1343,14 @@ body.sidebar-collapsed .main-wrapper {
 .tools-grid{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-bottom: 48px;
+    gap: 20px;
+    margin-bottom: 36px;
+    align-items: stretch;
 }
 .tool-box{
     background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%);
     border-radius: 16px;
-    padding: 28px 24px;
+    padding: 24px 22px;
     box-shadow: var(--shadow-sm);
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor: pointer;
@@ -1595,7 +1367,7 @@ body.sidebar-collapsed .main-wrapper {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--primary-light));
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
     transform: scaleX(0);
     transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -1613,10 +1385,10 @@ body.sidebar-collapsed .main-wrapper {
     transform: translate(-20%, 20%);
 }
 .tool-box:hover{
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 16px 32px rgba(31, 107, 153, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(31, 107, 153, 0.12);
     border-color: var(--primary-light);
-    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f7fbff 100%);
 }
 .tool-box:hover::before{
     transform: scaleX(1);
@@ -1624,38 +1396,50 @@ body.sidebar-collapsed .main-wrapper {
 .tool-icon{
     width: 54px;
     height: 54px;
-    border-radius: 14px;
+    border-radius: var(--ds-icon-radius, 12px);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 26px;
+    font-size: 0;
     margin-bottom: 16px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: none;
     position: relative;
     z-index: 2;
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+.tool-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2;
+}
+
 .tool-box:hover .tool-icon{
-    transform: scale(1.15) rotate(-2deg);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    transform: scale(1.06);
 }
 .tool-icon.hpp{
-    background: linear-gradient(135deg, #3B82F6, #1F6B99);
+    background: #EAF3FB;
+    color: #1F6B99;
 }
 .tool-icon.keuangan{
-    background: linear-gradient(135deg, #10B981, #059669);
+    background: #EAF7F0;
+    color: #0F8A5F;
 }
 .tool-icon.risiko{
-    background: linear-gradient(135deg, #F59E0B, #D97706);
+    background: #FFF4E8;
+    color: #B7791F;
 }
 .tool-icon.analisis{
-    background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+    background: #EAF3FB;
+    color: #1F6B99;
 }
 .tool-icon.info{
-    background: linear-gradient(135deg, #EC4899, #DB2777);
+    background: #EAF7F0;
+    color: #0F8A5F;
 }
 .tool-icon.advisor{
-    background: linear-gradient(135deg, #06B6D4, #0891B2);
+    background: #EAF3FB;
+    color: #1F6B99;
 }
 
 .tool-header {
@@ -1663,76 +1447,72 @@ body.sidebar-collapsed .main-wrapper {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     position: relative;
     z-index: 2;
 }
 
 .tool-title{
     font-weight: 700;
-    font-size: 18px;
+    font-size: 16px;
+    line-height: 1.35;
     color: var(--text-primary);
     flex: 1;
 }
 
 .tool-badge {
     display: inline-block;
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 10px;
-    font-weight: 700;
+    padding: var(--ds-badge-padding-y, 2px) var(--ds-badge-padding-x, 8px);
+    border-radius: 999px;
+    font-size: var(--ds-badge-font-size, 9px);
+    font-weight: var(--ds-badge-font-weight, 600);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: var(--ds-badge-letter-spacing, 0.35px);
     white-space: nowrap;
+    border: 1px solid transparent;
 }
 
 .tool-badge.popular {
-    background: linear-gradient(135deg, #FCD34D 0%, #FBBF24 100%);
-    color: #78350F;
-    box-shadow: 0 2px 8px rgba(252, 211, 77, 0.3);
+    background: #FEF3C7;
+    color: #92400E;
+    border-color: #FDE68A;
 }
 
 .tool-badge.new {
-    background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
-    animation: bounce 2s infinite;
+    background: #DBEAFE;
+    color: #1E40AF;
+    border-color: #BFDBFE;
 }
 
 .tool-badge.essential {
-    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    background: #D1FAE5;
+    color: #065F46;
+    border-color: #A7F3D0;
 }
 
 .tool-badge.alert {
-    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+    background: #FEE2E2;
+    color: #991B1B;
+    border-color: #FECACA;
 }
 
 .tool-badge.pro {
-    background: linear-gradient(135deg, #A78BFA 0%, #8B5CF6 100%);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+    background: #E0E7FF;
+    color: #3730A3;
+    border-color: #C7D2FE;
 }
 
 .tool-badge.learn {
-    background: linear-gradient(135deg, #FB7185 0%, #EC4899 100%);
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(236, 72, 153, 0.3);
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
+    background: #E2E8F0;
+    color: #334155;
+    border-color: #CBD5E1;
 }
 
 .tool-desc{
     font-size: 14px;
     color: var(--text-secondary);
-    margin-bottom: 16px;
-    line-height: 1.6;
+    margin-bottom: 14px;
+    line-height: 1.55;
     position: relative;
     z-index: 2;
     flex: 1;
@@ -1741,7 +1521,7 @@ body.sidebar-collapsed .main-wrapper {
 .tool-meta {
     display: flex;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     position: relative;
     z-index: 2;
     flex-wrap: wrap;
@@ -1751,7 +1531,7 @@ body.sidebar-collapsed .main-wrapper {
     font-size: 12px;
     color: var(--text-muted);
     padding: 4px 8px;
-    background: var(--background);
+    background: #F8FAFC;
     border-radius: 6px;
     font-weight: 500;
     transition: all 0.3s;
@@ -1766,7 +1546,7 @@ body.sidebar-collapsed .main-wrapper {
     color: var(--primary-color);
     text-decoration: none;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     z-index: 2;
@@ -1774,20 +1554,11 @@ body.sidebar-collapsed .main-wrapper {
     align-items: center;
     gap: 8px;
     padding: 8px 0;
-}
-
-.tool-link::after{
-    content: '→';
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    font-weight: 800;
+    margin-top: auto;
 }
 
 .tool-box:hover .tool-link{
     color: var(--primary-dark);
-}
-
-.tool-box:hover .tool-link::after{
-    transform: translateX(8px);
 }
 
 /* RESPONSIVE DESIGN */
@@ -1841,6 +1612,9 @@ body.sidebar-collapsed .main-wrapper {
     .biz-card{padding:24px;flex-direction:column;text-align:center}
     .biz-left{flex-direction:column;width:100%}
     .biz-profit{text-align:center;margin-top:16px}
+    .biz-stats{align-items:center}
+    .biz-stat{justify-content:center;flex-wrap:wrap}
+    .biz-decor{display:none}
     .biz-icon{font-size:36px}
     
     /* Actions - 2 columns */
@@ -1917,16 +1691,18 @@ body.sidebar-collapsed .main-wrapper {
     .biz-left{flex-direction:column;width:100%}
     .biz-profit{margin-top:14px}
     .biz-info h2{font-size:18px}
+    .biz-badge{font-size:10px;padding:5px 10px}
     
     .actions{grid-template-columns:1fr;gap:10px}
     .action{padding:14px;font-size:13px}
     
-    .section-title{font-size:15px;margin-bottom:16px;padding:0}
+    .section-title{font-size:15px;margin-bottom:16px;padding-left:10px;border-left-width:2px}
     
     .summary{grid-template-columns:1fr;gap:12px}
     .sum-card{padding:14px}
-    .sum-card small{font-size:11px}
-    .sum-card h3{font-size:16px;margin:6px 0}
+    .sum-card .sum-label{font-size:11px}
+    .sum-card .sum-sub-label{font-size:12px}
+    .sum-card h3{font-size:28px;margin:6px 0}
     
     .chart-insight-wrapper{grid-template-columns:1fr;gap:0}
     .chart-canvas-wrapper{height:250px}
@@ -1967,7 +1743,7 @@ body.sidebar-collapsed .main-wrapper {
     
     .biz-card{padding:14px}
     .biz-info h2{font-size:16px}
-    .biz-info span{font-size:11px}
+    .biz-badge{font-size:10px}
     
     .tools-grid{gap:12px;margin-bottom:20px}
     
@@ -2019,7 +1795,7 @@ body.sidebar-collapsed .main-wrapper {
     .actions{grid-template-columns:1fr;gap:8px}
     .action{padding:12px;font-size:12px}
     
-    .section-title{font-size:14px;margin-bottom:12px}
+    .section-title{font-size:14px;margin-bottom:12px;padding-left:10px;border-left-width:2px}
     
     .footer-simple{padding:12px 16px}
     .footer-inner{flex-direction:column;gap:8px;text-align:center}
@@ -2039,11 +1815,11 @@ body.sidebar-collapsed .main-wrapper {
     /* Bisnis card */
     .biz-card{padding:20px;margin-bottom:20px}
     .biz-info h2{font-size:18px}
-    .biz-info span{font-size:11px;padding:4px 10px}
+    .biz-badge{font-size:11px;padding:4px 10px}
     .biz-profit h2{font-size:22px}
     
     /* Section titles */
-    .section-title{font-size:15px;margin:20px 0 12px}
+    .section-title{font-size:15px;margin:20px 0 12px;padding-left:10px;border-left-width:2px}
     
     /* Filter periode - full width buttons */
     .filter-periode{
@@ -2059,22 +1835,23 @@ body.sidebar-collapsed .main-wrapper {
     
     /* Summary cards */
     .sum-card{padding:16px}
-    .sum-card small{font-size:12px}
-    .sum-card h3{font-size:20px}
+    .sum-card .sum-label{font-size:11px}
+    .sum-card .sum-sub-label{font-size:12px}
+    .sum-card h3{font-size:28px}
     
     /* Chart */
     .chart-section{padding:20px}
     .chart-header{flex-direction:column;align-items:flex-start;gap:12px}
-    .chart-header h4{font-size:15px}
+    .chart-header h4{font-size:16px}
     .chart-legend{flex-wrap:wrap;gap:12px;font-size:11px}
     #salesChart{height:180px}
     
     /* Insight */
     .insight-section{padding:20px}
-    .insight-section h4{font-size:15px}
+    .insight-section h4{font-size:16px}
     .insight-item{padding:12px}
     .insight-item strong{font-size:13px}
-    .insight-item p{font-size:12px}
+    .insight-item p{font-size:13px;font-weight:400;line-height:1.5}
     
     /* Transaksi */
     .transaksi{padding:16px}
@@ -2096,7 +1873,7 @@ body.sidebar-collapsed .main-wrapper {
     .biz-card{padding:16px;margin-bottom:16px}
     .biz-icon{font-size:32px}
     .biz-info h2{font-size:16px}
-    .biz-info span{font-size:10px;padding:3px 8px;margin-right:4px}
+    .biz-badge{font-size:10px;padding:3px 8px}
     .biz-profit{margin-top:12px}
     .biz-profit small{font-size:11px}
     .biz-profit h2{font-size:20px}
@@ -2106,7 +1883,7 @@ body.sidebar-collapsed .main-wrapper {
     .action{padding:14px;font-size:15px}
     
     /* Section titles */
-    .section-title{font-size:14px;margin:16px 0 10px}
+    .section-title{font-size:14px;margin:16px 0 10px;padding-left:10px;border-left-width:2px}
     
     /* Filter - stack on small phones */
     .filter-periode{gap:6px}
@@ -2114,23 +1891,24 @@ body.sidebar-collapsed .main-wrapper {
     
     /* Summary */
     .sum-card{padding:14px}
-    .sum-card small{font-size:11px}
-    .sum-card h3{font-size:18px;margin-top:6px}
+    .sum-card .sum-label{font-size:11px}
+    .sum-card .sum-sub-label{font-size:12px}
+    .sum-card h3{font-size:28px;margin-top:6px}
     
     /* Chart */
     .chart-section{padding:16px}
-    .chart-header h4{font-size:14px}
+    .chart-header h4{font-size:16px}
     .chart-legend{gap:10px;font-size:10px}
     .legend-color{width:10px;height:10px}
     #salesChart{height:160px}
     
     /* Insight */
     .insight-section{padding:16px}
-    .insight-section h4{font-size:14px;margin-bottom:12px}
+    .insight-section h4{font-size:16px;margin-bottom:12px}
     .insight-item{padding:10px;margin-bottom:10px}
     .insight-icon{font-size:20px;margin-bottom:6px}
     .insight-item strong{font-size:12px;margin-bottom:4px}
-    .insight-item p{font-size:11px;line-height:1.4}
+    .insight-item p{font-size:13px;font-weight:400;line-height:1.5}
     
     /* Transaksi */
     .transaksi{padding:14px}
@@ -2160,7 +1938,7 @@ body.sidebar-collapsed .main-wrapper {
 /* Touch-friendly improvements for all mobile devices */
 @media(max-width:991px){
     /* Larger touch targets */
-    .action, .filter-btn, .logout-btn, .tool-box{
+    .action, .filter-btn, .tool-box{
         min-height:44px;
         display:flex;
         align-items:center;
@@ -2168,7 +1946,7 @@ body.sidebar-collapsed .main-wrapper {
     }
     
     /* Prevent text selection on buttons */
-    .action, .filter-btn, .logout-btn{
+    .action, .filter-btn{
         -webkit-tap-highlight-color:transparent;
         user-select:none
     }
@@ -2394,30 +2172,35 @@ body.sidebar-collapsed .main-wrapper {
     font-size: 16px;
 }
 .risk-icon{
-    font-size: 24px;
     width: 44px;
     height: 44px;
-    border-radius: 12px;
+    border-radius: var(--ds-icon-radius, 12px);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
 }
+.risk-icon i,
+.risk-icon svg{
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+}
 .risk-card.red .risk-icon{
-    background: #EF4444;
-    color: #fff;
+    background: #FEE2E2;
+    color: #B91C1C;
 }
 .risk-card.yellow .risk-icon{
-    background: #F59E0B;
-    color: #fff;
+    background: #FEF3C7;
+    color: #92400E;
 }
 .risk-card.green .risk-icon{
-    background: #10B981;
-    color: #fff;
+    background: #DCFCE7;
+    color: #166534;
 }
 .risk-card.blue .risk-icon{
-    background: #3B82F6;
-    color: #fff;
+    background: #DBEAFE;
+    color: #1E3A8A;
 }
 .risk-checklist{
     display: flex;
@@ -2561,8 +2344,8 @@ body.sidebar-collapsed .main-wrapper {
 }
 .chart-header h4{
     color: var(--primary-color);
-    font-size: 18px;
-    font-weight: 800;
+    font-size: 16px;
+    font-weight: 600;
 }
 .chart-legend{
     display: flex;
@@ -2595,6 +2378,27 @@ body.sidebar-collapsed .main-wrapper {
     height: 240px;
 }
 
+.chart-canvas-wrapper{
+    position: relative;
+    min-height: 240px;
+}
+
+.chart-empty-state{
+    display: none;
+    height: 240px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #f8fafc;
+    color: #64748b;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
 /* INSIGHT SECTION */
 .insight-section{
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
@@ -2605,12 +2409,12 @@ body.sidebar-collapsed .main-wrapper {
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
 .insight-section h4{
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
     gap: 8px;
-    font-weight: 800;
+    font-weight: 600;
 }
 .insight-item{
     background: rgba(255, 255, 255, 0.12);
@@ -2634,8 +2438,9 @@ body.sidebar-collapsed .main-wrapper {
 }
 .insight-item p{
     font-size: 13px;
+    font-weight: 400;
     opacity: 0.95;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 .insight-icon{
     font-size: 24px;
@@ -2655,7 +2460,7 @@ body.sidebar-collapsed .main-wrapper {
 /* INI KUNCI CENTER */
 .footer-inner {
     max-width: 1200px;
-    margin: 0 auto; /* ← CENTER HORIZONTAL */
+    margin: 0 auto; /* CENTER HORIZONTAL */
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
@@ -2686,292 +2491,6 @@ body.sidebar-collapsed .main-wrapper {
 .brand {
     font-weight: 800;
     color: var(--primary-color);
-}
-
-/* ===== SUBSCRIPTION MODAL ===== */
-.subscription-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-    animation: fadeIn 0.3s ease;
-}
-
-.subscription-modal.show {
-    display: flex;
-}
-
-.subscription-modal-content {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    width: 90%;
-    max-width: 600px;
-    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.subscription-modal-header {
-    padding: 24px;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(135deg, #FEF3C7 0%, #FCD34D 100%);
-}
-
-.subscription-modal-header h2 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #78350F;
-    margin: 0;
-}
-
-.subscription-modal-close {
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.3);
-    color: #78350F;
-    cursor: pointer;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-}
-
-.subscription-modal-close:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
-
-.subscription-modal-body {
-    padding: 28px;
-}
-
-.subscription-item {
-    margin-bottom: 20px;
-}
-
-.subscription-item label {
-    display: block;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
-}
-
-.subscription-value {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    padding: 12px 16px;
-    background: var(--background);
-    border-radius: 8px;
-    border-left: 3px solid var(--primary-color);
-}
-
-.subscription-status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%);
-    color: #065F46;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 700;
-    border: 1px solid #6EE7B7;
-}
-
-.subscription-modal-footer {
-    padding: 20px 28px;
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-}
-
-.subscription-modal-btn {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.subscription-modal-btn.primary {
-    background: linear-gradient(135deg, #1F6B99 0%, #154A6F 100%);
-    color: white;
-}
-
-.subscription-modal-btn.primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(31, 107, 153, 0.3);
-}
-
-.subscription-modal-btn.secondary {
-    background: var(--background);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-}
-
-.subscription-modal-btn.secondary:hover {
-    background: #f1f5f9;
-}
-
-/* ===== PROFILE MODAL ===== */
-.profile-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(4px);
-    animation: fadeIn 0.3s ease;
-}
-
-.profile-modal.show {
-    display: flex;
-}
-
-.profile-modal-content {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    width: 90%;
-    max-width: 500px;
-    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.profile-modal-header {
-    padding: 24px;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.profile-modal-header h2 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--primary-color);
-    margin: 0;
-}
-
-.profile-modal-close {
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 8px;
-    background: var(--background);
-    color: var(--text-secondary);
-    cursor: pointer;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-}
-
-.profile-modal-close:hover {
-    background: var(--border-color);
-    color: var(--text-primary);
-}
-
-.profile-modal-body {
-    padding: 32px 24px;
-}
-
-.profile-item {
-    margin-bottom: 28px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid #F1F5F9;
-}
-
-.profile-item:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.profile-item label {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #64748B;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-}
-
-.profile-value {
-    display: block;
-    font-size: 1.15rem;
-    color: #1F6B99;
-    font-weight: 500;
-    padding: 14px 16px;
-    background: #F8FAFC;
-    border-radius: 10px;
-    border-left: 4px solid #1F6B99;
-    word-break: break-word;
-}
-
-.profile-modal-footer {
-    padding: 16px 24px;
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-}
-
-.profile-modal-btn {
-    padding: 10px 24px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
-    color: #fff;
-}
-
-.profile-modal-btn:hover {
-    box-shadow: 0 8px 16px rgba(31, 107, 153, 0.25);
-    transform: translateY(-2px);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 @media (max-width: 1024px) {
@@ -3037,66 +2556,44 @@ body.sidebar-collapsed .main-wrapper {
     
     <ul class="sidebar-menu">
         <li class="sidebar-menu-item">
-            <a href="<?= site_url('auth/dashboard_operasional'); ?>" class="sidebar-menu-link active">
-                <span class="sidebar-menu-icon">▦</span>
+            <a href="<?= site_url('auth/dashboard'); ?>" class="sidebar-menu-link active">
+                <span class="sidebar-menu-icon"><i data-lucide="layout-grid"></i></span>
                 <span class="sidebar-menu-text">Dashboard</span>
                 <span class="sidebar-menu-badge">Home</span>
             </a>
         </li>
          <li class="sidebar-menu-item">
             <a href="<?= site_url('advisor'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">◆</span>
+                <span class="sidebar-menu-icon"><i data-lucide="sparkles"></i></span>
                 <span class="sidebar-menu-text">AI Advisor</span>
-                <span class="sidebar-menu-badge new">New</span>
             </a>
         </li>
         <li class="sidebar-menu-item">
             <a href="<?= site_url('hpp'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">⚒</span>
+                <span class="sidebar-menu-icon"><i data-lucide="calculator"></i></span>
                 <span class="sidebar-menu-text">Kalkulator HPP</span>
             </a>
         </li>
         <li class="sidebar-menu-item">
             <a href="<?= site_url('keuangan'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">≈</span>
-                <span class="sidebar-menu-text">Keuangan</span>
-            </a>
-        </li>
-        <li class="sidebar-menu-item">
-            <a href="<?= site_url('analisis'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">►</span>
-                <span class="sidebar-menu-text">Analisis Produk</span>
+                <span class="sidebar-menu-icon"><i data-lucide="wallet"></i></span>
+                <span class="sidebar-menu-text">Pencatatan Keuangan</span>
             </a>
         </li>
         <li class="sidebar-menu-item">
             <a href="<?= site_url('risiko'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">▲</span>
+                <span class="sidebar-menu-icon"><i data-lucide="shield-alert"></i></span>
                 <span class="sidebar-menu-text">Manajemen Risiko</span>
             </a>
         </li>
         <li class="sidebar-menu-item">
             <a href="<?= site_url('auth/info_bisnis'); ?>" class="sidebar-menu-link">
-                <span class="sidebar-menu-icon">◉</span>
+                <span class="sidebar-menu-icon"><i data-lucide="book-open"></i></span>
                 <span class="sidebar-menu-text">Informasi Bisnis</span>
             </a>
         </li>
     </ul>
     
-    <!-- SUBSCRIPTION STATUS IN SIDEBAR -->
-    <div class="sidebar-subscription">
-        <div class="sidebar-subscription-card" onclick="openSubscriptionModal()">
-            <div class="subscription-info">
-                <div class="subscription-label">Paket Aktif</div>
-                <div class="subscription-plan">Upgrade</div>
-            </div>
-        </div>
-    </div>
-    
-        <button class="sidebar-footer-btn logout-btn" onclick="showLogoutModal()">
-            <span>⊳</span>
-            <span>Log out</span>
-        </button>
-    </div>
 </aside>
 
 <!-- MAIN CONTENT WRAPPER -->
@@ -3104,8 +2601,8 @@ body.sidebar-collapsed .main-wrapper {
     <!-- TOP HEADER -->
     <header class="top-header">
         <div class="header-left">
-            <button class="sidebar-toggle" id="mobileMenuBtn" style="display: none; font-size: 20px; width: auto; border: none; background: none; color: var(--text-secondary); cursor: pointer;">≡</button>
-            <div class="header-title">Dashboard Operasional</div>
+            <button class="sidebar-toggle" id="mobileMenuBtn" style="display: none; width: auto; border: none; background: none; color: var(--text-secondary); cursor: pointer;"><i data-lucide="menu" style="width:20px;height:20px;"></i></button>
+            <div class="header-title">Dashboard</div>
             <div class="header-search">
                 <input type="text" placeholder="Cari...">
             </div>
@@ -3129,18 +2626,33 @@ body.sidebar-collapsed .main-wrapper {
 
 <div class="container"> 
     <!-- BISNIS -->
-    <div class="biz-card">
-        <div class="biz-left">
+    <div class="biz-card ds-hero">
+        <div class="biz-left ds-hero-main">
             <div class="biz-info">
-                <h2><?= htmlspecialchars($user['usaha']); ?></h2>
-                <span><?= $user['type']; ?></span>
-                <span>Aktif Beroperasi</span>
+                <p class="ds-hero-greeting">Selamat datang, <?= htmlspecialchars(trim((string) preg_replace('/\s*\d+(?:\.\d+)+\.?$/', '', (string) ($user['nama'] ?? 'User')))); ?></p>
+                <h2 class="ds-hero-title">Bisnis Anda</h2>
+                <div class="biz-badges ds-hero-badges">
+                    <span class="biz-badge ds-hero-badge"><?= htmlspecialchars($user['type']); ?></span>
+                    <span class="biz-badge ds-hero-badge">Aktif Beroperasi</span>
+                </div>
             </div>
         </div>
-        <div class="biz-profit">
-            <small>Hari Ini</small>
-            <h2 id="labaBersihHeader">Rp <?= number_format($summary['today_profit'],0,',','.'); ?></h2>
-            <small>Laba Bersih</small>
+        <div class="biz-profit ds-hero-right">
+            <div class="biz-main-stat">
+                <small class="ds-hero-stat-label ds-hero-kpi-label">Laba Bersih Hari Ini</small>
+                <h2 id="labaBersihHeader" class="ds-hero-amount">Rp <?= number_format($summary['today_profit'],0,',','.'); ?></h2>
+            </div>
+            <div class="biz-stats">
+                <div class="biz-stat ds-hero-stat">
+                    <span class="ds-hero-stat-label">Total Transaksi Hari Ini:</span>
+                    <span class="ds-hero-stat-value"><?= count($transactions); ?></span>
+                </div>
+            </div>
+        </div>
+        <div class="biz-decor ds-hero-decor" aria-hidden="true">
+            <i data-lucide="store"></i>
+            <i data-lucide="trending-up"></i>
+            <i data-lucide="building-2"></i>
         </div>
     </div>
 
@@ -3148,105 +2660,88 @@ body.sidebar-collapsed .main-wrapper {
     <div class="section-title">Tools Bisnis & Analisis</div>
     <div class="tools-grid">
         <div class="tool-box">
-            <div class="tool-icon advisor" style="color:#fff">◆</div>
+            <div class="tool-icon advisor"><i data-lucide="sparkles"></i></div>
             <div class="tool-header">
                 <div class="tool-title">AI Advisor</div>
-                <span class="tool-badge new">AI-Powered</span>
+                <span class="tool-badge new">AI</span>
             </div>
             <div class="tool-desc">Dapatkan konsultasi strategi bisnis dari Artificial Intelligence yang canggih dan berpengalaman</div>
             <div class="tool-meta">
                 <span class="meta-item">5-10 menit</span>
-                <span class="meta-item">◆ Advanced</span>
+                <span class="meta-item">Advanced</span>
             </div>
             <a href="<?= site_url('advisor'); ?>" class="tool-link">Mulai Konsultasi</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon hpp" style="color:#fff">⚒</div>
+            <div class="tool-icon hpp"><i data-lucide="calculator"></i></div>
             <div class="tool-header">
                 <div class="tool-title">Kalkulator HPP</div>
                 <span class="tool-badge popular">Populer</span>
             </div>
             <div class="tool-desc">Hitung Harga Pokok Penjualan secara akurat untuk menentukan harga jual yang menguntungkan bisnis Anda</div>
             <div class="tool-meta">
-                <span class="meta-item">⏱ 2-3 menit</span>
-                <span class="meta-item">⚒ Calculation</span>
+                <span class="meta-item">2-3 menit</span>
+                <span class="meta-item">Perhitungan</span>
             </div>
             <a href="<?= site_url('hpp'); ?>" class="tool-link">Mulai Hitung</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon keuangan" style="color:#fff">≈</div>
+            <div class="tool-icon keuangan"><i data-lucide="wallet"></i></div>
             <div class="tool-header">
                 <div class="tool-title">Pencatatan Keuangan</div>
                 <span class="tool-badge essential">Essential</span>
             </div>
             <div class="tool-desc">Catat, kelola, dan analisis semua transaksi keuangan bisnis Anda dengan sistem yang terorganisir</div>
             <div class="tool-meta">
-                <span class="meta-item">⏱ Real-time</span>
-                <span class="meta-item">≈ Accounting</span>
+                <span class="meta-item">Real-time</span>
+                <span class="meta-item">Akuntansi</span>
             </div>
             <a href="<?= site_url('keuangan'); ?>" class="tool-link">Buka Pencatatan</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon risiko" style="color:#fff">▲</div>
+            <div class="tool-icon risiko"><i data-lucide="shield-alert"></i></div>
             <div class="tool-header">
                 <div class="tool-title">Manajemen Risiko</div>
                 <span class="tool-badge alert">Critical</span>
             </div>
             <div class="tool-desc">Identifikasi, analisis, dan buat strategi mitigasi untuk melindungi usaha dari risiko bisnis yang mungkin terjadi</div>
             <div class="tool-meta">
-                <span class="meta-item">⏱ 10-15 menit</span>
-                <span class="meta-item">▲ Risk Management</span>
+                <span class="meta-item">10-15 menit</span>
+                <span class="meta-item">Risk Management</span>
             </div>
             <a href="<?= site_url('risiko'); ?>" class="tool-link">Kelola Risiko</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon analisis" style="color:#fff">►</div>
+            <div class="tool-icon analisis"><i data-lucide="chart-line"></i></div>
             <div class="tool-header">
                 <div class="tool-title">Analisis Produk</div>
                 <span class="tool-badge pro">Pro</span>
             </div>
             <div class="tool-desc">Analisis mendalam performa produk, identifikasi trend penjualan, dan dapatkan rekomendasi strategi peningkatan</div>
             <div class="tool-meta">
-                <span class="meta-item">⏱ 5 menit</span>
-                <span class="meta-item">► Analytics</span>
+                <span class="meta-item">5 menit</span>
+                <span class="meta-item">Analytics</span>
             </div>
-            <a href="<?= site_url('analisis'); ?>" class="tool-link">Lihat Analisis</a>
+            <a href="<?= site_url('hpp'); ?>#analisis-produk" class="tool-link">Lihat Analisis</a>
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon info" style="color:#fff">◉</div>
+            <div class="tool-icon info"><i data-lucide="book-open"></i></div>
             <div class="tool-header">
                 <div class="tool-title">Informasi Bisnis</div>
                 <span class="tool-badge learn">Learning</span>
             </div>
             <div class="tool-desc">Baca panduan, tips, dan best practices dari para expert untuk mengembangkan bisnis Anda secara optimal</div>
             <div class="tool-meta">
-                <span class="meta-item">⏱ Bebas</span>
-                <span class="meta-item">◉ Knowledge Base</span>
+                <span class="meta-item">Bebas</span>
+                <span class="meta-item">Knowledge Base</span>
             </div>
             <a href="<?= site_url('auth/info_bisnis'); ?>" class="tool-link">Jelajahi Artikel</a>
         </div>
-    </div>
-
-    <!-- AKSI CEPAT -->
-    <div class="section-title">Aksi Cepat</div>
-    <div class="actions">
-        <a href="#" onclick="openModalPenjualan(); return false;" class="action sale">
-            <span class="action-text">Catat Penjualan</span>
-        </a>
-        <a href="#" onclick="openModalPengeluaran(); return false;" class="action expense">
-            <span class="action-text">Catat Pengeluaran</span>
-        </a>
-        <a href="<?= base_url('hpp'); ?>" class="action stock">
-            <span class="action-text">Kalkulator HPP</span>
-        </a>
-        <a href="<?= base_url('risiko'); ?>" onclick="openModalRisiko(); return false;" class="action report">
-            <span class="action-text">Manajemen Risiko</span>
-        </a>
     </div>
 
     <!-- RINGKASAN -->
@@ -3262,19 +2757,19 @@ body.sidebar-collapsed .main-wrapper {
     
     <div class="summary">
         <div class="sum-card">
-            <small>Penjualan</small>
+            <small class="sum-label">Penjualan</small>
             <h3 class="green" id="totalPenjualan">Rp <?= number_format($summary['today_sales'],0,',','.'); ?></h3>
-            <small id="jumlahPenjualan">1 transaksi</small>
+            <small class="sum-sub-label" id="jumlahPenjualan">1 transaksi</small>
         </div>
         <div class="sum-card">
-            <small>Pengeluaran</small>
+            <small class="sum-label">Pengeluaran</small>
             <h3 class="red" id="totalPengeluaran">Rp <?= number_format($summary['today_expense'],0,',','.'); ?></h3>
-            <small id="jumlahPengeluaran">1 transaksi</small>
+            <small class="sum-sub-label" id="jumlahPengeluaran">1 transaksi</small>
         </div>
         <div class="sum-card">
-            <small>Laba Bersih</small>
+            <small class="sum-label">Laba Bersih</small>
             <h3 class="blue" id="labaBersih">Rp <?= number_format($summary['today_profit'],0,',','.'); ?></h3>
-            <small id="marginProfit">Margin: <?= ($summary['today_sales']>0)?round(($summary['today_profit']/$summary['today_sales'])*100,1):0; ?>%</small>
+            <small class="sum-sub-label" id="marginProfit">Margin: <?= ($summary['today_sales']>0)?round(($summary['today_profit']/$summary['today_sales'])*100,1):0; ?>%</small>
         </div>
     </div>
 
@@ -3304,26 +2799,30 @@ body.sidebar-collapsed .main-wrapper {
         <!-- WRAPPER WAJIB -->
         <div class="chart-canvas-wrapper">
             <canvas id="salesChart"></canvas>
+            <div class="chart-empty-state" id="chartEmptyState">
+                Belum ada data. Grafik akan muncul setelah transaksi pertama dicatat.
+            </div>
         </div>
     </div>
 
     <!-- INSIGHT -->
     <div class="insight-section">
         <h4>Insight Bisnis</h4>
+        <div id="insightContent">
+            <div class="insight-item">
+                <strong>Performa Baik</strong>
+                <p>Penjualan hari ini meningkat dibanding hari sebelumnya.</p>
+            </div>
 
-        <div class="insight-item">
-            <strong>Performa Baik</strong>
-            <p>Penjualan hari ini meningkat dibanding hari sebelumnya.</p>
-        </div>
+            <div class="insight-item">
+                <strong>Efisiensi Biaya</strong>
+                <p>Pengeluaran relatif stabil dan terkontrol.</p>
+            </div>
 
-        <div class="insight-item">
-            <strong>Efisiensi Biaya</strong>
-            <p>Pengeluaran relatif stabil dan terkontrol.</p>
-        </div>
-
-        <div class="insight-item">
-            <strong>Rekomendasi</strong>
-            <p>Tambahkan stok produk favorit untuk memaksimalkan penjualan.</p>
+            <div class="insight-item">
+                <strong>Rekomendasi</strong>
+                <p>Tambahkan stok produk favorit untuk memaksimalkan penjualan.</p>
+            </div>
         </div>
     </div>
 
@@ -3331,7 +2830,7 @@ body.sidebar-collapsed .main-wrapper {
 
 
     <!-- TRANSAKSI -->
-    <div class="section-title">Transaksi Terbaru <span style="font-size:13px;font-weight:normal;margin-left:10px;color:#999" id="jumlahTransaksi"><?= count($transactions); ?> transaksi</span></div>
+    <div class="section-title">Transaksi Terbaru <span style="font-size:13px;font-weight:normal;margin-left:10px;color:#999" id="jumlahTransaksi"><?= (int)$summary['total_transaksi']; ?> transaksi</span></div>
     <div class="transaksi" id="transaksiList">
         <?php if($transactions): foreach($transactions as $tx): $neg = ($tx['amount'] < 0); ?>
         <div class="tx <?= $neg?'minus':'plus'; ?>">
@@ -3367,155 +2866,13 @@ body.sidebar-collapsed .main-wrapper {
 </footer>
 
 <!-- Chart.js Library -->
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <script>
-// Data dummy untuk demo (nanti bisa diambil dari backend)
-const chartData = {
-    labels: ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'],
-    sales: [2500000, 3200000, 2800000, 4100000, 3600000, 4800000, 3900000],
-    expense: [1200000, 1500000, 1100000, 1800000, 1400000, 2000000, 1600000],
-    profit: [1300000, 1700000, 1700000, 2300000, 2200000, 2800000, 2300000]
-};
-
-// Initialize Chart
-const ctx = document.getElementById('salesChart').getContext('2d');
-const salesChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: chartData.labels,
-        datasets: [
-            {
-                label: 'Penjualan',
-                data: chartData.sales,
-                borderColor: '#2ecc71',
-                backgroundColor: 'rgba(46, 204, 113, 0.1)',
-                borderWidth: 3,
-                tension: 0.4,
-                fill: true,
-                pointRadius: 5,
-                pointHoverRadius: 7,
-                pointBackgroundColor: '#2ecc71',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2
-            },
-            {
-                label: 'Pengeluaran',
-                data: chartData.expense,
-                borderColor: '#e74c3c',
-                backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                borderWidth: 3,
-                tension: 0.4,
-                fill: true,
-                pointRadius: 5,
-                pointHoverRadius: 7,
-                pointBackgroundColor: '#e74c3c',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2
-            },
-            {
-                label: 'Laba Bersih',
-                data: chartData.profit,
-                borderColor: '#1C6494',
-                backgroundColor: 'rgba(28, 100, 148, 0.1)',
-                borderWidth: 3,
-                tension: 0.4,
-                fill: true,
-                pointRadius: 5,
-                pointHoverRadius: 7,
-                pointBackgroundColor: '#1C6494',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            },
-            tooltip: {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                padding: 12,
-                titleFont: {
-                    size: 14,
-                    weight: 'bold'
-                },
-                bodyFont: {
-                    size: 13
-                },
-                callbacks: {
-                    label: function(context) {
-                        let label = context.dataset.label || '';
-                        if (label) {
-                            label += ': ';
-                        }
-                        label += 'Rp ' + context.parsed.y.toLocaleString('id-ID');
-                        return label;
-                    }
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    callback: function(value) {
-                        return 'Rp ' + (value / 1000000) + 'jt';
-                    },
-                    font: {
-                        size: 11
-                    }
-                },
-                grid: {
-                    color: 'rgba(0, 0, 0, 0.05)'
-                }
-            },
-            x: {
-                grid: {
-                    display: false
-                },
-                ticks: {
-                    font: {
-                        size: 11,
-                        weight: '600'
-                    }
-                }
-            }
-        }
-    }
-});
-
-// Filter periode functionality
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        // Update active state
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Get periode parameter
-        const periode = this.href.split('periode=')[1];
-        
-        // Update chart title based on periode
-        const titles = {
-            'hari': '7 Hari Terakhir',
-            'minggu': '4 Minggu Terakhir',
-            'bulan': '12 Bulan Terakhir',
-            'tahun': '5 Tahun Terakhir'
-        };
-        
-        document.querySelector('.chart-header h4').innerHTML = 
-            '📊 Tren Keuangan (' + titles[periode] + ')';
-        
-        // Here you can add AJAX call to fetch new data based on periode
-        // For demo, we'll just keep the same data
-        console.log('Filter changed to:', periode);
-    });
-});
+if (window.lucide) {
+    window.lucide.createIcons();
+}
 </script>
 
 <!-- ===== SUBSCRIPTION STATUS MODAL ===== -->
@@ -3566,7 +2923,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 <div class="modal-overlay" id="modalPenjualan" onclick="if(event.target===this) closeModalPenjualan()">
     <div class="modal-container">
         <div class="modal-header">
-            <h3 class="modal-title">💰 Catat Penjualan</h3>
+            <h3 class="modal-title"><i data-lucide="wallet"></i> Catat Penjualan</h3>
             <p class="modal-subtitle">Masukkan detail penjualan Anda</p>
         </div>
         <form id="formPenjualan" onsubmit="submitPenjualan(event)">
@@ -3614,7 +2971,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 <div class="modal-overlay" id="modalPengeluaran" onclick="if(event.target===this) closeModalPengeluaran()">
     <div class="modal-container">
         <div class="modal-header">
-            <h3 class="modal-title">🧾 Catat Pengeluaran</h3>
+            <h3 class="modal-title"><i data-lucide="receipt-text"></i> Catat Pengeluaran</h3>
             <p class="modal-subtitle">Masukkan detail pengeluaran Anda</p>
         </div>
         <form id="formPengeluaran" onsubmit="submitPengeluaran(event)">
@@ -3664,7 +3021,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 <div class="modal-overlay" id="modalRisiko" onclick="if(event.target===this) closeModalRisiko()">
     <div class="modal-container wide">
         <div class="modal-header">
-            <h3 class="modal-title">⚠️ Manajemen Risiko Bisnis</h3>
+            <h3 class="modal-title"><i data-lucide="shield-alert"></i> Manajemen Risiko Bisnis</h3>
             <p class="modal-subtitle">Identifikasi dan kelola risiko untuk melindungi bisnis Anda</p>
         </div>
         <form id="formRisiko" onsubmit="submitRisiko(event)">
@@ -3672,7 +3029,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
                 
                 <!-- SKOR RISIKO -->
                 <div class="score-section">
-                    <div class="score-header">📊 Skor Kesehatan Bisnis</div>
+                    <div class="score-header"><i data-lucide="chart-line"></i> Skor Kesehatan Bisnis</div>
                     <div class="score-text" id="riskScore">0%</div>
                     <div class="score-bar-container">
                         <div class="score-bar" id="riskScoreBar" style="width:0%">0%</div>
@@ -3686,7 +3043,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
                     <!-- RISIKO TINGGI -->
                     <div class="risk-card red">
                         <div class="risk-card-header">
-                            <div class="risk-icon">🔴</div>
+                            <div class="risk-icon"><i data-lucide="triangle-alert"></i></div>
                             <div>Risiko Tinggi</div>
                         </div>
                         <div class="risk-checklist">
@@ -3712,7 +3069,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
                     <!-- RISIKO SEDANG -->
                     <div class="risk-card yellow">
                         <div class="risk-card-header">
-                            <div class="risk-icon">🟡</div>
+                            <div class="risk-icon"><i data-lucide="alert-triangle"></i></div>
                             <div>Risiko Sedang</div>
                         </div>
                         <div class="risk-checklist">
@@ -3738,7 +3095,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
                     <!-- MITIGASI RISIKO -->
                     <div class="risk-card green">
                         <div class="risk-card-header">
-                            <div class="risk-icon">🟢</div>
+                            <div class="risk-icon"><i data-lucide="shield-check"></i></div>
                             <div>Mitigasi Risiko</div>
                         </div>
                         <div class="risk-checklist">
@@ -3764,7 +3121,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
                     <!-- RENCANA KONTINJENSI -->
                     <div class="risk-card blue">
                         <div class="risk-card-header">
-                            <div class="risk-icon">🔵</div>
+                            <div class="risk-icon"><i data-lucide="clipboard-list"></i></div>
                             <div>Rencana Kontinjensi</div>
                         </div>
                         <div class="risk-checklist">
@@ -3799,91 +3156,629 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 </div>
 
 <script>
-// Data tracking
-let dataKeuangan = {
-    penjualan: <?= $summary['today_sales']; ?>,
-    pengeluaran: <?= $summary['today_expense']; ?>,
-    jumlahTransaksiPenjualan: 1,
-    jumlahTransaksiPengeluaran: 1,
-    totalTransaksi: <?= count($transactions); ?>
-};
+const allowedPeriode = ['hari', 'minggu', 'bulan', 'tahun'];
 
-// Format number to Rupiah
-function formatRupiahDisplay(number) {
-    return 'Rp ' + parseInt(number).toLocaleString('id-ID');
+function getPeriodeFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const value = urlParams.get('periode') || 'hari';
+    return allowedPeriode.includes(value) ? value : 'hari';
 }
 
-// Update all displays
-function updateDisplay() {
-    const labaBersih = dataKeuangan.penjualan - dataKeuangan.pengeluaran;
-    const margin = dataKeuangan.penjualan > 0 ? ((labaBersih / dataKeuangan.penjualan) * 100).toFixed(1) : 0;
+let currentPeriode = getPeriodeFromUrl();
+let salesChart = null;
 
-    console.log('Updating displays...');
-    console.log('Penjualan:', dataKeuangan.penjualan);
-    console.log('Pengeluaran:', dataKeuangan.pengeluaran);
-    console.log('Laba Bersih:', labaBersih);
+const rawTransactions = <?= json_encode($transactions, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+let dashboardTransactions = Array.isArray(rawTransactions)
+    ? rawTransactions.map(normalizeTransaction)
+    : [];
+let filteredDashboardTransactions = [];
+let dataKeuangan = calculateFinancialSummary(filteredDashboardTransactions);
+let todaySummary = calculateFinancialSummary([]);
 
-    // Update header
-    const headerEl = document.getElementById('labaBersihHeader');
-    if (headerEl) {
-        headerEl.textContent = formatRupiahDisplay(labaBersih);
-        console.log('✓ Header updated');
+function formatRupiahDisplay(number) {
+    return 'Rp ' + (Number(number) || 0).toLocaleString('id-ID');
+}
+
+function pad2(num) {
+    return String(num).padStart(2, '0');
+}
+
+function normalizeNumber(value) {
+    if (typeof value === 'number') {
+        return Number.isFinite(value) ? value : 0;
     }
 
-    // Update summary cards
+    if (typeof value === 'string') {
+        const negative = value.includes('-');
+        const numeric = Number(value.replace(/[^0-9]/g, ''));
+        if (!Number.isFinite(numeric)) {
+            return 0;
+        }
+        return negative ? -numeric : numeric;
+    }
+
+    return 0;
+}
+
+function parseTransactionDate(tx) {
+    const candidate = tx.created_at || tx.tanggal || tx.transaction_date || tx.date || tx.datetime || tx.waktu;
+    if (!candidate) {
+        return new Date();
+    }
+
+    const parsed = new Date(candidate);
+    return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+}
+
+function normalizeTransaction(tx) {
+    const normalized = { ...tx };
+    let amount = normalizeNumber(tx.amount ?? tx.jumlah ?? tx.nominal ?? 0);
+    const type = String(tx.type || tx.kategori || tx.jenis || '').toLowerCase();
+
+    if (amount > 0 && (type.includes('pengeluaran') || type.includes('expense') || type.includes('keluar'))) {
+        amount = -amount;
+    } else if (amount < 0 && (type.includes('pemasukan') || type.includes('income') || type.includes('masuk'))) {
+        amount = Math.abs(amount);
+    }
+
+    normalized.amount = amount;
+    normalized._date = parseTransactionDate(tx);
+    normalized.title = tx.title || tx.deskripsi || tx.kategori || '-';
+
+    return normalized;
+}
+
+function getPeriodeRange(periode) {
+    const now = new Date();
+    const start = new Date(now);
+    const end = new Date(now);
+
+    if (periode === 'hari') {
+        start.setHours(0, 0, 0, 0);
+        end.setHours(23, 59, 59, 999);
+        return { start, end };
+    }
+
+    if (periode === 'minggu') {
+        const dayIndex = (start.getDay() + 6) % 7;
+        start.setDate(start.getDate() - dayIndex);
+        start.setHours(0, 0, 0, 0);
+        end.setTime(start.getTime());
+        end.setDate(start.getDate() + 6);
+        end.setHours(23, 59, 59, 999);
+        return { start, end };
+    }
+
+    if (periode === 'bulan') {
+        start.setDate(1);
+        start.setHours(0, 0, 0, 0);
+        end.setMonth(start.getMonth() + 1, 0);
+        end.setHours(23, 59, 59, 999);
+        return { start, end };
+    }
+
+    start.setMonth(0, 1);
+    start.setHours(0, 0, 0, 0);
+    end.setMonth(11, 31);
+    end.setHours(23, 59, 59, 999);
+    return { start, end };
+}
+
+function filterTransactionsByPeriode(transactions, periode) {
+    const { start, end } = getPeriodeRange(periode);
+    return transactions.filter((tx) => {
+        const date = tx._date instanceof Date ? tx._date : new Date(tx._date);
+        return date >= start && date <= end;
+    });
+}
+
+function formatDateKey(date) {
+    return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}`;
+}
+
+function getWeekStart(date) {
+    const base = new Date(date);
+    const dayIndex = (base.getDay() + 6) % 7;
+    base.setDate(base.getDate() - dayIndex);
+    base.setHours(0, 0, 0, 0);
+    return base;
+}
+
+function buildBuckets(periode) {
+    const now = new Date();
+    const buckets = [];
+
+    if (periode === 'hari') {
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date(now);
+            date.setDate(now.getDate() - i);
+            buckets.push({
+                key: formatDateKey(date),
+                label: date.toLocaleDateString('id-ID', { weekday: 'short' })
+            });
+        }
+        return buckets;
+    }
+
+    if (periode === 'minggu') {
+        const currentWeekStart = getWeekStart(now);
+        for (let i = 3; i >= 0; i--) {
+            const weekStart = new Date(currentWeekStart);
+            weekStart.setDate(currentWeekStart.getDate() - (i * 7));
+            buckets.push({
+                key: formatDateKey(weekStart),
+                label: `Minggu ${4 - i}`
+            });
+        }
+        return buckets;
+    }
+
+    if (periode === 'bulan') {
+        for (let i = 11; i >= 0; i--) {
+            const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            buckets.push({
+                key: `${date.getFullYear()}-${pad2(date.getMonth() + 1)}`,
+                label: date.toLocaleDateString('id-ID', { month: 'short' })
+            });
+        }
+        return buckets;
+    }
+
+    for (let i = 4; i >= 0; i--) {
+        const year = now.getFullYear() - i;
+        buckets.push({
+            key: String(year),
+            label: String(year)
+        });
+    }
+    return buckets;
+}
+
+function getBucketKeyByDate(date, periode) {
+    if (periode === 'hari') {
+        return formatDateKey(date);
+    }
+
+    if (periode === 'minggu') {
+        return formatDateKey(getWeekStart(date));
+    }
+
+    if (periode === 'bulan') {
+        return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}`;
+    }
+
+    return String(date.getFullYear());
+}
+
+function buildChartSeries(transactions, periode) {
+    const buckets = buildBuckets(periode);
+    const map = new Map();
+
+    buckets.forEach((bucket) => {
+        map.set(bucket.key, { sales: 0, expense: 0 });
+    });
+
+    transactions.forEach((tx) => {
+        const date = tx._date instanceof Date ? tx._date : new Date();
+        const key = getBucketKeyByDate(date, periode);
+        if (!map.has(key)) {
+            return;
+        }
+
+        const amount = Number(tx.amount) || 0;
+        const target = map.get(key);
+
+        if (amount >= 0) {
+            target.sales += amount;
+        } else {
+            target.expense += Math.abs(amount);
+        }
+    });
+
+    const labels = buckets.map((bucket) => bucket.label);
+    const sales = buckets.map((bucket) => map.get(bucket.key).sales);
+    const expense = buckets.map((bucket) => map.get(bucket.key).expense);
+    const profit = sales.map((value, index) => value - expense[index]);
+    const hasData = sales.some((v) => v > 0) || expense.some((v) => v > 0);
+
+    return { labels, sales, expense, profit, hasData };
+}
+
+function calculateFinancialSummary(transactions) {
+    return transactions.reduce((acc, tx) => {
+        const amount = Number(tx.amount) || 0;
+        if (amount >= 0) {
+            acc.penjualan += amount;
+            acc.jumlahTransaksiPenjualan += 1;
+        } else {
+            acc.pengeluaran += Math.abs(amount);
+            acc.jumlahTransaksiPengeluaran += 1;
+        }
+
+        acc.totalTransaksi += 1;
+        return acc;
+    }, {
+        penjualan: 0,
+        pengeluaran: 0,
+        jumlahTransaksiPenjualan: 0,
+        jumlahTransaksiPengeluaran: 0,
+        totalTransaksi: 0
+    });
+}
+
+function setChartEmptyState(show, message) {
+    const canvas = document.getElementById('salesChart');
+    const emptyState = document.getElementById('chartEmptyState');
+
+    if (!canvas || !emptyState) {
+        return;
+    }
+
+    if (show) {
+        emptyState.textContent = message;
+        emptyState.style.display = 'flex';
+        canvas.style.display = 'none';
+    } else {
+        emptyState.style.display = 'none';
+        canvas.style.display = 'block';
+    }
+}
+
+function getChartOptions() {
+    return {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                padding: 12,
+                titleFont: { size: 14, weight: 'bold' },
+                bodyFont: { size: 13 },
+                callbacks: {
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += 'Rp ' + context.parsed.y.toLocaleString('id-ID');
+                        return label;
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return 'Rp ' + (value / 1000000) + 'jt';
+                    },
+                    font: { size: 11 }
+                },
+                grid: { color: 'rgba(0, 0, 0, 0.05)' }
+            },
+            x: {
+                grid: { display: false },
+                ticks: { font: { size: 11, weight: '600' } }
+            }
+        }
+    };
+}
+
+function renderFinancialChart() {
+    const canvas = document.getElementById('salesChart');
+    if (!canvas) {
+        return;
+    }
+
+    const chartSeries = buildChartSeries(dashboardTransactions, 'hari');
+    if (!chartSeries.hasData) {
+        if (salesChart) {
+            salesChart.destroy();
+            salesChart = null;
+        }
+
+        const emptyMessage = dashboardTransactions.length > 0
+            ? 'Belum ada transaksi pada 7 hari terakhir.'
+            : 'Belum ada data. Grafik akan muncul setelah transaksi pertama dicatat.';
+        setChartEmptyState(true, emptyMessage);
+        return;
+    }
+
+    setChartEmptyState(false, '');
+
+    const chartData = {
+        labels: chartSeries.labels,
+        datasets: [
+            {
+                label: 'Penjualan',
+                data: chartSeries.sales,
+                borderColor: '#2ecc71',
+                backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                pointBackgroundColor: '#2ecc71',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            },
+            {
+                label: 'Pengeluaran',
+                data: chartSeries.expense,
+                borderColor: '#e74c3c',
+                backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                pointBackgroundColor: '#e74c3c',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            },
+            {
+                label: 'Laba Bersih',
+                data: chartSeries.profit,
+                borderColor: '#1C6494',
+                backgroundColor: 'rgba(28, 100, 148, 0.1)',
+                borderWidth: 3,
+                tension: 0.4,
+                fill: true,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                pointBackgroundColor: '#1C6494',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2
+            }
+        ]
+    };
+
+    if (!salesChart) {
+        salesChart = new Chart(canvas.getContext('2d'), {
+            type: 'line',
+            data: chartData,
+            options: getChartOptions()
+        });
+        return;
+    }
+
+    salesChart.data = chartData;
+    salesChart.update('none');
+}
+
+function updateFilterButtons() {
+    document.querySelectorAll('.filter-btn').forEach((btn) => {
+        const periode = btn.href.split('periode=')[1] || 'hari';
+        btn.classList.toggle('active', periode === currentPeriode);
+    });
+}
+
+function renderInsightItems(items) {
+    const insightContent = document.getElementById('insightContent');
+    if (!insightContent) {
+        return;
+    }
+
+    insightContent.innerHTML = items.map((item) => {
+        return `<div class="insight-item"><strong>${item.title}</strong><p>${item.description}</p></div>`;
+    }).join('');
+}
+
+function updateInsights() {
+    if (dashboardTransactions.length === 0) {
+        renderInsightItems([
+            {
+                title: 'Insight Bisnis',
+                description: 'Belum ada data transaksi. Mulai catat transaksi pertama Anda.'
+            }
+        ]);
+        return;
+    }
+
+    const items = [];
+
+    if (todaySummary.penjualan > 0) {
+        items.push({
+            title: 'Performa Baik',
+            description: `Penjualan hari ini sudah mencapai ${formatRupiahDisplay(todaySummary.penjualan)}.`
+        });
+    }
+
+    if (dataKeuangan.pengeluaran < dataKeuangan.penjualan) {
+        items.push({
+            title: 'Efisiensi Biaya',
+            description: 'Pengeluaran masih lebih kecil dari penjualan pada periode terpilih.'
+        });
+    }
+
+    let rekomendasiText = 'Pertahankan ritme pencatatan transaksi agar tren keuangan tetap terpantau akurat.';
+    if (dataKeuangan.totalTransaksi === 0) {
+        rekomendasiText = 'Belum ada transaksi pada periode ini. Coba pilih periode lain atau tambah transaksi baru.';
+    } else if (dataKeuangan.penjualan === 0 && dataKeuangan.pengeluaran > 0) {
+        rekomendasiText = 'Belum ada penjualan pada periode ini. Fokuskan promosi untuk menambah pemasukan.';
+    } else if (dataKeuangan.pengeluaran >= dataKeuangan.penjualan && dataKeuangan.penjualan > 0) {
+        rekomendasiText = 'Pengeluaran sudah menyamai atau melebihi penjualan. Evaluasi biaya operasional prioritas.';
+    }
+
+    items.push({
+        title: 'Rekomendasi',
+        description: rekomendasiText
+    });
+
+    renderInsightItems(items);
+}
+
+function updateTransactionList() {
+    const transaksiList = document.getElementById('transaksiList');
+    if (!transaksiList) {
+        return;
+    }
+
+    const rows = filteredDashboardTransactions
+        .slice()
+        .sort((a, b) => b._date - a._date)
+        .slice(0, 10);
+
+    if (!rows.length) {
+        transaksiList.innerHTML = '<p class="text-muted">Belum ada transaksi</p>';
+        return;
+    }
+
+    transaksiList.innerHTML = rows.map((tx) => {
+        const amount = Number(tx.amount) || 0;
+        const isExpense = amount < 0;
+        const typeLabel = isExpense ? 'Pengeluaran' : 'Pemasukan';
+
+        return `
+            <div class="tx ${isExpense ? 'minus' : 'plus'}">
+                <div>
+                    <strong>${tx.title || '-'}</strong><br>
+                    <small>${typeLabel}</small>
+                </div>
+                <div>${isExpense ? '-' : '+'} Rp ${Math.abs(amount).toLocaleString('id-ID')}</div>
+            </div>
+        `;
+    }).join('');
+}
+
+function recomputeFinancialState() {
+    filteredDashboardTransactions = filterTransactionsByPeriode(dashboardTransactions, currentPeriode);
+    dataKeuangan = calculateFinancialSummary(filteredDashboardTransactions);
+    todaySummary = calculateFinancialSummary(filterTransactionsByPeriode(dashboardTransactions, 'hari'));
+}
+
+function updateDisplay() {
+    const labaBersih = dataKeuangan.penjualan - dataKeuangan.pengeluaran;
+    const margin = dataKeuangan.penjualan > 0
+        ? ((labaBersih / dataKeuangan.penjualan) * 100).toFixed(1)
+        : 0;
+
+    const headerEl = document.getElementById('labaBersihHeader');
+    if (headerEl) {
+        const labaHariIni = todaySummary.penjualan - todaySummary.pengeluaran;
+        headerEl.textContent = formatRupiahDisplay(labaHariIni);
+    }
+
     const penjualanEl = document.getElementById('totalPenjualan');
     if (penjualanEl) {
         penjualanEl.textContent = formatRupiahDisplay(dataKeuangan.penjualan);
-        console.log('✓ Penjualan updated');
     }
 
     const pengeluaranEl = document.getElementById('totalPengeluaran');
     if (pengeluaranEl) {
         pengeluaranEl.textContent = formatRupiahDisplay(dataKeuangan.pengeluaran);
-        console.log('✓ Pengeluaran updated');
     }
 
     const labaBersihEl = document.getElementById('labaBersih');
     if (labaBersihEl) {
         labaBersihEl.textContent = formatRupiahDisplay(labaBersih);
-        console.log('✓ Laba Bersih updated');
     }
-    
+
     const jumlahPenjualanEl = document.getElementById('jumlahPenjualan');
     if (jumlahPenjualanEl) {
-        jumlahPenjualanEl.textContent = dataKeuangan.jumlahTransaksiPenjualan + ' transaksi';
+        jumlahPenjualanEl.textContent = `${dataKeuangan.jumlahTransaksiPenjualan} transaksi`;
     }
-    
+
     const jumlahPengeluaranEl = document.getElementById('jumlahPengeluaran');
     if (jumlahPengeluaranEl) {
-        jumlahPengeluaranEl.textContent = dataKeuangan.jumlahTransaksiPengeluaran + ' transaksi';
+        jumlahPengeluaranEl.textContent = `${dataKeuangan.jumlahTransaksiPengeluaran} transaksi`;
     }
-    
+
     const marginEl = document.getElementById('marginProfit');
     if (marginEl) {
-        marginEl.textContent = 'Margin: ' + margin + '%';
+        marginEl.textContent = `Margin: ${margin}%`;
     }
-    
-    // Update total transaksi
+
     const totalTxEl = document.getElementById('jumlahTransaksi');
     if (totalTxEl) {
-        totalTxEl.textContent = dataKeuangan.totalTransaksi + ' transaksi';
+        totalTxEl.textContent = `${dataKeuangan.totalTransaksi} transaksi`;
     }
-
-    console.log('All displays updated successfully!');
 }
 
-// Add transaction to list
+function notifyFinancialUpdated() {
+    window.dispatchEvent(new Event('dashboard:financial-updated'));
+}
+
+window.addEventListener('dashboard:financial-updated', function() {
+    recomputeFinancialState();
+    updateFilterButtons();
+    updateDisplay();
+    updateInsights();
+    updateTransactionList();
+    renderFinancialChart();
+});
+
+function syncDashboardTransactions() {
+    return fetch('<?= site_url("keuangan/get_data") ?>', { cache: 'no-store' })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Failed to load transactions');
+            }
+            return response.json();
+        })
+        .then((payload) => {
+            if (!payload.success || !Array.isArray(payload.transaksi)) {
+                dashboardTransactions = [];
+                notifyFinancialUpdated();
+                return;
+            }
+
+            dashboardTransactions = payload.transaksi
+                .map((tx) => normalizeTransaction(tx))
+                .sort((a, b) => b._date - a._date);
+
+            notifyFinancialUpdated();
+        })
+        .catch((error) => {
+            console.error('Sinkronisasi transaksi gagal:', error);
+            notifyFinancialUpdated();
+        });
+}
+
+document.querySelectorAll('.filter-btn').forEach((btn) => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const periode = this.href.split('periode=')[1] || 'hari';
+        currentPeriode = allowedPeriode.includes(periode) ? periode : 'hari';
+
+        const url = new URL(window.location.href);
+        url.searchParams.set('periode', currentPeriode);
+        window.history.replaceState({}, '', url.toString());
+
+        notifyFinancialUpdated();
+    });
+});
+
+window.addEventListener('storage', function(event) {
+    if (event.key === 'pencatatan_keuangan' || event.key === 'keuangan_last_updated') {
+        syncDashboardTransactions();
+    }
+});
+
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        syncDashboardTransactions();
+    }
+});
+
+setInterval(function() {
+    syncDashboardTransactions();
+}, 15000);
+
+notifyFinancialUpdated();
+syncDashboardTransactions();
+
 function addTransactionToList(title, kategori, amount) {
     const transaksiList = document.getElementById('transaksiList');
-    
-    // Remove "belum ada transaksi" message if exists
+
     const emptyMsg = transaksiList.querySelector('.text-muted');
     if (emptyMsg) {
         emptyMsg.remove();
     }
 
-    // Create new transaction element
     const newTx = document.createElement('div');
     newTx.className = 'tx plus';
     newTx.style.animation = 'slideIn 0.3s ease-out';
@@ -3892,24 +3787,20 @@ function addTransactionToList(title, kategori, amount) {
             <strong>${title}</strong><br>
             <small>Baru saja • ${kategori}</small>
         </div>
-        <div>+ Rp ${parseInt(amount).toLocaleString('id-ID')}</div>
+        <div>+ Rp ${parseInt(amount, 10).toLocaleString('id-ID')}</div>
     `;
 
-    // Add to top of list
     transaksiList.insertBefore(newTx, transaksiList.firstChild);
 }
 
-// Add expense transaction to list
 function addExpenseToList(title, kategori, amount) {
     const transaksiList = document.getElementById('transaksiList');
-    
-    // Remove "belum ada transaksi" message if exists
+
     const emptyMsg = transaksiList.querySelector('.text-muted');
     if (emptyMsg) {
         emptyMsg.remove();
     }
 
-    // Create new transaction element
     const newTx = document.createElement('div');
     newTx.className = 'tx minus';
     newTx.style.animation = 'slideIn 0.3s ease-out';
@@ -3918,10 +3809,9 @@ function addExpenseToList(title, kategori, amount) {
             <strong>${title}</strong><br>
             <small>Baru saja • ${kategori}</small>
         </div>
-        <div>- Rp ${parseInt(amount).toLocaleString('id-ID')}</div>
+        <div>- Rp ${parseInt(amount, 10).toLocaleString('id-ID')}</div>
     `;
 
-    // Add to top of list
     transaksiList.insertBefore(newTx, transaksiList.firstChild);
 }
 
@@ -3995,16 +3885,16 @@ function calculateRiskScore() {
         // Change color based on score
         if (score >= 75) {
             scoreBar.style.background = '#2ecc71';
-            scoreDesc.textContent = '✅ Excellent! Bisnis Anda memiliki manajemen risiko yang baik';
+            scoreDesc.textContent = 'Excellent! Bisnis Anda memiliki manajemen risiko yang baik';
         } else if (score >= 50) {
             scoreBar.style.background = '#f39c12';
-            scoreDesc.textContent = '⚠️ Cukup baik, namun masih ada area yang perlu diperbaiki';
+            scoreDesc.textContent = 'Cukup baik, namun masih ada area yang perlu diperbaiki';
         } else if (score >= 25) {
             scoreBar.style.background = '#e67e22';
-            scoreDesc.textContent = '⚠️ Perlu perhatian! Risiko bisnis cukup tinggi';
+            scoreDesc.textContent = 'Perlu perhatian! Risiko bisnis cukup tinggi';
         } else {
             scoreBar.style.background = '#e74c3c';
-            scoreDesc.textContent = '🚨 Urgent! Bisnis Anda memiliki risiko tinggi yang perlu segera ditangani';
+            scoreDesc.textContent = 'Urgent! Bisnis Anda memiliki risiko tinggi yang perlu segera ditangani';
         }
     }
     
@@ -4026,6 +3916,28 @@ function formatRupiah(input) {
     input.value = value;
 }
 
+function saveTransactionFromDashboard(jenis, deskripsi, jumlah) {
+    const formData = new FormData();
+    formData.append('jenis', jenis);
+    formData.append('deskripsi', deskripsi);
+    formData.append('tanggal', new Date().toISOString().slice(0, 10));
+    formData.append('jumlah', jumlah);
+
+    return fetch('<?= site_url("keuangan/save_transaksi") ?>', {
+        method: 'POST',
+        body: formData
+    })
+    .then((response) => response.json())
+    .then((result) => {
+        if (!result.success) {
+            throw new Error(result.message || 'Gagal menyimpan transaksi');
+        }
+
+        localStorage.setItem('keuangan_last_updated', String(Date.now()));
+        return syncDashboardTransactions();
+    });
+}
+
 // Submit Form Penjualan
 function submitPenjualan(e) {
     e.preventDefault();
@@ -4042,25 +3954,19 @@ function submitPenjualan(e) {
     
     // Validasi
     if (!jumlah || isNaN(jumlah) || jumlah <= 0) {
-        alert('⚠️ Masukkan jumlah yang valid!');
+        alert('Masukkan jumlah yang valid!');
         return;
     }
     
-    // Update data keuangan
-    dataKeuangan.penjualan += jumlah;
-    dataKeuangan.jumlahTransaksiPenjualan++;
-    dataKeuangan.totalTransaksi++;
-    
-    // Add to transaction list
-    addTransactionToList(deskripsi, kategori, jumlah);
-    
-    // Update all displays
-    updateDisplay();
-    
-    // Show success notification
-    showNotification('✅ Penjualan berhasil dicatat! Rp ' + parseInt(jumlah).toLocaleString('id-ID'), 'success');
-    
-    closeModalPenjualan();
+    saveTransactionFromDashboard('masuk', deskripsi, jumlah)
+        .then(() => {
+            showNotification('Penjualan berhasil dicatat! Rp ' + parseInt(jumlah, 10).toLocaleString('id-ID'), 'success');
+            closeModalPenjualan();
+        })
+        .catch((error) => {
+            console.error('Gagal simpan penjualan:', error);
+            alert('Gagal menyimpan transaksi penjualan. Silakan coba lagi.');
+        });
 }
 
 // Submit Form Pengeluaran
@@ -4079,25 +3985,19 @@ function submitPengeluaran(e) {
     
     // Validasi
     if (!jumlah || isNaN(jumlah) || jumlah <= 0) {
-        alert('⚠️ Masukkan jumlah yang valid!');
+        alert('Masukkan jumlah yang valid!');
         return;
     }
     
-    // Update data keuangan
-    dataKeuangan.pengeluaran += jumlah;
-    dataKeuangan.jumlahTransaksiPengeluaran++;
-    dataKeuangan.totalTransaksi++;
-    
-    // Add to transaction list
-    addExpenseToList(deskripsi, kategori, jumlah);
-    
-    // Update all displays
-    updateDisplay();
-    
-    // Show success notification
-    showNotification('✅ Pengeluaran berhasil dicatat! Rp ' + parseInt(jumlah).toLocaleString('id-ID'), 'error');
-    
-    closeModalPengeluaran();
+    saveTransactionFromDashboard('keluar', deskripsi, jumlah)
+        .then(() => {
+            showNotification('Pengeluaran berhasil dicatat! Rp ' + parseInt(jumlah, 10).toLocaleString('id-ID'), 'error');
+            closeModalPengeluaran();
+        })
+        .catch((error) => {
+            console.error('Gagal simpan pengeluaran:', error);
+            alert('Gagal menyimpan transaksi pengeluaran. Silakan coba lagi.');
+        });
 }
 
 // Submit Form Risiko
@@ -4116,7 +4016,7 @@ function submitRisiko(e) {
     const totalChecked = document.querySelectorAll('#formRisiko input[type="checkbox"]:checked').length;
     
     // Show success notification
-    showNotification('✅ Assessment risiko berhasil disimpan! Skor: ' + scoreText + ' (' + totalChecked + ' item teridentifikasi)', 'success');
+    showNotification('Assessment risiko berhasil disimpan! Skor: ' + scoreText + ' (' + totalChecked + ' item teridentifikasi)', 'success');
     
     closeModalRisiko();
 }
@@ -4233,7 +4133,6 @@ document.querySelectorAll('.sidebar-menu-link').forEach(link => {
 function updateResponsive() {
     if (window.innerWidth <= 768) {
         mobileMenuBtn.style.display = 'flex';
-        sidebarToggle.style.display = 'flex';
     } else {
         mobileMenuBtn.style.display = 'none';
         sidebar.classList.remove('mobile-open');
@@ -4243,167 +4142,6 @@ function updateResponsive() {
 updateResponsive();
 window.addEventListener('resize', updateResponsive);
 </script>
-
-<!-- PROFILE MODAL -->
-<div class="profile-modal" id="profileModal">
-    <div class="profile-modal-content">
-        <div class="profile-modal-header">
-            <h2>Profil User</h2>
-            <button class="profile-modal-close" onclick="closeProfileModal()">✕</button>
-        </div>
-        <div class="profile-modal-body">
-            <div class="profile-item">
-                <label>Nama Lengkap</label>
-                <div class="profile-value"><?= htmlspecialchars($user['nama'] ?? '-'); ?></div>
-            </div>
-            <div class="profile-item">
-                <label>Email</label>
-                <div class="profile-value"><?= htmlspecialchars($user['email'] ?? '-'); ?></div>
-            </div>
-            <div class="profile-item">
-                <label>Nama Usaha</label>
-                <div class="profile-value"><?= htmlspecialchars($user['usaha'] ?? '-'); ?></div>
-            </div>
-            <div class="profile-item">
-                <label>Tipe Dashboard</label>
-                <div class="profile-value"><?= htmlspecialchars($user['type'] ?? '-'); ?></div>
-            </div>
-        </div>
-        <div class="profile-modal-footer">
-            <button class="profile-modal-btn" onclick="closeProfileModal()">Tutup</button>
-        </div>
-    </div>
-</div>
-
-<!-- SUBSCRIPTION MODAL -->
-<div class="subscription-modal" id="subscriptionModal">
-    <div class="subscription-modal-content">
-        <div class="subscription-modal-header">
-            <h2>✨ Status Langganan</h2>
-            <button class="subscription-modal-close" onclick="closeSubscriptionModal()">✕</button>
-        </div>
-        <div class="subscription-modal-body">
-            <div class="subscription-item">
-                <label>Paket Saat Ini</label>
-                <div class="subscription-value">Premium Plan</div>
-            </div>
-            <div class="subscription-item">
-                <label>Status</label>
-                <div class="subscription-status-badge">
-                    <span>●</span> Aktif
-                </div>
-            </div>
-            <div class="subscription-item">
-                <label>Tanggal Berakhir</label>
-                <div class="subscription-value">15 April 2026</div>
-            </div>
-            <div class="subscription-item">
-                <label>Fitur Premium</label>
-                <div style="margin-top: 8px;">
-                    <div style="padding: 12px; background: var(--background); border-radius: 8px; font-size: 13px; line-height: 1.6; color: var(--text-secondary);">
-                        ✓ Analitik Lanjutan<br>
-                        ✓ Export Data Unlimited<br>
-                        ✓ Support Prioritas 24/7<br>
-                        ✓ Custom Report<br>
-                        ✓ API Access<br>
-                        ✓ Team Collaboration
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="subscription-modal-footer">
-            <button class="subscription-modal-btn secondary" onclick="closeSubscriptionModal()">Tutup</button>
-            <button class="subscription-modal-btn primary" onclick="upgradeSubscription()">Lihat Paket Lain</button>
-        </div>
-    </div>
-</div>
-
-<script>
-// User Dropdown Functions
-function toggleUserDropdown(event) {
-    event.stopPropagation();
-    const menu = document.getElementById('userDropdownMenu');
-    menu.classList.toggle('show');
-}
-
-// Close dropdown when clicking outside
-document.addEventListener('click', function(event) {
-    const menu = document.getElementById('userDropdownMenu');
-    const userDiv = event.target.closest('.header-user');
-    if (!userDiv && menu.classList.contains('show')) {
-        menu.classList.remove('show');
-    }
-});
-
-function openProfileModal() {
-    document.getElementById('profileModal').classList.add('show');
-}
-
-function closeProfileModal() {
-    document.getElementById('profileModal').classList.remove('show');
-}
-
-function openSubscriptionModal() {
-    document.getElementById('subscriptionModal').classList.add('show');
-}
-
-function closeSubscriptionModal() {
-    document.getElementById('subscriptionModal').classList.remove('show');
-}
-
-function upgradeSubscription() {
-    window.location.href = '<?= site_url('subscription/pricing'); ?>';
-}
-
-// Close modal when clicking outside
-document.getElementById('profileModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeProfileModal();
-    }
-});
-
-// Close subscription modal when clicking outside
-if (document.getElementById('subscriptionModal')) {
-    document.getElementById('subscriptionModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeSubscriptionModal();
-        }
-    });
-}
-
-// Logout Modal Functions
-function showLogoutModal() {
-    document.getElementById('logoutModal').classList.add('show');
-}
-
-function closeLogoutModal() {
-    document.getElementById('logoutModal').classList.remove('show');
-}
-
-function confirmLogout() {
-    window.location.href = "<?= site_url('auth/logout'); ?>";
-}
-
-// Close logout modal when clicking outside
-document.getElementById('logoutModal')?.addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeLogoutModal();
-    }
-});
-</script>
-
-<!-- LOGOUT MODAL -->
-<div class="logout-modal" id="logoutModal">
-    <div class="logout-modal-content">
-        <div class="logout-modal-icon">!!</div>
-        <h2>Yakin ingin keluar?</h2>
-        <p>Anda akan logout dari akun Anda. Pastikan sudah menyimpan semua pekerjaan Anda sebelum keluar.</p>
-        <div class="logout-modal-buttons">
-            <button class="logout-btn-confirm" onclick="confirmLogout()">Keluar Sekarang</button>
-            <button class="logout-btn-cancel" onclick="closeLogoutModal()">Batal</button>
-        </div>
-    </div>
-</div>
 
 </main>
 </div>
