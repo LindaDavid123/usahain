@@ -285,7 +285,7 @@ $user = array_merge([
 </head>
 <body>
     <div class="container">
-        <a href="<?= site_url('dashboard/perencanaan'); ?>" class="back-button">← Kembali ke Dashboard</a>
+        <a href="<?= site_url('auth/dashboard'); ?>" class="back-button">← Kembali ke Dashboard</a>
 
         <div class="guide-header">
             <h1>💰 Panduan Modal Usaha</h1>
@@ -471,7 +471,7 @@ $user = array_merge([
 
             <div class="guide-section">
                 <h2>5. Strategi Mengamankan Modal</h2>
-                <h3>Perencanaan yang Matang</h3>
+                <h3>Persiapan yang Matang</h3>
                 <ul>
                     <li>Buat business plan yang detail dan realistis</li>
                     <li>Proyeksikan cash flow minimal 12 bulan</li>
@@ -551,7 +551,7 @@ $user = array_merge([
         
             <div class="guide-section">
                 <h2>Kesimpulan</h2>
-                <p>Modal adalah salah satu faktor kunci dalam memulai dan mengembangkan bisnis. Dengan perencanaan yang matang, pemilihan sumber modal yang tepat, dan pengelolaan yang baik, Anda dapat memastikan bisnis memiliki fondasi finansial yang kuat untuk berkembang.</p>
+                <p>Modal adalah salah satu faktor kunci dalam memulai dan mengembangkan bisnis. Dengan persiapan yang matang, pemilihan sumber modal yang tepat, dan pengelolaan yang baik, Anda dapat memastikan bisnis memiliki fondasi finansial yang kuat untuk berkembang.</p>
 
                 <div class="highlight-box">
                     <strong>🎯 Kunci Sukses:</strong> Modal yang cukup adalah penting, tetapi lebih penting lagi adalah bagaimana Anda mengelola modal tersebut. Fokus pada pertumbuhan yang berkelanjutan dan manajemen keuangan yang sehat.

@@ -142,6 +142,8 @@ class Keuangan extends CI_Controller {
             $date = new DateTime($tx->tanggal);
             $tx->tanggal_display = $date->format('D, d F Y');
             $tx->tanggal = $tx->tanggal; // Keep original date for sorting
+            // Normalize text field for frontend that expects "deskripsi".
+            $tx->deskripsi = $tx->catatan ?? $tx->kategori ?? '';
         }
         
         echo json_encode([
@@ -178,14 +180,15 @@ class Keuangan extends CI_Controller {
         
         // Map dari frontend (masuk/keluar) ke database (pemasukan/pengeluaran)
         $jenis_db = ($jenis === 'masuk') ? 'pemasukan' : 'pengeluaran';
+        $kategori = substr($deskripsi, 0, 100);
         
         $data = [
             'id_user' => $id_user,
             'jenis' => $jenis_db,
-            'deskripsi' => $deskripsi,
             'tanggal' => $tanggal,
             'nominal' => $jumlah,
-            'kategori' => $deskripsi, // Use deskripsi as kategori
+            'kategori' => $kategori,
+            'catatan' => $deskripsi,
             'created_at' => date('Y-m-d H:i:s')
         ];
         
@@ -239,13 +242,14 @@ class Keuangan extends CI_Controller {
         }
         
         $jenis_db = ($jenis === 'masuk') ? 'pemasukan' : 'pengeluaran';
+        $kategori = substr($deskripsi, 0, 100);
         
         $update_data = [
             'jenis' => $jenis_db,
-            'deskripsi' => $deskripsi,
             'tanggal' => $tanggal,
             'nominal' => $jumlah,
-            'kategori' => $deskripsi
+            'kategori' => $kategori,
+            'catatan' => $deskripsi
         ];
         
         $this->db->where('id_transaksi', $id)->update('pencatatan_keuangan', $update_data);

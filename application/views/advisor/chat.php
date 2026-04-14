@@ -14,7 +14,7 @@
     :root{--blue1:#0b6ea8;--blue2:#27b0e3;--bg:#f1f8fb;--header-height:86px}
     *{box-sizing:border-box;margin:0;padding:0}
     body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto;background:#f8fafc;color:#0f1724;overflow-x:hidden}
-    .hero{background:linear-gradient(135deg,#0b6ea8 0%,#1a8dd5 50%,#27b0e3 100%);padding:16px 32px;color:#fff;display:flex;align-items:center;gap:16px;position:fixed;top:0;left:0;right:0;height:var(--header-height);z-index:100;box-shadow:0 4px 24px rgba(11,110,168,0.25),inset 0 1px 0 rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-bottom:2px solid rgba(255,255,255,0.08)}
+    .hero{background:#1c6494;padding:16px 32px;color:#fff;display:flex;align-items:center;gap:16px;position:fixed;top:0;left:0;right:0;height:var(--header-height);z-index:100;box-shadow:0 4px 24px rgba(28,100,148,0.25),inset 0 1px 0 rgba(255,255,255,0.1);backdrop-filter:blur(12px);border-bottom:2px solid rgba(255,255,255,0.08)}
     .title{font-size:19px;font-weight:800;margin:0;letter-spacing:-0.5px;text-shadow:0 2px 4px rgba(0,0,0,0.15);animation:slideInTitle 0.6s ease-out;position:relative}
     @keyframes slideInTitle{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
     .subtitle{font-size:12px;opacity:0.92;margin:3px 0 0 0;font-weight:500;letter-spacing:0.3px;animation:slideInSubtitle 0.8s ease-out;position:relative}
@@ -44,7 +44,7 @@
     .bubble.ai h1{font-size:18px}
     .bubble.ai h2{font-size:16px}
     .bubble.ai h3{font-size:14px}
-    .bubble.user{background:linear-gradient(135deg,#0b6ea8 0%,#27b0e3 100%);color:#fff;align-self:flex-end;margin-left:auto;border-bottom-right-radius:4px;box-shadow:0 4px 12px rgba(11,110,168,0.15)}
+    .bubble.user{background:#1c6494;color:#fff;align-self:flex-end;margin-left:auto;border-bottom-right-radius:4px;box-shadow:0 4px 12px rgba(28,100,148,0.15)}
     .bubble.user .msg-time{color:rgba(255,255,255,0.85)}
 
     .chat-list{display:flex;flex-direction:column;gap:16px;padding:20px 0}
@@ -73,8 +73,8 @@
     .layout{display:flex;padding-top:var(--header-height);min-height:100vh;background:#f8fafc}
     .sidebar{width:280px;background:#fff;border-right:1px solid #e6eef6;position:fixed;left:0;top:var(--header-height);bottom:0;overflow-y:auto;padding:0;z-index:50;transition:transform 0.3s ease,opacity 0.3s ease;box-shadow:2px 0 12px rgba(0,0,0,0.04);display:flex;flex-direction:column}
     .sidebar.closed{transform:translateX(-100%);opacity:0}
-    .new-chat-btn{width:calc(100% - 28px);padding:10px;border-radius:8px;background:linear-gradient(135deg,#0b6ea8 0%,#27b0e3 100%);color:#fff;border:none;font-weight:700;cursor:pointer;margin:14px;transition:all 0.3s;font-size:13px;box-shadow:0 4px 12px rgba(11,110,168,0.15);display:flex;align-items:center;justify-content:center;gap:6px}
-    .new-chat-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(11,110,168,0.25)}
+    .new-chat-btn{width:calc(100% - 28px);padding:10px;border-radius:8px;background:#1c6494;color:#fff;border:none;font-weight:700;cursor:pointer;margin:14px;transition:all 0.3s;font-size:13px;box-shadow:0 4px 12px rgba(28,100,148,0.15);display:flex;align-items:center;justify-content:center;gap:6px}
+    .new-chat-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(28,100,148,0.25)}
     
     /* SIDEBAR MENU */
     .sidebar-menu{padding:0}
@@ -93,7 +93,7 @@
     .profile-info{flex:1;min-width:0}
     .profile-name-small{font-size:13px;font-weight:700;color:#0f1724;margin-bottom:2px}
     .profile-plan{font-size:11px;color:#64748b;font-weight:500}
-    .upgrade-btn{padding:10px 12px;border-radius:10px;background:linear-gradient(135deg,#fbbf24 0%,#f59e0b 100%);color:#fff;border:none;font-weight:700;cursor:pointer;font-size:12px;transition:all 0.3s;box-shadow:0 2px 8px rgba(251,191,36,0.15);display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap;flex-shrink:0}
+    .upgrade-btn{padding:10px 12px;border-radius:10px;background:#f59e0b;color:#fff;border:none;font-weight:700;cursor:pointer;font-size:12px;transition:all 0.3s;box-shadow:0 2px 8px rgba(251,191,36,0.15);display:flex;align-items:center;justify-content:center;gap:4px;white-space:nowrap;flex-shrink:0}
     .upgrade-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(251,191,36,0.25)}
     .upgrade-btn:active{transform:translateY(0)}
     .sidebar-title{display:none}
@@ -168,7 +168,7 @@
     /* TOGGLE BUTTON */
     .sidebar-toggle{background:transparent;color:#fff;padding:6px;border-radius:8px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;width:40px;height:40px;flex-shrink:0;position:relative}
     .sidebar-toggle:hover{background:rgba(255,255,255,0.15);transform:scale(1.05)}
-    .sidebar-toggle img{width:28px;height:28px;transition:all 0.3s ease}
+    .sidebar-toggle .header-icon{font-size:24px;line-height:1;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease}
     .sidebar-toggle .toggle-indicator{position:absolute;right:-4px;bottom:-4px;width:12px;height:12px;border-radius:50%;background:#27b0e3;border:2px solid #fff;transition:all 0.3s ease;box-shadow:0 2px 6px rgba(11,110,168,0.3)}
     .sidebar-toggle.closed .toggle-indicator{background:#fbbf24;box-shadow:0 2px 6px rgba(245,158,11,0.4)}
     
@@ -224,7 +224,7 @@
 <body>
   <div class="hero">
     <button class="sidebar-toggle" id="sidebarToggle" title="Tutup Sidebar">
-      <img src="<?= site_url('assets/icons/robot.png') ?>" alt="Robot AI" style="width:28px;height:28px">
+      <div class="header-icon">🤖</div>
       <span class="toggle-indicator" title="Sidebar: Open"></span>
     </button>
     <div style="flex:1">
@@ -232,16 +232,16 @@
       <div class="subtitle">Tanya & diskusikan strategi bisnis Anda</div>
     </div>
     <div style="display:flex;gap:12px;align-items:center">
+      <a href="<?= site_url('auth/dashboard') ?>" class="logout-btn" title="Kembali ke Dashboard">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+      </a>
       <button class="share-btn" id="shareBtn" title="Bagikan">
         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
         </svg>
       </button>
-      <a href="<?= site_url('advisor/index') ?>" class="logout-btn" title="Kembali ke Dashboard">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-      </a>
     </div>
   </div>
 
@@ -287,25 +287,6 @@
         </div>
       </div>
       
-      <!-- BOTTOM SECTION - PROFILE & UPGRADE -->
-      <div class="sidebar-bottom">
-        <!-- USER PROFILE -->
-        <div class="user-profile">
-          <div class="profile-avatar-small">👤</div>
-          <div class="profile-info">
-            <div class="profile-name-small"><?= htmlspecialchars($this->session->userdata('name') ?? 'User') ?></div>
-            <div class="profile-plan">Free</div>
-          </div>
-        </div>
-        
-        <!-- UPGRADE BUTTON -->
-        <button class="upgrade-btn">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-          </svg>
-          Upgrade AI
-        </button>
-      </div>
     </div>
 
     <!-- MAIN CONTENT -->

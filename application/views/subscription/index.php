@@ -21,99 +21,43 @@
         }
 
         body { font-family: 'Inter', Arial, sans-serif; background: var(--bg-light); margin: 0; padding: 0; color: var(--text-dark); }
-        .navbar { background: var(--gradient-primary); color: #fff; padding: 22px 0 14px 0; }
-        .navbar .container { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 32px; }
-        .navbar-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
-        .navbar-btns { display: flex; gap: 16px; align-items: center; }
-        .navbar-btn { background: #fff; color: var(--primary); border: none; border-radius: 8px; padding: 8px 18px; font-weight: 600; cursor: pointer; transition: background 0.2s; text-decoration: none; }
-        .navbar-btn:hover { background: var(--bg-light); }
-        .main { max-width: 900px; margin: 32px auto; padding: 32px; background: #fff; border-radius: 18px; box-shadow: 0 2px 12px rgba(31, 107, 153, 0.08); }
+        .main { max-width: 900px; margin: 40px auto; padding: 32px; background: #fff; border-radius: 18px; box-shadow: 0 2px 12px rgba(31, 107, 153, 0.08); }
         h1 { font-size: 2rem; font-weight: 800; margin-bottom: 18px; color: var(--primary); }
+        .subtitle { color: var(--text-muted); margin-bottom: 26px; }
         .btn-add { background: var(--gradient-primary); color: #fff; border: none; border-radius: 8px; padding: 10px 26px; font-weight: 700; font-size: 1rem; margin-bottom: 24px; text-decoration: none; transition: background 0.2s; display: inline-block; }
         .btn-add:hover { background: var(--primary-dark); }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { padding: 14px 10px; text-align: left; border-bottom: 1px solid #e3eafc; }
-        th { background: var(--bg-light); font-weight: 700; color: var(--primary); }
-        tr:hover { background: #f0f6ff; }
-        .badge { display: inline-block; padding: 5px 14px; border-radius: 14px; font-size: 0.95rem; font-weight: 700; }
-        .badge.active { background: #d1f7c4; color: var(--success); }
-        .badge.inactive { background: #ffe0b2; color: var(--warning); }
-        .badge.expired { background: #ffcdd2; color: var(--danger); }
-        .action-btns { display: flex; gap: 8px; }
-        .btn-action { padding: 8px 16px; border-radius: 7px; font-weight: 600; font-size: 0.98rem; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s; }
-        .btn-view { background: #e3eafc; color: var(--primary); }
-        .btn-view:hover { background: #d0e2ff; }
-        .btn-edit { background: #d1f7c4; color: var(--success); }
-        .btn-edit:hover { background: #b9f6ca; }
-        .btn-delete { background: #ffcdd2; color: var(--danger); }
-        .btn-delete:hover { background: #ffb4a9; }
-        .empty { text-align: center; padding: 40px; color: var(--text-muted); }
+        .card { border: 1px solid #e5ecf7; border-radius: 14px; padding: 24px; background: #fcfeff; }
+        .info-row { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid #edf2fb; }
+        .info-row:last-of-type { border-bottom: none; }
+        .info-label { color: var(--text-muted); font-weight: 600; }
+        .info-value { color: var(--text-dark); font-weight: 700; text-transform: capitalize; }
+        .badge { display: inline-block; padding: 5px 12px; border-radius: 14px; font-size: 0.9rem; font-weight: 700; background: #d1f7c4; color: var(--success); text-transform: capitalize; }
         @media (max-width: 700px) {
             .main { padding: 12px; }
-            th, td { padding: 10px 4px; font-size: 0.97rem; }
+            .info-row { flex-direction: column; gap: 6px; }
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="container">
-            <div class="navbar-title">Subscription</div>
-            <div class="navbar-btns">
-                <a href="<?php echo site_url('auth/dashboard'); ?>" class="navbar-btn">Dashboard</a>
-                <a href="<?php echo site_url('auth/logout'); ?>" class="navbar-btn">Logout</a>
-            </div>
-        </div>
-    </div>
     <div class="main">
         <h1>Langganan Saya</h1>
-        <a href="<?php echo site_url('subscription/pricing'); ?>" class="btn-add">+ Upgrade Paket</a>
+        <p class="subtitle">Detail paket aktif akun Anda.</p>
 
-        <?php if (! empty($subscriptions)): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Paket</th>
-                        <th>Status</th>
-                        <th>Tanggal Aktif</th>
-                        <th>Tanggal Berakhir</th>
-                        <th>Sisa Hari</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($subscriptions as $s): ?>
-                        <?php
-                            $now       = new DateTime();
-                            $expired   = new DateTime($s->tgl_expired);
-                            $diff      = $now->diff($expired);
-                            $days_left = $expired > $now ? $diff->days : 0;
-                        ?>
-                        <tr>
-                            <td style="font-weight:700; text-transform:capitalize; color:#357ABD;"><?php echo htmlspecialchars($s->paket); ?></td>
-                            <td>
-                                <?php $status = strtolower($s->status); ?>
-                                <span class="badge<?php echo $status; ?>">
-                                    <?php echo ucfirst($s->status); ?>
-                                </span>
-                            </td>
-                            <td><?php echo date('d M Y', strtotime($s->tgl_aktif)); ?></td>
-                            <td><?php echo date('d M Y', strtotime($s->tgl_expired)); ?></td>
-                            <td>
-                                <?php if ($days_left > 0): ?>
-                                    <strong style="color:<?php echo $days_left < 7 ? '#c62828' : '#2e7d32'; ?>">
-                                        <?php echo $days_left; ?> hari
-                                    </strong>
-                                <?php else: ?>
-                                    <span style="color: #999;">Expired</span>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else: ?>
-            <div class="empty">
-                <p>Anda belum memiliki paket langganan aktif.</p>
-                <a href="<?php echo site_url('subscription/pricing'); ?>" class="btn-add" style="margin-top: 16px;">Pilih Paket Langganan</a>
+        <?php if (! empty($active_subscription)): ?>
+            <div class="card">
+                <div class="info-row">
+                    <span class="info-label">Nama Paket</span>
+                    <span class="info-value"><?php echo htmlspecialchars($active_subscription->paket); ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Tanggal Aktif</span>
+                    <span class="info-value"><?php echo ! empty($active_subscription->tgl_aktif) ? date('d M Y', strtotime($active_subscription->tgl_aktif)) : '-'; ?></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Status</span>
+                    <span class="badge"><?php echo ucfirst($active_subscription->status); ?></span>
+                </div>
+                <a href="<?php echo site_url('subscription/pricing'); ?>" class="btn-add" style="margin-top: 22px; margin-bottom: 0;">Ganti Paket</a>
             </div>
         <?php endif; ?>
     </div>

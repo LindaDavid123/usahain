@@ -19,6 +19,12 @@ ALTER TABLE `user` MODIFY COLUMN `nama_usaha` VARCHAR(100) NULL DEFAULT NULL;
 -- 3. Tambahkan kolom updated_at jika belum ada (untuk tracking)
 ALTER TABLE `user` ADD COLUMN `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `created_at`;
 
+-- 4. Tambahkan kolom data bisnis untuk AI Advisor
+ALTER TABLE `user` ADD COLUMN `advisor_modal` DECIMAL(18,2) NULL DEFAULT NULL AFTER `jenis_usaha`;
+ALTER TABLE `user` ADD COLUMN `advisor_minat` VARCHAR(100) NULL DEFAULT NULL AFTER `advisor_modal`;
+ALTER TABLE `user` ADD COLUMN `advisor_lokasi` VARCHAR(100) NULL DEFAULT NULL AFTER `advisor_minat`;
+ALTER TABLE `user` ADD COLUMN `advisor_tujuan` VARCHAR(150) NULL DEFAULT NULL AFTER `advisor_lokasi`;
+
 -- ============================================================
 -- VERIFICATION QUERIES (jalankan untuk memverifikasi)
 -- ============================================================

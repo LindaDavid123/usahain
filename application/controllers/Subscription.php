@@ -88,8 +88,36 @@ class Subscription extends CI_Controller
     // List subscription (hanya milik user yang login)
     public function index()
     {
-        $id_user               = $this->session->userdata('id_user');
-        $data['subscriptions'] = $this->db->get_where('subscription', ['id_user' => $id_user])->result();
+        $id_user = $this->session->userdata('id_user');
+
+        // Jika belum login atau belum punya paket aktif, langsung ke halaman pricing.
+        if (! $id_user) {
+            redirect('subscription/pricing');
+            return;
+        }
+
+        $today = date('Y-m-d');
+
+        $active_subscription = $this->db
+            ->from('subscription')
+            ->where('id_user', $id_user)
+            ->where('status', 'active')
+            ->group_start()
+                ->where('tgl_expired >=', $today)
+                ->or_where('tgl_expired', null)
+            ->group_end()
+            ->order_by('tgl_expired', 'DESC')
+            ->order_by('id_subs', 'DESC')
+            ->limit(1)
+            ->get()
+            ->row();
+
+        if (! $active_subscription) {
+            redirect('subscription/pricing');
+            return;
+        }
+
+        $data['active_subscription'] = $active_subscription;
         $this->load->view('subscription/index', $data);
     }
 

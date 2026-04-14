@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisis Produk Otomatis - Usahain</title>
+    <link rel="stylesheet" href="<?= base_url('assets/css/dashboard-shared.css'); ?>">
     <style>
         :root {
             --primary: #1C6494;
             --primary-dark: #144d73;
-            --primary-light: #E3F2FD;
+            --primary-light: #EAF3FB;
             --accent: #ff9800;
             --success: #2ecc71;
             --danger: #e74c3c;
@@ -17,6 +18,7 @@
             --text-light: #7f8c8d;
             --bg-light: #f8f9fa;
             --border: #e1e8ed;
+            --surface: #ffffff;
         }
 
         * {
@@ -26,20 +28,22 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: Inter, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f6f8fb 0%, #eef4f8 100%);
             min-height: 100vh;
             padding: 20px;
             color: var(--text);
+            line-height: 1.5;
         }
 
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(8px);
+            padding: 16px 24px;
             border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -47,8 +51,17 @@
 
         .navbar h2 {
             color: var(--primary);
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar h2 i,
+        .navbar h2 svg {
+            width: 20px;
+            height: 20px;
         }
 
         .navbar a {
@@ -58,6 +71,15 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar a i,
+        .navbar a svg {
+            width: 16px;
+            height: 16px;
         }
 
         .navbar a:hover {
@@ -72,35 +94,7 @@
 
         /* Header */
         .header {
-            text-align: center;
             margin-bottom: 30px;
-            padding: 40px 30px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-        }
-
-        .header-icon {
-            font-size: 56px;
-            margin-bottom: 15px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .header h1 {
-            font-size: 32px;
-            color: var(--primary-dark);
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .header p {
-            color: var(--text-light);
-            font-size: 16px;
         }
 
         /* Stats Grid */
@@ -112,14 +106,15 @@
         }
 
         .stat-card {
-            background: white;
-            padding: 30px;
+            background: var(--surface);
+            padding: 24px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
             text-align: center;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            border: 1px solid var(--border);
         }
 
         .stat-card::before {
@@ -133,8 +128,8 @@
         }
 
         .stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-6px);
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
         }
 
         .stat-card.terlaris::before {
@@ -150,8 +145,22 @@
         }
 
         .stat-icon {
-            font-size: 48px;
+            width: 50px;
+            height: 50px;
+            border-radius: var(--ds-icon-radius, 12px);
+            margin: 0 auto 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-light);
+            color: var(--primary);
             margin-bottom: 15px;
+        }
+
+        .stat-icon i,
+        .stat-icon svg {
+            width: 22px;
+            height: 22px;
         }
 
         .stat-label {
@@ -182,21 +191,35 @@
 
         /* Trend Section */
         .trend-section {
-            background: white;
-            padding: 35px;
+            background: var(--surface);
+            padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+            border: 1px solid var(--border);
             margin-bottom: 20px;
         }
 
         .trend-section h3 {
-            font-size: 20px;
-            color: var(--primary-dark);
+            font-size: var(--ds-section-title-size, 16px);
+            line-height: var(--ds-heading-line-height, 1.3);
+            letter-spacing: var(--ds-section-title-letter-spacing, 0.3px);
+            color: var(--ds-section-title-color, #1a1a2e);
             margin-bottom: 25px;
-            font-weight: 700;
+            font-weight: var(--ds-section-title-weight, 600);
             display: flex;
             align-items: center;
             gap: 10px;
+            border-left: 3px solid var(--ds-section-title-accent, #1E6FBA);
+            padding-left: var(--ds-section-title-padding-left, 12px);
+        }
+
+        .trend-section h3 i,
+        .trend-section h3 svg,
+        .recommendations h3 i,
+        .recommendations h3 svg {
+            width: 18px;
+            height: 18px;
+            color: var(--primary);
         }
 
         .trend-item {
@@ -230,10 +253,11 @@
         }
 
         .trend-percentage {
-            font-size: 16px;
-            font-weight: 700;
-            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
             border-radius: 20px;
+            letter-spacing: 0.2px;
         }
 
         .trend-percentage.positive {
@@ -292,21 +316,26 @@
 
         /* Recommendations */
         .recommendations {
-            background: white;
-            padding: 35px;
+            background: var(--surface);
+            padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+            border: 1px solid var(--border);
             margin-bottom: 20px;
         }
 
         .recommendations h3 {
-            font-size: 20px;
-            color: var(--primary-dark);
+            font-size: var(--ds-section-title-size, 16px);
+            line-height: var(--ds-heading-line-height, 1.3);
+            letter-spacing: var(--ds-section-title-letter-spacing, 0.3px);
+            color: var(--ds-section-title-color, #1a1a2e);
             margin-bottom: 25px;
-            font-weight: 700;
+            font-weight: var(--ds-section-title-weight, 600);
             display: flex;
             align-items: center;
             gap: 10px;
+            border-left: 3px solid var(--ds-section-title-accent, #1E6FBA);
+            padding-left: var(--ds-section-title-padding-left, 12px);
         }
 
         .recommendations ul {
@@ -318,8 +347,8 @@
             padding: 18px 20px 18px 50px;
             position: relative;
             color: var(--text);
-            font-size: 15px;
-            line-height: 1.7;
+            font-size: 14px;
+            line-height: 1.6;
             border-left: 4px solid var(--primary);
             margin-bottom: 15px;
             background: var(--bg-light);
@@ -333,10 +362,14 @@
         }
 
         .recommendations li::before {
-            content: '💡';
+            content: '';
             position: absolute;
-            left: 18px;
-            font-size: 20px;
+            left: 20px;
+            top: 26px;
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--primary);
         }
 
         /* Action Buttons */
@@ -348,18 +381,25 @@
         }
 
         .btn {
-            padding: 16px 32px;
+            padding: 14px 26px;
             border-radius: 12px;
             border: none;
             cursor: pointer;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 14px;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            line-height: 1.3;
+        }
+
+        .btn i,
+        .btn svg {
+            width: 16px;
+            height: 16px;
         }
 
         .btn-primary {
@@ -396,11 +436,7 @@
             }
 
             .header {
-                padding: 30px 20px;
-            }
-
-            .header h1 {
-                font-size: 24px;
+                margin-bottom: 24px;
             }
 
             .stats-grid {
@@ -449,36 +485,57 @@
 </head>
 <body>
     <div class="navbar">
-        <h2>🚀 Analisis Produk Otomatis</h2>
-        <a href="<?= site_url('auth/dashboard'); ?>">← Kembali ke Dashboard</a>
+        <h2><i data-lucide="rocket"></i>Analisis Produk Otomatis</h2>
+        <a href="<?= site_url('auth/dashboard'); ?>"><i data-lucide="arrow-left"></i>Kembali ke Dashboard</a>
     </div>
 
     <div class="container">
         <!-- Header -->
-        <div class="header">
-            <div class="header-icon">📊</div>
-            <h1>Analisis Produk Cerdas</h1>
-            <p>Insight mendalam dari data penjualan produk Anda</p>
+        <div class="header ds-hero">
+            <div class="ds-hero-main">
+                <p class="ds-hero-greeting">Selamat datang kembali, <?= htmlspecialchars($user['nama'] ?? 'User'); ?>.</p>
+                <h1 class="ds-hero-title">Analisis Produk Cerdas</h1>
+                <p class="ds-hero-subtitle">Pantau performa produk dan peluang peningkatan margin secara terukur.</p>
+                <div class="ds-hero-badges">
+                    <span class="ds-hero-badge">ANALISIS</span>
+                    <span class="ds-hero-badge">PRODUK AKTIF</span>
+                </div>
+            </div>
+            <div class="ds-hero-right">
+                <div class="ds-hero-stat">
+                    <span class="ds-hero-stat-label">Insight Tersedia:</span>
+                    <span class="ds-hero-stat-value">3 kategori</span>
+                </div>
+                <div class="ds-hero-stat">
+                    <span class="ds-hero-stat-label">Status Modul:</span>
+                    <span class="ds-hero-stat-value">Aktif</span>
+                </div>
+            </div>
+            <div class="ds-hero-decor" aria-hidden="true">
+                <i data-lucide="chart-line"></i>
+                <i data-lucide="trending-up"></i>
+                <i data-lucide="package"></i>
+            </div>
         </div>
 
         <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card terlaris">
-                <div class="stat-icon">🏆</div>
+                <div class="stat-icon"><i data-lucide="trophy"></i></div>
                 <div class="stat-label">Produk Terlaris</div>
                 <div class="stat-value">Nasi Ayam Geprek</div>
                 <div class="stat-meta">150 terjual bulan ini</div>
             </div>
 
             <div class="stat-card profit">
-                <div class="stat-icon">💰</div>
+                <div class="stat-icon"><i data-lucide="circle-dollar-sign"></i></div>
                 <div class="stat-label">Profit Tertinggi</div>
                 <div class="stat-value">Es Teh Manis</div>
                 <div class="stat-meta highlight">Margin 70%</div>
             </div>
 
             <div class="stat-card perhatian">
-                <div class="stat-icon">⚠️</div>
+                <div class="stat-icon"><i data-lucide="triangle-alert"></i></div>
                 <div class="stat-label">Perlu Perhatian</div>
                 <div class="stat-value">Gado-gado</div>
                 <div class="stat-meta">Penjualan menurun</div>
@@ -487,12 +544,12 @@
 
         <!-- Trend Section -->
         <div class="trend-section">
-            <h3>📈 Tren Penjualan (7 hari terakhir)</h3>
+            <h3><i data-lucide="trending-up"></i>Tren Penjualan (7 hari terakhir)</h3>
             
             <div class="trend-item">
                 <div class="trend-label">
                     <span class="trend-name">Nasi Ayam Geprek</span>
-                    <span class="trend-percentage positive">↑ +15%</span>
+                    <span class="trend-percentage positive">+15%</span>
                 </div>
                 <div class="trend-bar-container">
                     <div class="trend-bar green" style="width: 75%;"></div>
@@ -502,7 +559,7 @@
             <div class="trend-item">
                 <div class="trend-label">
                     <span class="trend-name">Es Teh Manis</span>
-                    <span class="trend-percentage positive">↑ +8%</span>
+                    <span class="trend-percentage positive">+8%</span>
                 </div>
                 <div class="trend-bar-container">
                     <div class="trend-bar blue" style="width: 58%;"></div>
@@ -512,7 +569,7 @@
             <div class="trend-item">
                 <div class="trend-label">
                     <span class="trend-name">Gado-gado</span>
-                    <span class="trend-percentage negative">↓ -12%</span>
+                    <span class="trend-percentage negative">-12%</span>
                 </div>
                 <div class="trend-bar-container">
                     <div class="trend-bar red" style="width: 38%;"></div>
@@ -522,7 +579,7 @@
 
         <!-- Recommendations -->
         <div class="recommendations">
-            <h3>🎯 Rekomendasi Aksi</h3>
+            <h3><i data-lucide="target"></i>Rekomendasi Aksi</h3>
             <ul>
                 <li>Tingkatkan stok Nasi Ayam Geprek karena permintaan tinggi dan tren positif</li>
                 <li>Promosikan Es Teh Manis lebih gencar karena margin keuntungan sangat tinggi (70%)</li>
@@ -531,25 +588,31 @@
                 <li>Lakukan survei pelanggan untuk memahami preferensi dan feedback produk</li>
             </ul>
             <div style="margin-top:18px;">
-                <a href="<?= site_url('info'); ?>" class="btn btn-info" style="background:#1C6494;color:#fff;padding:10px 22px;border-radius:7px;text-decoration:none;font-weight:600;">ℹ️ Lihat Informasi Bisnis</a>
+                <a href="<?= site_url('info'); ?>" class="btn btn-info" style="background:#1C6494;color:#fff;padding:10px 22px;border-radius:7px;text-decoration:none;font-weight:600;"><i data-lucide="info"></i>Lihat Informasi Bisnis</a>
             </div>
         </div>
 
         <!-- Action Buttons -->
         <div class="action-buttons">
             <a href="<?= site_url('analisis'); ?>" class="btn btn-primary">
-                📋 Lihat Detail Lengkap
+                <i data-lucide="clipboard-list"></i>Lihat Detail Lengkap
             </a>
             <a href="<?= site_url('analisis/create'); ?>" class="btn btn-secondary">
-                ➕ Tambah Analisis Baru
+                <i data-lucide="plus"></i>Tambah Analisis Baru
             </a>
             <a href="<?= site_url('auth/dashboard'); ?>" class="btn btn-secondary">
-                🏠 Kembali ke Dashboard
+                <i data-lucide="house"></i>Kembali ke Dashboard
             </a>
         </div>
     </div>
 
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+
     <script>
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+
         // Animate progress bars on load
         window.addEventListener('DOMContentLoaded', () => {
             const bars = document.querySelectorAll('.trend-bar');

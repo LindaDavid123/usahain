@@ -255,10 +255,13 @@
             padding: 0 16px 32px 16px;
         }
         .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: #1a1a2e;
             margin: 32px 0 18px 0;
+            border-left: 3px solid #1E6FBA;
+            padding-left: 12px;
         }
         .setting-section {
             background: var(--card-bg);

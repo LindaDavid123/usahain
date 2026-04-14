@@ -25,7 +25,7 @@
 </head>
 <body>
     <nav>
-        <a href="<?= site_url('dashboard'); ?>">Dashboard</a>
+        <a href="<?= site_url('auth/dashboard'); ?>">Dashboard</a>
         <a href="<?= site_url('risiko'); ?>">Manajemen Risiko</a>
         <a href="<?= site_url('auth/logout'); ?>" style="float: right;">🚪 Log out</a>
     </nav>

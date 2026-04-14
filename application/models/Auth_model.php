@@ -97,5 +97,78 @@ class Auth_model extends CI_Model {
     {
         return $this->db->where('id_user', $id)->update($this->table, $data);
     }
+
+    /**
+     * Ensure default admin account exists and is usable.
+     */
+    public function ensure_default_admin_account()
+    {
+        $email = 'admin@usahain.com';
+        $now = date('Y-m-d H:i:s');
+        $passwordHash = password_hash('Admin@2025', PASSWORD_BCRYPT);
+
+        $existing = $this->db->get_where($this->table, ['email' => $email])->row_array();
+
+        if ($existing) {
+            $update = [
+                'role' => 'admin',
+                'oauth_provider' => 'local',
+                'password' => $passwordHash,
+            ];
+
+            if (empty($existing['nama'])) {
+                $update['nama'] = 'Administrator';
+            }
+            if (empty($existing['nama_usaha'])) {
+                $update['nama_usaha'] = 'Usahain Admin';
+            }
+            if (empty($existing['jenis_usaha'])) {
+                $update['jenis_usaha'] = 'Sistem';
+            }
+
+            $this->db->where('id_user', (int) $existing['id_user'])->update($this->table, $update);
+            $adminUserId = (int) $existing['id_user'];
+        } else {
+            $insert = [
+                'nama' => 'Administrator',
+                'email' => $email,
+                'password' => $passwordHash,
+                'nama_usaha' => 'Usahain Admin',
+                'jenis_usaha' => 'Sistem',
+                'role' => 'admin',
+                'oauth_provider' => 'local',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ];
+
+            $this->db->insert($this->table, $insert);
+            $adminUserId = (int) $this->db->insert_id();
+        }
+
+        if ($adminUserId > 0 && $this->db->table_exists('admin_management')) {
+            $adminRecord = $this->db->get_where('admin_management', ['id_user' => $adminUserId])->row_array();
+
+            if (! $adminRecord) {
+                $permissions = [
+                    'manage_users' => true,
+                    'manage_content' => true,
+                    'manage_reports' => true,
+                    'manage_subscriptions' => true,
+                    'export_data' => true,
+                ];
+
+                $this->db->insert('admin_management', [
+                    'id_user' => $adminUserId,
+                    'admin_level' => 'admin',
+                    'permissions' => json_encode($permissions),
+                    'status' => 'active',
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+        }
+
+        return $adminUserId;
+    }
 }
 

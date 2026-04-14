@@ -25,6 +25,7 @@ $transactions = $transactions ?? [];
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Analisis Risiko Bisnis - <?= htmlspecialchars($user['nama']); ?></title>
+<link rel="stylesheet" href="<?= base_url('assets/css/dashboard-shared.css'); ?>">
 
 <style>
 /* === THEME COLOR VARIABLES === */
@@ -58,7 +59,9 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     align-items:center;
     box-shadow:var(--shadow-md)
 }
-.header h3{font-size:20px;font-weight:700}
+.header h3{font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px}
+.header h3 i,
+.header h3 svg{width:18px;height:18px}
 .header small{opacity:.9}
 
 .header-right{
@@ -98,6 +101,10 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 /* LAYOUT */
 .container{max-width:1150px;margin:28px auto;padding:0 24px}
 
+.page-hero-card{
+    margin-bottom:32px;
+}
+
 /* BISNIS CARD */
 .biz-card{
     background:linear-gradient(135deg, #65C1DF 0%, #1C6494 100%);
@@ -129,13 +136,16 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 
 /* SECTION */
 .section-title{
-    font-weight:700;
+    font-weight:var(--ds-section-title-weight,600);
     margin:26px 0 14px;
     display:flex;
     align-items:center;
     gap:8px;
-    color:var(--primary-color);
-    font-size:17px
+    color:var(--ds-section-title-color,#1a1a2e);
+    font-size:var(--ds-section-title-size,16px);
+    letter-spacing:var(--ds-section-title-letter-spacing,0.3px);
+    border-left:3px solid var(--ds-section-title-accent,#1E6FBA);
+    padding-left:var(--ds-section-title-padding-left,12px)
 }
 
 /* AKSI CEPAT - Action Buttons */
@@ -243,11 +253,11 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     .header h3{font-size:18px}
     .avatar{width:42px;height:42px}
     
-    /* Bisnis card */
-    .biz-card{padding:24px;flex-direction:column;text-align:center}
-    .biz-left{flex-direction:column;width:100%}
-    .biz-profit{text-align:center;margin-top:16px}
-    .biz-icon{font-size:36px}
+    .page-hero-card{padding:24px;flex-direction:column;text-align:center}
+    .page-hero-main{align-items:center}
+    .page-hero-stats{align-items:center}
+    .page-hero-stat{justify-content:center;flex-wrap:wrap}
+    .page-hero-decor{display:none}
     
     /* Actions - 2 columns */
     .actions{grid-template-columns:repeat(2,1fr);gap:12px}
@@ -280,14 +290,13 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     .avatar{width:38px;height:38px;font-size:16px}
     .logout-btn{padding:7px 14px;font-size:12px}
     
-    /* Bisnis card */
-    .biz-card{padding:20px;margin-bottom:20px}
-    .biz-info h2{font-size:18px}
-    .biz-info span{font-size:11px;padding:4px 10px}
-    .biz-profit h2{font-size:22px}
+    .page-hero-card{padding:20px;margin-bottom:20px}
+    .page-hero-main h1{font-size:24px}
+    .page-hero-subtitle{font-size:14px}
+    .page-hero-badge{font-size:11px;padding:4px 10px}
     
     /* Section titles */
-    .section-title{font-size:15px;margin:20px 0 12px}
+    .section-title{font-size:15px;margin:20px 0 12px;padding-left:10px;border-left-width:2px}
     
     /* Filter periode - full width buttons */
     .filter-periode{
@@ -352,21 +361,17 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
         white-space:nowrap
     }
     
-    /* Bisnis card - compact */
-    .biz-card{padding:16px;margin-bottom:16px}
-    .biz-icon{font-size:32px}
-    .biz-info h2{font-size:16px}
-    .biz-info span{font-size:10px;padding:3px 8px;margin-right:4px}
-    .biz-profit{margin-top:12px}
-    .biz-profit small{font-size:11px}
-    .biz-profit h2{font-size:20px}
+    .page-hero-card{padding:16px;margin-bottom:16px}
+    .page-hero-main h1{font-size:20px}
+    .page-hero-subtitle{font-size:13px}
+    .page-hero-badge{font-size:10px;padding:3px 8px}
     
     /* Actions - single column on very small screens */
     .actions{grid-template-columns:1fr;gap:10px}
     .action{padding:14px;font-size:15px}
     
     /* Section titles */
-    .section-title{font-size:14px;margin:16px 0 10px}
+    .section-title{font-size:14px;margin:16px 0 10px;padding-left:10px;border-left-width:2px}
     
     /* Filter - stack on small phones */
     .filter-periode{gap:6px}
@@ -468,12 +473,20 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 .risk-card.yellow{border-color:#f39c12;background:linear-gradient(135deg,#fff 0%,#fff8e6 100%)}
 .risk-card.green{border-color:#2ecc71;background:linear-gradient(135deg,#fff 0%,#e8f8f0 100%)}
 .risk-card.blue{border-color:#3498db;background:linear-gradient(135deg,#fff 0%,#e8f4f8 100%)}
-.risk-card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-weight:700;font-size:15px}
-.risk-icon{font-size:24px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center}
-.risk-card.red .risk-icon{background:#e74c3c;color:#fff}
-.risk-card.yellow .risk-icon{background:#f39c12;color:#fff}
-.risk-card.green .risk-icon{background:#2ecc71;color:#fff}
-.risk-card.blue .risk-icon{background:#3498db;color:#fff}
+.risk-card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-weight:700;font-size:15px;line-height:1.3}
+.risk-icon{width:var(--ds-icon-shell-size,38px);height:var(--ds-icon-shell-size,38px);border-radius:var(--ds-icon-radius,10px);display:flex;align-items:center;justify-content:center}
+.risk-icon i,
+.risk-icon svg{width:var(--ds-icon-inner-size,18px);height:var(--ds-icon-inner-size,18px);stroke-width:2}
+.risk-card.red .risk-icon{background:#FEE2E2;color:#B91C1C}
+.risk-card.yellow .risk-icon{background:#FEF3C7;color:#B7791F}
+.risk-card.green .risk-icon{background:#DCFCE7;color:#15803D}
+.risk-card.blue .risk-icon{background:#DBEAFE;color:#1D4ED8}
+
+.risk-level-badge{display:inline-block;margin-left:8px;padding:var(--ds-badge-padding-y,2px) var(--ds-badge-padding-x,8px);border-radius:999px;font-size:var(--ds-badge-font-size,10px);font-weight:var(--ds-badge-font-weight,600);letter-spacing:var(--ds-badge-letter-spacing,.25px);border:1px solid transparent;vertical-align:middle}
+.risk-level-badge.high{background:#FEE2E2;color:#991B1B;border-color:#FECACA}
+.risk-level-badge.medium{background:#FEF3C7;color:#92400E;border-color:#FDE68A}
+.risk-level-badge.good{background:#DCFCE7;color:#166534;border-color:#BBF7D0}
+.risk-level-badge.plan{background:#DBEAFE;color:#1E3A8A;border-color:#BFDBFE}
 .risk-checklist{display:flex;flex-direction:column;gap:8px}
 .risk-checkbox{display:flex;align-items:center;gap:8px;padding:8px;border-radius:6px;cursor:pointer;transition:background 0.2s}
 .risk-checkbox:hover{background:rgba(0,0,0,0.03)}
@@ -618,7 +631,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 /* INI KUNCI CENTER */
 .footer-inner {
     max-width: 1200px;
-    margin: 0 auto; /* ← CENTER HORIZONTAL */
+    margin: 0 auto; /* CENTER HORIZONTAL */
     padding: 0 20px;
     display: flex;
     justify-content: space-between;
@@ -645,7 +658,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 <!-- HEADER -->
 <div class="header">
     <div>
-        <h3>⚠️ Analisis Risiko Bisnis</h3>
+        <h3><i data-lucide="shield-alert"></i>Analisis Risiko Bisnis</h3>
         <small>Identifikasi dan mitigasi risiko untuk melindungi usaha Anda</small>
     </div>
 
@@ -661,11 +674,32 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 
 <div class="container">
 
-    <!-- PAGE TITLE & DESCRIPTION -->
-    <div style="text-align:center; margin-bottom:40px; padding:30px 0;">
-        <div style="font-size:48px; margin-bottom:10px;">🛡️</div>
-        <h1 style="font-size:32px; font-weight:700; margin-bottom:12px; color:#1C6494;">Manajemen Risiko</h1>
-        <p style="font-size:16px; color:#718096; max-width:600px; margin:0 auto;">Identifikasi dan kelola risiko bisnis Anda dengan checklist praktis</p>
+    <!-- PAGE HERO -->
+    <div class="page-hero-card ds-hero">
+        <div class="page-hero-main ds-hero-main">
+            <p class="page-hero-greeting ds-hero-greeting">Selamat datang kembali, <?= htmlspecialchars($user['nama']); ?>.</p>
+            <h1 class="ds-hero-title">Manajemen Risiko</h1>
+            <p class="page-hero-subtitle ds-hero-subtitle">Pantau risiko utama dan tindak mitigasi bisnis Anda secara terstruktur.</p>
+            <div class="page-hero-badges ds-hero-badges">
+                <span class="page-hero-badge ds-hero-badge"><?= htmlspecialchars($user['type']); ?></span>
+                <span class="page-hero-badge ds-hero-badge">MODUL AKTIF</span>
+            </div>
+        </div>
+        <div class="page-hero-stats ds-hero-right">
+            <div class="page-hero-stat ds-hero-stat">
+                <span class="page-hero-stat-label ds-hero-stat-label">Total Transaksi:</span>
+                <span class="page-hero-stat-value ds-hero-stat-value"><?= count($transactions); ?></span>
+            </div>
+            <div class="page-hero-stat ds-hero-stat">
+                <span class="page-hero-stat-label ds-hero-stat-label">Status Risiko:</span>
+                <span class="page-hero-stat-value ds-hero-stat-value">Dipantau</span>
+            </div>
+        </div>
+        <div class="page-hero-decor ds-hero-decor" aria-hidden="true">
+            <i data-lucide="shield-check"></i>
+            <i data-lucide="triangle-alert"></i>
+            <i data-lucide="building-2"></i>
+        </div>
     </div>
 
     <!-- RISK CATEGORIES GRID -->
@@ -673,7 +707,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
         
         <!-- RISIKO TINGGI -->
         <div style="background:#f5e6e8; border-radius:12px; padding:24px; border:2px solid #e8b4c0;">
-            <h3 style="font-size:18px; font-weight:700; color:#c1314d; margin-bottom:16px;">🔴 Risiko Tinggi</h3>
+            <h3 style="font-size:18px; font-weight:700; color:#c1314d; margin-bottom:16px;"><i data-lucide="triangle-alert" style="width:16px;height:16px;vertical-align:-3px;margin-right:6px;"></i>Risiko Tinggi</h3>
             <div style="display:flex; flex-direction:column; gap:12px;">
                 <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
                     <input type="checkbox" style="width:18px; height:18px;">
@@ -692,7 +726,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 
         <!-- RISIKO SEDANG -->
         <div style="background:#f0ecd4; border-radius:12px; padding:24px; border:2px solid #e4d89f;">
-            <h3 style="font-size:18px; font-weight:700; color:#a68c2a; margin-bottom:16px;">🟡 Risiko Sedang</h3>
+            <h3 style="font-size:18px; font-weight:700; color:#a68c2a; margin-bottom:16px;"><i data-lucide="alert-triangle" style="width:16px;height:16px;vertical-align:-3px;margin-right:6px;"></i>Risiko Sedang</h3>
             <div style="display:flex; flex-direction:column; gap:12px;">
                 <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
                     <input type="checkbox" style="width:18px; height:18px;">
@@ -711,7 +745,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 
         <!-- MITIGASI RISIKO -->
         <div style="background:#d4f4dd; border-radius:12px; padding:24px; border:2px solid #9dd4ab;">
-            <h3 style="font-size:18px; font-weight:700; color:#2ecc71; margin-bottom:16px;">✅ Mitigasi Risiko</h3>
+            <h3 style="font-size:18px; font-weight:700; color:#2ecc71; margin-bottom:16px;"><i data-lucide="shield-check" style="width:16px;height:16px;vertical-align:-3px;margin-right:6px;"></i>Mitigasi Risiko</h3>
             <div style="display:flex; flex-direction:column; gap:12px;">
                 <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
                     <input type="checkbox" checked style="width:18px; height:18px;">
@@ -730,7 +764,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 
         <!-- RENCANA KONTINJENSI -->
         <div style="background:#d4e4f5; border-radius:12px; padding:24px; border:2px solid #9dc7e8;">
-            <h3 style="font-size:18px; font-weight:700; color:#1e5a96; margin-bottom:16px;">📋 Rencana Kontinjensi</h3>
+            <h3 style="font-size:18px; font-weight:700; color:#1e5a96; margin-bottom:16px;"><i data-lucide="clipboard-list" style="width:16px;height:16px;vertical-align:-3px;margin-right:6px;"></i>Rencana Kontinjensi</h3>
             <div style="display:flex; flex-direction:column; gap:12px;">
                 <label style="display:flex; align-items:center; gap:10px; font-size:14px; color:#333;">
                     <input type="checkbox" style="width:18px; height:18px;">
@@ -752,7 +786,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     <!-- ANALISIS RISIKO BUTTON -->
     <div style="text-align:center; margin:30px 0;">
         <button onclick="openModalRisiko(); return false;" style="background:#1e5a96; color:white; border:none; padding:12px 32px; border-radius:24px; font-size:16px; font-weight:600; cursor:pointer; transition:all 0.3s;">
-            🔍 Analisis Risiko
+            Analisis Risiko
         </button>
     </div>
 
@@ -771,7 +805,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     <!-- SIMPAN BUTTON -->
     <div style="text-align:right;">
         <button onclick="savRisiko();" style="background:#2ecc71; color:white; border:none; padding:12px 40px; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; transition:all 0.3s;">
-            ✓ Simpan
+            Simpan
         </button>
     </div>
 </script>
@@ -798,7 +832,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 <div class="modal-overlay" id="modalPenjualan" onclick="if(event.target===this) closeModalPenjualan()">
     <div class="modal-container">
         <div class="modal-header">
-            <h3 class="modal-title">💰 Catat Penjualan</h3>
+            <h3 class="modal-title"><i data-lucide="wallet"></i> Catat Penjualan</h3>
             <p class="modal-subtitle">Masukkan detail penjualan Anda</p>
         </div>
         <form id="formPenjualan" onsubmit="submitPenjualan(event)">
@@ -846,7 +880,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 <div class="modal-overlay" id="modalPengeluaran" onclick="if(event.target===this) closeModalPengeluaran()">
     <div class="modal-container">
         <div class="modal-header">
-            <h3 class="modal-title">🧾 Catat Pengeluaran</h3>
+            <h3 class="modal-title"><i data-lucide="receipt-text"></i> Catat Pengeluaran</h3>
             <p class="modal-subtitle">Masukkan detail pengeluaran Anda</p>
         </div>
         <form id="formPengeluaran" onsubmit="submitPengeluaran(event)">
@@ -896,7 +930,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
 <div class="modal-overlay" id="modalRisiko" onclick="if(event.target===this) closeModalRisiko()">
     <div class="modal-container wide">
         <div class="modal-header">
-            <h3 class="modal-title">⚠️ Manajemen Risiko Bisnis</h3>
+            <h3 class="modal-title"><i data-lucide="shield-alert"></i> Manajemen Risiko Bisnis</h3>
             <p class="modal-subtitle">Identifikasi dan kelola risiko untuk melindungi bisnis Anda</p>
         </div>
         <form id="formRisiko" onsubmit="submitRisiko(event)">
@@ -904,7 +938,7 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
                 
                 <!-- SKOR RISIKO -->
                 <div class="score-section">
-                    <div class="score-header">📊 Skor Kesehatan Bisnis</div>
+                    <div class="score-header"><i data-lucide="chart-line"></i> Skor Kesehatan Bisnis</div>
                     <div class="score-text" id="riskScore">0%</div>
                     <div class="score-bar-container">
                         <div class="score-bar" id="riskScoreBar" style="width:0%">0%</div>
@@ -918,8 +952,8 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
                     <!-- RISIKO TINGGI -->
                     <div class="risk-card red">
                         <div class="risk-card-header">
-                            <div class="risk-icon">🔴</div>
-                            <div>Risiko Tinggi</div>
+                            <div class="risk-icon"><i data-lucide="triangle-alert"></i></div>
+                            <div>Risiko Tinggi <span class="risk-level-badge high">High</span></div>
                         </div>
                         <div class="risk-checklist">
                             <div class="risk-checkbox">
@@ -944,8 +978,8 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
                     <!-- RISIKO SEDANG -->
                     <div class="risk-card yellow">
                         <div class="risk-card-header">
-                            <div class="risk-icon">🟡</div>
-                            <div>Risiko Sedang</div>
+                            <div class="risk-icon"><i data-lucide="alert-triangle"></i></div>
+                            <div>Risiko Sedang <span class="risk-level-badge medium">Medium</span></div>
                         </div>
                         <div class="risk-checklist">
                             <div class="risk-checkbox">
@@ -970,8 +1004,8 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
                     <!-- MITIGASI RISIKO -->
                     <div class="risk-card green">
                         <div class="risk-card-header">
-                            <div class="risk-icon">🟢</div>
-                            <div>Mitigasi Risiko</div>
+                            <div class="risk-icon"><i data-lucide="shield-check"></i></div>
+                            <div>Mitigasi Risiko <span class="risk-level-badge good">Safe</span></div>
                         </div>
                         <div class="risk-checklist">
                             <div class="risk-checkbox">
@@ -996,8 +1030,8 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
                     <!-- RENCANA KONTINJENSI -->
                     <div class="risk-card blue">
                         <div class="risk-card-header">
-                            <div class="risk-icon">🔵</div>
-                            <div>Rencana Kontinjensi</div>
+                            <div class="risk-icon"><i data-lucide="clipboard-list"></i></div>
+                            <div>Rencana Kontinjensi <span class="risk-level-badge plan">Plan</span></div>
                         </div>
                         <div class="risk-checklist">
                             <div class="risk-checkbox">
@@ -1030,7 +1064,12 @@ body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--t
     </div>
 </div>
 
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <script>
+if (window.lucide) {
+    window.lucide.createIcons();
+}
+
 // Data tracking
 let dataKeuangan = {
     penjualan: <?= $summary['today_sales']; ?>,
@@ -1059,26 +1098,26 @@ function updateDisplay() {
     const headerEl = document.getElementById('labaBersihHeader');
     if (headerEl) {
         headerEl.textContent = formatRupiahDisplay(labaBersih);
-        console.log('✓ Header updated');
+        console.log('Header updated');
     }
 
     // Update summary cards
     const penjualanEl = document.getElementById('totalPenjualan');
     if (penjualanEl) {
         penjualanEl.textContent = formatRupiahDisplay(dataKeuangan.penjualan);
-        console.log('✓ Penjualan updated');
+        console.log('Penjualan updated');
     }
 
     const pengeluaranEl = document.getElementById('totalPengeluaran');
     if (pengeluaranEl) {
         pengeluaranEl.textContent = formatRupiahDisplay(dataKeuangan.pengeluaran);
-        console.log('✓ Pengeluaran updated');
+        console.log('Pengeluaran updated');
     }
 
     const labaBersihEl = document.getElementById('labaBersih');
     if (labaBersihEl) {
         labaBersihEl.textContent = formatRupiahDisplay(labaBersih);
-        console.log('✓ Laba Bersih updated');
+        console.log('Laba Bersih updated');
     }
     
     const jumlahPenjualanEl = document.getElementById('jumlahPenjualan');
@@ -1227,16 +1266,16 @@ function calculateRiskScore() {
         // Change color based on score
         if (score >= 75) {
             scoreBar.style.background = '#2ecc71';
-            scoreDesc.textContent = '✅ Excellent! Bisnis Anda memiliki manajemen risiko yang baik';
+            scoreDesc.textContent = 'Excellent! Bisnis Anda memiliki manajemen risiko yang baik';
         } else if (score >= 50) {
             scoreBar.style.background = '#f39c12';
-            scoreDesc.textContent = '⚠️ Cukup baik, namun masih ada area yang perlu diperbaiki';
+            scoreDesc.textContent = 'Cukup baik, namun masih ada area yang perlu diperbaiki';
         } else if (score >= 25) {
             scoreBar.style.background = '#e67e22';
-            scoreDesc.textContent = '⚠️ Perlu perhatian! Risiko bisnis cukup tinggi';
+            scoreDesc.textContent = 'Perlu perhatian! Risiko bisnis cukup tinggi';
         } else {
             scoreBar.style.background = '#e74c3c';
-            scoreDesc.textContent = '🚨 Urgent! Bisnis Anda memiliki risiko tinggi yang perlu segera ditangani';
+            scoreDesc.textContent = 'Urgent! Bisnis Anda memiliki risiko tinggi yang perlu segera ditangani';
         }
     }
     
@@ -1274,7 +1313,7 @@ function submitPenjualan(e) {
     
     // Validasi
     if (!jumlah || isNaN(jumlah) || jumlah <= 0) {
-        alert('⚠️ Masukkan jumlah yang valid!');
+        alert('Masukkan jumlah yang valid!');
         return;
     }
     
@@ -1290,7 +1329,7 @@ function submitPenjualan(e) {
     updateDisplay();
     
     // Show success notification
-    showNotification('✅ Penjualan berhasil dicatat! Rp ' + parseInt(jumlah).toLocaleString('id-ID'), 'success');
+    showNotification('Penjualan berhasil dicatat! Rp ' + parseInt(jumlah).toLocaleString('id-ID'), 'success');
     
     closeModalPenjualan();
 }
@@ -1311,7 +1350,7 @@ function submitPengeluaran(e) {
     
     // Validasi
     if (!jumlah || isNaN(jumlah) || jumlah <= 0) {
-        alert('⚠️ Masukkan jumlah yang valid!');
+        alert('Masukkan jumlah yang valid!');
         return;
     }
     
@@ -1327,7 +1366,7 @@ function submitPengeluaran(e) {
     updateDisplay();
     
     // Show success notification
-    showNotification('✅ Pengeluaran berhasil dicatat! Rp ' + parseInt(jumlah).toLocaleString('id-ID'), 'error');
+    showNotification('Pengeluaran berhasil dicatat! Rp ' + parseInt(jumlah).toLocaleString('id-ID'), 'error');
     
     closeModalPengeluaran();
 }
@@ -1348,7 +1387,7 @@ function submitRisiko(e) {
     const totalChecked = document.querySelectorAll('#formRisiko input[type="checkbox"]:checked').length;
     
     // Show success notification
-    showNotification('✅ Assessment risiko berhasil disimpan! Skor: ' + scoreText + ' (' + totalChecked + ' item teridentifikasi)', 'success');
+    showNotification('Assessment risiko berhasil disimpan! Skor: ' + scoreText + ' (' + totalChecked + ' item teridentifikasi)', 'success');
     
     closeModalRisiko();
 }
@@ -1422,7 +1461,7 @@ function savRisiko() {
     
     // This would send data to backend
     console.log('Saving risk data...');
-    alert('✅ Checklist risiko berhasil disimpan!');
+    alert('Checklist risiko berhasil disimpan!');
 }
 
 </script>

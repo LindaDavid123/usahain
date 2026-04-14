@@ -100,7 +100,7 @@
     }
 
     .btn-signup{
-      background: linear-gradient(135deg, #1C6494, #2563eb) !important;
+      background: #1C6494 !important;
       border: none !important;
       color: white !important;
       padding: 10px 26px !important;
@@ -112,7 +112,7 @@
     }
 
     .btn-signup:hover{
-      background: linear-gradient(135deg, #164f75, #1d4ed8) !important;
+      background: #155379 !important;
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(28, 100, 148, 0.35);
     }
@@ -179,7 +179,7 @@
       align-items:center;
       justify-content:center;
       padding:10px;
-      background: linear-gradient(to bottom, #e6f7ff, #1e5a88);
+      background: #e6f7ff;
       box-shadow:0 8px 20px rgba(2,6,23,0.06);
       flex: 0 0 64px;
     }
@@ -192,7 +192,7 @@
 
     /* HERO */
     .hero {
-      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+      background: #b8dcf5;
       padding: 100px 20px 80px;
       position: relative;
       overflow: hidden;
@@ -205,7 +205,7 @@
       right: -20%;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      background: rgba(255,255,255,0.3);
       border-radius: 50%;
     }
 
@@ -216,7 +216,7 @@
       left: -10%;
       width: 500px;
       height: 500px;
-      background: radial-gradient(circle, rgba(28,100,148,0.1) 0%, transparent 70%);
+      background: rgba(28,100,148,0.1);
       border-radius: 50%;
     }
 
@@ -263,7 +263,7 @@
     }
 
     .btn-get-started {
-      background: linear-gradient(135deg, #1C6494, #2563eb) !important;
+      background: #1C6494 !important;
       color: white !important;
       padding: 14px 32px !important;
       border-radius: 12px !important;
@@ -278,7 +278,7 @@
     }
 
     .btn-get-started:hover {
-      background: linear-gradient(135deg, #164f75, #1d4ed8) !important;
+      background: #155379 !important;
       transform: translateY(-3px);
       box-shadow: 0 12px 32px rgba(28, 100, 148, 0.4);
     }
@@ -345,10 +345,7 @@
     .stat-number {
       font-size: 32px;
       font-weight: 800;
-      background: linear-gradient(135deg, #1C6494, #2563eb);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #1C6494;
       margin-bottom: 4px;
     }
 
@@ -400,7 +397,7 @@
     .feature-card {
       border-radius: 20px;
       padding: 40px 35px;
-      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      background: #f1f5f9;
       box-shadow: 0 4px 20px rgba(28, 100, 148, 0.08);
       height: 100%;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -418,7 +415,7 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #1C6494, #2563eb, #1C6494);
+      background: #1C6494;
       transform: scaleX(0);
       transition: transform 0.4s;
     }
@@ -439,7 +436,7 @@
       max-width: 240px;
       height: 180px;
       margin: 0 auto 28px;
-      background: linear-gradient(135deg, rgba(28, 100, 148, 0.08) 0%, rgba(37, 99, 235, 0.08) 100%);
+      background: rgba(28, 100, 148, 0.08);
       border-radius: 16px;
       display: flex;
       align-items: center;
@@ -451,7 +448,7 @@
     }
 
     .feature-card:hover .illustration {
-      background: linear-gradient(135deg, rgba(28, 100, 148, 0.12) 0%, rgba(37, 99, 235, 0.12) 100%);
+      background: rgba(28, 100, 148, 0.12);
       transform: scale(1.05);
     }
 
@@ -507,7 +504,7 @@
 
     /* FITUR TAMBAHAN UPDATED */
     .feature-section-gradient{
-      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+      background: #f8fafc;
       padding-top: 80px;
       padding-bottom: 80px;
       position: relative;
@@ -520,7 +517,7 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(28, 100, 148, 0.2), transparent);
+      background: rgba(28, 100, 148, 0.2);
     }
 
     .section-title-main {
@@ -544,7 +541,7 @@
       transform: translateX(-50%);
       width: 60px;
       height: 4px;
-      background: linear-gradient(90deg, #1C6494, #2563eb);
+      background: #1C6494;
       border-radius: 2px;
     }
 
@@ -582,7 +579,7 @@
     }
 
     .why-btn {
-      background: linear-gradient(135deg, #1C6494, #2563eb);
+      background: #1C6494;
       color: white;
       padding: 14px 36px;
       border-radius: 12px;
@@ -596,7 +593,7 @@
     }
 
     .why-btn:hover {
-      background: linear-gradient(135deg, #164f75, #1d4ed8);
+      background: #155379;
       transform: translateY(-3px);
       box-shadow: 0 12px 32px rgba(28, 100, 148, 0.4);
       color: white;
@@ -620,7 +617,7 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: linear-gradient(90deg, #1C6494, #2563eb);
+      background: #1C6494;
       border-radius: 20px 20px 0 0;
       transform: scaleX(0);
       transition: transform 0.4s;
@@ -663,6 +660,140 @@
       font-size: 0.95rem;
       line-height: 1.6;
       margin-bottom: 0;
+    }
+
+    .landing-pricing-card {
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 24px;
+      height: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 8px rgba(17, 24, 39, 0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .landing-pricing-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(17, 24, 39, 0.08);
+    }
+
+    .landing-pricing-card.starter {
+      background: #f8fafc;
+    }
+
+    .landing-pricing-card.essential {
+      background: #f0f7ff;
+    }
+
+    .landing-pricing-card.growth {
+      background: #f5f3ff;
+    }
+
+    .landing-pricing-card.elite {
+      background: #fffbeb;
+    }
+
+    .landing-pricing-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #1c6494;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: 4px;
+      padding: 2px 8px;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+    }
+
+    .landing-plan-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+
+    .landing-plan-subtitle {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    .landing-plan-price {
+      font-size: 32px;
+      font-weight: 700;
+      color: #111827;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .landing-plan-period {
+      font-size: 12px;
+      color: #6b7280;
+      margin: 0;
+    }
+
+    .landing-feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px 0;
+      flex-grow: 1;
+    }
+
+    .landing-feature-list li {
+      padding: 8px 0;
+      color: #374151;
+      font-size: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .landing-feature-icon {
+      width: 13px;
+      height: 13px;
+      color: #1c6494;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .landing-pricing-btn {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      width: 100%;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      background: #1c6494;
+      color: #ffffff;
+      border: 1px solid #1c6494;
+      transition: all 0.2s ease;
+      margin-top: auto;
+    }
+
+    .landing-pricing-btn:hover {
+      background: #155379;
+      border-color: #155379;
+      color: #ffffff;
+    }
+
+    .landing-pricing-btn.starter {
+      background: transparent;
+      border: 1px solid #e5e7eb;
+      color: #374151;
+    }
+
+    .landing-pricing-btn.starter:hover {
+      background: #f9fafb;
+      border-color: #e5e7eb;
+      color: #111827;
     }
 
     @media(max-width:991px){
@@ -888,7 +1019,7 @@
           align-items: center;
           justify-content: center;
           padding: 10px 28px;
-          background: linear-gradient(135deg, #1C6494, #2563eb);
+          background: #1C6494;
           color: white;
           border: none;
           border-radius: 8px;
@@ -999,7 +1130,7 @@
             <a href="<?= site_url('auth/register'); ?>" class="btn btn-get-started" style="padding: 12px 28px !important;">
               Mulai Sekarang
             </a>
-            <a href="#features" class="btn" style="background: transparent; border: 2px solid #1C6494; color: #1C6494; padding: 10px 26px; border-radius: 10px; font-weight: 600; transition: all 0.3s;">
+            <a href="#features" class="btn" style="background: transparent; border: 1px solid #1C6494; color: #1C6494; padding: 10px 26px; border-radius: 10px; font-weight: 600; transition: all 0.3s;">
               Yuk, Kenali Lebih lanjut!
             </a>
           </div>
@@ -1048,7 +1179,7 @@
                     <span style="font-size: 13px; font-weight: 700; color: #1C6494;">48%</span>
                   </div>
                   <div style="background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
-                    <div style="background: linear-gradient(90deg, #60a5fa, #3b82f6); width: 48%; height: 100%; border-radius: 4px;"></div>
+                    <div style="background: #1C6494; width: 48%; height: 100%; border-radius: 4px;"></div>
                   </div>
                 </div>
                 
@@ -1058,7 +1189,7 @@
                     <span style="font-size: 13px; font-weight: 700; color: #1C6494;">35%</span>
                   </div>
                   <div style="background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
-                    <div style="background: linear-gradient(90deg, #60a5fa, #3b82f6); width: 35%; height: 100%; border-radius: 4px;"></div>
+                    <div style="background: #1C6494; width: 35%; height: 100%; border-radius: 4px;"></div>
                   </div>
                 </div>
                 
@@ -1068,21 +1199,21 @@
                     <span style="font-size: 13px; font-weight: 700; color: #1C6494;">30%</span>
                   </div>
                   <div style="background: #e2e8f0; height: 8px; border-radius: 4px; overflow: hidden;">
-                    <div style="background: linear-gradient(90deg, #60a5fa, #3b82f6); width: 30%; height: 100%; border-radius: 4px;"></div>
+                    <div style="background: #1C6494; width: 30%; height: 100%; border-radius: 4px;"></div>
                   </div>
                 </div>
               </div>
               
               <!-- Center: Vertical Bar Chart -->
               <div style="display: flex; align-items: flex-end; gap: 10px; height: 110px; padding: 0 10px;">
-                <div style="background: linear-gradient(to top, #3b82f6, #60a5fa); width: 20px; height: 75%; border-radius: 6px 6px 0 0;"></div>
-                <div style="background: linear-gradient(to top, #3b82f6, #60a5fa); width: 20px; height: 90%; border-radius: 6px 6px 0 0;"></div>
-                <div style="background: linear-gradient(to top, #3b82f6, #60a5fa); width: 20px; height: 60%; border-radius: 6px 6px 0 0;"></div>
-                <div style="background: linear-gradient(to top, #3b82f6, #60a5fa); width: 20px; height: 50%; border-radius: 6px 6px 0 0;"></div>
+                <div style="background: #1C6494; width: 20px; height: 75%; border-radius: 6px 6px 0 0;"></div>
+                <div style="background: #1C6494; width: 20px; height: 90%; border-radius: 6px 6px 0 0;"></div>
+                <div style="background: #1C6494; width: 20px; height: 60%; border-radius: 6px 6px 0 0;"></div>
+                <div style="background: #1C6494; width: 20px; height: 50%; border-radius: 6px 6px 0 0;"></div>
               </div>
               
               <!-- Right: AI Health Score Card -->
-              <div style="background: linear-gradient(135deg, #1C6494, #2563eb); color: white; padding: 24px 28px; border-radius: 16px; text-align: center; min-width: 150px;">
+              <div style="background: #1C6494; color: white; padding: 24px 28px; border-radius: 16px; text-align: center; min-width: 150px;">
                 <div style="display: flex; align-items: center; gap: 8px; justify-content: center; margin-bottom: 12px;">
                   <svg width="18" height="18" viewBox="0 0 16 16" fill="white" opacity="0.9">
                     <circle cx="8" cy="8" r="6.5" stroke="white" stroke-width="1.2" fill="none"/>
@@ -1121,7 +1252,7 @@
       <!-- AI Advisor -->
       <div class="col-md-6 col-lg-3">
         <div style="background: white; padding: 36px 28px; border-radius: 20px; box-shadow: 0 4px 20px rgba(28, 100, 148, 0.08); height: 100%; transition: all 0.3s; border: 2px solid rgba(255, 255, 255, 0.8); text-align: center;">
-          <div style="width: 80px; height: 80px; border-radius: 16px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #E2E8FF, #C7D2FE);">
+          <div style="width: 80px; height: 80px; border-radius: 16px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; background: #E2E8FF;">
             <img src="assets/icons/robot.png" width="46" alt="AI Advisor">
           </div>
           <h5 style="font-size: 1.2rem; font-weight: 700; color: #1e293b; margin-bottom: 14px;">AI Advisor</h5>
@@ -1133,7 +1264,7 @@
       <!-- Kalkulator HPP -->
       <div class="col-md-6 col-lg-3">
         <div style="background: white; padding: 36px 28px; border-radius: 20px; box-shadow: 0 4px 20px rgba(28, 100, 148, 0.08); height: 100%; transition: all 0.3s; border: 2px solid rgba(255, 255, 255, 0.8); text-align: center;">
-          <div style="width: 80px; height: 80px; border-radius: 16px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #E2E8FF, #C7D2FE);">
+          <div style="width: 80px; height: 80px; border-radius: 16px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; background: #E2E8FF;">
             <img src="assets/icons/abacus.png" width="46" alt="Kalkulator HPP">
           </div>
           <h5 style="font-size: 1.2rem; font-weight: 700; color: #1e293b; margin-bottom: 14px;">Kalkulator HPP</h5>
@@ -1145,7 +1276,7 @@
       <!-- Pencatatan Keuangan -->
       <div class="col-md-6 col-lg-3">
         <div style="background: white; padding: 36px 28px; border-radius: 20px; box-shadow: 0 4px 20px rgba(28, 100, 148, 0.08); height: 100%; transition: all 0.3s; border: 2px solid rgba(255, 255, 255, 0.8); text-align: center;">
-          <div style="width: 80px; height: 80px; border-radius: 16px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #E2E8FF, #C7D2FE);">
+          <div style="width: 80px; height: 80px; border-radius: 16px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; background: #E2E8FF;">
             <img src="assets/icons/money-bags.png" width="46" alt="Pencatatan Keuangan">
           </div>
           <h5 style="font-size: 1.2rem; font-weight: 700; color: #1e293b; margin-bottom: 14px;">Pencatatan Keuangan</h5>
@@ -1157,7 +1288,7 @@
       <!-- Manajemen Risiko -->
       <div class="col-md-6 col-lg-3">
         <div style="background: white; padding: 36px 28px; border-radius: 20px; box-shadow: 0 4px 20px rgba(28, 100, 148, 0.08); height: 100%; transition: all 0.3s; border: 2px solid rgba(255, 255, 255, 0.8); text-align: center;">
-          <div style="width: 80px; height: 80px; border-radius: 16px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #E2E8FF, #C7D2FE);">
+          <div style="width: 80px; height: 80px; border-radius: 16px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; background: #E2E8FF;">
             <img src="assets/icons/shield.png" width="46" alt="Manajemen Risiko">
           </div>
           <h5 style="font-size: 1.2rem; font-weight: 700; color: #1e293b; margin-bottom: 14px;">Manajemen Risiko</h5>
@@ -1170,7 +1301,7 @@
 
     <!-- Button -->
     <div>
-      <a href="<?= site_url('auth/login'); ?>" style="background: linear-gradient(135deg, #1C6494, #2563eb); color: white; padding: 14px 40px; border-radius: 12px; font-weight: 700; text-decoration: none; display: inline-block; box-shadow: 0 8px 24px rgba(28, 100, 148, 0.3); transition: all 0.3s;">
+      <a href="<?= site_url('auth/login'); ?>" style="background: #1C6494; color: white; padding: 14px 40px; border-radius: 12px; font-weight: 700; text-decoration: none; display: inline-block; box-shadow: 0 8px 24px rgba(28, 100, 148, 0.3); transition: all 0.3s;">
         Lihat Semua Fitur
       </a>
     </div>
@@ -1179,11 +1310,11 @@
 </section>
 
 <!-- PENAWARAN SPESIAL -->
-<section id="penawaran" class="py-5" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); position: relative; overflow: hidden;">
+<section id="penawaran" class="py-5" style="background: #f1f5f9; position: relative; overflow: hidden;">
   
   <!-- Decorative Elements -->
-  <div style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: linear-gradient(135deg, rgba(28, 100, 148, 0.08), rgba(37, 99, 235, 0.08)); border-radius: 50%; filter: blur(40px);"></div>
-  <div style="position: absolute; bottom: -80px; right: -80px; width: 300px; height: 300px; background: linear-gradient(135deg, rgba(255, 193, 7, 0.08), rgba(255, 152, 0, 0.08)); border-radius: 50%; filter: blur(60px);"></div>
+  <div style="position: absolute; top: -50px; left: -50px; width: 200px; height: 200px; background: rgba(28, 100, 148, 0.08); border-radius: 50%; filter: blur(40px);"></div>
+  <div style="position: absolute; bottom: -80px; right: -80px; width: 300px; height: 300px; background: rgba(255, 193, 7, 0.08); border-radius: 50%; filter: blur(60px);"></div>
   
   <div class="container" style="position: relative; z-index: 2;">
     <div class="row align-items-center">
@@ -1227,30 +1358,29 @@
           
           <!-- Starter Card -->
           <div class="col-md-6">
-            <div style="background: linear-gradient(135deg, #ffe4e8 0%, #ffc9d1 100%); padding: 32px 28px; border-radius: 24px; box-shadow: 0 8px 24px rgba(231, 76, 60, 0.15); height: 100%; transition: all 0.3s; border: 2px solid rgba(255, 255, 255, 0.8); position: relative;">
-              <div style="position: absolute; top: 20px; right: 20px;">
-                <span style="background: white; color: #e74c3c; font-size: 10px; font-weight: 700; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;">Most Popular</span>
+            <div class="landing-pricing-card starter">
+              <span class="landing-pricing-badge">MOST POPULAR</span>
+              <h6 class="landing-plan-name">Starter</h6>
+              <p class="landing-plan-subtitle">Mulai Perjalanan</p>
+              <div style="margin-bottom: 20px;">
+                <h3 class="landing-plan-price">Rp0</h3>
+                <p class="landing-plan-period">Gratis Selamanya</p>
               </div>
-              <h6 style="font-size: 0.85rem; font-weight: 700; color: #e74c3c; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Starter</h6>
-              <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Mulai Perjalanan</p>
-              <div style="margin-bottom: 24px;">
-                <h3 style="font-size: 3rem; font-weight: 800; color: #e74c3c; line-height: 1; margin-bottom: 4px;">
-                  Rp<span style="font-size: 3.5rem;">0</span>
-                </h3>
-                <p style="font-size: 0.9rem; color: #666; margin: 0;">Gratis Selamanya</p>
-              </div>
-              <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> 3 AI Advisor/bulan
+              <ul class="landing-feature-list">
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>3 AI Advisor/bulan</span>
                 </li>
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Max 20 transaksi
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Max 20 transaksi</span>
                 </li>
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Dashboard dasar
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Dashboard dasar</span>
                 </li>
               </ul>
-              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" style="background: #e74c3c; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s;">
+              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" class="landing-pricing-btn starter">
                 Pilih Paket
               </a>
             </div>
@@ -1258,30 +1388,29 @@
 
           <!-- Essential Card -->
           <div class="col-md-6">
-            <div style="background: linear-gradient(135deg, #d4e8f7 0%, #b3d9f2 100%); padding: 32px 28px; border-radius: 24px; box-shadow: 0 8px 24px rgba(28, 100, 148, 0.2); height: 100%; transition: all 0.3s; border: 3px solid #1C6494; position: relative; transform: scale(1.02);">
-              <div style="position: absolute; top: 20px; right: 20px;">
-                <span style="background: linear-gradient(135deg, #FFD700, #FFA500); color: #1C6494; font-size: 10px; font-weight: 700; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);">PROMO</span>
+            <div class="landing-pricing-card essential">
+              <span class="landing-pricing-badge">PROMO</span>
+              <h6 class="landing-plan-name">Essential</h6>
+              <p class="landing-plan-subtitle">Otomatisasi Efisien</p>
+              <div style="margin-bottom: 20px;">
+                <h3 class="landing-plan-price">Rp18K</h3>
+                <p class="landing-plan-period">per bulan</p>
               </div>
-              <h6 style="font-size: 0.85rem; font-weight: 700; color: #1C6494; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Essential</h6>
-              <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Otomatisasi Efisien</p>
-              <div style="margin-bottom: 24px;">
-                <h3 style="font-size: 3rem; font-weight: 800; color: #1C6494; line-height: 1; margin-bottom: 4px;">
-                  Rp<span style="font-size: 3.5rem;">18K</span>
-                </h3>
-                <p style="font-size: 0.9rem; color: #666; margin: 0;">per bulan</p>
-              </div>
-              <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> 10 AI Advisor/bulan
+              <ul class="landing-feature-list">
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>10 AI Advisor/bulan</span>
                 </li>
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Unlimited pencatatan
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Unlimited pencatatan</span>
                 </li>
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Export PDF
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Export PDF</span>
                 </li>
               </ul>
-              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" style="background: #1C6494; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s; box-shadow: 0 4px 16px rgba(28, 100, 148, 0.3);">
+              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" class="landing-pricing-btn">
                 Pilih Paket
               </a>
             </div>
@@ -1289,30 +1418,29 @@
 
           <!-- Growth Card -->
           <div class="col-md-6">
-            <div style="background: linear-gradient(135deg, #e9dcf8 0%, #d4c5ed 100%); padding: 32px 28px; border-radius: 24px; box-shadow: 0 8px 24px rgba(155, 89, 255, 0.15); height: 100%; transition: all 0.3s; border: 2px solid rgba(255, 255, 255, 0.8); position: relative;">
-              <div style="position: absolute; top: 20px; right: 20px;">
-                <span style="background: linear-gradient(135deg, #ff9800, #f57c00); color: white; font-size: 10px; font-weight: 700; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);">POPULER</span>
+            <div class="landing-pricing-card growth">
+              <span class="landing-pricing-badge">POPULER</span>
+              <h6 class="landing-plan-name">Growth</h6>
+              <p class="landing-plan-subtitle">Kembangkan Bisnis</p>
+              <div style="margin-bottom: 20px;">
+                <h3 class="landing-plan-price">Rp45K</h3>
+                <p class="landing-plan-period">per bulan</p>
               </div>
-              <h6 style="font-size: 0.85rem; font-weight: 700; color: #9b59ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Growth</h6>
-              <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Kembangkan Bisnis</p>
-              <div style="margin-bottom: 24px;">
-                <h3 style="font-size: 3rem; font-weight: 800; color: #9b59ff; line-height: 1; margin-bottom: 4px;">
-                  Rp<span style="font-size: 3.5rem;">45K</span>
-                </h3>
-                <p style="font-size: 0.9rem; color: #666; margin: 0;">per bulan</p>
-              </div>
-              <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Unlimited AI Advisor
+              <ul class="landing-feature-list">
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Unlimited AI Advisor</span>
                 </li>
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> 5 Analisis kompetitor
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>5 Analisis kompetitor</span>
                 </li>
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Smart Alert
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Smart Alert</span>
                 </li>
               </ul>
-              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" style="background: #9b59ff; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s;">
+              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" class="landing-pricing-btn">
                 Pilih Paket
               </a>
             </div>
@@ -1320,30 +1448,29 @@
 
           <!-- Elite Card -->
           <div class="col-md-6">
-            <div style="background: linear-gradient(135deg, #fff4d9 0%, #ffe9b3 100%); padding: 32px 28px; border-radius: 24px; box-shadow: 0 8px 24px rgba(255, 152, 0, 0.15); height: 100%; transition: all 0.3s; border: 2px solid rgba(255, 255, 255, 0.8); position: relative;">
-              <div style="position: absolute; top: 20px; right: 20px;">
-                <span style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; font-size: 10px; font-weight: 700; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);">TERBAIK</span>
+            <div class="landing-pricing-card elite">
+              <span class="landing-pricing-badge">TERBAIK</span>
+              <h6 class="landing-plan-name">Elite</h6>
+              <p class="landing-plan-subtitle">Pendampingan Personal</p>
+              <div style="margin-bottom: 20px;">
+                <h3 class="landing-plan-price">Rp85K</h3>
+                <p class="landing-plan-period">per bulan</p>
               </div>
-              <h6 style="font-size: 0.85rem; font-weight: 700; color: #ff9800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Elite</h6>
-              <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Pendampingan Personal</p>
-              <div style="margin-bottom: 24px;">
-                <h3 style="font-size: 3rem; font-weight: 800; color: #ff9800; line-height: 1; margin-bottom: 4px;">
-                  Rp<span style="font-size: 3.5rem;">85K</span>
-                </h3>
-                <p style="font-size: 0.9rem; color: #666; margin: 0;">per bulan</p>
-              </div>
-              <ul style="list-style: none; padding: 0; margin: 0 0 24px 0;">
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> 2 sesi konsultasi 1-on-1
+              <ul class="landing-feature-list">
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>2 sesi konsultasi 1-on-1</span>
                 </li>
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Unlimited analisis
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Unlimited analisis</span>
                 </li>
-                <li style="padding: 8px 0; color: #475569; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;">
-                  <span style="color: #22c55e; font-size: 1.1rem;">✓</span> Priority Support
+                <li>
+                  <svg class="landing-feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <span>Priority Support</span>
                 </li>
               </ul>
-              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" style="background: #ff9800; color: white; padding: 14px 0; border-radius: 12px; font-weight: 700; text-decoration: none; display: block; text-align: center; transition: all 0.3s;">
+              <a href="<?= site_url('auth/login'); ?>?redirect=subscription/pricing" class="landing-pricing-btn">
                 Pilih Paket
               </a>
             </div>
@@ -1387,7 +1514,7 @@
           <!-- Card 1 -->
           <div class="col-md-6">
             <div class="why-box">
-              <div class="why-icon" style="background: linear-gradient(135deg, #E2E8FF, #C7D2FE);">
+              <div class="why-icon" style="background: #E2E8FF;">
                 <img src="assets/icons/target.png" width="42">
               </div>
               <h6>Mudah Dipahami</h6>
@@ -1398,7 +1525,7 @@
           <!-- Card 2 -->
           <div class="col-md-6">
             <div class="why-box">
-              <div class="why-icon" style="background: linear-gradient(135deg, #FEE2E2, #FECACA);">
+              <div class="why-icon" style="background: #FEE2E2;">
                 <img src="assets/icons/energy.png" width="42">
               </div>
               <h6>Hemat Waktu</h6>
@@ -1409,7 +1536,7 @@
           <!-- Card 3 -->
           <div class="col-md-6">
             <div class="why-box">
-              <div class="why-icon" style="background: linear-gradient(135deg, #D1FAE5, #A7F3D0);">
+              <div class="why-icon" style="background: #D1FAE5;">
                 <img src="assets/icons/partners.png" width="42">
               </div>
               <h6>Dukungan Penuh</h6>
@@ -1420,7 +1547,7 @@
           <!-- Card 4 -->
           <div class="col-md-6">
             <div class="why-box">
-              <div class="why-icon" style="background: linear-gradient(135deg, #FEE2E2, #FECACA);">
+              <div class="why-icon" style="background: #FEE2E2;">
                 <svg width="42" height="42" viewBox="0 0 24 24" fill="#ef4444">
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.73-2.77-.01-2.2-1.9-2.96-3.66-3.42z"/>
                 </svg>

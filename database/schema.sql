@@ -21,6 +21,10 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` VARCHAR(255),
   `nama_usaha` VARCHAR(100),
   `jenis_usaha` VARCHAR(100),
+  `advisor_modal` DECIMAL(18,2) NULL,
+  `advisor_minat` VARCHAR(100) NULL,
+  `advisor_lokasi` VARCHAR(100) NULL,
+  `advisor_tujuan` VARCHAR(150) NULL,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX `idx_google_id` (`google_id`)
@@ -77,6 +81,9 @@ CREATE TABLE IF NOT EXISTS `pencatatan_keuangan` (
 CREATE TABLE IF NOT EXISTS `kalkulator_hpp` (
   `id_hpp` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_user` INT(8) UNSIGNED NOT NULL,
+  `nama_produk` VARCHAR(250),
+  `kategori` VARCHAR(100),
+  `jumlah_produksi` INT,
   `bahan` DECIMAL(14,2),
   `tenaga_kerja` DECIMAL(14,2),
   `total_biaya` DECIMAL(18,2),

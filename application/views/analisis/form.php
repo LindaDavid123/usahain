@@ -1,375 +1,647 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php
+$isEdit = isset($produk);
+$userName = (string) ($this->session->userdata('nama') ?: 'User');
+$userEmail = (string) ($this->session->userdata('email') ?: '-');
+$avatar = strtoupper(substr($userName, 0, 1));
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo isset($produk) ? 'Edit Analisis' : 'Tambah Analisis'; ?> - Usahain</title>
+    <title><?= $isEdit ? 'Edit Analisis Produk' : 'Tambah Analisis Produk Baru'; ?> - Usahain</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --primary: #1C6494;
-            --primary-dark: #144d73;
-            --success: #2ecc71;
-            --danger: #e74c3c;
-            --text: #2c3e50;
-            --text-light: #7f8c8d;
-            --bg-light: #f8f9fa;
-            --border: #e1e8ed;
+            --primary: #1c6494;
+            --primary-dark: #175379;
+            --text: #111827;
+            --text-secondary: #6b7280;
+            --label: #374151;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --danger: #dc2626;
         }
 
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
         }
 
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 260px;
+            background: #fff;
+            border-right: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            z-index: 999;
+            transition: all 0.3s;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
             align-items: center;
         }
 
-        .navbar h2 {
-            color: var(--primary);
-            font-size: 24px;
-            font-weight: 600;
-        }
-
-        .navbar a {
-            color: var(--primary);
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             text-decoration: none;
-            padding: 10px 20px;
+            color: #1f6b99;
+            font-size: 16px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .sidebar-logo img {
+            width: 40px;
+            height: 40px;
             border-radius: 8px;
-            transition: all 0.3s ease;
-            font-weight: 500;
         }
 
-        .navbar a:hover {
-            background: var(--primary);
-            color: white;
+        .sidebar-menu {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 12px;
+            list-style: none;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .form-header-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-
-        .form-header h2 {
-            color: var(--primary-dark);
-            font-size: 28px;
-            font-weight: 700;
+        .sidebar-menu-item {
             margin-bottom: 8px;
         }
 
-        .form-header p {
-            color: var(--text-light);
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--text);
-            font-weight: 600;
-            font-size: 14px;
-            letter-spacing: 0.3px;
-        }
-
-        label span.required {
-            color: var(--danger);
-            margin-left: 3px;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-size: 15px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-light);
-            transition: all 0.3s ease;
-            color: var(--text);
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: white;
-            box-shadow: 0 0 0 4px rgba(28, 100, 148, 0.1);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 140px;
-            line-height: 1.6;
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-prefix {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-            font-weight: 600;
-        }
-
-        .input-group input {
-            padding-left: 45px;
-        }
-
-        .button-group {
+        .sidebar-menu-link {
             display: flex;
-            gap: 12px;
-            margin-top: 35px;
+            align-items: center;
+            gap: 0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
         }
 
-        .btn {
-            flex: 1;
-            padding: 16px 32px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
+        .sidebar-menu-link:hover {
+            background: var(--bg);
+            color: #1f6b99;
+            transform: translateX(4px);
+        }
+
+        .sidebar-menu-link.active {
+            background: linear-gradient(135deg, #1f6b99 0%, #3a88ba 100%);
+            color: #fff;
             font-weight: 600;
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(31, 107, 153, 0.25);
+        }
+
+        .sidebar-menu-icon,
+        .sidebar-menu-icon i,
+        .sidebar-menu-icon svg {
+            display: none;
+            width: 18px;
+            height: 18px;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-menu-badge {
+            margin-left: auto;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: rgba(31, 107, 153, 0.1);
+            color: #1f6b99;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu-link:hover .sidebar-menu-badge {
+            background: rgba(31, 107, 153, 0.2);
+        }
+
+        .sidebar-menu-link.active .sidebar-menu-badge {
+            background: #1c6494;
+            color: #fff;
+        }
+
+        body.sidebar-collapsed .sidebar-logo-text,
+        body.sidebar-collapsed .sidebar-menu-text,
+        body.sidebar-collapsed .sidebar-menu-badge {
+            display: none;
+        }
+
+        .main-wrapper {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            min-height: 100vh;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        body.sidebar-collapsed .main-wrapper {
+            margin-left: 80px;
+            width: calc(100% - 80px);
+        }
+
+        .top-header {
+            height: 70px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .header-left,
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .sidebar-toggle {
+            width: 34px;
+            height: 34px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fff;
+            color: #4b5563;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1c6494;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
             text-decoration: none;
+            color: inherit;
+            transition: all 0.3s;
+        }
+
+        .header-user:hover {
+            background: rgba(31, 107, 153, 0.08);
+        }
+
+        .header-user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1f6b99 0%, #7ec8e3 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .header-user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-user-name {
+            font-size: 13px;
+            color: #111827;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .header-user-email {
+            font-size: 11px;
+            color: #6b7280;
+            line-height: 1.2;
+        }
+
+        .content {
+            padding: 40px 32px;
+        }
+
+        .form-shell {
+            max-width: 480px;
+            width: 100%;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .back-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1.5px solid #e5e7eb;
+            background: #f3f4f6;
+            color: #4b5563;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            flex-shrink: 0;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
+        .back-icon:hover {
+            background: #e5e7eb;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(28, 100, 148, 0.4);
+        .back-icon i,
+        .back-icon svg {
+            width: 16px;
+            height: 16px;
         }
 
-        .btn-secondary {
-            background: white;
-            color: var(--text);
-            border: 2px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-light);
-            transform: translateY(-2px);
+        .form-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111827;
+            line-height: 1.25;
         }
 
         .validation-errors {
-            background: linear-gradient(135deg, #ffe3e3 0%, #ffcdd2 100%);
-            color: #b71c1c;
-            padding: 18px 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            font-size: 14px;
-            border-left: 5px solid var(--danger);
-            animation: slideIn 0.3s ease;
-        }
-
-        .success-message {
-            background: linear-gradient(135deg, #e3ffe3 0%, #c8e6c9 100%);
-            color: #1b5e20;
-            padding: 18px 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            font-size: 14px;
-            border-left: 5px solid var(--success);
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-tip {
-            background: var(--bg-light);
-            padding: 15px;
+            margin-bottom: 14px;
+            border: 1px solid #fecaca;
+            background: #fef2f2;
+            color: #991b1b;
             border-radius: 10px;
-            border-left: 4px solid var(--primary);
-            margin-bottom: 25px;
+            padding: 10px 12px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-control {
+            width: 100%;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 9px 12px;
             font-size: 13px;
-            color: var(--text-light);
-            display: flex;
-            gap: 10px;
-            align-items: start;
+            color: #111827;
+            background: #fff;
+            font-family: inherit;
         }
 
-        .form-tip::before {
-            content: '💡';
-            font-size: 18px;
+        .form-control:focus {
+            outline: none;
+            border-color: #1c6494;
+            box-shadow: 0 0 0 3px rgba(28, 100, 148, 0.1);
         }
 
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            background: #1c6494;
+            color: #fff;
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #175379;
+        }
+
+        @media (max-width: 1024px) {
+            .main-wrapper {
+                margin-left: 0;
+                width: 100%;
             }
 
-            .navbar {
-                flex-direction: column;
-                gap: 15px;
+            .sidebar {
+                transform: translateX(-100%);
             }
 
-            .container {
-                padding: 25px 20px;
+            .sidebar.mobile-open {
+                transform: translateX(0);
             }
 
-            .form-header h2 {
-                font-size: 22px;
+            .sidebar-toggle {
+                display: inline-flex;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .top-header {
+                padding: 16px 20px;
+                height: 60px;
             }
 
-            .button-group {
-                flex-direction: column;
+            .header-left {
+                gap: 12px;
+            }
+
+            .header-title {
+                font-size: 16px;
+            }
+
+            .content {
+                padding: 20px 16px;
+            }
+
+            .form-shell {
+                padding: 14px;
+            }
+
+            .form-header {
+                margin-bottom: 14px;
+            }
+
+            .form-group {
+                margin-bottom: 12px;
+            }
+
+            .header-user-info {
+                display: none;
+            }
+        }
+
+        @media (max-width: 479px) {
+            .top-header {
+                padding: 12px 16px;
+                height: 56px;
+            }
+
+            .header-title {
+                font-size: 14px;
+            }
+
+            .header-right {
+                gap: 8px;
+            }
+
+            .content {
+                padding: 16px 12px;
+            }
+
+            .form-shell {
+                padding: 12px;
+            }
+
+            .form-header {
+                margin-bottom: 12px;
+            }
+
+            .form-group {
+                margin-bottom: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <h2><?php echo isset($produk) ? '✏️ Edit Analisis' : '➕ Tambah Analisis'; ?></h2>
-        <a href="<?php echo site_url('analisis'); ?>">← Kembali ke Daftar</a>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="#" onclick="toggleSidebar(); return false;" class="sidebar-logo" title="Klik untuk buka/tutup sidebar">
+                <img src="<?= base_url('assets/logo.png'); ?>" alt="Usahain">
+                <span class="sidebar-logo-text">Usahain</span>
+            </a>
+        </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('auth/dashboard'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="layout-grid"></i></span>
+                    <span class="sidebar-menu-text">Dashboard</span>
+                    <span class="sidebar-menu-badge">Home</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('advisor'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="sparkles"></i></span>
+                    <span class="sidebar-menu-text">AI Advisor</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('hpp'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="calculator"></i></span>
+                    <span class="sidebar-menu-text">Kalkulator HPP</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('keuangan'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="wallet"></i></span>
+                    <span class="sidebar-menu-text">Pencatatan Keuangan</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('risiko'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="shield-alert"></i></span>
+                    <span class="sidebar-menu-text">Manajemen Risiko</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('auth/info_bisnis'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="book-open"></i></span>
+                    <span class="sidebar-menu-text">Informasi Bisnis</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="sidebar-toggle" id="mobileMenuBtn" type="button" aria-label="Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div class="header-title">Analisis Produk</div>
+            </div>
+            <div class="header-right">
+                <a href="<?= site_url('user/profile'); ?>" class="header-user">
+                    <div class="header-user-avatar"><?= htmlspecialchars($avatar); ?></div>
+                    <div class="header-user-info">
+                        <div class="header-user-name"><?= htmlspecialchars($userName); ?></div>
+                        <div class="header-user-email"><?= htmlspecialchars($userEmail); ?></div>
+                    </div>
+                </a>
+            </div>
+        </header>
+
+        <main class="content">
+            <section class="form-shell">
+                <div class="form-header">
+                    <a href="<?= site_url('analisis'); ?>" class="back-icon" aria-label="Kembali ke daftar">
+                        <i data-lucide="arrow-left"></i>
+                    </a>
+                    <h1 class="form-title"><?= $isEdit ? 'Edit Analisis Produk' : 'Tambah Analisis Produk Baru'; ?></h1>
+                </div>
+
+                <?php if (validation_errors()): ?>
+                    <div class="validation-errors">
+                        <?= validation_errors(); ?>
+                    </div>
+                <?php endif; ?>
+
+                <form method="post" autocomplete="off">
+                    <div class="form-group">
+                        <label for="nama_produk">Nama Produk</label>
+                        <input
+                            type="text"
+                            id="nama_produk"
+                            name="nama_produk"
+                            class="form-control"
+                            placeholder="Contoh: Nasi Goreng Spesial"
+                            value="<?= $isEdit ? htmlspecialchars($produk->nama_produk) : set_value('nama_produk'); ?>"
+                            autofocus
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="penjualan">Penjualan</label>
+                        <input
+                            type="number"
+                            id="penjualan"
+                            name="penjualan"
+                            class="form-control"
+                            step="1"
+                            min="0"
+                            placeholder="50000"
+                            value="<?= $isEdit ? (float) $produk->penjualan : set_value('penjualan'); ?>"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="biaya_produksi">Biaya Produksi</label>
+                        <input
+                            type="number"
+                            id="biaya_produksi"
+                            name="biaya_produksi"
+                            class="form-control"
+                            step="1"
+                            min="0"
+                            placeholder="25000"
+                            value="<?= $isEdit ? (float) $produk->biaya_produksi : set_value('biaya_produksi'); ?>"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="analisis">Analisis Produk</label>
+                        <textarea
+                            id="analisis"
+                            name="analisis"
+                            class="form-control"
+                            placeholder="Deskripsikan keunggulan dan strategi produk ini"
+                            required
+                        ><?= $isEdit ? htmlspecialchars($produk->analisis) : set_value('analisis'); ?></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Simpan Analisis</button>
+                </form>
+            </section>
+        </main>
     </div>
 
-    <div class="container">
-        <div class="form-header">
-            <div class="form-header-icon"><?php echo isset($produk) ? '📝' : '🆕'; ?></div>
-            <h2><?php echo isset($produk) ? 'Edit Analisis Produk' : 'Tambah Analisis Produk Baru'; ?></h2>
-            <p><?php echo isset($produk) ? 'Perbarui data analisis produk Anda' : 'Isi form di bawah untuk menambahkan analisis produk'; ?></p>
-        </div>
+    <script>
+        function toggleSidebar() {
+            if (window.innerWidth <= 1024) {
+                return;
+            }
 
-        <?php if (validation_errors()): ?>
-            <div class="validation-errors">
-                <strong>⚠️ Terjadi Kesalahan:</strong><br>
-                <?php echo validation_errors(); ?>
-            </div>
-        <?php endif; ?>
+            document.body.classList.toggle('sidebar-collapsed');
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
 
-        <?php if (isset($success_message)): ?>
-            <div class="success-message">
-                <strong>✓ Berhasil!</strong><br>
-                <?php echo $success_message; ?>
-            </div>
-        <?php endif; ?>
+        const sidebar = document.getElementById('sidebar');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 
-        <div class="form-tip">
-            <div>Pastikan data yang Anda masukkan akurat untuk mendapatkan analisis yang tepat. Data penjualan dan biaya produksi akan digunakan untuk menghitung margin keuntungan.</div>
-        </div>
+        function updateResponsiveSidebar() {
+            if (window.innerWidth <= 1024) {
+                sidebar.classList.remove('collapsed');
+                document.body.classList.remove('sidebar-collapsed');
+                mobileMenuBtn.style.display = 'inline-flex';
+            } else {
+                sidebar.classList.remove('mobile-open');
+                mobileMenuBtn.style.display = 'none';
+            }
+        }
 
-        <form method="post" autocomplete="off">
-            <div class="form-group">
-                <label for="nama_produk">
-                    Nama Produk
-                    <span class="required">*</span>
-                </label>
-                <input 
-                    type="text" 
-                    id="nama_produk" 
-                    name="nama_produk" 
-                    placeholder="Contoh: Nasi Goreng Special" 
-                    value="<?php echo isset($produk) ? htmlspecialchars($produk->nama_produk) : set_value('nama_produk'); ?>" 
-                    required
-                >
-            </div>
+        mobileMenuBtn.addEventListener('click', function () {
+            sidebar.classList.toggle('mobile-open');
+        });
 
-            <div class="form-group">
-                <label for="penjualan">
-                    Penjualan (Rp)
-                    <span class="required">*</span>
-                </label>
-                <div class="input-group">
-                    <span class="input-prefix">Rp</span>
-                    <input 
-                        type="number" 
-                        id="penjualan" 
-                        name="penjualan" 
-                        step="1" 
-                        min="0" 
-                        placeholder="50000" 
-                        value="<?php echo isset($produk) ? $produk->penjualan : set_value('penjualan'); ?>" 
-                        required
-                    >
-                </div>
-            </div>
+        document.querySelectorAll('.sidebar-menu-link').forEach(function (link) {
+            link.addEventListener('click', function () {
+                if (window.innerWidth <= 1024) {
+                    sidebar.classList.remove('mobile-open');
+                }
+            });
+        });
 
-            <div class="form-group">
-                <label for="biaya_produksi">
-                    Biaya Produksi (Rp)
-                    <span class="required">*</span>
-                </label>
-                <div class="input-group">
-                    <span class="input-prefix">Rp</span>
-                    <input 
-                        type="number" 
-                        id="biaya_produksi" 
-                        name="biaya_produksi" 
-                        step="1" 
-                        min="0" 
-                        placeholder="25000" 
-                        value="<?php echo isset($produk) ? $produk->biaya_produksi : set_value('biaya_produksi'); ?>" 
-                        required
-                    >
-                </div>
-            </div>
+        window.addEventListener('resize', updateResponsiveSidebar);
+        updateResponsiveSidebar();
 
-            <div class="form-group">
-                <label for="analisis">
-                    Analisis Produk
-                    <span class="required">*</span>
-                </label>
-                <textarea 
-                    id="analisis" 
-                    name="analisis" 
-                    placeholder="Tulis analisis lengkap tentang produk ini, seperti keunggulan, kelemahan, peluang pasar, dan strategi pengembangan..." 
-                    required
-                ><?php echo isset($produk) ? htmlspecialchars($produk->analisis) : set_value('analisis'); ?></textarea>
-            </div>
-
-            <div class="button-group">
-                <button type="submit" class="btn btn-primary">
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

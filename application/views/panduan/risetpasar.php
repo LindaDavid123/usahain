@@ -243,7 +243,7 @@ $user = array_merge([
 </head>
 <body>
     <div class="container">
-        <a href="<?= site_url('dashboard/perencanaan'); ?>" class="back-button">← Kembali ke Dashboard</a>
+        <a href="<?= site_url('auth/dashboard'); ?>" class="back-button">← Kembali ke Dashboard</a>
 
         <div class="guide-header">
             <h1>🔍 Panduan Riset Pasar</h1>

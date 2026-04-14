@@ -280,7 +280,7 @@ $user = array_merge([
 </head>
 <body>
     <div class="container">
-        <a href="<?= site_url('dashboard/perencanaan'); ?>" class="back-button">← Kembali ke Dashboard</a>
+        <a href="<?= site_url('auth/dashboard'); ?>" class="back-button">← Kembali ke Dashboard</a>
 
         <div class="guide-header">
             <h1>📚 Panduan Memulai Bisnis UMKM</h1>
@@ -312,14 +312,14 @@ $user = array_merge([
                     <li>Tentukan harga yang kompetitif</li>
                 <div class="section-header">
                     <div class="section-number">2</div>
-                    <h2>Perencanaan Bisnis</h2>
+                    <h2>Strategi Bisnis</h2>
                 </div
             </div>
 
             <div class="guide-section">
-                <h2>2. Perencanaan Bisnis</h2>
+                <h2>2. Strategi Bisnis</h2>
                 <h3>Membuat Business Plan</h3>
-                <p>Setiap bisnis yang sukses dimulai dengan perencanaan yang matang. Business plan Anda harus mencakup:</p>
+                <p>Setiap bisnis yang sukses dimulai dengan persiapan yang matang. Business plan Anda harus mencakup:</p>
                 <ul>
                     <li>Deskripsi bisnis dan visi misi</li>
                     <li>Analisis pasar dan kompetitor</li>
@@ -466,7 +466,7 @@ $user = array_merge([
             <div class="guide-section">
                 <h2>Kesimpulan</h2>
             </div>
-                <p>Memulai bisnis UMKM memang memerlukan persiapan yang matang dan kerja keras. Namun dengan perencanaan yang baik, tekad yang kuat, dan pembelajaran berkelanjutan, Anda dapat membangun bisnis yang sukses dan berkelanjutan.</p>
+                <p>Memulai bisnis UMKM memang memerlukan persiapan yang matang dan kerja keras. Namun dengan strategi yang baik, tekad yang kuat, dan pembelajaran berkelanjutan, Anda dapat membangun bisnis yang sukses dan berkelanjutan.</p>
                 
                 <div class="highlight-box">
                     <strong>🚀 Semangat!</strong> Ingat bahwa setiap pengusaha sukses dimulai dari nol. Jangan takut untuk memulai, dan terus belajar dari pengalaman Anda.

@@ -89,40 +89,27 @@ class User extends CI_Controller {
             }
         }
 
-        $this->load->view('user/form');
+        // Legacy endpoint: route create diarahkan ke halaman registrasi aktif.
+        redirect('auth/register');
     }
 
-    // Edit user (form GET, submit POST)
+    // Edit profile user (dedicated page)
     public function edit($id = null)
     {
-        if (!$id) { show_404(); return; }
+        if (!$this->session->userdata('id_user')) {
+            redirect('auth/login');
+        }
+
+        $id = $id ?: $this->session->userdata('id_user');
+
         $user = $this->User_model->get($id);
         if (!$user) { show_404(); return; }
 
-        if ($this->input->method() === 'post') {
-            $this->form_validation->set_rules('nama', 'Nama', 'required|max_length[200]');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|max_length[250]');
-            $this->form_validation->set_rules('password', 'Password', 'min_length[6]');
-
-            if ($this->form_validation->run() === TRUE) {
-                $data = [
-                    'nama' => $this->input->post('nama'),
-                    'role' => $this->input->post('role'),
-                    'email' => $this->input->post('email'),
-                    'nama_usaha' => $this->input->post('nama_usaha'),
-                ];
-                $pwd = $this->input->post('password');
-                if ($pwd) {
-                    $data['password'] = password_hash($pwd, PASSWORD_BCRYPT);
-                }
-                $this->User_model->update($id, $data);
-                redirect('user');
-                return;
-            }
-        }
-
         $data['user'] = $user;
-        $this->load->view('user/form', $data);
+        $data['success'] = $this->session->flashdata('success_message');
+        $data['errors'] = $this->session->flashdata('error_messages') ?: [];
+
+        $this->load->view('user/edit_profile', $data);
     }
 
     // Delete user (show confirmation on GET, delete on POST)
@@ -386,6 +373,12 @@ class User extends CI_Controller {
             $this->form_validation->set_rules('nama', 'Nama Lengkap', 'required|max_length[200]');
             $this->form_validation->set_rules('nama_usaha', 'Nama Usaha', 'max_length[255]');
             $this->form_validation->set_rules('jenis_usaha', 'Jenis Usaha', 'max_length[100]');
+            if ($this->has_advisor_profile_columns()) {
+                $this->form_validation->set_rules('advisor_modal', 'Modal Bisnis', 'trim|numeric');
+                $this->form_validation->set_rules('advisor_minat', 'Minat Bisnis', 'trim|max_length[100]');
+                $this->form_validation->set_rules('advisor_lokasi', 'Lokasi Bisnis', 'trim|max_length[100]');
+                $this->form_validation->set_rules('advisor_tujuan', 'Tujuan Bisnis', 'trim|max_length[150]');
+            }
 
             if ($this->form_validation->run() === TRUE) {
                 $update_data = [
@@ -395,24 +388,90 @@ class User extends CI_Controller {
                     'updated_at' => date('Y-m-d H:i:s')
                 ];
 
+                if ($this->has_advisor_profile_columns()) {
+                    $advisor_modal = trim((string) $this->input->post('advisor_modal'));
+                    $update_data['advisor_modal'] = $advisor_modal !== '' ? (float) $advisor_modal : null;
+                    $update_data['advisor_minat'] = trim((string) $this->input->post('advisor_minat')) ?: null;
+                    $update_data['advisor_lokasi'] = trim((string) $this->input->post('advisor_lokasi')) ?: null;
+                    $update_data['advisor_tujuan'] = trim((string) $this->input->post('advisor_tujuan')) ?: null;
+                }
+
                 if ($this->User_model->update($id, $update_data)) {
                     // Update session
                     $this->session->set_userdata('nama', $this->input->post('nama'));
                     $this->session->set_userdata('nama_usaha', $this->input->post('nama_usaha'));
                     
                     $this->session->set_flashdata('success_message', 'Profil berhasil diperbarui!');
-                    redirect('user/settings');
+                    redirect('user/edit/' . $id);
                 } else {
                     $this->session->set_flashdata('error_messages', ['Gagal memperbarui profil']);
-                    redirect('user/settings');
+                    redirect('user/edit/' . $id);
                 }
             } else {
                 $this->session->set_flashdata('error_messages', $this->form_validation->error_array());
-                redirect('user/settings');
+                redirect('user/edit/' . $id);
             }
         }
 
-        redirect('user/settings');
+        redirect('user/edit/' . $id);
+    }
+
+    public function update_business_profile()
+    {
+        if (!$this->session->userdata('id_user')) {
+            redirect('auth/login');
+        }
+
+        $id_user = $this->session->userdata('id_user');
+        $redirect_url = 'user/profile/' . $id_user . '?tab=settings#data-bisnis-section';
+
+        if (!$this->has_advisor_profile_columns()) {
+            $this->session->set_flashdata('error', 'Kolom data bisnis advisor belum tersedia di database.');
+            redirect($redirect_url);
+            return;
+        }
+
+        if ($this->input->method() !== 'post') {
+            redirect($redirect_url);
+            return;
+        }
+
+        $this->form_validation->set_rules('advisor_modal', 'Modal', 'required|numeric|greater_than[0]');
+        $this->form_validation->set_rules('advisor_minat', 'Minat', 'required|min_length[2]|max_length[100]');
+        $this->form_validation->set_rules('advisor_lokasi', 'Lokasi', 'required|min_length[2]|max_length[100]');
+        $this->form_validation->set_rules('advisor_tujuan', 'Tujuan', 'required|min_length[2]|max_length[150]');
+
+        if ($this->form_validation->run() !== TRUE) {
+            $errors = $this->form_validation->error_array();
+            $first_error = reset($errors);
+            $this->session->set_flashdata('error', $first_error ?: 'Validasi data bisnis gagal.');
+            redirect($redirect_url);
+            return;
+        }
+
+        $update_data = [
+            'advisor_modal' => (float) $this->input->post('advisor_modal'),
+            'advisor_minat' => trim((string) $this->input->post('advisor_minat')),
+            'advisor_lokasi' => trim((string) $this->input->post('advisor_lokasi')),
+            'advisor_tujuan' => trim((string) $this->input->post('advisor_tujuan')),
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+
+        if ($this->User_model->update($id_user, $update_data)) {
+            $this->session->set_flashdata('success', 'Data bisnis untuk AI Advisor berhasil diperbarui.');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal memperbarui data bisnis AI Advisor.');
+        }
+
+        redirect($redirect_url);
+    }
+
+    private function has_advisor_profile_columns()
+    {
+        return $this->db->field_exists('advisor_modal', 'user')
+            && $this->db->field_exists('advisor_minat', 'user')
+            && $this->db->field_exists('advisor_lokasi', 'user')
+            && $this->db->field_exists('advisor_tujuan', 'user');
     }
 
     /**

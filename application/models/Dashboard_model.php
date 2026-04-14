@@ -36,12 +36,20 @@ class Dashboard_model extends CI_Model {
             ->where($date_filter, null, false)
             ->get('pencatatan_keuangan');
         $expense = $query_expense->row()->total ?? 0;
+
+        // Query jumlah transaksi untuk periode aktif.
+        $query_total = $this->db->select('COUNT(*) as total')
+            ->where('id_user', $id_user)
+            ->where($date_filter, null, false)
+            ->get('pencatatan_keuangan');
+        $total_transaksi = $query_total->row()->total ?? 0;
         
         return [
             'today_sales'   => (int)$sales,
             'today_expense' => (int)$expense,
             'today_profit'  => (int)($sales - $expense),
-            'margin'        => $sales > 0 ? round((($sales - $expense) / $sales) * 100, 1) : 0
+            'margin'        => $sales > 0 ? round((($sales - $expense) / $sales) * 100, 1) : 0,
+            'total_transaksi' => (int)$total_transaksi
         ];
     }
 

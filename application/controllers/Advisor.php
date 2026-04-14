@@ -15,8 +15,10 @@ class Advisor extends CI_Controller {
 
     public function index()
     {
-        // Show the advisor form directly as the main advisor page
-        $this->load->view('advisor/form');
+        if ($this->auto_create_from_saved_profile()) {
+            return;
+        }
+        $this->render_advisor_form();
     }
 
     public function view($id = null)
@@ -183,7 +185,10 @@ class Advisor extends CI_Controller {
 
     public function form()
     {
-        $this->load->view('advisor/form');
+        if ($this->auto_create_from_saved_profile()) {
+            return;
+        }
+        $this->render_advisor_form();
     }
 
     public function create()
@@ -213,31 +218,170 @@ class Advisor extends CI_Controller {
                 ]);
                 $this->session->set_flashdata('info', 'Anda menggunakan sesi tamu. Buat akun untuk menyimpan data secara permanen.');
             }
-            $this->form_validation->set_rules('modal', 'Modal Awal', 'required|numeric');
-            $this->form_validation->set_rules('lokasi', 'Lokasi Usaha', 'required|min_length[3]');
-            $this->form_validation->set_rules('minat', 'Jenis Usaha/Minat', 'required|min_length[3]');
-            if ($this->form_validation->run() === TRUE) {
-                $modal = $this->input->post('modal');
-                $lokasi = $this->input->post('lokasi');
-                $minat = $this->input->post('minat');
-                
-                // Generate AI recommendation based on input
-                $rekomendasi = $this->generate_recommendation($modal, $lokasi, $minat);
 
-                $data = [
-                    'id_user' => $id_user,
+            $use_saved_profile = $this->input->post('use_saved_profile') === '1';
+            $modal = null;
+            $lokasi = null;
+            $minat = null;
+            $tujuan = null;
+
+            if ($use_saved_profile) {
+                $saved_profile = $this->get_saved_profile_data($id_user);
+                if (!$saved_profile) {
+                    $this->session->set_flashdata('error', 'Data bisnis tersimpan belum lengkap. Mohon isi data terlebih dahulu.');
+                    redirect('advisor');
+                    return;
+                }
+
+                $modal = (float) $saved_profile['modal'];
+                $lokasi = $saved_profile['lokasi'];
+                $minat = $saved_profile['minat'];
+                $tujuan = $saved_profile['tujuan'];
+            } else {
+                $this->form_validation->set_rules('modal', 'Modal Awal', 'required|numeric');
+                $this->form_validation->set_rules('lokasi', 'Lokasi Usaha', 'required|min_length[3]');
+                $this->form_validation->set_rules('minat', 'Jenis Usaha/Minat', 'required|min_length[3]');
+                $this->form_validation->set_rules('tujuan', 'Tujuan Bisnis', 'required|min_length[2]');
+
+                if ($this->form_validation->run() !== TRUE) {
+                    $this->render_advisor_form();
+                    return;
+                }
+
+                $modal = (float) $this->input->post('modal');
+                $lokasi = trim((string) $this->input->post('lokasi'));
+                $minat = trim((string) $this->input->post('minat'));
+                $tujuan = trim((string) $this->input->post('tujuan'));
+
+                if ($modal <= 0 || $lokasi === '' || $minat === '' || $tujuan === '') {
+                    $this->session->set_flashdata('error', 'Mohon lengkapi data bisnis Anda.');
+                    $this->render_advisor_form();
+                    return;
+                }
+
+                // Simpan profil data bisnis pengguna agar AI Advisor bisa langsung digunakan di kunjungan berikutnya.
+                $this->save_profile_data($id_user, [
                     'modal' => $modal,
                     'lokasi' => $lokasi,
                     'minat' => $minat,
-                    'rekomendasi' => $rekomendasi,
-                    'riwayat_chat' => '',
-                ];
-                $insert_id = $this->Al_advisor_model->insert($data);
-                redirect('advisor/chat/'.$insert_id);
-                return;
+                    'tujuan' => $tujuan,
+                ]);
             }
+
+            // Generate AI recommendation based on input
+            $rekomendasi = $this->generate_recommendation($modal, $lokasi, $minat);
+
+            $data = [
+                'id_user' => $id_user,
+                'modal' => $modal,
+                'lokasi' => $lokasi,
+                'minat' => $minat,
+                'rekomendasi' => $rekomendasi,
+                'riwayat_chat' => '',
+            ];
+            $insert_id = $this->Al_advisor_model->insert($data);
+            redirect('advisor/chat/'.$insert_id);
+            return;
         }
+        $this->render_advisor_form();
+    }
+
+    private function render_advisor_form()
+    {
         $this->load->view('advisor/form');
+    }
+
+    private function auto_create_from_saved_profile()
+    {
+        $id_user = $this->session->userdata('id_user');
+        if (!$id_user) {
+            return false;
+        }
+
+        $saved_profile = $this->get_saved_profile_data($id_user);
+        if (!$saved_profile) {
+            return false;
+        }
+
+        $modal = (float) $saved_profile['modal'];
+        $lokasi = $saved_profile['lokasi'];
+        $minat = $saved_profile['minat'];
+
+        $rekomendasi = $this->generate_recommendation($modal, $lokasi, $minat);
+
+        $insert_id = $this->Al_advisor_model->insert([
+            'id_user' => $id_user,
+            'modal' => $modal,
+            'lokasi' => $lokasi,
+            'minat' => $minat,
+            'rekomendasi' => $rekomendasi,
+            'riwayat_chat' => '',
+        ]);
+
+        if (!$insert_id) {
+            return false;
+        }
+
+        redirect('advisor/chat/' . $insert_id);
+        return true;
+    }
+
+    private function get_saved_profile_data($id_user)
+    {
+        if (!$id_user || !$this->has_advisor_profile_columns()) {
+            return null;
+        }
+
+        $row = $this->db
+            ->select('advisor_modal, advisor_minat, advisor_lokasi, advisor_tujuan')
+            ->get_where('user', ['id_user' => $id_user])
+            ->row_array();
+
+        if (!$row) {
+            return null;
+        }
+
+        $modal = isset($row['advisor_modal']) ? (float) $row['advisor_modal'] : 0;
+        $minat = trim((string) ($row['advisor_minat'] ?? ''));
+        $lokasi = trim((string) ($row['advisor_lokasi'] ?? ''));
+        $tujuan = trim((string) ($row['advisor_tujuan'] ?? ''));
+
+        if ($modal <= 0 || $minat === '' || $lokasi === '' || $tujuan === '') {
+            return null;
+        }
+
+        return [
+            'modal' => $modal,
+            'modal_label' => 'Rp ' . number_format($modal, 0, ',', '.'),
+            'minat' => $minat,
+            'lokasi' => $lokasi,
+            'tujuan' => $tujuan,
+        ];
+    }
+
+    private function save_profile_data($id_user, array $profile_data)
+    {
+        if (!$id_user || !$this->has_advisor_profile_columns()) {
+            return false;
+        }
+
+        $payload = [
+            'advisor_modal' => isset($profile_data['modal']) ? (float) $profile_data['modal'] : null,
+            'advisor_minat' => trim((string) ($profile_data['minat'] ?? '')),
+            'advisor_lokasi' => trim((string) ($profile_data['lokasi'] ?? '')),
+            'advisor_tujuan' => trim((string) ($profile_data['tujuan'] ?? '')),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ];
+
+        return $this->db->where('id_user', $id_user)->update('user', $payload);
+    }
+
+    private function has_advisor_profile_columns()
+    {
+        return $this->db->field_exists('advisor_modal', 'user')
+            && $this->db->field_exists('advisor_minat', 'user')
+            && $this->db->field_exists('advisor_lokasi', 'user')
+            && $this->db->field_exists('advisor_tujuan', 'user');
     }
 
     public function edit($id = null)

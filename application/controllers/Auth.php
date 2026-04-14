@@ -9,6 +9,7 @@ class Auth extends CI_Controller
         parent::__construct();
         $this->load->model('Auth_model');
         $this->load->library('form_validation');
+        $this->Auth_model->ensure_default_admin_account();
     }
 
     /**
@@ -22,7 +23,7 @@ class Auth extends CI_Controller
             if ($redirect) {
                 redirect($redirect);
             }
-            redirect('auth/dashboard');
+            $this->redirect_by_role($this->session->userdata('role'));
         }
 
         if ($this->input->method() === 'post') {
@@ -35,8 +36,6 @@ class Auth extends CI_Controller
                 $user     = $this->Auth_model->login($email, $password);
 
                 if ($user) {
-                    // Hapus dashboard_type lama agar user bisa pilih ulang
-                    $this->session->unset_userdata('dashboard_type');
                     $this->session->set_userdata([
                         'id_user' => $user->id_user,
                         'nama'    => $user->nama,
@@ -52,7 +51,7 @@ class Auth extends CI_Controller
                         redirect($redirect);
                     }
 
-                    redirect('auth/dashboard_selection');
+                    $this->redirect_by_role($user->role);
                 } else {
                     $data['error'] = 'Email atau password salah.';
                 }
@@ -138,17 +137,11 @@ class Auth extends CI_Controller
             redirect('auth/login');
         }
 
-        // Cek apakah user sudah memilih tipe dashboard
-        $dashboard_type = $this->session->userdata('dashboard_type');
-
-        if (! $dashboard_type) {
-            // Jika belum memilih, tampilkan halaman pemilihan
-            $data['user'] = $this->session->userdata();
-            $this->load->view('auth/dashboard_selection', $data);
-            return;
+        if ($this->session->userdata('role') === 'admin') {
+            redirect('admin/dashboard');
         }
 
-        // Load dashboard sesuai tipe
+        // Dashboard tunggal: operasional
         $data['user'] = $this->session->userdata();
 
         // Load Dashboard Model untuk mendapatkan data
@@ -171,63 +164,20 @@ class Auth extends CI_Controller
             }
         }
 
-        if ($dashboard_type === 'planning') {
-            $this->load->view('auth/dashboard_planning', $data);
-        } else {
-            $this->load->view('auth/dashboard_operasional', $data);
-        }
+        $this->load->view('auth/dashboard_operasional', $data);
     }
 
-    /**
-     * Set Dashboard Type
-     */
-    public function set_dashboard_type($type = 'operasional')
+    private function redirect_by_role($role)
     {
-        if (! $this->session->userdata('id_user')) {
-            redirect('auth/login');
+        if ($role === 'admin') {
+            redirect('admin/dashboard');
         }
 
-        // Validasi tipe dashboard
-        if (! in_array($type, ['planning', 'operasional'])) {
-            $type = 'operasional';
-        }
-
-        // Set session
-        $this->session->set_userdata('dashboard_type', $type);
-
-        // Redirect ke dashboard
         redirect('auth/dashboard');
     }
 
     /**
-     * Dashboard selection page
-     */
-    public function dashboard_selection()
-    {
-        if (! $this->session->userdata('id_user')) {
-            redirect('auth/login');
-        }
-
-        $data['user'] = $this->session->userdata();
-        $this->load->view('auth/dashboard_selection', $data);
-    }
-
-    /**
-     * Change Dashboard Type (untuk switch antar dashboard)
-     */
-    public function change_dashboard()
-    {
-        if (! $this->session->userdata('id_user')) {
-            redirect('auth/login');
-        }
-
-        // Hapus session dashboard_type agar user bisa pilih ulang
-        $this->session->unset_userdata('dashboard_type');
-        redirect('auth/dashboard');
-    }
-
-    /**
-     * Halaman pengisian informasi bisnis (untuk dashboard perencanaan)
+     * Halaman pengisian informasi bisnis
      */
     public function bisnis_info()
     {
@@ -246,33 +196,8 @@ class Auth extends CI_Controller
             redirect('auth/login');
         }
         $data['user'] = $this->session->userdata();
-        $this->load->view('auth/info_bisnis', $data);
-    }
-
-    /**
-     * Dashboard Planning (untuk calon pemilik UMKM)
-     */
-    public function dashboard_planning()
-    {
-        if (! $this->session->userdata('id_user')) {
-            redirect('auth/login');
-        }
-
-        $data['user'] = $this->session->userdata();
-        $this->load->view('auth/dashboard_planning', $data);
-    }
-
-    /**
-     * Dashboard Operasional
-     */
-    public function dashboard_operasional()
-    {
-        if (! $this->session->userdata('id_user')) {
-            redirect('auth/login');
-        }
-
-        $data['user'] = $this->session->userdata();
-        $this->load->view('auth/dashboard_operasional', $data);
+        // Route legacy auth/info_bisnis sengaja diarahkan ke view info baru agar konsisten.
+        $this->load->view('info/index', $data);
     }
 
 }

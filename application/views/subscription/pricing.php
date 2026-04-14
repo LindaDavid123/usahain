@@ -111,7 +111,7 @@
                                 confirmButtonColor: '#1F6B99',
                                 confirmButtonText: 'Lanjut ke Dashboard'
                             }).then(() => {
-                                window.location.href = '<?php echo site_url('auth/dashboard_operasional'); ?>';
+                                window.location.href = '<?php echo site_url('auth/dashboard'); ?>';
                             });
                         })
                         .catch(err => {
@@ -252,35 +252,38 @@
 
         /* === TABS === */
         .pricing-tabs {
-            display: flex;
+            display: inline-flex;
             justify-content: center;
-            gap: 16px;
+            gap: 4px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 4px;
             margin-bottom: 60px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .tab-btn {
-            padding: 12px 32px;
-            border: 2px solid #e2e8f0;
-            background: white;
-            color: #64748b;
-            border-radius: 10px;
+            padding: 10px 24px;
+            border: none;
+            background: transparent;
+            color: #374151;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.2s ease;
         }
 
         .tab-btn:hover {
-            border-color: #1f6b99;
-            color: #1f6b99;
-            background: #f0f6fb;
+            color: #111827;
+            background: #e5e7eb;
         }
 
         .tab-btn.active {
-            background: #1f6b99;
+            background: #1c6494;
             color: white;
-            border-color: #1f6b99;
-            box-shadow: 0 4px 12px rgba(31, 107, 153, 0.3);
+            box-shadow: none;
         }
 
         /* === PRICING GRID === */
@@ -294,79 +297,70 @@
         /* === PRICING CARD === */
         .pricing-card {
             border-radius: 16px;
-            padding: 32px 24px;
-            border: 2px solid #e2e8f0;
+            padding: 24px;
+            border: 1px solid #e5e7eb;
+            background: #ffffff;
             position: relative;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 8px rgba(17, 24, 39, 0.05);
         }
 
-        /* Starter - Pink */
-        .pricing-card:nth-child(1) {
-            background: #FCE4E6;
-            border-top: 4px solid #E74C3C;
+        .pricing-card.plan-starter {
+            background: #f8fafc;
         }
 
-        /* Essential - Blue */
-        .pricing-card:nth-child(2) {
-            background: #E3F2FD;
-            border-top: 4px solid #1F6B99;
+        .pricing-card.plan-essential {
+            background: #f0f7ff;
         }
 
-        /* Growth - Purple */
-        .pricing-card:nth-child(3) {
-            background: #EDE9FE;
-            border-top: 4px solid #7C3AED;
+        .pricing-card.plan-growth {
+            background: #f5f3ff;
         }
 
-        /* Elite - Yellow/Orange */
-        .pricing-card:nth-child(4) {
-            background: #FEF3E2;
-            border-top: 4px solid #F59E0B;
+        .pricing-card.plan-elite {
+            background: #fffbeb;
         }
 
         .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 32px rgba(31, 107, 153, 0.12);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(17, 24, 39, 0.08);
         }
 
-        /* Highlighted card untuk Growth/Populer */
         .pricing-card.highlighted {
-            border-color: #7C3AED;
-            transform: scale(1.02);
+            border-color: #e5e7eb;
         }
 
         /* === BADGE === */
         .badge-popular {
             position: absolute;
-            top: -12px;
-            right: 20px;
-            background: linear-gradient(135deg, #1f6b99 0%, #154a6f 100%);
+            top: 16px;
+            right: 16px;
+            background: #1c6494;
             color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(31, 107, 153, 0.3);
+            line-height: 1.4;
         }
 
         /* === PLAN NAME === */
         .plan-name {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #1e293b;
+            font-size: 16px;
+            font-weight: 600;
+            color: #111827;
             margin-bottom: 8px;
         }
 
         .plan-subtitle {
-            font-size: 0.95rem;
-            color: #64748b;
+            font-size: 12px;
+            color: #6b7280;
             margin-bottom: 16px;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         /* === PRICE === */
@@ -375,17 +369,17 @@
         }
 
         .price-tag {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #1f6b99;
-            letter-spacing: -0.5px;
+            font-size: 32px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: 0;
         }
 
         .price-period {
-            font-size: 0.95rem;
-            color: #64748b;
-            font-weight: 500;
-            margin-bottom: 24px;
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 400;
+            margin-bottom: 20px;
             display: block;
         }
 
@@ -399,29 +393,23 @@
         /* === FEATURES LIST === */
         .features-list {
             list-style: none;
-            margin: 0 0 32px 0;
+            margin: 0 0 24px 0;
             flex-grow: 1;
         }
 
         .features-list li {
-            padding: 12px 0;
-            color: #475569;
+            padding: 8px 0;
+            color: #374151;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            font-size: 0.95rem;
-            border-bottom: 1px solid #e2e8f0;
+            gap: 8px;
+            font-size: 13px;
         }
 
-        .features-list li:last-child {
-            border-bottom: none;
-        }
-
-        .features-list li::before {
-            content: "✓";
-            color: #1f6b99;
-            font-weight: 800;
-            font-size: 1.1rem;
+        .feature-check {
+            width: 13px;
+            height: 13px;
+            color: #1c6494;
             flex-shrink: 0;
             margin-top: 2px;
         }
@@ -429,48 +417,34 @@
         /* === BUTTON === */
         .btn-choose {
             width: 100%;
-            padding: 14px 24px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
+            padding: 12px 16px;
+            border: 1px solid #1c6494;
+            border-radius: 8px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.2s ease;
             text-transform: capitalize;
             margin-top: auto;
             color: white;
+            background: #1c6494;
         }
 
-        .pricing-card:nth-child(1) .btn-choose {
-            background: #E74C3C;
+        .btn-choose:hover {
+            background: #155379;
+            border-color: #155379;
         }
 
-        .pricing-card:nth-child(1) .btn-choose:hover {
-            background: #C0392B;
+        .pricing-card.plan-starter .btn-choose {
+            background: transparent;
+            border: 1px solid #e5e7eb;
+            color: #374151;
         }
 
-        .pricing-card:nth-child(2) .btn-choose {
-            background: #1F6B99;
-        }
-
-        .pricing-card:nth-child(2) .btn-choose:hover {
-            background: #154A6F;
-        }
-
-        .pricing-card:nth-child(3) .btn-choose {
-            background: #7C3AED;
-        }
-
-        .pricing-card:nth-child(3) .btn-choose:hover {
-            background: #6D28D9;
-        }
-
-        .pricing-card:nth-child(4) .btn-choose {
-            background: #F59E0B;
-        }
-
-        .pricing-card:nth-child(4) .btn-choose:hover {
-            background: #D97706;
+        .pricing-card.plan-starter .btn-choose:hover {
+            background: #f9fafb;
+            border-color: #e5e7eb;
+            color: #111827;
         }
 
         .btn-choose:active {
@@ -524,7 +498,7 @@
             }
 
             .pricing-card {
-                padding: 28px 24px;
+                padding: 24px;
             }
 
             .pricing-card.highlighted {
@@ -533,15 +507,6 @@
 
             .pricing-card.highlighted:hover {
                 transform: translateY(-8px) scale(1);
-            }
-
-            .price-tag {
-                font-size: 2rem;
-            }
-
-            .features-list li {
-                font-size: 0.9rem;
-                padding: 10px 0;
             }
         }
 
@@ -558,38 +523,19 @@
                 font-size: 0.95rem;
             }
 
-            .plan-name {
-                font-size: 1.35rem;
-            }
-
-            .price-tag {
-                font-size: 1.75rem;
-            }
-
-            .btn-choose {
-                padding: 12px 20px;
-                font-size: 0.95rem;
-            }
-
-            .features-list li {
-                font-size: 0.85rem;
-                padding: 8px 0;
-            }
-
             .pricing-card {
                 padding: 24px;
             }
 
-            .badge-popular {
-                padding: 5px 12px;
-                font-size: 0.7rem;
+            .btn-choose {
+                padding: 12px 16px;
             }
         }
     </style>
 </head>
 <body>
     <!-- Close Button -->
-    <button class="close-btn" onclick="window.location.href='<?= site_url('auth/dashboard_operasional'); ?>'" title="Kembali ke Dashboard">×</button>
+    <button class="close-btn" onclick="window.location.href='<?= site_url('auth/dashboard'); ?>'" title="Kembali ke Dashboard">×</button>
 
     <div class="container">
         <!-- Header -->
@@ -709,9 +655,10 @@
         function renderPricingCards(tab) {
             const grid = document.getElementById('pricingGrid');
             const data = pricingData[tab];
+            const checkIcon = '<svg class="feature-check" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
             grid.innerHTML = data.map(card => `
-                <div class="pricing-card ${card.highlighted ? 'highlighted' : ''}">
+                <div class="pricing-card plan-${card.plan} ${card.highlighted ? 'highlighted' : ''}">
                     ${card.badge ? `<span class="badge-popular">${card.badge}</span>` : ''}
                     <div class="plan-name">${card.name}</div>
                     <div class="plan-subtitle">${card.subtitle}</div>
@@ -722,7 +669,7 @@
                     <div class="plan-description"></div>
 
                     <ul class="features-list">
-                        ${card.features.map(feature => `<li>${feature}</li>`).join('')}
+                        ${card.features.map(feature => `<li>${checkIcon}<span>${feature}</span></li>`).join('')}
                     </ul>
 
                     <button class="btn-choose" onclick="choosePlan('${card.plan}')">Pilih Paket</button>

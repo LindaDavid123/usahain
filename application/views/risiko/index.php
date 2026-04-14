@@ -1,74 +1,665 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php
+$user = array_merge([
+    'nama'  => 'User',
+    'email' => '-',
+], (array) ($user ?? []));
+
+$summary = array_merge([
+    'total' => 0,
+    'tinggi' => 0,
+    'sedang' => 0,
+    'rendah' => 0,
+], (array) ($summary ?? []));
+
+$risiko_list = is_array($risiko_list ?? null) ? $risiko_list : [];
+$edit_risiko = $edit_risiko ?? null;
+$is_edit = ! empty($edit_risiko);
+?>
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Manajemen Risiko</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Risiko - Usahain</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background-color: #f5f5f5; }
-        nav { background-color: #2c3e50; color: white; padding: 10px 20px; }
-        nav a { color: white; margin-right: 20px; text-decoration: none; }
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
-        .card { background: white; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn { display: inline-block; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; }
-        .btn-primary { background-color: #3498db; color: white; }
-        .btn-danger { background-color: #e74c3c; color: white; }
-        .btn-success { background-color: #27ae60; color: white; }
-        .btn:hover { opacity: 0.8; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #ecf0f1; font-weight: bold; }
-        .alert { padding: 12px; margin-bottom: 20px; border-radius: 4px; background-color: #d4edda; color: #155724; }
-        .no-data { padding: 20px; text-align: center; color: #7f8c8d; }
+        :root {
+            --primary: #1c6494;
+            --primary-dark: #15527a;
+            --text: #111827;
+            --text-secondary: #64748b;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --border: #e5e7eb;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #16a34a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 260px;
+            background: #fff;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            z-index: 50;
+            transition: all 0.3s;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .sidebar.collapsed { width: 80px; }
+        .sidebar-header {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #1f6b99;
+            font-size: 16px;
+            font-weight: 800;
+            white-space: nowrap;
+            min-width: 40px;
+        }
+        .sidebar-logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+        .sidebar-menu { flex: 1; overflow-y: auto; padding: 14px 12px; list-style: none; }
+        .sidebar-menu-item { margin-bottom: 8px; }
+        .sidebar-menu-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.25s;
+        }
+        .sidebar-menu-link:hover {
+            background: var(--bg);
+            color: #1f6b99;
+            transform: translateX(4px);
+        }
+        .sidebar-menu-link.active {
+            background: linear-gradient(135deg, #1f6b99 0%, #3a88ba 100%);
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(31, 107, 153, 0.25);
+        }
+        .sidebar-menu-badge {
+            margin-left: auto;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: rgba(31, 107, 153, 0.1);
+            color: #1f6b99;
+        }
+        .sidebar-menu-link.active .sidebar-menu-badge {
+            background: #1c6494;
+            color: #fff;
+        }
+        .sidebar-menu-icon { display: none; }
+
+        body.sidebar-collapsed .sidebar-menu-text,
+        body.sidebar-collapsed .sidebar-menu-badge,
+        body.sidebar-collapsed .sidebar-logo-text { display: none; }
+
+        .main-wrapper {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+        body.sidebar-collapsed .main-wrapper {
+            margin-left: 80px;
+            width: calc(100% - 80px);
+        }
+
+        .top-header {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+        .header-left { display: flex; align-items: center; gap: 14px; }
+        .header-title { font-size: 18px; font-weight: 600; color: #1c6494; }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: inherit;
+        }
+        .header-user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1f6b99 0%, #7ec8e3 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+        }
+        .header-user-info { display: flex; flex-direction: column; gap: 2px; }
+        .header-user-name { font-size: 13px; font-weight: 600; }
+        .header-user-email { font-size: 11px; color: var(--text-secondary); }
+
+        .container {
+            max-width: 1280px;
+            margin: 28px auto;
+            padding: 0 18px;
+        }
+
+        .alert {
+            margin-bottom: 16px;
+            border-radius: 10px;
+            padding: 12px 14px;
+            border: 1px solid transparent;
+            font-size: 14px;
+        }
+        .alert-success {
+            background: #ecfdf5;
+            color: #166534;
+            border-color: #bbf7d0;
+        }
+        .alert-danger {
+            background: #fef2f2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+        .alert ul { margin-left: 16px; }
+
+        .summary-row {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .summary-card {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 16px 20px;
+            border: 1px solid var(--border);
+        }
+        .summary-label {
+            color: var(--text-secondary);
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            margin-bottom: 8px;
+        }
+        .summary-value {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .summary-card.total .summary-value { color: #1f2937; }
+        .summary-card.high .summary-value { color: #ef4444; }
+        .summary-card.medium .summary-value { color: #f59e0b; }
+        .summary-card.low .summary-value { color: #16a34a; }
+
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .risk-form {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr 1.3fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label {
+            font-size: 12px;
+            color: #374151;
+            font-weight: 500;
+        }
+        .form-group input,
+        .form-group select {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 9px 12px;
+            font-size: 13px;
+            background: #fff;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #94c9e9;
+            box-shadow: 0 0 0 3px rgba(28, 100, 148, 0.12);
+        }
+        .btn-submit {
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            background: #1c6494;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0 18px;
+            white-space: nowrap;
+        }
+        .btn-submit:hover { background: var(--primary-dark); }
+        .btn-cancel {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0 12px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .table-wrapper { overflow-x: auto; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 920px;
+        }
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+        th {
+            background: #1c6494;
+            color: #ffffff;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            white-space: nowrap;
+        }
+
+        .badge-risk-tinggi { background: rgba(239,68,68,0.1); color: #ef4444; }
+        .badge-risk-sedang { background: rgba(245,158,11,0.1); color: #f59e0b; }
+        .badge-risk-rendah { background: rgba(22,163,74,0.1); color: #16a34a; }
+
+        .badge-status-belum { background: rgba(239,68,68,0.1); color: #ef4444; }
+        .badge-status-proses { background: rgba(245,158,11,0.1); color: #f59e0b; }
+        .badge-status-selesai { background: rgba(22,163,74,0.1); color: #16a34a; }
+
+        .actions-cell {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .btn-action {
+            border: none;
+            background: transparent;
+            padding: 0;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn-action i,
+        .btn-action svg {
+            width: 14px;
+            height: 14px;
+        }
+        .btn-action.edit { color: #f59e0b; }
+        .btn-action.delete { color: #ef4444; }
+
+        .empty-state {
+            text-align: center;
+            padding: 28px 12px;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        @media (max-width: 1200px) {
+            .summary-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .risk-form { grid-template-columns: 1fr 1fr; }
+            .risk-form .form-group:last-child { grid-column: span 2; }
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 260px;
+            }
+            .sidebar.mobile-open { transform: translateX(0); }
+            .main-wrapper,
+            body.sidebar-collapsed .main-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
+            .mobile-menu { display: inline-flex; }
+            .header-user-email { display: none; }
+            .header-user-name { display: none; }
+        }
+
+        @media (max-width: 640px) {
+            .summary-row { grid-template-columns: 1fr; }
+            .risk-form { grid-template-columns: 1fr; }
+            .risk-form .form-group:last-child { grid-column: auto; }
+            .top-header { padding: 14px 16px; }
+            .container { padding: 0 12px; margin: 18px auto; }
+        }
     </style>
 </head>
 <body>
-    <nav>
-        <a href="<?= site_url('dashboard'); ?>">Dashboard</a>
-        <a href="<?= site_url('risiko'); ?>">Manajemen Risiko</a>
-        <a href="<?= site_url('auth/logout'); ?>" style="float: right;">🚪 Log out</a>
-    </nav>
-    <div class="container">
-        <div class="card">
-            <div class="header">
-                <h2>Manajemen Risiko Usaha</h2>
-                <a href="<?= site_url('risiko/create'); ?>" class="btn btn-success">+ Tambah Risiko</a>
-            </div>
-            <?php if ($this->session->flashdata('success')) : ?>
-                <div class="alert"><?= $this->session->flashdata('success'); ?></div>
-            <?php endif; ?>
-            <?php if (empty($risiko_list)) : ?>
-                <div class="no-data">Belum ada data risiko. <a href="<?= site_url('risiko/create'); ?>">Buat yang baru</a></div>
-            <?php else : ?>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Jenis Usaha</th>
-                            <th>Daftar Risiko</th>
-                            <th>Rekomendasi Mitigasi</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 1; foreach ($risiko_list as $risiko) : ?>
-                        <tr>
-                            <td><?= $no++; ?></td>
-                            <td><strong><?= substr($risiko->jenis_usaha, 0, 30); ?></strong></td>
-                            <td><?= substr($risiko->daftar_risiko, 0, 40); ?>...</td>
-                            <td><?= substr($risiko->rekomendasi_mitigasi, 0, 40); ?>...</td>
-                            <td>
-                                <a href="<?= site_url('risiko/view/'.$risiko->id_risiko); ?>" class="btn btn-primary" style="padding: 5px 10px; font-size: 12px;">Lihat</a>
-                                <a href="<?= site_url('risiko/edit/'.$risiko->id_risiko); ?>" class="btn btn-primary" style="padding: 5px 10px; font-size: 12px; background-color: #f39c12;">Edit</a>
-                                <a href="<?= site_url('risiko/delete/'.$risiko->id_risiko); ?>" class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;">Hapus</a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php endif; ?>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="#" onclick="toggleSidebar(); return false;" class="sidebar-logo" title="Klik untuk buka/tutup sidebar">
+                <img src="<?= base_url('assets/logo.png'); ?>" alt="Usahain">
+                <span class="sidebar-logo-text">Usahain</span>
+            </a>
         </div>
+        <ul class="sidebar-menu">
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('auth/dashboard'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="layout-grid"></i></span>
+                    <span class="sidebar-menu-text">Dashboard</span>
+                    <span class="sidebar-menu-badge">Home</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('advisor'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="sparkles"></i></span>
+                    <span class="sidebar-menu-text">AI Advisor</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('hpp'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="calculator"></i></span>
+                    <span class="sidebar-menu-text">Kalkulator HPP</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('keuangan'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="wallet"></i></span>
+                    <span class="sidebar-menu-text">Pencatatan Keuangan</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('risiko'); ?>" class="sidebar-menu-link active">
+                    <span class="sidebar-menu-icon"><i data-lucide="shield-alert"></i></span>
+                    <span class="sidebar-menu-text">Manajemen Risiko</span>
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="<?= site_url('auth/info_bisnis'); ?>" class="sidebar-menu-link">
+                    <span class="sidebar-menu-icon"><i data-lucide="book-open"></i></span>
+                    <span class="sidebar-menu-text">Informasi Bisnis</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="mobile-menu" id="mobileMenuBtn" aria-label="Buka menu">
+                    <i data-lucide="menu" style="width:20px;height:20px;"></i>
+                </button>
+                <div class="header-title">Manajemen Risiko</div>
+            </div>
+            <div class="header-right">
+                <a href="<?= site_url('user/profile'); ?>" class="header-user">
+                    <div class="header-user-avatar"><?= strtoupper(substr((string) $user['nama'], 0, 1)); ?></div>
+                    <div class="header-user-info">
+                        <div class="header-user-name"><?= htmlspecialchars((string) $user['nama']); ?></div>
+                        <div class="header-user-email"><?= htmlspecialchars((string) $user['email']); ?></div>
+                    </div>
+                </a>
+            </div>
+        </header>
+
+        <main class="container">
+            <?php if ($this->session->flashdata('success')): ?>
+                <div class="alert alert-success"><?= htmlspecialchars((string) $this->session->flashdata('success')); ?></div>
+            <?php endif; ?>
+
+            <?php if ($this->session->flashdata('error')): ?>
+                <div class="alert alert-danger"><?= htmlspecialchars((string) $this->session->flashdata('error')); ?></div>
+            <?php endif; ?>
+
+            <?php if (validation_errors()): ?>
+                <div class="alert alert-danger">
+                    <ul><?= validation_errors('<li>', '</li>'); ?></ul>
+                </div>
+            <?php endif; ?>
+
+            <section class="summary-row">
+                <div class="summary-card total">
+                    <div class="summary-label">Total Risiko</div>
+                    <div class="summary-value"><?= (int) $summary['total']; ?></div>
+                </div>
+                <div class="summary-card high">
+                    <div class="summary-label">Risiko Tinggi</div>
+                    <div class="summary-value"><?= (int) $summary['tinggi']; ?></div>
+                </div>
+                <div class="summary-card medium">
+                    <div class="summary-label">Risiko Sedang</div>
+                    <div class="summary-value"><?= (int) $summary['sedang']; ?></div>
+                </div>
+                <div class="summary-card low">
+                    <div class="summary-label">Risiko Rendah</div>
+                    <div class="summary-value"><?= (int) $summary['rendah']; ?></div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h2 class="card-title"><?= $is_edit ? 'Edit Risiko' : 'Tambah Risiko'; ?></h2>
+                <form method="post" action="<?= site_url('risiko'); ?>" class="risk-form">
+                    <?php if ($is_edit): ?>
+                        <input type="hidden" name="id_risiko" value="<?= (int) $edit_risiko->id_risiko; ?>">
+                        <input type="hidden" name="tanggal" value="<?= htmlspecialchars((string) $edit_risiko->tanggal); ?>">
+                    <?php endif; ?>
+
+                    <div class="form-group">
+                        <label for="nama_risiko">Nama Risiko</label>
+                        <input
+                            type="text"
+                            id="nama_risiko"
+                            name="nama_risiko"
+                            placeholder="Contoh: Ketergantungan pada 1 supplier"
+                            value="<?= htmlspecialchars(set_value('nama_risiko', $is_edit ? (string) $edit_risiko->nama_risiko : '')); ?>"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tingkat">Tingkat</label>
+                        <?php $tingkat_value = set_value('tingkat', $is_edit ? (string) $edit_risiko->tingkat : 'Sedang'); ?>
+                        <select id="tingkat" name="tingkat" required>
+                            <option value="Tinggi" <?= $tingkat_value === 'Tinggi' ? 'selected' : ''; ?>>Tinggi</option>
+                            <option value="Sedang" <?= $tingkat_value === 'Sedang' ? 'selected' : ''; ?>>Sedang</option>
+                            <option value="Rendah" <?= $tingkat_value === 'Rendah' ? 'selected' : ''; ?>>Rendah</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tindakan_mitigasi">Tindakan Mitigasi</label>
+                        <input
+                            type="text"
+                            id="tindakan_mitigasi"
+                            name="tindakan_mitigasi"
+                            placeholder="Contoh: Cari 2-3 supplier alternatif"
+                            value="<?= htmlspecialchars(set_value('tindakan_mitigasi', $is_edit ? (string) $edit_risiko->tindakan_mitigasi : '')); ?>"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status_penanganan">Status</label>
+                        <?php $status_value = set_value('status_penanganan', $is_edit ? (string) $edit_risiko->status_penanganan : 'Belum Ditangani'); ?>
+                        <select id="status_penanganan" name="status_penanganan" required>
+                            <option value="Belum Ditangani" <?= $status_value === 'Belum Ditangani' ? 'selected' : ''; ?>>Belum Ditangani</option>
+                            <option value="Dalam Proses" <?= $status_value === 'Dalam Proses' ? 'selected' : ''; ?>>Dalam Proses</option>
+                            <option value="Sudah Ditangani" <?= $status_value === 'Sudah Ditangani' ? 'selected' : ''; ?>>Sudah Ditangani</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn-submit"><?= $is_edit ? 'Simpan Perubahan' : 'Tambah Risiko'; ?></button>
+                    </div>
+                </form>
+                <?php if ($is_edit): ?>
+                    <div style="margin-top: 10px;">
+                        <a href="<?= site_url('risiko'); ?>" class="btn-cancel">Batal Edit</a>
+                    </div>
+                <?php endif; ?>
+            </section>
+
+            <section class="card">
+                <h2 class="card-title">Daftar Risiko</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama Risiko</th>
+                                <th>Tingkat</th>
+                                <th>Tindakan Mitigasi</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($risiko_list)): ?>
+                                <tr>
+                                    <td colspan="6" class="empty-state">Belum ada data risiko.</td>
+                                </tr>
+                            <?php else: ?>
+                                <?php foreach ($risiko_list as $risiko): ?>
+                                    <?php
+                                    $tingkat = (string) ($risiko->tingkat ?? 'Sedang');
+                                    $status = (string) ($risiko->status_penanganan ?? 'Belum Ditangani');
+                                    $tingkat_class = 'badge-risk-sedang';
+                                    if ($tingkat === 'Tinggi') {
+                                        $tingkat_class = 'badge-risk-tinggi';
+                                    } elseif ($tingkat === 'Rendah') {
+                                        $tingkat_class = 'badge-risk-rendah';
+                                    }
+
+                                    $status_class = 'badge-status-belum';
+                                    $status_label = 'Belum Ditangani';
+                                    if ($status === 'Dalam Proses') {
+                                        $status_class = 'badge-status-proses';
+                                        $status_label = 'Dalam Proses';
+                                    } elseif ($status === 'Sudah Ditangani') {
+                                        $status_class = 'badge-status-selesai';
+                                        $status_label = 'Sudah Ditangani';
+                                    }
+
+                                    $tanggal_value = ! empty($risiko->tanggal) ? date('d/m/Y', strtotime((string) $risiko->tanggal)) : '-';
+                                    ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars((string) $risiko->nama_risiko); ?></td>
+                                        <td><span class="badge <?= $tingkat_class; ?>"><?= htmlspecialchars($tingkat); ?></span></td>
+                                        <td><?= htmlspecialchars((string) $risiko->tindakan_mitigasi); ?></td>
+                                        <td><span class="badge <?= $status_class; ?>"><?= $status_label; ?></span></td>
+                                        <td><?= htmlspecialchars($tanggal_value); ?></td>
+                                        <td>
+                                            <div class="actions-cell">
+                                                <a class="btn-action edit" href="<?= site_url('risiko?edit=' . (int) $risiko->id_risiko); ?>" aria-label="Edit Risiko">
+                                                    <i data-lucide="pencil"></i>
+                                                </a>
+                                                <form method="post" action="<?= site_url('risiko/delete/' . (int) $risiko->id_risiko); ?>" onsubmit="return confirm('Hapus risiko ini?');">
+                                                    <button type="submit" class="btn-action delete" aria-label="Hapus Risiko">
+                                                        <i data-lucide="trash-2"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
     </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const body = document.body;
+            body.classList.toggle('sidebar-collapsed');
+            sidebar.classList.toggle('collapsed');
+        }
+
+        const sidebar = document.getElementById('sidebar');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('mobile-open');
+            });
+        }
+
+        document.querySelectorAll('.sidebar-menu-link').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 900) {
+                    sidebar.classList.remove('mobile-open');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

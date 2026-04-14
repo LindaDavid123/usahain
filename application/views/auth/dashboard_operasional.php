@@ -2716,20 +2716,6 @@ body.sidebar-collapsed .main-wrapper {
         </div>
 
         <div class="tool-box">
-            <div class="tool-icon analisis"><i data-lucide="chart-line"></i></div>
-            <div class="tool-header">
-                <div class="tool-title">Analisis Produk</div>
-                <span class="tool-badge pro">Pro</span>
-            </div>
-            <div class="tool-desc">Analisis mendalam performa produk, identifikasi trend penjualan, dan dapatkan rekomendasi strategi peningkatan</div>
-            <div class="tool-meta">
-                <span class="meta-item">5 menit</span>
-                <span class="meta-item">Analytics</span>
-            </div>
-            <a href="<?= site_url('hpp'); ?>#analisis-produk" class="tool-link">Lihat Analisis</a>
-        </div>
-
-        <div class="tool-box">
             <div class="tool-icon info"><i data-lucide="book-open"></i></div>
             <div class="tool-header">
                 <div class="tool-title">Informasi Bisnis</div>

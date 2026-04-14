@@ -374,7 +374,7 @@
   <div class="container-wrapper">
     <div class="card-bisnis">
       <div class="card-header-bisnis">
-        <button type="button" class="btn-close-custom" onclick="window.location.href='<?= site_url('dashboard_selection'); ?>'">
+        <button type="button" class="btn-close-custom" onclick="window.location.href='<?= site_url('auth/dashboard'); ?>'">
           <i class="fas fa-times"></i>
         </button>
         <h1>
@@ -398,7 +398,7 @@
           <div class="icon">📋</div>
           <div class="info-card-content">
             <h3>Calon Pemilik UMKM</h3>
-            <p>Mulai dengan perencanaan dan persiapan bisnis Anda secara profesional</p>
+            <p>Mulai dengan persiapan dan pengelolaan bisnis Anda secara profesional</p>
           </div>
         </div>
         
@@ -414,7 +414,7 @@
           <div class="form-group">
             <label class="form-label">
               <i class="fas fa-store" style="color: #667eea; margin-right: 8px;"></i>
-              Nama Usaha (Rencana)
+              Nama Usaha
               <span class="optional">(Opsional)</span>
             </label>
             <input 
@@ -457,7 +457,7 @@
             <button 
               type="button" 
               class="btn btn-secondary-custom"
-              onclick="window.location.href='<?= site_url('dashboard_selection'); ?>'"
+              onclick="window.location.href='<?= site_url('auth/dashboard'); ?>'"
             >
               <i class="fas fa-times"></i>
               Lewati
@@ -565,7 +565,7 @@
           
           // Redirect setelah 1.5 detik
           setTimeout(() => {
-            window.location.href = '<?= site_url('dashboard/perencanaan'); ?>';
+            window.location.href = '<?= site_url('auth/dashboard'); ?>';
           }, 1500);
         } else {
           // Handle error response from server

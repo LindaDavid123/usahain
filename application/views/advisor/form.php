@@ -7,13 +7,13 @@
     <title><?= isset($advisor) ? 'Edit Konsultasi' : 'AI Business Advisor'; ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root{--bg:#f1f8fb;--card:#FFFFFF;--accent1:#0b6ea8;--accent2:#27b0e3;--cta:#18A0FB;--success:#10b981;--warning:#f59e0b;--info:#3b82f6;--light-gray:#f8fafc;--border:#e2e8f0}
+        :root{--bg:#f1f5f9;--card:#FFFFFF;--accent1:#0b6ea8;--accent2:#27b0e3;--cta:#18A0FB;--success:#10b981;--warning:#f59e0b;--info:#3b82f6;--light-gray:#f8fafc;--border:#e2e8f0}
         *{box-sizing:border-box}
-        body{margin:0;background:linear-gradient(135deg, #ecf9ff 0%, #dff4fb 50%, #d0ecf8 100%);font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto;color:#0f1724;padding:20px;min-height:100vh}
-        .container{max-width:900px;margin:0 auto}
-        .card{background:var(--card);border-radius:24px;padding:40px 36px;box-shadow:0 20px 60px rgba(2,6,23,0.12);backdrop-filter:blur(10px)}
+        body{margin:0;background:var(--bg);font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto;color:#0f1724;padding:20px;min-height:100vh}
+        .container{max-width:560px;margin:0 auto}
+        .card{background:var(--card);border-radius:24px;padding:32px;box-shadow:0 20px 60px rgba(2,6,23,0.12);backdrop-filter:blur(10px)}
 
-        .header{text-align:center;margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--light-gray)}
+        .header{text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:2px solid var(--light-gray)}
         .header-icon{font-size:56px;margin-bottom:16px;animation:float 3s ease-in-out infinite;display:inline-block}
         .heading{font-size:24px;font-weight:700;margin-bottom:8px;color:#0f1724}
         .sub{font-size:15px;color:#64748b;line-height:1.6}
@@ -23,9 +23,9 @@
             50% { transform: translateY(-10px); }
         }
 
-        .form-wrapper{display:grid;grid-template-columns:repeat(2, 1fr);gap:18px}
+        .form-wrapper{display:grid;grid-template-columns:repeat(2, 1fr);gap:16px}
         
-        .form-section{background:var(--light-gray);border-radius:16px;padding:28px;border:2px solid var(--border);transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);position:relative}
+        .form-section{background:var(--light-gray);border-radius:16px;padding:20px;border:2px solid var(--border);transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);position:relative}
         .form-section::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg, var(--accent1), var(--accent2));border-radius:16px 16px 0 0;opacity:0;transition:opacity 0.3s ease}
         .form-section:focus-within::before{opacity:1}
         .form-section:hover{border-color:var(--accent2);background:#ffffff;box-shadow:0 8px 24px rgba(0,136,194,0.08)}
@@ -33,7 +33,7 @@
         .form-group{margin:0;position:relative}
         .label-wrapper{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
         label{display:block;font-size:13px;color:#1e293b;font-weight:700;letter-spacing:0.2px;line-height:1.3}
-        .label-desc{font-size:11px;color:#94a3b8;font-weight:400;margin-top:3px;display:block;line-height:1.3}
+        .label-desc{font-size:11px;color:#94a3b8;font-weight:400;margin:3px 0 8px;display:block;line-height:1.3}
         
         select{width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--border);background:#ffffff;font-size:13px;font-family:Inter;cursor:pointer;appearance:none;padding-right:36px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:18px;background-color:#ffffff;transition:all 0.3s ease;font-weight:500;color:#0f1724}
         select:hover{border-color:var(--accent2);box-shadow:0 4px 12px rgba(0,136,194,0.1)}
@@ -57,14 +57,6 @@
         .radio-input, .checkbox-input{width:18px;height:18px;cursor:pointer;accent-color:var(--accent2);flex-shrink:0;margin-top:0px}
         .radio-label, .checkbox-label{font-size:13px;color:#334155;font-weight:500;cursor:pointer;flex:1;margin:0;line-height:1.3}
         .radio-input:checked ~ .radio-label, .checkbox-input:checked ~ .checkbox-label{color:var(--accent1);font-weight:600}
-
-        .summary-section{background:linear-gradient(135deg, #ecf9ff 0%, #e8f4f8 100%);border-radius:16px;padding:20px;margin-bottom:0;border:2px solid #b3dff5;margin-top:4px;grid-column:1 / -1}
-        .summary-title{font-size:14px;font-weight:700;color:#0f1724;margin-bottom:12px;display:flex;align-items:center;gap:6px}
-        .summary-content{background:#ffffff;border-radius:12px;padding:14px;font-size:12px;line-height:1.6;color:#475569;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
-        .summary-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);align-items:center}
-        .summary-row:last-child{border-bottom:none}
-        .summary-label{font-weight:600;color:#0f1724;font-size:12px}
-        .summary-value{color:#64748b;font-size:12px;text-align:right;max-width:45%;word-wrap:break-word}
 
         .btn-group{margin-top:24px;display:flex;gap:12px;grid-column:1 / -1}
         .btn{padding:14px 24px;border:none;border-radius:12px;cursor:pointer;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font-size:14px;gap:8px;flex:1;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(0,0,0,0.1);letter-spacing:0.2px}
@@ -90,19 +82,14 @@
             .header-icon{font-size:48px}
             .heading{font-size:22px;margin-bottom:6px}
             .sub{font-size:14px}
-            .form-wrapper{grid-template-columns:1fr;gap:14px}
-            .form-section{padding:16px}
+            .form-wrapper{grid-template-columns:1fr;gap:16px}
+            .form-section{padding:20px}
             .form-section.full-width{grid-column:1}
             .btn-group{gap:10px;grid-column:1}
             .btn{padding:12px 20px;font-size:13px}
             select{padding:10px 12px;padding-right:32px;background-size:16px;font-size:12px}
             .radio-group, .checkbox-group{gap:8px;margin-top:8px}
             .radio-item, .checkbox-item{padding:10px 10px;gap:8px}
-            .summary-section{padding:16px}
-            .summary-title{font-size:13px;margin-bottom:10px}
-            .summary-content{padding:12px;font-size:11px}
-            .summary-row{padding:6px 0}
-            .summary-value{max-width:50%}
         }
     </style>
 </head>
@@ -116,14 +103,14 @@
                 <div class="sub">Dapatkan rekomendasi bisnis yang tepat untuk Anda</div>
             </div>
 
-            <form method="post" action="<?= site_url('advisor/create'); ?>">
+            <form method="post" action="<?= site_url('advisor/create'); ?>" class="advisor-input-form">
                 <div class="form-wrapper">
                     <!-- Row 1: Modal & Minat -->
                     <div class="form-section">
                         <div class="form-group">
                             <label for="modal">Modal <span style="color:#ef4444">*</span></label>
                             <div class="label-desc">Range modal</div>
-                            <select id="modal" name="modal" required onchange="updateSummary(); toggleModalInput()">
+                            <select id="modal" name="modal" required onchange="toggleModalInput()">
                                 <option value="">Pilih</option>
                                 <option value="1000000" <?= (isset($advisor) && $advisor->modal == 1000000) ? 'selected' : ''; ?>>< 1 Juta</option>
                                 <option value="5000000" <?= (isset($advisor) && $advisor->modal == 5000000) ? 'selected' : ''; ?>>1 - 5 Juta</option>
@@ -135,7 +122,7 @@
                                 <option value="lainnya" <?= (isset($advisor) && $advisor->modal == 'lainnya') ? 'selected' : ''; ?>>Lainnya</option>
                             </select>
                             <div class="input-wrapper" id="modalInput">
-                                <input type="text" class="input-text" id="modalCustom" name="modal_custom" placeholder="Ketik range modal Anda" onchange="updateSummary()" onkeyup="updateSummary()">
+                                <input type="text" class="input-text" id="modalCustom" name="modal_custom" placeholder="Ketik range modal Anda">
                             </div>
                             <?= form_error('modal', '<div class="error">', '</div>'); ?>
                         </div>
@@ -145,7 +132,7 @@
                         <div class="form-group">
                             <label for="minat">Minat <span style="color:#ef4444">*</span></label>
                             <div class="label-desc">Bidang keahlian</div>
-                            <select id="minat" name="minat" required onchange="updateSummary(); toggleMinatInput()">
+                            <select id="minat" name="minat" required onchange="toggleMinatInput()">
                                 <option value="">Pilih</option>
                                 <option value="kuliner" <?= (isset($advisor) && $advisor->minat == 'kuliner') ? 'selected' : ''; ?>>Kuliner</option>
                                 <option value="fashion" <?= (isset($advisor) && $advisor->minat == 'fashion') ? 'selected' : ''; ?>>Fashion</option>
@@ -157,7 +144,7 @@
                                 <option value="lainnya" <?= (isset($advisor) && $advisor->minat == 'lainnya') ? 'selected' : ''; ?>>Lainnya</option>
                             </select>
                             <div class="input-wrapper" id="minatInput">
-                                <input type="text" class="input-text" id="minatCustom" name="minat_custom" placeholder="Ketik bidang minat Anda" onchange="updateSummary()" onkeyup="updateSummary()">
+                                <input type="text" class="input-text" id="minatCustom" name="minat_custom" placeholder="Ketik bidang minat Anda">
                             </div>
                             <?= form_error('minat', '<div class="error">', '</div>'); ?>
                         </div>
@@ -168,7 +155,7 @@
                         <div class="form-group">
                             <label for="lokasi">Lokasi <span style="color:#ef4444">*</span></label>
                             <div class="label-desc">Pilih lokasi</div>
-                            <select id="lokasi" name="lokasi" required onchange="updateSummary(); toggleLokasiInput()">
+                            <select id="lokasi" name="lokasi" required onchange="toggleLokasiInput()">
                                 <option value="">Pilih</option>
                                 <option value="jakarta" <?= (isset($advisor) && $advisor->lokasi == 'jakarta') ? 'selected' : ''; ?>>Jakarta</option>
                                 <option value="bandung" <?= (isset($advisor) && $advisor->lokasi == 'bandung') ? 'selected' : ''; ?>>Bandung</option>
@@ -180,7 +167,7 @@
                                 <option value="lainnya" <?= (isset($advisor) && $advisor->lokasi == 'lainnya') ? 'selected' : ''; ?>>Lainnya</option>
                             </select>
                             <div class="input-wrapper" id="lokasiInput">
-                                <input type="text" class="input-text" id="lokasiCustom" name="lokasi_custom" placeholder="Ketik lokasi Anda" onchange="updateSummary()" onkeyup="updateSummary()">
+                                <input type="text" class="input-text" id="lokasiCustom" name="lokasi_custom" placeholder="Ketik lokasi Anda">
                             </div>
                             <?= form_error('lokasi', '<div class="error">', '</div>'); ?>
                         </div>
@@ -190,7 +177,7 @@
                         <div class="form-group">
                             <label for="tujuan">Tujuan <span style="color:#ef4444">*</span></label>
                             <div class="label-desc">Tujuan bisnis</div>
-                            <select id="tujuan" name="tujuan" required onchange="updateSummary(); toggleTujuanInput()">
+                            <select id="tujuan" name="tujuan" required onchange="toggleTujuanInput()">
                                 <option value="">Pilih</option>
                                 <option value="ide" <?= (isset($advisor) && $advisor->tujuan == 'ide') ? 'selected' : ''; ?>>Cari ide bisnis</option>
                                 <option value="mengembangkan" <?= (isset($advisor) && $advisor->tujuan == 'mengembangkan') ? 'selected' : ''; ?>>Kembangkan bisnis</option>
@@ -199,41 +186,17 @@
                                 <option value="lainnya" <?= (isset($advisor) && $advisor->tujuan == 'lainnya') ? 'selected' : ''; ?>>Lainnya</option>
                             </select>
                             <div class="input-wrapper" id="tujuanInput">
-                                <input type="text" class="input-text" id="tujuanCustom" name="tujuan_custom" placeholder="Ketik tujuan bisnis Anda" onchange="updateSummary()" onkeyup="updateSummary()">
+                                <input type="text" class="input-text" id="tujuanCustom" name="tujuan_custom" placeholder="Ketik tujuan bisnis Anda">
                             </div>
                             <?= form_error('tujuan', '<div class="error">', '</div>'); ?>
                         </div>
                     </div>
 
-                    <!-- Summary Section (Full Width) -->
-                    <div class="summary-section full-width">
-                        <div class="summary-title">📋 Ringkasan Data Anda</div>
-                        <div class="summary-content">
-                            <div class="summary-row">
-                                <span class="summary-label">Modal:</span>
-                                <span class="summary-value">Menunggu input</span>
-                            </div>
-                            <div class="summary-row">
-                                <span class="summary-label">Minat:</span>
-                                <span class="summary-value">Menunggu input</span>
-                            </div>
-                            <div class="summary-row">
-                                <span class="summary-label">Lokasi:</span>
-                                <span class="summary-value">Menunggu input</span>
-                            </div>
-                            <div class="summary-row">
-                                <span class="summary-label">Tujuan:</span>
-                                <span class="summary-value">Menunggu input</span>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="btn-group">
                     <button type="submit" class="btn btn-primary">
-                        <span>📊</span>
                         Analisis & Rekomendasi
                     </button>
-                    <button type="button" class="btn btn-secondary" onclick="window.location.href='<?= site_url('dashboard'); ?>'">Tutup</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='<?= site_url('auth/dashboard'); ?>'">Tutup</button>
                 </div>
                 </div>
             </form>
@@ -241,51 +204,11 @@
     </div>
 
     <script>
-        // Data mapping untuk ringkasan
-        const optionLabels = {
-            modal: {
-                '1000000': '< 1 Juta',
-                '5000000': '1 - 5 Juta',
-                '10000000': '5 - 10 Juta',
-                '50000000': '10 - 50 Juta',
-                '100000000': '50 - 100 Juta',
-                '500000000': '100 - 500 Juta',
-                '1000000000': '500 Juta+',
-                'lainnya': ''
-            },
-            minat: {
-                'kuliner': 'Kuliner',
-                'fashion': 'Fashion',
-                'teknologi': 'Teknologi',
-                'jasa': 'Jasa',
-                'pertanian': 'Pertanian',
-                'pendidikan': 'Pendidikan',
-                'pariwisata': 'Pariwisata',
-                'lainnya': ''
-            },
-            lokasi: {
-                'jakarta': 'Jakarta',
-                'bandung': 'Bandung',
-                'surabaya': 'Surabaya',
-                'medan': 'Medan',
-                'yogyakarta': 'Yogyakarta',
-                'semarang': 'Semarang',
-                'makassar': 'Makassar',
-                'lainnya': ''
-            },
-            tujuan: {
-                'ide': 'Cari ide bisnis',
-                'mengembangkan': 'Kembangkan bisnis',
-                'sampingan': 'Bisnis sampingan',
-                'fulltime': 'Full-time',
-                'lainnya': ''
-            }
-        };
-
         function toggleModalInput() {
             const select = document.getElementById('modal');
             const input = document.getElementById('modalInput');
             const customInput = document.getElementById('modalCustom');
+            if (!select || !input || !customInput) return;
             const isLainnya = select.value === 'lainnya';
             input.classList.toggle('show', isLainnya);
             select.classList.toggle('hidden', isLainnya);
@@ -299,6 +222,7 @@
             const select = document.getElementById('minat');
             const input = document.getElementById('minatInput');
             const customInput = document.getElementById('minatCustom');
+            if (!select || !input || !customInput) return;
             const isLainnya = select.value === 'lainnya';
             input.classList.toggle('show', isLainnya);
             select.classList.toggle('hidden', isLainnya);
@@ -312,6 +236,7 @@
             const select = document.getElementById('lokasi');
             const input = document.getElementById('lokasiInput');
             const customInput = document.getElementById('lokasiCustom');
+            if (!select || !input || !customInput) return;
             const isLainnya = select.value === 'lainnya';
             input.classList.toggle('show', isLainnya);
             select.classList.toggle('hidden', isLainnya);
@@ -325,6 +250,7 @@
             const select = document.getElementById('tujuan');
             const input = document.getElementById('tujuanInput');
             const customInput = document.getElementById('tujuanCustom');
+            if (!select || !input || !customInput) return;
             const isLainnya = select.value === 'lainnya';
             input.classList.toggle('show', isLainnya);
             select.classList.toggle('hidden', isLainnya);
@@ -334,28 +260,12 @@
             }
         }
 
-        function updateSummary() {
-            // Get selected values
-            const modal = document.getElementById('modal').value;
-            const minat = document.getElementById('minat').value;
-            const lokasi = document.getElementById('lokasi').value;
-            const tujuan = document.getElementById('tujuan').value;
-
-            // Get custom input values if "Lainnya" selected
-            const modalValue = modal === 'lainnya' ? document.getElementById('modalCustom').value : optionLabels.modal[modal];
-            const minatValue = minat === 'lainnya' ? document.getElementById('minatCustom').value : optionLabels.minat[minat];
-            const lokasiValue = lokasi === 'lainnya' ? document.getElementById('lokasiCustom').value : optionLabels.lokasi[lokasi];
-            const tujuanValue = tujuan === 'lainnya' ? document.getElementById('tujuanCustom').value : optionLabels.tujuan[tujuan];
-
-            // Update summary rows
-            document.querySelectorAll('.summary-row')[0].innerHTML = `<span class="summary-label">Modal:</span><span class="summary-value">${modalValue || 'Menunggu input'}</span>`;
-            document.querySelectorAll('.summary-row')[1].innerHTML = `<span class="summary-label">Minat:</span><span class="summary-value">${minatValue || 'Menunggu input'}</span>`;
-            document.querySelectorAll('.summary-row')[2].innerHTML = `<span class="summary-label">Lokasi:</span><span class="summary-value">${lokasiValue || 'Menunggu input'}</span>`;
-            document.querySelectorAll('.summary-row')[3].innerHTML = `<span class="summary-label">Tujuan:</span><span class="summary-value">${tujuanValue || 'Menunggu input'}</span>`;
-        }
-
         // Validate form before submission
         function validateForm() {
+            if (!document.getElementById('modal') || !document.getElementById('minat') || !document.getElementById('lokasi') || !document.getElementById('tujuan')) {
+                return true;
+            }
+
             const modal = document.getElementById('modal').value;
             const minat = document.getElementById('minat').value;
             const lokasi = document.getElementById('lokasi').value;
@@ -393,7 +303,7 @@
 
         // Attach validation to form submit
         document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
+            const form = document.querySelector('form.advisor-input-form');
             if (form) {
                 form.addEventListener('submit', function(e) {
                     if (!validateForm()) {
@@ -402,28 +312,11 @@
                 });
             }
 
-            // Add event listeners to custom inputs for real-time validation feedback
-            const customInputs = [
-                document.getElementById('modalCustom'),
-                document.getElementById('minatCustom'),
-                document.getElementById('lokasiCustom'),
-                document.getElementById('tujuanCustom')
-            ];
-
-            customInputs.forEach(input => {
-                if (input) {
-                    input.addEventListener('input', function() {
-                        updateSummary();
-                    });
-                }
-            });
-
-            // Initialize visibility and summary
+            // Initialize visibility
             toggleModalInput();
             toggleMinatInput();
             toggleLokasiInput();
             toggleTujuanInput();
-            updateSummary();
         });
     </script>
 </body>

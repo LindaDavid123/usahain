@@ -12,874 +12,970 @@ $user = array_merge([
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,user-scalable=yes">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1C6494">
-<title>Rekomendasi Informasi Bisnis - <?= htmlspecialchars($user['nama']); ?></title>
+<title>Informasi Bisnis - <?= htmlspecialchars($user['nama']); ?></title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 
 <style>
 :root {
-    --primary-color: #4A90E2;
-    --primary-dark: #357ABD;
-    --primary-light: #6BA4EC;
-    --secondary-color: #7EC8E3;
-    --secondary-light: #A8DCE8;
-    --accent-color: #52D79A;
-    --accent-dark: #2ecc71;
-    --background: #F5F8FA;
-    --card-bg: #ffffff;
-    --text-primary: #2D3748;
-    --text-secondary: #718096;
-    --shadow-sm: 0 2px 8px rgba(74,144,226,0.08);
-    --shadow-md: 0 4px 16px rgba(74,144,226,0.12);
-    --shadow-lg: 0 8px 24px rgba(74,144,226,0.16);
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,Segoe UI,Arial;background:var(--background);color:var(--text-primary);line-height:1.6}
-
-/* HEADER / NAVBAR */
-.header{
-    background:linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
-    padding:20px 32px;
-    color:#fff;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:var(--shadow-md);
-    position:sticky;
-    top:0;
-    z-index:100
-}
-
-.header h3{font-size:20px;font-weight:700}
-.header small{opacity:.9}
-
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:14px
-}
-
-.avatar{
-    width:46px;height:46px;border-radius:50%;
-    background:var(--card-bg);
-    color:var(--primary-color);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:700;
-    box-shadow:var(--shadow-sm);
-    border:2px solid rgba(255,255,255,0.3)
-}
-
-.logout-btn{
-    background:rgba(255,255,255,.18);
-    color:#fff;
-    padding:9px 18px;
-    border-radius:24px;
-    font-size:13px;
-    text-decoration:none;
-    font-weight:600;
-    transition:.3s ease;
-    border:1.5px solid rgba(255,255,255,0.3)
-}
-.logout-btn:hover{
-    background:rgba(255,255,255,.3);
-    border-color:rgba(255,255,255,0.5);
-    transform:translateY(-1px);
-    box-shadow:0 4px 12px rgba(0,0,0,0.15)
-}
-
-/* CONTAINER */
-.container{max-width:1200px;margin:0 auto;padding:0 24px}
-
-/* BANNER SECTION */
-.info-banner{
-    background:linear-gradient(135deg, var(--secondary-light) 0%, var(--secondary-color) 100%);
-    color:#fff;
-    padding:40px 32px;
-    border-radius:16px;
-    margin:30px 0;
-    text-align:center;
-    box-shadow:var(--shadow-md)
-}
-
-.info-banner h1{
-    font-size:28px;
-    font-weight:700;
-    margin-bottom:10px
-}
-
-.info-banner p{
-    font-size:14px;
-    opacity:.95;
-    max-width:600px;
-    margin:0 auto
-}
-
-/* SEARCH & FILTER */
-.controls-wrapper{
-    display:flex;
-    gap:12px;
-    margin:30px 0 20px;
-    flex-wrap:wrap;
-    align-items:center
-}
-
-.search-box{
-    flex:1;
-    min-width:250px;
-    position:relative
-}
-
-.search-box input{
-    width:100%;
-    padding:12px 16px 12px 44px;
-    border:2px solid #e2e8f0;
-    border-radius:10px;
-    font-size:14px;
-    transition:.3s ease;
-    background:#fff
-}
-
-.search-box input:focus{
-    outline:none;
-    border-color:var(--primary-color);
-    box-shadow:0 0 0 3px rgba(74,144,226,0.1)
-}
-
-.search-box::before{
-    content:"🔍";
-    position:absolute;
-    left:16px;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:18px
-}
-
-.filter-group{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap
-}
-
-.filter-btn{
-    padding:10px 18px;
-    border:2px solid #e2e8f0;
-    background:#fff;
-    border-radius:10px;
-    font-size:13px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s ease;
-    color:var(--text-secondary)
-}
-
-.filter-btn:hover{
-    border-color:var(--primary-color);
-    color:var(--primary-color)
-}
-
-.filter-btn.active{
-    background:var(--primary-color);
-    border-color:var(--primary-color);
-    color:#fff
-}
-
-/* SECTION TITLE */
-.section-title{
-    font-size:22px;
-    font-weight:700;
-    margin:40px 0 24px;
-    color:var(--primary-color);
-    text-align:center;
-    padding:20px 0;
-    border-bottom:3px solid var(--secondary-light);
-    display:inline-block;
-    width:100%
-}
-
-/* CARDS GRID */
-.cards-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-    gap:20px;
-    margin-bottom:40px
-}
-
-.info-card{
-    background:var(--card-bg);
-    border-radius:12px;
-    padding:28px;
-    box-shadow:var(--shadow-sm);
-    transition:.3s ease;
-    border:2px solid transparent;
-    border-left:4px solid var(--primary-color);
-    position:relative;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column
-}
-
-.info-card:hover{
-    transform:translateY(-4px);
-    box-shadow:var(--shadow-lg);
-    border-color:var(--secondary-light)
-}
-
-.info-card .icon{
-    font-size:40px;
-    margin-bottom:12px;
-    display:block
-}
-
-.info-card h3{
-    font-size:16px;
-    font-weight:700;
-    margin-bottom:12px;
-    color:var(--text-primary);
-    line-height:1.3
-}
-
-.info-card p{
-    font-size:13px;
-    color:var(--text-secondary);
-    line-height:1.6;
-    margin-bottom:16px;
-    flex:1
-}
-
-.info-card ul{
-    font-size:12px;
-    color:var(--text-secondary);
-    margin:16px 0;
-    padding-left:20px;
-}
-
-.info-card ul li{
-    margin-bottom:8px;
-    line-height:1.5
-}
-
-.card-actions{
-    display:flex;
-    gap:8px;
-    margin-top:auto
-}
-
-.btn-info, .btn-bookmark{
-    padding:10px 18px;
-    border-radius:8px;
-    font-size:12px;
-    font-weight:600;
-    text-decoration:none;
-    border:none;
-    cursor:pointer;
-    transition:.3s ease;
-    display:inline-flex;
-    align-items:center;
-    gap:6px
-}
-
-.btn-info{
-    background:linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
-    color:#fff;
-    flex:1
-}
-
-.btn-info:hover{
-    transform:translateY(-2px);
-    box-shadow:var(--shadow-md)
-}
-
-.btn-bookmark{
-    background:#f7fafc;
-    color:var(--text-secondary);
-    border:2px solid #e2e8f0
-}
-
-.btn-bookmark:hover{
-    background:#edf2f7;
-    border-color:var(--primary-color);
-    color:var(--primary-color)
-}
-
-.btn-bookmark.active{
-    background:var(--accent-color);
-    border-color:var(--accent-color);
-    color:#fff
-}
-
-/* TIP CARDS */
-.tip-card{
-    background:var(--card-bg);
-    border-radius:12px;
-    padding:28px;
-    box-shadow:var(--shadow-sm);
-    transition:.3s ease;
-    border:2px solid transparent;
-    text-align:center;
-    position:relative;
-}
-
-.tip-card:hover{
-    transform:translateY(-4px);
-    box-shadow:var(--shadow-md);
-    border-color:var(--secondary-light)
-}
-
-.tip-card .icon{
-    font-size:48px;
-    margin-bottom:12px;
-    display:block
-}
-
-.tip-card h3{
-    font-size:16px;
-    font-weight:700;
-    margin-bottom:12px;
-    color:var(--text-primary)
-}
-
-.tip-card p{
-    font-size:13px;
-    color:var(--text-secondary);
-    line-height:1.6
-}
-
-/* RESOURCE SECTION - Accordion */
-.resources-section{
-    margin-bottom:40px
-}
-
-.resource-item{
-    background:var(--card-bg);
-    border-radius:12px;
-    margin-bottom:12px;
-    box-shadow:var(--shadow-sm);
-    overflow:hidden;
-    transition:.3s ease
-}
-
-.resource-header{
-    padding:20px 24px;
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
-    color:#fff;
-    font-weight:600;
-    user-select:none;
-    transition:.3s ease
-}
-
-.resource-header:hover{
-    box-shadow:var(--shadow-md)
-}
-
-.resource-header .icon{
-    margin-right:12px;
-    font-size:24px
-}
-
-.resource-header .toggle{
-    font-size:20px;
-    transition:.3s ease
-}
-
-.resource-header.active .toggle{
-    transform:rotate(180deg)
-}
-
-.resource-content{
-    padding:0;
-    max-height:0;
-    overflow:hidden;
-    transition:max-height 0.3s ease;
-}
-
-.resource-content.active{
-    padding:20px 24px;
-    max-height:2000px
-}
-
-.resource-content p{
-    font-size:13px;
-    color:var(--text-secondary);
-    line-height:1.7;
-    margin-bottom:12px
-}
-
-.resource-content ul{
-    font-size:13px;
-    color:var(--text-secondary);
-    margin-left:20px;
-    margin-bottom:12px
-}
-
-.resource-content ul li{
-    margin-bottom:8px;
-    line-height:1.6
-}
-
-.resource-links{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-top:12px
-}
-
-.resource-link{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    padding:8px 14px;
-    background:#f7fafc;
-    border:1px solid #e2e8f0;
-    border-radius:6px;
-    font-size:12px;
-    color:var(--primary-color);
-    text-decoration:none;
-    transition:.3s ease
-}
-
-.resource-link:hover{
-    background:var(--primary-color);
-    color:#fff;
-    transform:translateY(-2px)
-}
-
-/* MODAL */
-.modal{
-    display:none;
-    position:fixed;
-    z-index:1000;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.6);
-    backdrop-filter:blur(4px);
-    animation:fadeIn 0.3s ease
-}
-
-.modal.active{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px
-}
-
-.modal-content{
-    background:var(--card-bg);
-    border-radius:16px;
-    max-width:600px;
-    width:100%;
-    max-height:85vh;
-    overflow-y:auto;
-    box-shadow:var(--shadow-lg);
-    animation:slideUp 0.3s ease
-}
-
-.modal-header{
-    padding:24px;
-    border-bottom:2px solid #e2e8f0;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:sticky;
-    top:0;
-    background:var(--card-bg);
-    z-index:10
-}
-
-.modal-header h2{
-    font-size:20px;
-    color:var(--primary-color)
-}
-
-.modal-close{
-    width:32px;
-    height:32px;
-    border-radius:50%;
-    background:#f7fafc;
-    border:none;
-    cursor:pointer;
-    font-size:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:.3s ease
-}
-
-.modal-close:hover{
-    background:#e2e8f0;
-    transform:rotate(90deg)
-}
-
-.modal-body{
-    padding:24px
-}
-
-.modal-body h3{
-    font-size:16px;
-    color:var(--text-primary);
-    margin:16px 0 8px;
-    display:flex;
-    align-items:center;
-    gap:8px
-}
-
-.modal-body p, .modal-body li{
-    font-size:14px;
-    color:var(--text-secondary);
-    line-height:1.7
-}
-
-.modal-body ul{
-    margin:12px 0;
-    padding-left:24px
-}
-
-.modal-body li{
-    margin-bottom:8px
-}
-
-.info-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:4px;
-    padding:4px 10px;
-    background:var(--secondary-light);
-    color:var(--primary-dark);
-    border-radius:12px;
-    font-size:11px;
-    font-weight:600;
-    margin-top:8px
-}
-
-@keyframes fadeIn{
-    from{opacity:0}
-    to{opacity:1}
-}
-
-@keyframes slideUp{
-    from{transform:translateY(30px);opacity:0}
-    to{transform:translateY(0);opacity:1}
-}
-
-/* FOOTER */
-.footer-simple {
-    width: 100%;
-    background: #f8fbfd;
-    border-top: 1px solid #e6eef5;
-    padding: 12px 0;
-    font-size: 13px;
-    color: #6c757d;
-    margin-top:60px
-}
-
-.footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    --primary: #1c6494;
+    --primary-dark: #175379;
+    --text: #111827;
+    --text-secondary: #6b7280;
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --border: #e5e7eb;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
     display: flex;
-    justify-content: space-between;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 260px;
+    background: #fff;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    transition: all 0.3s;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.sidebar.collapsed {
+    width: 80px;
+}
+
+.sidebar-header {
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
     align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #1f6b99;
+    font-size: 16px;
+    font-weight: 800;
+    white-space: nowrap;
+    min-width: 40px;
+}
+
+.sidebar-logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.sidebar-menu {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 12px;
+    list-style: none;
+}
+
+.sidebar-menu-item {
+    margin-bottom: 8px;
+}
+
+.sidebar-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.sidebar-menu-link:hover {
+    background: #f8fafc;
+    color: #1f6b99;
+    transform: translateX(4px);
+}
+
+.sidebar-menu-link.active {
+    background: linear-gradient(135deg, #1f6b99 0%, #3a88ba 100%);
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(31, 107, 153, 0.25);
+}
+
+.sidebar-menu-icon {
+    display: none;
+    width: 18px;
+    height: 18px;
+}
+
+.sidebar-menu-icon i,
+.sidebar-menu-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.sidebar-menu-badge {
+    margin-left: auto;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: rgba(31, 107, 153, 0.1);
+    color: #1f6b99;
+}
+
+.sidebar-menu-link.active .sidebar-menu-badge {
+    background: #1c6494;
+    color: #fff;
+}
+
+body.sidebar-collapsed .sidebar-menu-text,
+body.sidebar-collapsed .sidebar-menu-badge,
+body.sidebar-collapsed .sidebar-logo-text {
+    display: none;
+}
+
+.main-wrapper {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+body.sidebar-collapsed .main-wrapper {
+    margin-left: 84px;
+    width: calc(100% - 84px);
+}
+
+.top-header {
+    height: 70px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+}
+
+.header-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.header-user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: #1c6494;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.header-user-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.header-user-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.header-user-email {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 28px auto;
+    padding: 0 18px;
+}
+
+.page-header {
+    margin-bottom: 22px;
+}
+
+.page-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 6px;
+}
+
+.page-header p {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+.controls-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
+}
+
+.content-panel {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 240px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(28, 100, 148, 0.1);
+}
+
+.filter-group {
+    display: flex;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
-.footer-inner a{
-    color:#6c757d;
-    text-decoration:none;
-    transition:.3s ease
+.filter-btn {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    background: #fff;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4b5563;
+    cursor: pointer;
 }
 
-.footer-inner a:hover{
-    color:var(--primary-color)
+.filter-btn.active,
+.filter-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
 }
 
-/* TOAST NOTIFICATION */
-.toast{
-    position:fixed;
-    bottom:24px;
-    right:24px;
-    background:var(--card-bg);
-    padding:16px 20px;
-    border-radius:10px;
-    box-shadow:var(--shadow-lg);
-    display:flex;
-    align-items:center;
-    gap:12px;
-    min-width:280px;
-    z-index:2000;
-    animation:slideInRight 0.3s ease;
-    border-left:4px solid var(--accent-color)
+.section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    margin: 0 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f3f4f6;
 }
 
-.toast.hide{
-    animation:slideOutRight 0.3s ease;
+.info-section {
+    margin-bottom: 20px;
 }
 
-@keyframes slideInRight{
-    from{transform:translateX(400px);opacity:0}
-    to{transform:translateX(0);opacity:1}
+.info-section:last-of-type {
+    margin-bottom: 0;
 }
 
-@keyframes slideOutRight{
-    from{transform:translateX(0);opacity:1}
-    to{transform:translateX(400px);opacity:0}
+.cards-grid {
+    display: block;
 }
 
-.toast-icon{
-    font-size:24px
+.info-card {
+    position: relative;
+    display: block;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #f3f4f6;
+    border-radius: 0;
+    padding: 12px 68px 12px 0;
+    min-height: 0;
 }
 
-.toast-message{
-    flex:1;
-    font-size:14px;
-    color:var(--text-primary)
+.info-card:last-child {
+    border-bottom: none;
 }
 
-.no-results{
-    text-align:center;
-    padding:60px 20px;
-    color:var(--text-secondary)
+.card-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2px;
 }
 
-.no-results .icon{
-    font-size:64px;
-    margin-bottom:16px;
-    opacity:.5
+.card-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #1c6494;
+    flex-shrink: 0;
 }
 
-.no-results h3{
-    font-size:18px;
-    margin-bottom:8px
+.card-icon i,
+.card-icon svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2;
 }
 
-.no-results p{
-    font-size:14px
+.info-card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #111827;
+    line-height: 1.4;
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-    .header{padding:16px 20px}
-    .header h3{font-size:18px}
-    .avatar{width:38px;height:38px}
-    
-    .container{padding:0 16px}
-    
-    .info-banner{padding:30px 20px;margin:20px 0}
-    .info-banner h1{font-size:22px}
-    .info-banner p{font-size:13px}
-    
-    .controls-wrapper{flex-direction:column}
-    .search-box{min-width:100%}
-    
-    .section-title{font-size:18px;margin:30px 0 16px}
-    
-    .cards-grid{grid-template-columns:1fr;gap:16px}
-    
-    .footer-inner{flex-direction:column;text-align:center}
-    
-    .toast{
-        bottom:12px;
-        right:12px;
-        left:12px;
-        min-width:auto
+.info-card p {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.45;
+    margin: 0 0 0 26px;
+}
+
+.card-actions {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-top: 0;
+}
+
+.btn-learn {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #1c6494;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-learn:hover {
+    text-decoration: underline;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 560px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.modal-close {
+    border: none;
+    background: #f3f4f6;
+    color: #4b5563;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.modal-body {
+    padding: 16px;
+}
+
+.modal-body p {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.55;
+    margin-bottom: 8px;
+}
+
+.modal-body p:last-child {
+    margin-bottom: 0;
+}
+
+.no-results {
+    display: none;
+    margin-top: 18px;
+    padding: 12px 0 0;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #6b7280;
+    text-align: center;
+    background: transparent;
+}
+
+.no-results.show {
+    display: block;
+}
+
+@media (max-width: 1024px) {
+    .main-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    body.sidebar-collapsed .main-wrapper {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    body.sidebar-collapsed .sidebar-menu-text,
+    body.sidebar-collapsed .sidebar-menu-badge,
+    body.sidebar-collapsed .sidebar-logo-text {
+        display: inline;
     }
 }
 
-@media(max-width:576px){
-    .header{padding:14px 16px}
-    .header h3{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .header small{display:none}
-    
-    .container{padding:0 12px}
-    
-    .info-banner{padding:24px 16px;border-radius:12px;margin:16px 0}
-    .info-banner h1{font-size:20px}
-    
-    .section-title{font-size:16px;margin:24px 0 12px}
-    
-    .info-card,.tip-card{padding:20px}
-    .info-card .icon,.tip-card .icon{font-size:32px}
-    .info-card h3,.tip-card h3{font-size:14px}
-    .info-card p,.tip-card p{font-size:12px}
-    
-    .card-actions{flex-direction:column}
+@media (max-width: 768px) {
+    .top-header {
+        padding: 0 14px;
+    }
+
+    .header-user-email {
+        display: none;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+
+    .content-panel {
+        padding: 16px;
+    }
+
+    .info-card {
+        padding-right: 0;
+    }
+
+    .card-actions {
+        position: static;
+        transform: none;
+        margin: 4px 0 0 26px;
+    }
 }
 </style>
 </head>
 
 <body>
-
-<!-- HEADER -->
-<div class="header">
-    <div>
-        <h3>ℹRekomendasi Informasi Bisnis</h3>
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <a href="#" onclick="toggleSidebar(); return false;" class="sidebar-logo" title="Klik untuk buka atau tutup sidebar">
+            <img src="<?= base_url('assets/logo.png'); ?>" alt="Usahain">
+            <span class="sidebar-logo-text">Usahain</span>
+        </a>
     </div>
 
-    <div class="header-right">
-        <a href="<?= base_url('auth/logout'); ?>" 
-           class="logout-btn"
-           onclick="return confirm('Yakin ingin logout?')">
-           Logout
-        </a>
-        <div class="avatar"><?= strtoupper(substr($user['nama'],0,1)); ?></div>
+    <ul class="sidebar-menu">
+        <li class="sidebar-menu-item">
+            <a href="<?= site_url('auth/dashboard'); ?>" class="sidebar-menu-link">
+                <span class="sidebar-menu-icon"><i data-lucide="layout-grid"></i></span>
+                <span class="sidebar-menu-text">Dashboard</span>
+                <span class="sidebar-menu-badge">Home</span>
+            </a>
+        </li>
+        <li class="sidebar-menu-item">
+            <a href="<?= site_url('advisor'); ?>" class="sidebar-menu-link">
+                <span class="sidebar-menu-icon"><i data-lucide="sparkles"></i></span>
+                <span class="sidebar-menu-text">AI Advisor</span>
+            </a>
+        </li>
+        <li class="sidebar-menu-item">
+            <a href="<?= site_url('hpp'); ?>" class="sidebar-menu-link">
+                <span class="sidebar-menu-icon"><i data-lucide="calculator"></i></span>
+                <span class="sidebar-menu-text">Kalkulator HPP</span>
+            </a>
+        </li>
+        <li class="sidebar-menu-item">
+            <a href="<?= site_url('keuangan'); ?>" class="sidebar-menu-link">
+                <span class="sidebar-menu-icon"><i data-lucide="wallet"></i></span>
+                <span class="sidebar-menu-text">Pencatatan Keuangan</span>
+            </a>
+        </li>
+        <li class="sidebar-menu-item">
+            <a href="<?= site_url('risiko'); ?>" class="sidebar-menu-link">
+                <span class="sidebar-menu-icon"><i data-lucide="shield-alert"></i></span>
+                <span class="sidebar-menu-text">Manajemen Risiko</span>
+            </a>
+        </li>
+        <li class="sidebar-menu-item">
+            <a href="<?= site_url('auth/info_bisnis'); ?>" class="sidebar-menu-link active">
+                <span class="sidebar-menu-icon"><i data-lucide="book-open"></i></span>
+                <span class="sidebar-menu-text">Informasi Bisnis</span>
+            </a>
+        </li>
+    </ul>
+</aside>
+
+<div class="main-wrapper">
+    <header class="top-header">
+        <div class="header-title">Informasi Bisnis</div>
+        <div class="header-right">
+            <a href="<?= site_url('user/profile'); ?>" class="header-user">
+                <div class="header-user-avatar"><?= strtoupper(substr($user['nama'], 0, 1)); ?></div>
+                <div class="header-user-info">
+                    <div class="header-user-name"><?= htmlspecialchars($user['nama']); ?></div>
+                    <div class="header-user-email"><?= htmlspecialchars($user['email']); ?></div>
+                </div>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Informasi Bisnis</h1>
+            <p>Referensi ringkas legalitas dan praktik terbaik untuk mengembangkan UMKM Anda.</p>
+        </div>
+
+        <div class="controls-wrapper">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Cari informasi bisnis..." onkeyup="applyFilters()">
+            </div>
+            <div class="filter-group">
+                <button class="filter-btn active" data-category="semua" onclick="filterByCategory('semua')">Semua</button>
+                <button class="filter-btn" data-category="izin" onclick="filterByCategory('izin')">Legalitas &amp; Perizinan</button>
+                <button class="filter-btn" data-category="tips" onclick="filterByCategory('tips')">Tips Sukses UMKM</button>
+            </div>
+        </div>
+
+        <div class="content-panel">
+            <section class="info-section" data-section="izin">
+                <h2 class="section-title">Legalitas &amp; Perizinan</h2>
+                <div class="cards-grid">
+                <article class="info-card" data-category="izin" data-keywords="siup izin tempat kerja operasional">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="file-text"></i></span>
+                        <h3>Surat Izin Tempat Usaha (SIUP)</h3>
+                    </div>
+                    <p>Izin dasar untuk operasional tempat usaha.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://oss.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="izin" data-keywords="pirt izin edar produk makanan">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="clipboard-list"></i></span>
+                        <h3>PIRT (Pangan Industri Rumah Tangga)</h3>
+                    </div>
+                    <p>Izin khusus untuk produk makanan atau minuman.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://oss.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="izin" data-keywords="sertifikat industri rumah tangga irt">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="factory"></i></span>
+                        <h3>Sertifikat Industri Rumah Tangga</h3>
+                    </div>
+                    <p>Sertifikat legal untuk usaha mikro berbasis rumah.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://oss.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="izin" data-keywords="halal sertifikasi bpjph">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="badge-check"></i></span>
+                        <h3>Sertifikasi Halal</h3>
+                    </div>
+                    <p>Sertifikasi halal untuk produk konsumsi masyarakat.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://ptsp.halal.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="izin" data-keywords="merek dagang hki trademark">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="badge-plus"></i></span>
+                        <h3>Pendaftaran Merek Dagang</h3>
+                    </div>
+                    <p>Perlindungan hukum untuk identitas brand usaha.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://merek.dgip.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="izin" data-keywords="bpom obat suplemen kosmetik">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="shield-check"></i></span>
+                        <h3>Izin BPOM</h3>
+                    </div>
+                    <p>Izin BPOM untuk produk kesehatan dan kosmetik.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://e-reg.pom.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+                </div>
+            </section>
+
+            <section class="info-section" data-section="tips">
+                <h2 class="section-title">Tips Sukses UMKM</h2>
+                <div class="cards-grid">
+                <article class="info-card" data-category="tips" data-keywords="manajemen operasional efisiensi">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="settings"></i></span>
+                        <h3>Kelola Manajemen Usaha Anda</h3>
+                    </div>
+                    <p>Terapkan manajemen terstruktur untuk efisiensi operasional bisnis.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://www.depkop.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="tips" data-keywords="digital marketing media sosial online">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="smartphone"></i></span>
+                        <h3>Manfaatkan Digital Marketing</h3>
+                    </div>
+                    <p>Gunakan kanal digital untuk memperluas pasar secara terukur.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://kemendag.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="tips" data-keywords="kualitas produk pelanggan standar">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="star"></i></span>
+                        <h3>Fokus pada Kualitas Produk</h3>
+                    </div>
+                    <p>Jaga kualitas agar pelanggan loyal dan rekomendasi meningkat.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://www.depkop.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="tips" data-keywords="kompetitor analisis strategi">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="search"></i></span>
+                        <h3>Analisis Kompetitor</h3>
+                    </div>
+                    <p>Pelajari pesaing untuk menemukan celah diferensiasi bisnis.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://www.depkop.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="tips" data-keywords="networking kemitraan jaringan">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="handshake"></i></span>
+                        <h3>Bangun Jaringan &amp; Kemitraan</h3>
+                    </div>
+                    <p>Perluas jejaring untuk dukungan supplier dan kolaborasi usaha.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://kemitraan.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+
+                <article class="info-card" data-category="tips" data-keywords="keuangan cash flow laporan">
+                    <div class="card-head">
+                        <span class="card-icon"><i data-lucide="wallet"></i></span>
+                        <h3>Kelola Keuangan dengan Baik</h3>
+                    </div>
+                    <p>Pisahkan dana bisnis dan pantau arus kas rutin.</p>
+                    <div class="card-actions">
+                        <a class="btn-learn" href="https://www.ojk.go.id" target="_blank" rel="noopener noreferrer">Pelajari</a>
+                    </div>
+                </article>
+                </div>
+            </section>
+
+            <div class="no-results" id="noResults">Tidak ada card yang cocok dengan pencarian atau filter.</div>
+        </div>
+    </main>
+</div>
+
+<div class="modal" id="detailModal" aria-hidden="true">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="detailTitle">Detail Informasi</h2>
+            <button class="modal-close" onclick="closeDetail()" aria-label="Tutup">&times;</button>
+        </div>
+        <div class="modal-body" id="detailBody"></div>
     </div>
 </div>
 
-<div class="container">
+<script>
+const detailContent = {
+    siup: {
+        title: 'Surat Izin Tempat Usaha (SIUP)',
+        paragraphs: [
+            'Persyaratan: KTP, surat keterangan dari kelurahan.',
+            'Proses: permohonan ke DPMPTSP setempat.',
+            'Masa berlaku: 5 tahun.'
+        ]
+    },
+    pirt: {
+        title: 'PIRT (Pangan Industri Rumah Tangga)',
+        paragraphs: [
+            'Untuk: produk makanan dan minuman.',
+            'Proses: uji lab dan dokumentasi produksi.',
+            'Durasi: 2 sampai 4 minggu.'
+        ]
+    },
+    irt: {
+        title: 'Sertifikat Industri Rumah Tangga',
+        paragraphs: [
+            'Untuk: UMKM dengan produksi di rumah.',
+            'Persyaratan: permohonan sederhana dan verifikasi.',
+            'Manfaat: legalitas serta akses pasar lebih luas.'
+        ]
+    },
+    halal: {
+        title: 'Sertifikasi Halal',
+        paragraphs: [
+            'Wajib untuk: produk makanan dan minuman.',
+            'Proses: permohonan ke BPJPH dan audit dokumen.',
+            'Masa berlaku: 4 tahun.'
+        ]
+    },
+    merek: {
+        title: 'Pendaftaran Merek Dagang',
+        paragraphs: [
+            'Fungsi: proteksi dari peniruan merek.',
+            'Proses: permohonan ke Ditjen HKI Kemenkumham.',
+            'Durasi: 1 sampai 2 tahun.'
+        ]
+    },
+    bpom: {
+        title: 'Izin BPOM',
+        paragraphs: [
+            'Untuk: obat tradisional, suplemen, dan kosmetik.',
+            'Persyaratan: dokumen teknis dan uji lab BPOM.',
+            'Validitas: 5 tahun.'
+        ]
+    },
+    manajemen: {
+        title: 'Kelola Manajemen Usaha Anda',
+        paragraphs: [
+            'Terapkan sistem manajemen yang terstruktur untuk meningkatkan efisiensi operasional.',
+            'Langkah ini membantu profitabilitas bisnis lebih terjaga secara berkelanjutan.'
+        ]
+    },
+    digital: {
+        title: 'Manfaatkan Digital Marketing',
+        paragraphs: [
+            'Gunakan media sosial, website, dan email marketing untuk menjangkau audiens lebih luas.',
+            'Strategi digital membantu biaya promosi lebih efisien dan terukur.'
+        ]
+    },
+    kualitas: {
+        title: 'Fokus pada Kualitas Produk',
+        paragraphs: [
+            'Kualitas adalah kunci loyalitas pelanggan dalam jangka panjang.',
+            'Jaga standar produk, dengarkan masukan, dan terus tingkatkan kualitas.'
+        ]
+    },
+    kompetitor: {
+        title: 'Analisis Kompetitor',
+        paragraphs: [
+            'Pelajari strategi kompetitor dan identifikasi keunggulan mereka.',
+            'Cari celah pasar untuk diferensiasi produk atau layanan usaha Anda.'
+        ]
+    },
+    jaringan: {
+        title: 'Bangun Jaringan dan Kemitraan',
+        paragraphs: [
+            'Networking adalah aset penting untuk pertumbuhan bisnis UMKM.',
+            'Bergabunglah dengan komunitas dan bangun kemitraan strategis dengan supplier.'
+        ]
+    },
+    keuangan: {
+        title: 'Kelola Keuangan dengan Baik',
+        paragraphs: [
+            'Kelola keuangan dengan disiplin dan pisahkan dana pribadi serta bisnis.',
+            'Pantau arus kas rutin agar keputusan bisnis lebih tepat.'
+        ]
+    }
+};
 
-    <!-- BANNER -->
-    <div class="info-banner">
-        <h1>Rekomendasi Informasi Bisnis</h1>
-        <p>Pelajari langkah-langkah penting, strategi, dan tips untuk sukses UMKM Indonesia</p>
-    </div>
+let currentCategory = 'semua';
 
-    <!-- SEARCH & FILTER -->
-    <div class="controls-wrapper">
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Cari informasi bisnis..." onkeyup="filterCards()">
-        </div>
-        <div class="filter-group">
-            <button class="filter-btn active" onclick="filterByCategory('semua')">Semua</button>
-            <button class="filter-btn" onclick="filterByCategory('izin')">Izin & Legal</button>
-            <button class="filter-btn" onclick="filterByCategory('tips')">Tips Bisnis</button>
-            <button class="filter-btn" onclick="filterByCategory('sumber-daya')">Sumber Daya</button>
-        </div>
-    </div>
+function renderLucideIcons() {
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+}
 
-    <!-- SECTION 1: LEGALISITAS & PERIZINAN -->
-    <div class="section-title" id="section-izin">📋 Legalisitas & Perizinan Usaha</div>
-    <div class="cards-grid" id="izinCards">
-        <div class="info-card" data-category="izin" data-keywords="siup izin tempat kerja operasional">
-            <span class="icon">📄</span>
-            <h3>Surat Izin Tempat Usaha (SIUP)</h3>
-            <p>Izin dasar untuk operasional tempat usaha</p>
-            <ul>
-                <li>Persyaratan: KTP, surat keterangan dari kelurahan</li>
-                <li>Proses: Permohonan ke DPMPTSP setempat</li>
-                <li>Masa berlaku: 5 tahun</li>
-            </ul>
-            <div class="card-actions">
-                <button class="btn-info" onclick="showDetailModal('siup')">📖 Detail</button>
-                <button class="btn-bookmark" onclick="toggleBookmark(this)">🔖</button>
-            </div>
-        </div>
+function toggleSidebar() {
+    if (window.innerWidth <= 1024) {
+        return;
+    }
 
-        <div class="info-card" data-category="izin" data-keywords="pirt izin edar produk makanan">
-            <span class="icon">📋</span>
-            <h3>PIRT (Pangan Industri Rumah Tangga)</h3>
-            <p>Izin khusus untuk produk makanan/minuman</p>
-            <ul>
-                <li>Untuk: Produk makanan dan minuman</li>
-                <li>Proses: Uji lab, dokumentasi produksi</li>
-                <li>Durasi: 2-4 minggu</li>
-            </ul>
-            <div class="card-actions">
-                <button class="btn-info" onclick="showDetailModal('pirt')">📖 Detail</button>
-                <button class="btn-bookmark" onclick="toggleBookmark(this)">🔖</button>
-            </div>
-        </div>
+    document.body.classList.toggle('sidebar-collapsed');
+    document.getElementById('sidebar').classList.toggle('collapsed');
+}
 
-        <div class="info-card" data-category="izin" data-keywords="sertifikat industri rumah tangga irt">
-            <span class="icon">🏭</span>
-            <h3>Sertifikat Industri Rumah Tangga</h3>
-            <p>Sertifikat untuk usaha mikro di rumah</p>
-            <ul>
-                <li>Untuk: UMKM dengan produksi di rumah</li>
-                <li>Persyaratan: Permohonan sederhana, verifikasi</li>
-                <li>Manfaat: Legalitas + akses pasar lebih luas</li>
-            </ul>
-            <div class="card-actions">
-                <button class="btn-info" onclick="showDetailModal('irt')">📖 Detail</button>
-                <button class="btn-bookmark" onclick="toggleBookmark(this)">🔖</button>
-            </div>
-        </div>
+function filterByCategory(category) {
+    currentCategory = category;
 
-        <div class="info-card" data-category="izin" data-keywords="halal sertifikasi bpjph">
-            <span class="icon">✨</span>
-            <h3>Sertifikasi Halal</h3>
-            <p>Sertifikasi halal untuk produk konsumsi</p>
-            <ul>
-                <li>Wajib untuk: Produk makanan & minuman</li>
-                <li>Proses: Permohonan ke BPJPH, audit dokumen</li>
-                <li>Masa berlaku: 4 tahun</li>
-            </ul>
-            <div class="card-actions">
-                <button class="btn-info" onclick="showDetailModal('halal')">📖 Detail</button>
-                <button class="btn-bookmark" onclick="toggleBookmark(this)">🔖</button>
-            </div>
-        </div>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.dataset.category === category) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 
-        <div class="info-card" data-category="izin" data-keywords="merek dagang hki trademark">
-            <span class="icon">™️</span>
-            <h3>Pendaftaran Merek Dagang</h3>
-            <p>Perlindungan hukum untuk brand Anda</p>
-            <ul>
-                <li>Fungsi: Proteksi dari peniruan merek</li>
-                <li>Proses: Permohonan ke Ditjen HKI Kemenkumham</li>
-                <li>Durasi: 1-2 tahun</li>
-            </ul>
-            <div class="card-actions">
-                <button class="btn-info" onclick="showDetailModal('merek')">📖 Detail</button>
-                <button class="btn-bookmark" onclick="toggleBookmark(this)">🔖</button>
-            </div>
-        </div>
+    applyFilters();
+}
 
-        <div class="info-card" data-category="izin" data-keywords="bpom obat suplemen kosmetik">
-            <span class="icon">🏥</span>
-            <h3>Izin BPOM</h3>
-            <p>Izin dari Badan POM untuk produk kesehatan</p>
-            <ul>
-                <li>Untuk: Obat tradisional, suplemen, kosmetik</li>
-                <li>Persyaratan: Dokumen teknis, uji lab BPOM</li>
-                <li>Validitas: 5 tahun</li>
-            </ul>
-            <div class="card-actions">
-                <button class="btn-info" onclick="showDetailModal('bpom')">📖 Detail</button>
-                <button class="btn-bookmark" onclick="toggleBookmark(this)">🔖</button>
-            </div>
-        </div>
-    </div>
+function applyFilters() {
+    const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.info-card');
+    const sectionCounts = { izin: 0, tips: 0 };
+    let visibleCardCount = 0;
 
-    <!-- SECTION 2: TIPS SUKSES MEMBANGUN UMKM -->
-    <div class="section-title" id="section-tips">💡 Tips Sukses Membangun UMKM</div>
-    <div class="cards-grid" id="tipsCards">
-        <div class="tip-card" data-category="tips" data-keywords="manajemen operasional efisiensi">
-            <span class="icon">🎯</span>
-            <h3>Kelola Manajemen Usaha Anda</h3>
-            <p>Terapkan sistem manajemen yang terstruktur untuk meningkatkan efisiensi operasional dan profitabilitas bisnis Anda secara berkelanjutan.</p>
-        </div>
+    cards.forEach(card => {
+        const cardCategory = card.dataset.category;
+        const cardText = (card.innerText + ' ' + (card.dataset.keywords || '')).toLowerCase();
 
-        <div class="tip-card" data-category="tips" data-keywords="digital marketing media sosial online">
-            <span class="icon">📱</span>
-            <h3>Manfaatkan Digital Marketing</h3>
-            <p>Gunakan media sosial, website, dan email marketing untuk menjangkau audiens lebih luas dengan biaya yang lebih efisien dan terukur.</p>
-        </div>
+        const passCategory = currentCategory === 'semua' || cardCategory === currentCategory;
+        const passKeyword = keyword === '' || cardText.includes(keyword);
 
-        <div class="tip-card" data-category="tips" data-keywords="kualitas produk pelanggan standar">
-            <span class="icon">⭐</span>
-            <h3>Fokus pada Kualitas Produk</h3>
-            <p>Kualitas adalah kunci loyalitas pelanggan. Jaga standar produk, dengarkan feedback, dan terus improve berdasarkan kebutuhan pasar.</p>
-        </div>
+        if (passCategory && passKeyword) {
+            card.style.display = '';
+            visibleCardCount += 1;
+            sectionCounts[cardCategory] += 1;
+        } else {
+            card.style.display = 'none';
+        }
+    });
 
-        <div class="tip-card" data-category="tips" data-keywords="kompetitor analisis strategi">
-            <span class="icon">🔍</span>
-            <h3>Analisis Kompetitor</h3>
-            <p>Pelajari strategi kompetitor, identifikasi keunggulan mereka, dan cari celah pasar untuk diferensiasi produk atau layanan Anda.</p>
-        </div>
+    document.querySelectorAll('.info-section').forEach(section => {
+        const sectionKey = section.dataset.section;
+        section.style.display = sectionCounts[sectionKey] > 0 ? '' : 'none';
+    });
 
-        <div class="tip-card" data-category="tips" data-keywords="networking kemitraan jaringan">
-            <span class="icon">🤝</span>
-            <h3>Bangun Jaringan & Kemitraan</h3>
-            <p>Networking adalah aset berharga. Bergabunglah dengan komunitas bisnis, bangun kemitraan strategis, dan perluas jaringan supplier.</p>
-        </div>
+    document.getElementById('noResults').classList.toggle('show', visibleCardCount === 0);
+}
 
-        <div class="tip-card" data-category="tips" data-keywords="keuangan cash flow laporan">
-            <span class="icon">💰</span>
-            <h3>Kelola Keuangan dengan Baik</h3>
-            <p>Kelola keuangan dengan disiplin, pisahkan dana pribadi dan bisnis,
+function openDetail(key) {
+    const data = detailContent[key];
+    if (!data) {
+        return;
+    }
+
+    const modal = document.getElementById('detailModal');
+    const title = document.getElementById('detailTitle');
+    const body = document.getElementById('detailBody');
+
+    title.textContent = data.title;
+    body.innerHTML = data.paragraphs.map(text => '<p>' + text + '</p>').join('');
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeDetail() {
+    const modal = document.getElementById('detailModal');
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+window.addEventListener('click', function (event) {
+    const modal = document.getElementById('detailModal');
+    if (event.target === modal) {
+        closeDetail();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    renderLucideIcons();
+    applyFilters();
+});
+</script>
+</body>
+</html>

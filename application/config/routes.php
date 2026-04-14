@@ -73,16 +73,8 @@ $route['user/delete/(:num)'] = 'user/delete/$1';
 $route['auth/login'] = 'auth/login';
 $route['auth/register'] = 'auth/register';
 $route['auth/dashboard'] = 'auth/dashboard';
-$route['auth/dashboard_selection'] = 'auth/dashboard_selection';
 $route['auth/bisnis_info'] = 'auth/bisnis_info';
 $route['auth/info_bisnis'] = 'auth/info_bisnis';
-$route['auth/change_dashboard'] = 'auth/change_dashboard';
-$route['auth/set_dashboard_type/(:any)'] = 'auth/set_dashboard_type/$1';
-
-// Dashboard friendly URLs
-$route['dashboard'] = 'auth/dashboard';
-$route['dashboard/planning'] = 'auth/set_dashboard_type/planning';
-$route['dashboard/operasional'] = 'auth/set_dashboard_type/operasional';
 
 // Tools friendly URLs
 $route['advisor'] = 'advisor/index';
