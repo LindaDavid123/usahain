@@ -15,6 +15,17 @@ $summary = array_merge([
 $risiko_list = is_array($risiko_list ?? null) ? $risiko_list : [];
 $edit_risiko = $edit_risiko ?? null;
 $is_edit = ! empty($edit_risiko);
+$analyze_requested = ! empty($analyze_requested);
+$auto_analysis = is_array($auto_analysis ?? null) ? $auto_analysis : [
+    'has_financial_data' => false,
+    'empty_message' => '',
+    'detected_risks' => [],
+    'projections' => [],
+    'suggestions' => [],
+];
+$detected_risks = is_array($auto_analysis['detected_risks'] ?? null) ? $auto_analysis['detected_risks'] : [];
+$projections = is_array($auto_analysis['projections'] ?? null) ? $auto_analysis['projections'] : [];
+$suggestions = is_array($auto_analysis['suggestions'] ?? null) ? $auto_analysis['suggestions'] : [];
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -227,6 +238,289 @@ $is_edit = ! empty($edit_risiko);
         .summary-card.medium .summary-value { color: #f59e0b; }
         .summary-card.low .summary-value { color: #16a34a; }
 
+        .auto-analysis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .auto-analysis-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        .auto-analysis-subtitle {
+            color: #64748b;
+            font-size: 13px;
+        }
+        .btn-analyze {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            height: 40px;
+            padding: 0 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            background: #1c6494;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .btn-analyze:hover {
+            background: #15527a;
+        }
+        .btn-analyze:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .auto-refresh-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            font-size: 12px;
+            user-select: none;
+        }
+        .auto-refresh-control input {
+            width: 14px;
+            height: 14px;
+            accent-color: #1c6494;
+        }
+        .auto-refresh-status {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            font-size: 11px;
+            color: #64748b;
+        }
+        .auto-refresh-status .countdown {
+            color: #334155;
+            font-weight: 600;
+        }
+        .auto-hint,
+        .auto-empty,
+        .no-risk-state {
+            margin-top: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            background: #f8fafc;
+            color: #475569;
+            font-size: 13px;
+            padding: 14px;
+        }
+
+        .auto-risk-list {
+            list-style: none;
+            margin: 8px 0 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .auto-risk-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            background: #fff;
+            padding: 12px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .auto-risk-main {
+            flex: 1;
+        }
+        .auto-risk-title-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .risk-level-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+        }
+        .risk-level-icon i,
+        .risk-level-icon svg {
+            width: 14px;
+            height: 14px;
+        }
+        .risk-level-icon.high {
+            background: rgba(239,68,68,0.12);
+            color: #dc2626;
+        }
+        .risk-level-icon.medium {
+            background: rgba(245,158,11,0.16);
+            color: #b45309;
+        }
+        .risk-level-icon.low {
+            background: rgba(22,163,74,0.16);
+            color: #15803d;
+        }
+        .auto-risk-desc {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+        .badge-level-high { background: rgba(239,68,68,0.1); color: #ef4444; }
+        .badge-level-medium { background: rgba(245,158,11,0.1); color: #f59e0b; }
+        .badge-level-low { background: rgba(22,163,74,0.1); color: #16a34a; }
+        .btn-add-risk {
+            border: 1px solid #e5e7eb;
+            background: #fff;
+            color: #1c6494;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-add-risk:hover {
+            background: #f8fafc;
+        }
+
+        .auto-block {
+            margin-top: 16px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 14px;
+        }
+        .auto-block-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        .projection-wrapper {
+            overflow-x: auto;
+        }
+        .projection-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 640px;
+        }
+        .projection-table th,
+        .projection-table td {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 10px;
+            font-size: 13px;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+        .projection-table th {
+            background: #f8fafc;
+            color: #374151;
+            font-weight: 700;
+        }
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .status-pill.safe {
+            background: rgba(22,163,74,0.12);
+            color: #15803d;
+        }
+        .status-pill.warning {
+            background: rgba(245,158,11,0.14);
+            color: #b45309;
+        }
+        .status-pill.danger {
+            background: rgba(239,68,68,0.12);
+            color: #dc2626;
+        }
+
+        .suggestion-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .suggestion-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            color: #374151;
+            font-size: 13px;
+            line-height: 1.45;
+            border: 1px solid #f1f5f9;
+            border-radius: 10px;
+            background: #fff;
+            padding: 10px;
+        }
+        .suggestion-icon {
+            width: 15px;
+            height: 15px;
+            color: #f59e0b;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .mini-toast-container {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 2000;
+            pointer-events: none;
+        }
+        .mini-toast {
+            min-width: 240px;
+            max-width: 320px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 12px;
+            line-height: 1.45;
+            background: #fff;
+            color: #1f2937;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.14);
+            animation: miniToastIn 0.2s ease-out;
+        }
+        .mini-toast.success {
+            border-color: #bbf7d0;
+            background: #ecfdf5;
+            color: #166534;
+        }
+        .mini-toast.error {
+            border-color: #fecaca;
+            background: #fef2f2;
+            color: #991b1b;
+        }
+        .mini-toast.info {
+            border-color: #bfdbfe;
+            background: #eff6ff;
+            color: #1d4ed8;
+        }
+
+        @keyframes miniToastIn {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .card {
             background: var(--card);
             border-radius: 12px;
@@ -371,6 +665,10 @@ $is_edit = ! empty($edit_risiko);
             .summary-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             .risk-form { grid-template-columns: 1fr 1fr; }
             .risk-form .form-group:last-child { grid-column: span 2; }
+            .auto-analysis-actions {
+                width: 100%;
+                align-items: flex-start;
+            }
         }
 
         @media (max-width: 900px) {
@@ -497,6 +795,126 @@ $is_edit = ! empty($edit_risiko);
                 <div class="summary-card low">
                     <div class="summary-label">Risiko Rendah</div>
                     <div class="summary-value"><?= (int) $summary['rendah']; ?></div>
+                </div>
+            </section>
+
+            <section class="card" id="autoAnalysisSection">
+                <div class="auto-analysis-header">
+                    <div>
+                        <h2 class="card-title" style="margin-bottom: 6px;">Deteksi Risiko dari Data Keuangan</h2>
+                        <p class="auto-analysis-subtitle">Analisis otomatis berdasarkan data transaksi keuangan terbaru.</p>
+                    </div>
+                    <div class="auto-analysis-actions">
+                        <button type="button" class="btn-analyze" id="btnAnalyzeNow">
+                            <i data-lucide="sparkles"></i>
+                            <span id="btnAnalyzeNowText">Analisis Sekarang</span>
+                        </button>
+                        <label class="auto-refresh-control" for="autoRefreshToggle">
+                            <input type="checkbox" id="autoRefreshToggle">
+                            <span>Auto-refresh setiap 60 detik</span>
+                        </label>
+                        <div class="auto-refresh-status" id="autoRefreshStatus">
+                            <span id="autoRefreshStatusText">Auto-refresh nonaktif.</span>
+                            <span id="autoRefreshCountdown" class="countdown"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="autoAnalysisContent">
+                    <?php if (! $analyze_requested): ?>
+                        <div class="auto-hint">Klik Analisis Sekarang untuk membaca data keuangan terbaru dan menghasilkan deteksi risiko otomatis.</div>
+                    <?php else: ?>
+                        <?php if (! ($auto_analysis['has_financial_data'] ?? false)): ?>
+                            <div class="auto-empty"><?= htmlspecialchars((string) ($auto_analysis['empty_message'] ?? 'Belum ada data keuangan.')); ?></div>
+                        <?php else: ?>
+                            <?php if (! empty($detected_risks)): ?>
+                                <ul class="auto-risk-list">
+                                    <?php foreach ($detected_risks as $item): ?>
+                                        <?php
+                                        $level = (string) ($item['tingkat'] ?? 'Sedang');
+                                        $icon = 'alert-circle';
+                                        $icon_class = 'medium';
+                                        $badge_class = 'badge-level-medium';
+
+                                        if ($level === 'Tinggi') {
+                                            $icon = 'triangle-alert';
+                                            $icon_class = 'high';
+                                            $badge_class = 'badge-level-high';
+                                        } elseif ($level === 'Rendah') {
+                                            $icon = 'shield-check';
+                                            $icon_class = 'low';
+                                            $badge_class = 'badge-level-low';
+                                        }
+                                        ?>
+                                        <li class="auto-risk-item">
+                                            <div class="auto-risk-main">
+                                                <div class="auto-risk-title-row">
+                                                    <span class="risk-level-icon <?= $icon_class; ?>">
+                                                        <i data-lucide="<?= $icon; ?>"></i>
+                                                    </span>
+                                                    <strong><?= htmlspecialchars((string) ($item['nama_risiko'] ?? '-')); ?></strong>
+                                                    <span class="badge <?= $badge_class; ?>"><?= htmlspecialchars($level); ?></span>
+                                                </div>
+                                                <p class="auto-risk-desc"><?= htmlspecialchars((string) ($item['keterangan'] ?? '-')); ?></p>
+                                            </div>
+
+                                            <form method="post" action="<?= site_url('risiko/add_auto_risk'); ?>">
+                                                <input type="hidden" name="nama_risiko" value="<?= htmlspecialchars((string) ($item['nama_risiko'] ?? '')); ?>">
+                                                <input type="hidden" name="tingkat" value="<?= htmlspecialchars($level); ?>">
+                                                <input type="hidden" name="keterangan" value="<?= htmlspecialchars((string) ($item['keterangan'] ?? '')); ?>">
+                                                <button type="submit" class="btn-add-risk">Tambahkan ke Daftar Risiko</button>
+                                            </form>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php else: ?>
+                                <div class="no-risk-state">Tidak ditemukan risiko signifikan dari data keuangan saat ini.</div>
+                            <?php endif; ?>
+
+                            <div class="auto-block">
+                                <h3 class="auto-block-title">Proyeksi Risiko 3 Bulan ke Depan</h3>
+                                <div class="projection-wrapper">
+                                    <table class="projection-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Periode</th>
+                                                <th>Estimasi Pemasukan</th>
+                                                <th>Estimasi Pengeluaran</th>
+                                                <th>Estimasi Saldo</th>
+                                                <th>Status Risiko</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($projections as $row): ?>
+                                                <tr>
+                                                    <td><?= htmlspecialchars((string) ($row['periode'] ?? '-')); ?></td>
+                                                    <td>Rp <?= number_format((float) ($row['estimasi_pemasukan'] ?? 0), 0, ',', '.'); ?></td>
+                                                    <td>Rp <?= number_format((float) ($row['estimasi_pengeluaran'] ?? 0), 0, ',', '.'); ?></td>
+                                                    <td>Rp <?= number_format((float) ($row['estimasi_saldo'] ?? 0), 0, ',', '.'); ?></td>
+                                                    <td>
+                                                        <?php $status_class = (string) ($row['status_class'] ?? 'warning'); ?>
+                                                        <span class="status-pill <?= htmlspecialchars($status_class); ?>"><?= htmlspecialchars((string) ($row['status_label'] ?? 'Waspada')); ?></span>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="auto-block">
+                                <h3 class="auto-block-title">Saran Manajemen Keuangan</h3>
+                                <ul class="suggestion-list">
+                                    <?php foreach ($suggestions as $suggestion): ?>
+                                        <li>
+                                            <i data-lucide="lightbulb" class="suggestion-icon"></i>
+                                            <span><?= htmlspecialchars((string) $suggestion); ?></span>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </section>
 
@@ -634,8 +1052,504 @@ $is_edit = ! empty($edit_risiko);
         </main>
     </div>
 
+    <div class="mini-toast-container" id="miniToastContainer" aria-live="polite"></div>
+
     <script>
         lucide.createIcons();
+
+        const autoAnalyzeBtn = document.getElementById('btnAnalyzeNow');
+        const autoAnalyzeBtnText = document.getElementById('btnAnalyzeNowText');
+        const autoAnalysisContent = document.getElementById('autoAnalysisContent');
+        const autoAnalysisSection = document.getElementById('autoAnalysisSection');
+        const autoRefreshToggle = document.getElementById('autoRefreshToggle');
+        const autoRefreshStatus = document.getElementById('autoRefreshStatus');
+        const autoRefreshStatusText = document.getElementById('autoRefreshStatusText');
+        const autoRefreshCountdown = document.getElementById('autoRefreshCountdown');
+        const miniToastContainer = document.getElementById('miniToastContainer');
+        const autoAnalysisUrl = <?= json_encode(site_url('risiko/auto_analysis_data')); ?>;
+        const addAutoRiskUrl = <?= json_encode(site_url('risiko/add_auto_risk')); ?>;
+        const analyzeRequestedOnServer = <?= $analyze_requested ? 'true' : 'false'; ?>;
+        const autoRefreshStorageKey = 'risiko_auto_refresh_60s_enabled';
+        const AUTO_REFRESH_INTERVAL_SECONDS = 60;
+        let autoRefreshIntervalId = null;
+        let autoSectionVisible = true;
+        let analysisRequestInFlight = false;
+        let autoRefreshRemainingSeconds = AUTO_REFRESH_INTERVAL_SECONDS;
+        let autoRefreshLastResult = '';
+
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function formatRupiah(value) {
+            const number = Number(value || 0);
+            return 'Rp ' + number.toLocaleString('id-ID');
+        }
+
+        function getRiskLevelMeta(level) {
+            if (level === 'Tinggi') {
+                return {
+                    icon: 'triangle-alert',
+                    iconClass: 'high',
+                    badgeClass: 'badge-level-high'
+                };
+            }
+
+            if (level === 'Rendah') {
+                return {
+                    icon: 'shield-check',
+                    iconClass: 'low',
+                    badgeClass: 'badge-level-low'
+                };
+            }
+
+            return {
+                icon: 'alert-circle',
+                iconClass: 'medium',
+                badgeClass: 'badge-level-medium'
+            };
+        }
+
+        function setAnalyzeLoading(isLoading) {
+            if (!autoAnalyzeBtn || !autoAnalyzeBtnText) {
+                return;
+            }
+
+            autoAnalyzeBtn.disabled = isLoading;
+            autoAnalyzeBtnText.textContent = isLoading ? 'Menganalisis...' : 'Analisis Sekarang';
+        }
+
+        function setAutoRefreshStatus(message) {
+            if (!autoRefreshStatusText) {
+                return;
+            }
+            autoRefreshStatusText.textContent = message;
+        }
+
+        function setAutoRefreshCountdown(seconds) {
+            if (!autoRefreshCountdown) {
+                return;
+            }
+
+            if (typeof seconds !== 'number' || seconds < 0) {
+                autoRefreshCountdown.textContent = '';
+                return;
+            }
+
+            autoRefreshCountdown.textContent = 'Refresh berikutnya dalam ' + seconds + ' detik.';
+        }
+
+        function showMiniToast(message, type) {
+            if (!miniToastContainer) {
+                return;
+            }
+
+            const toastType = type || 'info';
+            const toast = document.createElement('div');
+            toast.className = 'mini-toast ' + toastType;
+            toast.textContent = message;
+
+            miniToastContainer.appendChild(toast);
+
+            window.setTimeout(() => {
+                toast.remove();
+            }, 2600);
+        }
+
+        function getCurrentTimeLabel() {
+            return new Date().toLocaleTimeString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        function renderAutoAnalysis(analysis) {
+            if (!autoAnalysisContent) {
+                return;
+            }
+
+            if (!analysis || !analysis.has_financial_data) {
+                const message = (analysis && analysis.empty_message)
+                    ? analysis.empty_message
+                    : 'Belum ada data keuangan. Mulai catat transaksi di Pencatatan Keuangan untuk mendapatkan analisis risiko otomatis.';
+
+                autoAnalysisContent.innerHTML = '<div class="auto-empty">' + escapeHtml(message) + '</div>';
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+                return;
+            }
+
+            const risks = Array.isArray(analysis.detected_risks) ? analysis.detected_risks : [];
+            const projections = Array.isArray(analysis.projections) ? analysis.projections : [];
+            const suggestions = Array.isArray(analysis.suggestions) ? analysis.suggestions : [];
+
+            let html = '';
+
+            if (risks.length > 0) {
+                html += '<ul class="auto-risk-list">';
+
+                risks.forEach((item) => {
+                    const level = item && item.tingkat ? item.tingkat : 'Sedang';
+                    const meta = getRiskLevelMeta(level);
+                    const name = item && item.nama_risiko ? item.nama_risiko : '-';
+                    const desc = item && item.keterangan ? item.keterangan : '-';
+
+                    html +=
+                        '<li class="auto-risk-item">' +
+                            '<div class="auto-risk-main">' +
+                                '<div class="auto-risk-title-row">' +
+                                    '<span class="risk-level-icon ' + meta.iconClass + '">' +
+                                        '<i data-lucide="' + meta.icon + '"></i>' +
+                                    '</span>' +
+                                    '<strong>' + escapeHtml(name) + '</strong>' +
+                                    '<span class="badge ' + meta.badgeClass + '">' + escapeHtml(level) + '</span>' +
+                                '</div>' +
+                                '<p class="auto-risk-desc">' + escapeHtml(desc) + '</p>' +
+                            '</div>' +
+                            '<form method="post" action="' + escapeHtml(addAutoRiskUrl) + '">' +
+                                '<input type="hidden" name="nama_risiko" value="' + escapeHtml(name) + '">' +
+                                '<input type="hidden" name="tingkat" value="' + escapeHtml(level) + '">' +
+                                '<input type="hidden" name="keterangan" value="' + escapeHtml(desc) + '">' +
+                                '<button type="submit" class="btn-add-risk">Tambahkan ke Daftar Risiko</button>' +
+                            '</form>' +
+                        '</li>';
+                });
+
+                html += '</ul>';
+            } else {
+                html += '<div class="no-risk-state">Tidak ditemukan risiko signifikan dari data keuangan saat ini.</div>';
+            }
+
+            html +=
+                '<div class="auto-block">' +
+                    '<h3 class="auto-block-title">Proyeksi Risiko 3 Bulan ke Depan</h3>' +
+                    '<div class="projection-wrapper">' +
+                        '<table class="projection-table">' +
+                            '<thead>' +
+                                '<tr>' +
+                                    '<th>Periode</th>' +
+                                    '<th>Estimasi Pemasukan</th>' +
+                                    '<th>Estimasi Pengeluaran</th>' +
+                                    '<th>Estimasi Saldo</th>' +
+                                    '<th>Status Risiko</th>' +
+                                '</tr>' +
+                            '</thead>' +
+                            '<tbody>';
+
+            projections.forEach((row) => {
+                const statusClass = row && row.status_class ? row.status_class : 'warning';
+                const statusLabel = row && row.status_label ? row.status_label : 'Waspada';
+
+                html +=
+                    '<tr>' +
+                        '<td>' + escapeHtml(row && row.periode ? row.periode : '-') + '</td>' +
+                        '<td>' + formatRupiah(row && row.estimasi_pemasukan ? row.estimasi_pemasukan : 0) + '</td>' +
+                        '<td>' + formatRupiah(row && row.estimasi_pengeluaran ? row.estimasi_pengeluaran : 0) + '</td>' +
+                        '<td>' + formatRupiah(row && row.estimasi_saldo ? row.estimasi_saldo : 0) + '</td>' +
+                        '<td><span class="status-pill ' + escapeHtml(statusClass) + '">' + escapeHtml(statusLabel) + '</span></td>' +
+                    '</tr>';
+            });
+
+            html +=
+                            '</tbody>' +
+                        '</table>' +
+                    '</div>' +
+                '</div>';
+
+            html +=
+                '<div class="auto-block">' +
+                    '<h3 class="auto-block-title">Saran Manajemen Keuangan</h3>' +
+                    '<ul class="suggestion-list">';
+
+            suggestions.forEach((item) => {
+                html +=
+                    '<li>' +
+                        '<i data-lucide="lightbulb" class="suggestion-icon"></i>' +
+                        '<span>' + escapeHtml(item) + '</span>' +
+                    '</li>';
+            });
+
+            html +=
+                    '</ul>' +
+                '</div>';
+
+            autoAnalysisContent.innerHTML = html;
+
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        }
+
+        function shouldRunAutoRefreshNow() {
+            return Boolean(
+                autoRefreshToggle &&
+                autoRefreshToggle.checked &&
+                document.visibilityState === 'visible' &&
+                autoSectionVisible
+            );
+        }
+
+        function resetAutoRefreshCountdown() {
+            autoRefreshRemainingSeconds = AUTO_REFRESH_INTERVAL_SECONDS;
+            updateAutoRefreshStatusLine();
+        }
+
+        function updateAutoRefreshStatusLine() {
+            if (!autoRefreshToggle || !autoRefreshToggle.checked) {
+                setAutoRefreshStatus('Auto-refresh nonaktif.');
+                setAutoRefreshCountdown(-1);
+                return;
+            }
+
+            if (document.visibilityState !== 'visible') {
+                setAutoRefreshStatus('Auto-refresh aktif (pause): tab tidak aktif.');
+                setAutoRefreshCountdown(-1);
+                return;
+            }
+
+            if (!autoSectionVisible) {
+                setAutoRefreshStatus('Auto-refresh aktif (pause): section tidak terlihat.');
+                setAutoRefreshCountdown(-1);
+                return;
+            }
+
+            if (analysisRequestInFlight) {
+                setAutoRefreshStatus('Auto-refresh aktif. Memperbarui data...');
+                setAutoRefreshCountdown(-1);
+                return;
+            }
+
+            if (autoRefreshLastResult !== '') {
+                setAutoRefreshStatus(autoRefreshLastResult);
+            } else {
+                setAutoRefreshStatus('Auto-refresh aktif.');
+            }
+
+            setAutoRefreshCountdown(autoRefreshRemainingSeconds);
+        }
+
+        function requestAutoAnalysis(options) {
+            if (!autoAnalysisUrl) {
+                return;
+            }
+
+            const config = Object.assign({ showLoading: true, source: 'manual' }, options || {});
+
+            if (analysisRequestInFlight) {
+                return;
+            }
+
+            analysisRequestInFlight = true;
+
+            if (config.showLoading) {
+                setAnalyzeLoading(true);
+            }
+
+            if (config.source === 'auto') {
+                updateAutoRefreshStatusLine();
+            }
+
+            fetch(autoAnalysisUrl, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                }
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status);
+                }
+                return response.json();
+            })
+            .then((result) => {
+                if (!result || result.success !== true) {
+                    throw new Error('Invalid response');
+                }
+                renderAutoAnalysis(result.analysis || null);
+
+                if (config.source === 'auto') {
+                    autoRefreshLastResult = 'Auto-refresh aktif. Diperbarui ' + getCurrentTimeLabel() + '.';
+                    resetAutoRefreshCountdown();
+                    showMiniToast('Analisis risiko diperbarui otomatis.', 'success');
+                }
+            })
+            .catch(() => {
+                if (autoAnalysisContent) {
+                    autoAnalysisContent.innerHTML = '<div class="auto-empty">Gagal memuat analisis otomatis. Silakan coba lagi.</div>';
+                }
+
+                if (config.source === 'auto') {
+                    autoRefreshLastResult = 'Auto-refresh aktif, tetapi pembaruan gagal.';
+                    resetAutoRefreshCountdown();
+                    showMiniToast('Auto-refresh gagal. Akan coba lagi.', 'error');
+                }
+            })
+            .finally(() => {
+                analysisRequestInFlight = false;
+
+                if (config.showLoading) {
+                    setAnalyzeLoading(false);
+                }
+
+                 if (config.source !== 'auto') {
+                    if (autoRefreshToggle && autoRefreshToggle.checked) {
+                        autoRefreshLastResult = 'Auto-refresh aktif. Diperbarui ' + getCurrentTimeLabel() + '.';
+                        resetAutoRefreshCountdown();
+                    }
+                }
+
+                updateAutoRefreshStatusLine();
+
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            });
+        }
+
+        function setupSectionVisibilityObserver() {
+            if (!autoAnalysisSection) {
+                autoSectionVisible = true;
+                return;
+            }
+
+            if (!('IntersectionObserver' in window)) {
+                autoSectionVisible = true;
+                return;
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                autoSectionVisible = Boolean(entry && entry.isIntersecting);
+
+                if (shouldRunAutoRefreshNow()) {
+                    updateAutoRefreshStatusLine();
+                }
+            }, { threshold: 0.2 });
+
+            observer.observe(autoAnalysisSection);
+        }
+
+        function setupAutoRefreshInterval() {
+            if (autoRefreshIntervalId) {
+                clearInterval(autoRefreshIntervalId);
+            }
+
+            autoRefreshIntervalId = window.setInterval(() => {
+                if (!autoRefreshToggle || !autoRefreshToggle.checked) {
+                    updateAutoRefreshStatusLine();
+                    return;
+                }
+
+                if (!shouldRunAutoRefreshNow()) {
+                    updateAutoRefreshStatusLine();
+                    return;
+                }
+
+                if (analysisRequestInFlight) {
+                    updateAutoRefreshStatusLine();
+                    return;
+                }
+
+                if (autoRefreshRemainingSeconds <= 0) {
+                    requestAutoAnalysis({ showLoading: false, source: 'auto' });
+                    return;
+                }
+
+                autoRefreshRemainingSeconds -= 1;
+                updateAutoRefreshStatusLine();
+            }, 1000);
+        }
+
+        function syncAutoRefreshToggleState() {
+            if (!autoRefreshToggle) {
+                return;
+            }
+
+            let enabled = false;
+
+            try {
+                enabled = window.localStorage.getItem(autoRefreshStorageKey) === '1';
+            } catch (error) {
+                enabled = false;
+            }
+
+            autoRefreshToggle.checked = enabled;
+
+            if (enabled) {
+                autoRefreshLastResult = 'Auto-refresh aktif. Data akan diperbarui tiap 60 detik saat section terlihat.';
+                autoRefreshRemainingSeconds = AUTO_REFRESH_INTERVAL_SECONDS;
+            } else {
+                autoRefreshLastResult = '';
+            }
+
+            updateAutoRefreshStatusLine();
+        }
+
+        function onAutoRefreshToggleChanged() {
+            if (!autoRefreshToggle) {
+                return;
+            }
+
+            const enabled = autoRefreshToggle.checked;
+
+            try {
+                window.localStorage.setItem(autoRefreshStorageKey, enabled ? '1' : '0');
+            } catch (error) {
+                // Ignore storage error and continue.
+            }
+
+            if (enabled) {
+                autoRefreshLastResult = 'Auto-refresh aktif. Data akan diperbarui tiap 60 detik saat section terlihat.';
+                autoRefreshRemainingSeconds = AUTO_REFRESH_INTERVAL_SECONDS;
+                updateAutoRefreshStatusLine();
+                showMiniToast('Auto-refresh diaktifkan.', 'info');
+
+                if (shouldRunAutoRefreshNow()) {
+                    requestAutoAnalysis({ showLoading: false, source: 'auto' });
+                }
+            } else {
+                autoRefreshLastResult = '';
+                updateAutoRefreshStatusLine();
+                showMiniToast('Auto-refresh dinonaktifkan.', 'info');
+            }
+        }
+
+        if (autoAnalyzeBtn) {
+            autoAnalyzeBtn.addEventListener('click', function () {
+                requestAutoAnalysis({ showLoading: true, source: 'manual' });
+            });
+        }
+
+        if (autoRefreshToggle) {
+            autoRefreshToggle.addEventListener('change', onAutoRefreshToggleChanged);
+        }
+
+        document.addEventListener('visibilitychange', function () {
+            if (shouldRunAutoRefreshNow()) {
+                autoRefreshRemainingSeconds = AUTO_REFRESH_INTERVAL_SECONDS;
+                requestAutoAnalysis({ showLoading: false, source: 'auto' });
+                return;
+            }
+
+            updateAutoRefreshStatusLine();
+        });
+
+        setupSectionVisibilityObserver();
+        syncAutoRefreshToggleState();
+        setupAutoRefreshInterval();
+
+        // Load analysis automatically on first open so users don't need to click first.
+        if (!analyzeRequestedOnServer) {
+            requestAutoAnalysis({ showLoading: false, source: 'manual' });
+        }
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
